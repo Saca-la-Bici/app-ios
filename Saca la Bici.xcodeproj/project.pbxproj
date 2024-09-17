@@ -6,6 +6,16 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		252B64832C99FC5E00A362C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 252B647F2C99FC5E00A362C5 /* Assets.xcassets */; };
+		252B64842C99FC5E00A362C5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64802C99FC5E00A362C5 /* ContentView.swift */; };
+		252B64852C99FC5E00A362C5 /* Saca_la_BiciApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64812C99FC5E00A362C5 /* Saca_la_BiciApp.swift */; };
+		252B64872C99FC5E00A362C5 /* Saca_la_BiciTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64862C99FC5E00A362C5 /* Saca_la_BiciTests.swift */; };
+		252B648A2C99FC5E00A362C5 /* Saca_la_BiciUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64882C99FC5E00A362C5 /* Saca_la_BiciUITests.swift */; };
+		252B648B2C99FC5E00A362C5 /* Saca_la_BiciUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64892C99FC5E00A362C5 /* Saca_la_BiciUITestsLaunchTests.swift */; };
+		252B64902C99FCD800A362C5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 252B648E2C99FCD800A362C5 /* Preview Assets.xcassets */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		252B63AC2C99F16900A362C5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,25 +37,14 @@
 		252B639B2C99F16700A362C5 /* Saca la Bici.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Saca la Bici.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		252B63AB2C99F16900A362C5 /* Saca la BiciTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Saca la BiciTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		252B63B52C99F16900A362C5 /* Saca la BiciUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Saca la BiciUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		252B647F2C99FC5E00A362C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		252B64802C99FC5E00A362C5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		252B64812C99FC5E00A362C5 /* Saca_la_BiciApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saca_la_BiciApp.swift; sourceTree = "<group>"; };
+		252B64862C99FC5E00A362C5 /* Saca_la_BiciTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saca_la_BiciTests.swift; sourceTree = "<group>"; };
+		252B64882C99FC5E00A362C5 /* Saca_la_BiciUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saca_la_BiciUITests.swift; sourceTree = "<group>"; };
+		252B64892C99FC5E00A362C5 /* Saca_la_BiciUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saca_la_BiciUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		252B648E2C99FCD800A362C5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		252B639D2C99F16700A362C5 /* Saca la Bici */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Saca la Bici";
-			sourceTree = "<group>";
-		};
-		252B63AE2C99F16900A362C5 /* Saca la BiciTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Saca la BiciTests";
-			sourceTree = "<group>";
-		};
-		252B63B82C99F16900A362C5 /* Saca la BiciUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Saca la BiciUITests";
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		252B63982C99F16700A362C5 /* Frameworks */ = {
@@ -75,9 +74,9 @@
 		252B63922C99F16700A362C5 = {
 			isa = PBXGroup;
 			children = (
-				252B639D2C99F16700A362C5 /* Saca la Bici */,
-				252B63AE2C99F16900A362C5 /* Saca la BiciTests */,
-				252B63B82C99F16900A362C5 /* Saca la BiciUITests */,
+				252B64922C99FD0F00A362C5 /* Saca la Bici */,
+				252B648D2C99FCAE00A362C5 /* Saca la BiciTests */,
+				252B648C2C99FC8300A362C5 /* Saca la BiciUITests */,
 				252B639C2C99F16700A362C5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +89,42 @@
 				252B63B52C99F16900A362C5 /* Saca la BiciUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		252B648C2C99FC8300A362C5 /* Saca la BiciUITests */ = {
+			isa = PBXGroup;
+			children = (
+				252B64892C99FC5E00A362C5 /* Saca_la_BiciUITestsLaunchTests.swift */,
+				252B64882C99FC5E00A362C5 /* Saca_la_BiciUITests.swift */,
+			);
+			path = "Saca la BiciUITests";
+			sourceTree = "<group>";
+		};
+		252B648D2C99FCAE00A362C5 /* Saca la BiciTests */ = {
+			isa = PBXGroup;
+			children = (
+				252B64862C99FC5E00A362C5 /* Saca_la_BiciTests.swift */,
+			);
+			path = "Saca la BiciTests";
+			sourceTree = "<group>";
+		};
+		252B64922C99FD0F00A362C5 /* Saca la Bici */ = {
+			isa = PBXGroup;
+			children = (
+				252B64812C99FC5E00A362C5 /* Saca_la_BiciApp.swift */,
+				252B64802C99FC5E00A362C5 /* ContentView.swift */,
+				252B647F2C99FC5E00A362C5 /* Assets.xcassets */,
+				252B64932C99FD2C00A362C5 /* Preview Content */,
+			);
+			path = "Saca la Bici";
+			sourceTree = "<group>";
+		};
+		252B64932C99FD2C00A362C5 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				252B648E2C99FCD800A362C5 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -106,9 +141,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				252B639D2C99F16700A362C5 /* Saca la Bici */,
 			);
 			name = "Saca la Bici";
 			packageProductDependencies = (
@@ -130,9 +162,6 @@
 			dependencies = (
 				252B63AD2C99F16900A362C5 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				252B63AE2C99F16900A362C5 /* Saca la BiciTests */,
-			);
 			name = "Saca la BiciTests";
 			packageProductDependencies = (
 			);
@@ -152,9 +181,6 @@
 			);
 			dependencies = (
 				252B63B72C99F16900A362C5 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				252B63B82C99F16900A362C5 /* Saca la BiciUITests */,
 			);
 			name = "Saca la BiciUITests";
 			packageProductDependencies = (
@@ -212,6 +238,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				252B64902C99FCD800A362C5 /* Preview Assets.xcassets in Resources */,
+				252B64832C99FC5E00A362C5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +264,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				252B64842C99FC5E00A362C5 /* ContentView.swift in Sources */,
+				252B64852C99FC5E00A362C5 /* Saca_la_BiciApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				252B64872C99FC5E00A362C5 /* Saca_la_BiciTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +281,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				252B648A2C99FC5E00A362C5 /* Saca_la_BiciUITests.swift in Sources */,
+				252B648B2C99FC5E00A362C5 /* Saca_la_BiciUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
