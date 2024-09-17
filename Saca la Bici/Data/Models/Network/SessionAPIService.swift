@@ -12,9 +12,9 @@ import FirebaseCore
 import GoogleSignIn
 
 // Singleton
-class LoginAPIService {
+class SessionAPIService {
     // Se usa la libería de Alamofire y se usa static let para que sea inmutable y si se crean varias instancias que sea igual para todas dichas instancias.
-    static let shared = LoginAPIService()
+    static let shared = SessionAPIService()
     
     // Crear una sesión personalizada con tiempos de espera ajustados
     let session = Session(configuration: {
@@ -23,6 +23,62 @@ class LoginAPIService {
         configuration.timeoutIntervalForResource = 15 // Tiempo de espera de 5 segundos para el recurso
         return configuration
     }())
+    
+    func registrarUsuario(url: URL, UserDatos: UserNuevo, urlStatus: URL) async -> Int? {
+        do {
+            // Crear el usuario en Firebase Authentication
+            let authResult = try await Auth.auth().createUser(withEmail: UserDatos.email, password: UserDatos.password)
+            
+            // Obtener el UID de Firebase Authentication
+            let firebaseUID = authResult.user.uid
+                       
+            // Obtener el ID Token del usuario autenticado
+            let idToken = try await authResult.user.getIDToken()
+            
+            let parameters: Parameters = [
+                "username" : UserDatos.username,
+                "nombre" : UserDatos.nombre,
+                "edad" : 20,
+                "correoElectronico" : UserDatos.email,
+                "tipoSangre": UserDatos.tipoSangre,
+                "numeroEmergencia": UserDatos.numeroEmergencia,
+                "firebaseUID": firebaseUID
+            ]
+                       
+            // Preparar los headers con el ID Token para enviarlo al backend
+            let headers: HTTPHeaders = [
+                "Authorization": "Bearer \(idToken)",
+                "Content-Type": "application/json"
+            ]
+            
+            let taskRequest = session.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate()
+            let response = await taskRequest.serializingData().response
+            
+            let statusCode = response.response?.statusCode
+            
+            switch response.result {
+            case .success(_):
+                return statusCode
+                
+            case let .failure(error):
+                // Eliminar el usuario de Firebase porque falló el backend
+                try await authResult.user.delete()
+                
+                debugPrint(error.localizedDescription)
+                    
+                // Imprimir el cuerpo de la respuesta en caso de error
+                if let data = response.data {
+                    let errorResponse = String(decoding: data, as: UTF8.self)
+                    print("\(errorResponse)")
+                }
+                
+                return statusCode
+            }
+        } catch {
+            print("Error al registrar en Firebase: \(error.localizedDescription)")
+            return nil
+        }
+    }
     
     func iniciarSesion(UserDatos: User, URLUsername: URL) async -> Int? {
         do {

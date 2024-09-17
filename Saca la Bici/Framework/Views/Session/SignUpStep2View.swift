@@ -105,7 +105,6 @@ struct SignUpStep2View: View {
                             Text("Nombre Completo")
                                 .font(.caption)
                             TextField("Escribe tu nombre Completo", text: $signUpViewModel.nombreCompleto)
-                                .keyboardType(.numberPad)
                                 .padding()
                                 .cornerRadius(10)
                                 .overlay(

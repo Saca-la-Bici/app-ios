@@ -16,6 +16,7 @@ struct Response: Codable {
 struct UserNuevo: Codable {
     var username: String
     var password: String
+    var nombre: String
     var email: String
     var tipoSangre: String
     var numeroEmergencia: String
