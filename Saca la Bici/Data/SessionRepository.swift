@@ -8,7 +8,9 @@
 import Foundation
 
 // Se crea el protocolo para que lo hereden la clase o el struct (como la base)
-protocol LoginAPIProtocol {
+protocol SessionAPIProtocol {
+    
+    func registrarUsuario(UserDatos: UserNuevo) async -> Int?
         
     func probarToken() async -> Response?
     
@@ -18,30 +20,34 @@ protocol LoginAPIProtocol {
 }
 
 // Crear nuestra clase PokemonRespository y heredar de nuestro protocolo PokemonAPIProtocol
-class LoginRepository: LoginAPIProtocol {
+class SessionRepository: SessionAPIProtocol {
     
     // Singleton para que cada requerimiento pueda acceder al mismo archivo y clase (repositiorio con funciones de llamadas API
-    static let shared = LoginRepository()
+    static let shared = SessionRepository()
     
     // Se crea la variable tipo NetworkAPIService con la librería Alamofire
-    let loginService: LoginAPIService
+    let sessionService: SessionAPIService
     
     // Se inicializa con la variable singleton
-    init(loginService: LoginAPIService = LoginAPIService.shared) {
-            self.loginService = loginService
+    init(sessionService: SessionAPIService = SessionAPIService.shared) {
+            self.sessionService = sessionService
         }
+    
+    func registrarUsuario(UserDatos: UserNuevo) async -> Int? {
+        return await sessionService.registrarUsuario(url: URL(string:"\(Api.base)\(Api.routes.session)/registrarUsuario")!, UserDatos: UserDatos, urlStatus: URL(string:"\(Api.base)\(Api.routes.status)")!)
+    }
     
     func probarToken() async -> Response? {
         // Llamas la función usando el URL base, el modulo y limite que fue pasado usando await porque es asincronico
-        return await loginService.probarToken(url: URL(string:"\(Api.base)")!)
+        return await sessionService.probarToken(url: URL(string:"\(Api.base)")!)
     }
     
     // Tomar en cuenta la llamada al back para mostrar info
     func iniciarSesion(UserDatos: User) async -> Int? {
-        return await loginService.iniciarSesion(UserDatos: UserDatos, URLUsername: URL(string:"\(Api.base)\(Api.routes.session)/getUserEmail")!)
+        return await sessionService.iniciarSesion(UserDatos: UserDatos, URLUsername: URL(string:"\(Api.base)\(Api.routes.session)/getUserEmail")!)
     }
     
     func GoogleLogin() async -> Int? {
-        return await loginService.GoogleLogin(url: URL(string:"\(Api.base)\(Api.routes.session)/registrarUsuario")!)
+        return await sessionService.GoogleLogin(url: URL(string:"\(Api.base)\(Api.routes.session)/registrarUsuario")!)
     }
 }

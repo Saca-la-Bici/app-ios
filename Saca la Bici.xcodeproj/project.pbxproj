@@ -13,7 +13,7 @@
 		252B648A2C99FC5E00A362C5 /* Saca_la_BiciUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64882C99FC5E00A362C5 /* Saca_la_BiciUITests.swift */; };
 		252B648B2C99FC5E00A362C5 /* Saca_la_BiciUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64892C99FC5E00A362C5 /* Saca_la_BiciUITestsLaunchTests.swift */; };
 		252B64902C99FCD800A362C5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 252B648E2C99FCD800A362C5 /* Preview Assets.xcassets */; };
-		252B64D12C99FE5900A362C5 /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64C72C99FE5900A362C5 /* CoordinatorView.swift */; };
+		252B64D12C99FE5900A362C5 /* SessionCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64C72C99FE5900A362C5 /* SessionCoordinatorView.swift */; };
 		252B64D22C99FE5900A362C5 /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64CE2C99FE5900A362C5 /* UIApplicationExtensions.swift */; };
 		252B64D32C99FE5900A362C5 /* SignUpStep1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64C92C99FE5900A362C5 /* SignUpStep1View.swift */; };
 		252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64CA2C99FE5900A362C5 /* SignUpStep2View.swift */; };
@@ -28,11 +28,9 @@
 		252B64E02C99FE6F00A362C5 /* LoginRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64DD2C99FE6F00A362C5 /* LoginRequirement.swift */; };
 		252B64E12C99FE6F00A362C5 /* SignUpRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64DE2C99FE6F00A362C5 /* SignUpRequirement.swift */; };
 		252B64EB2C99FE7200A362C5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64E32C99FE7200A362C5 /* User.swift */; };
-		252B64EC2C99FE7200A362C5 /* SignUpRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64E92C99FE7200A362C5 /* SignUpRepository.swift */; };
 		252B64ED2C99FE7200A362C5 /* APIRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64E22C99FE7200A362C5 /* APIRoutes.swift */; };
-		252B64EE2C99FE7200A362C5 /* LoginAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64E42C99FE7200A362C5 /* LoginAPIService.swift */; };
-		252B64EF2C99FE7200A362C5 /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64E82C99FE7200A362C5 /* LoginRepository.swift */; };
-		252B64F02C99FE7200A362C5 /* SignUpAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64E52C99FE7200A362C5 /* SignUpAPIService.swift */; };
+		252B64EE2C99FE7200A362C5 /* SessionAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64E42C99FE7200A362C5 /* SessionAPIService.swift */; };
+		252B64EF2C99FE7200A362C5 /* SessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64E82C99FE7200A362C5 /* SessionRepository.swift */; };
 		252B64F32C99FF1000A362C5 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 252B64F22C99FF1000A362C5 /* Alamofire */; };
 		252B64F62C99FFBD00A362C5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 252B64F52C99FFBD00A362C5 /* FirebaseAuth */; };
 		252B64F82C99FFBD00A362C5 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 252B64F72C99FFBD00A362C5 /* FirebaseAuthCombine-Community */; };
@@ -75,7 +73,7 @@
 		252B64C32C99FE5900A362C5 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		252B64C52C99FE5900A362C5 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		252B64C62C99FE5900A362C5 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
-		252B64C72C99FE5900A362C5 /* CoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorView.swift; sourceTree = "<group>"; };
+		252B64C72C99FE5900A362C5 /* SessionCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCoordinatorView.swift; sourceTree = "<group>"; };
 		252B64C82C99FE5900A362C5 /* MenuTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTabs.swift; sourceTree = "<group>"; };
 		252B64C92C99FE5900A362C5 /* SignUpStep1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep1View.swift; sourceTree = "<group>"; };
 		252B64CA2C99FE5900A362C5 /* SignUpStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep2View.swift; sourceTree = "<group>"; };
@@ -86,10 +84,8 @@
 		252B64DE2C99FE6F00A362C5 /* SignUpRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRequirement.swift; sourceTree = "<group>"; };
 		252B64E22C99FE7200A362C5 /* APIRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRoutes.swift; sourceTree = "<group>"; };
 		252B64E32C99FE7200A362C5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		252B64E42C99FE7200A362C5 /* LoginAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPIService.swift; sourceTree = "<group>"; };
-		252B64E52C99FE7200A362C5 /* SignUpAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAPIService.swift; sourceTree = "<group>"; };
-		252B64E82C99FE7200A362C5 /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
-		252B64E92C99FE7200A362C5 /* SignUpRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRepository.swift; sourceTree = "<group>"; };
+		252B64E42C99FE7200A362C5 /* SessionAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionAPIService.swift; sourceTree = "<group>"; };
+		252B64E82C99FE7200A362C5 /* SessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRepository.swift; sourceTree = "<group>"; };
 		252B65002C9A280800A362C5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		252B65042C9A297700A362C5 /* Saca-la-Bici-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Saca-la-Bici-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -195,14 +191,9 @@
 		252B64CD2C99FE5900A362C5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				252B64C52C99FE5900A362C5 /* LoginView.swift */,
+				252B65052C9A37D600A362C5 /* Session */,
 				252B64C62C99FE5900A362C5 /* ResultView.swift */,
-				252B64C72C99FE5900A362C5 /* CoordinatorView.swift */,
 				252B64C82C99FE5900A362C5 /* MenuTabs.swift */,
-				252B64C92C99FE5900A362C5 /* SignUpStep1View.swift */,
-				252B64CA2C99FE5900A362C5 /* SignUpStep2View.swift */,
-				252B64CB2C99FE5900A362C5 /* SignUpStep3View.swift */,
-				252B64CC2C99FE5900A362C5 /* MainLoginView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -236,8 +227,7 @@
 		252B64E62C99FE7200A362C5 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				252B64E42C99FE7200A362C5 /* LoginAPIService.swift */,
-				252B64E52C99FE7200A362C5 /* SignUpAPIService.swift */,
+				252B64E42C99FE7200A362C5 /* SessionAPIService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -256,8 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				252B64E72C99FE7200A362C5 /* Models */,
-				252B64E82C99FE7200A362C5 /* LoginRepository.swift */,
-				252B64E92C99FE7200A362C5 /* SignUpRepository.swift */,
+				252B64E82C99FE7200A362C5 /* SessionRepository.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -277,6 +266,19 @@
 			children = (
 				252B64DD2C99FE6F00A362C5 /* LoginRequirement.swift */,
 				252B64DE2C99FE6F00A362C5 /* SignUpRequirement.swift */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		252B65052C9A37D600A362C5 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				252B64CC2C99FE5900A362C5 /* MainLoginView.swift */,
+				252B64C52C99FE5900A362C5 /* LoginView.swift */,
+				252B64C92C99FE5900A362C5 /* SignUpStep1View.swift */,
+				252B64CA2C99FE5900A362C5 /* SignUpStep2View.swift */,
+				252B64CB2C99FE5900A362C5 /* SignUpStep3View.swift */,
+				252B64C72C99FE5900A362C5 /* SessionCoordinatorView.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -432,16 +434,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				252B64852C99FC5E00A362C5 /* Saca_la_BiciApp.swift in Sources */,
-				252B64D12C99FE5900A362C5 /* CoordinatorView.swift in Sources */,
+				252B64D12C99FE5900A362C5 /* SessionCoordinatorView.swift in Sources */,
 				252B64D22C99FE5900A362C5 /* UIApplicationExtensions.swift in Sources */,
 				252B64D32C99FE5900A362C5 /* SignUpStep1View.swift in Sources */,
 				252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */,
 				252B64EB2C99FE7200A362C5 /* User.swift in Sources */,
-				252B64EC2C99FE7200A362C5 /* SignUpRepository.swift in Sources */,
 				252B64ED2C99FE7200A362C5 /* APIRoutes.swift in Sources */,
-				252B64EE2C99FE7200A362C5 /* LoginAPIService.swift in Sources */,
-				252B64EF2C99FE7200A362C5 /* LoginRepository.swift in Sources */,
-				252B64F02C99FE7200A362C5 /* SignUpAPIService.swift in Sources */,
+				252B64EE2C99FE7200A362C5 /* SessionAPIService.swift in Sources */,
+				252B64EF2C99FE7200A362C5 /* SessionRepository.swift in Sources */,
 				252B64D52C99FE5900A362C5 /* SignUpStep3View.swift in Sources */,
 				252B64D62C99FE5900A362C5 /* MenuTabs.swift in Sources */,
 				252B64D72C99FE5900A362C5 /* ResultView.swift in Sources */,

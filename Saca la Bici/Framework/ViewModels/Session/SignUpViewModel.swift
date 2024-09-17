@@ -76,7 +76,7 @@ class SignUpViewModel: ObservableObject {
         
         let numeroEmergencia = "+" + self.countryCode + self.phoneNumber
         
-        let usuarioNuevo = UserNuevo(username: self.username, password: self.confirmPassword, email: self.email, tipoSangre: self.selectedBloodType, numeroEmergencia: numeroEmergencia)
+        let usuarioNuevo = UserNuevo(username: self.username, password: self.confirmPassword, nombre: nombreCompleto, email: self.email, tipoSangre: self.selectedBloodType, numeroEmergencia: numeroEmergencia)
         
         let responseCode = await self.signUpRequirement.registrarUsuario(UserDatos: usuarioNuevo)
         

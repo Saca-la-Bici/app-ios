@@ -18,15 +18,15 @@ class SignUpRequirement : SignUpRequirementProtocol {
     static let shared = SignUpRequirement()
     
     // La variable inmutable es de tipo Pokemon Repository
-    let signUpRepository: SignUpRepository
+    let sessionRepository: SessionRepository
     
     // Inicializas la instancia con el repositorio que acaba se crearse
-    init(signUpRepository: SignUpRepository = SignUpRepository.shared) {
-        self.signUpRepository = signUpRepository
+    init(sessionRepository: SessionRepository = SessionRepository.shared) {
+        self.sessionRepository = sessionRepository
     }
     
     func registrarUsuario(UserDatos: UserNuevo) async -> Int? {
-        return await signUpRepository.registrarUsuario(UserDatos: UserDatos)
+        return await sessionRepository.registrarUsuario(UserDatos: UserDatos)
     }
     
 }

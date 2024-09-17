@@ -21,23 +21,23 @@ class LoginRequirement : LoginRequirementProtocol {
     static let shared = LoginRequirement()
     
     // La variable inmutable es de tipo Pokemon Repository
-    let loginRepository: LoginRepository
+    let sessionRepository: SessionRepository
     
     // Inicializas la instancia con el repositorio que acaba se crearse
-    init(loginRepository: LoginRepository = LoginRepository.shared) {
-        self.loginRepository = loginRepository
+    init(sessionRepository: SessionRepository = SessionRepository.shared) {
+        self.sessionRepository = sessionRepository
     }
     
     func probarToken() async -> Response? {
-        return await loginRepository.probarToken()
+        return await sessionRepository.probarToken()
     }
     
     func iniciarSesion(UserDatos: User) async -> Int? {
-        return await loginRepository.iniciarSesion(UserDatos: UserDatos)
+        return await sessionRepository.iniciarSesion(UserDatos: UserDatos)
     }
     
     func GoogleLogin() async -> Int? {
-        return await loginRepository.GoogleLogin()
+        return await sessionRepository.GoogleLogin()
     }
     
 }
