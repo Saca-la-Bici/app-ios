@@ -15,7 +15,6 @@ class LoginViewModel: ObservableObject {
     @Published var password: String = ""
     @Published var isPasswordVisible: Bool = false
     @Published var textTest: String = "Resultado de Firebase"
-    @Published var isLoggedinGoogle: Bool = false
     @Published var LoginViewActive: Bool = false
     
     // Creas dos variables más por si se comete un error
@@ -71,8 +70,6 @@ class LoginViewModel: ObservableObject {
         // No mostrar error si se cancelo. 
         } else if (responseStatus == -1) {
             self.showAlert = false
-        } else {
-            self.isLoggedinGoogle = true
         }
             
     }

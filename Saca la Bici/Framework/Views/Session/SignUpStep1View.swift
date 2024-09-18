@@ -36,107 +36,43 @@ struct SignUpStep1View: View {
                     VStack(alignment: .leading,spacing: 20) {
                         
                         // Correo electrónico
-                        VStack(alignment: .leading) {
-                            Text("Correo electrónico")
-                                .font(.caption)
-                            TextField("Correo electrónico", text: $signUpViewModel.email)
-                                .textInputAutocapitalization(.never)
-                                .keyboardType(.emailAddress)
-                                .padding()
-                                .cornerRadius(10)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-                                )
-                        }
+                        EmailField(email: $signUpViewModel.email,
+                            text: "Correo electrónico",
+                            placeholder: "Escribe tu correo electrónico...")
                         
                         // Nombre de usuario
-                        VStack(alignment: .leading) {
-                            Text("Nombre de usuario")
-                                .font(.caption)
-                            TextField("Nombre de usuario", text: $signUpViewModel.username)
-                                .textInputAutocapitalization(.never)
-                                .padding()
-                                .cornerRadius(10)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-                                )
-                        }
+                        TextoLimiteField(
+                            label: "Nombre de usuario",
+                            placeholder: "Escribe tu nombre de usuario...",
+                            text: $signUpViewModel.username,
+                            maxLength: 50,
+                            title: false
+                        )
                         
                         Spacer().frame(height: 0)
                         
                         // Fecha de nacimiento
-                        VStack(alignment: .leading) {
-                            Text("Fecha de Nacimiento")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                            Text("Esta información no será pública")
-                                .font(.caption)
-                            
-                            Spacer().frame(height: 15)
-                            
-                            HStack {
-                                // Picker de Mes
-                                Picker(selection: $signUpViewModel.selectedMonth, label: Text("Mes")) {
-                                    ForEach(signUpViewModel.months, id: \.self) {
-                                        Text($0)
-                                            .foregroundColor(Color(red: 123/255, green: 163/255, blue: 139/255))
-                                            .background(Color.clear)
-                                    }
-                                }
-                                .pickerStyle(WheelPickerStyle())
-                                .frame(maxWidth: 180, maxHeight: 130)
-                                .cornerRadius(10)
-                                .padding(.top, -20)
-                                
-                                // Picker de Día
-                                Picker(selection: $signUpViewModel.selectedDay, label: Text("Día")) {
-                                    ForEach(signUpViewModel.days, id: \.self) {
-                                        Text($0)
-                                            .foregroundColor(Color(red: 123/255, green: 163/255, blue: 139/255))
-                                            .background(Color.clear)
-                                    }
-                                }
-                                .pickerStyle(WheelPickerStyle())
-                                .frame(maxWidth: 65, maxHeight: 130)
-                                .cornerRadius(10)
-                                .padding(.top, -20)
-                                
-                                // Picker de Año
-                                Picker(selection: $signUpViewModel.selectedYear, label: Text("Año")) {
-                                    ForEach(signUpViewModel.years, id: \.self) {
-                                        Text($0)
-                                            .foregroundColor(Color(red: 123/255, green: 163/255, blue: 139/255))
-                                            .background(Color.clear)
-                                    }
-                                }
-                                .pickerStyle(WheelPickerStyle())
-                                .frame(maxWidth: 95, maxHeight: 130)
-                                .cornerRadius(10)
-                                .padding(.top, -20)
-                            }
-                        }
+                        FechaNacimientoPicker(
+                            selectedMonth: $signUpViewModel.selectedMonth,
+                            selectedDay: $signUpViewModel.selectedDay,
+                            selectedYear: $signUpViewModel.selectedYear,
+                            months: signUpViewModel.months,
+                            days: signUpViewModel.days,
+                            years: signUpViewModel.years
+                        )
                         
                         Spacer().frame(height: 10)
                         
-                        // Continuar
-                        Button(action: {
-                            signUpViewModel.validarDatosStep1()
-                            if !signUpViewModel.showAlert {
-                                path.append("continue")
+                        CustomButton(
+                            text: "Continuar",
+                            backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
+                            action: {
+                                signUpViewModel.validarDatosStep1()
+                                if !signUpViewModel.showAlert {
+                                    path.append("continue")
+                                }
                             }
-                        }) {
-                            Text("Continuar")
-                                .font(.subheadline)
-                                .bold()
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .foregroundColor(.black)
-                                .background(Color(red: 0.961, green: 0.802, blue: 0.048))
-                                .cornerRadius(10)
-                        }
-                        .buttonStyle(PlainButtonStyle())
+                        )
                     }
                     
                     Spacer()

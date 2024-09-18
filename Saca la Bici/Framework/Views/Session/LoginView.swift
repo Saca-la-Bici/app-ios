@@ -27,60 +27,22 @@ struct LoginView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
-                
                 Spacer().frame(height: 50)
                 
                 // Formulario
                 VStack(alignment: .leading, spacing: 20) {
                     
                     // Correo electrónico
-                    VStack(alignment: .leading) {
-                        Text("Correo electrónico o usuario")
-                            .font(.caption)
-                        TextField("Correo electrónico o usuario", text: $loginViewModel.emailOrUsername)
-                            .keyboardType(.emailAddress)
-                            .textInputAutocapitalization(.never)
-                            .padding()
-                            .cornerRadius(10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-                            )
-                    }
+                    EmailField(email: $loginViewModel.emailOrUsername,
+                        text: "Correo electrónico o usuario",
+                        placeholder: "Escribe tu correo o usuario...")
                     
                     // Contraseña
-                    VStack(alignment: .leading) {
-                        Text("Contraseña")
-                            .font(.caption)
-                        ZStack {
-                            if loginViewModel.isPasswordVisible {
-                                TextField("Contraseña", text: $loginViewModel.password)
-                                    .textInputAutocapitalization(.never)
-                            } else {
-                                SecureField("Contraseña", text: $loginViewModel.password)
-                                    .textInputAutocapitalization(.never)
-                            }
-                        }
-                        .padding()
-                        .cornerRadius(10)
-                        .overlay(
-                            HStack {
-                                Spacer()
-                                Button(action: {
-                                    loginViewModel.isPasswordVisible.toggle() // Muestra u oculta la contraseña
-                                }) {
-                                    Image(systemName: loginViewModel.isPasswordVisible ? "eye.slash" : "eye")
-                                        .foregroundColor(.gray)
-                                        .padding()
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                            }
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-                        )
-                    }
+                    PasswordField(
+                        password: $loginViewModel.password,
+                        isPasswordVisible: $loginViewModel.isPasswordVisible,
+                        text: "Contraseña"
+                    )
                     
                     // ¿Olvidaste tu contraseña?
                     Button(action: {
@@ -92,24 +54,16 @@ struct LoginView: View {
                     })
                     .buttonStyle(PlainButtonStyle())
                     
-                    // Iniciar sesión
-                    Button {
-                        Task {
-                            await loginViewModel.iniciarSesion()
-                            // El listener se encarga del menu
+                    CustomButton(
+                        text: "Iniciar Sesión",
+                        backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
+                        action: {
+                            Task {
+                                await loginViewModel.iniciarSesion()
+                                // El listener se encarga del menu
+                            }
                         }
-                        
-                    } label: {
-                        Text("Iniciar sesión")
-                            .font(.subheadline)
-                            .bold()
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .foregroundColor(.black)
-                            .background(Color(red: 0.961, green: 0.802, blue: 0.048))
-                            .cornerRadius(10)
-                    }
-                    .buttonStyle(PlainButtonStyle())
+                    )
                     
                     // O continúa con
                     Text("o continúa con")

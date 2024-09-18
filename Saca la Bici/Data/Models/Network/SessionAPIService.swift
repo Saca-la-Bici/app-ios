@@ -24,7 +24,7 @@ class SessionAPIService {
         return configuration
     }())
     
-    func registrarUsuario(url: URL, UserDatos: UserNuevo, urlStatus: URL) async -> Int? {
+    func registrarUsuario(url: URL, UserDatos: UserNuevo) async -> Int? {
         do {
             // Crear el usuario en Firebase Authentication
             let authResult = try await Auth.auth().createUser(withEmail: UserDatos.email, password: UserDatos.password)
@@ -38,7 +38,7 @@ class SessionAPIService {
             let parameters: Parameters = [
                 "username" : UserDatos.username,
                 "nombre" : UserDatos.nombre,
-                "edad" : 20,
+                "fechaNacimiento" : UserDatos.fechaNacimiento,
                 "correoElectronico" : UserDatos.email,
                 "tipoSangre": UserDatos.tipoSangre,
                 "numeroEmergencia": UserDatos.numeroEmergencia,
@@ -154,6 +154,44 @@ class SessionAPIService {
             }
         }
     
+    func checarPerfilBackend(url: URL) async -> Bool {
+        // Obtener el ID Token usando async/await
+        guard let idToken = await obtenerIDToken() else {
+            print("No se pudo obtener el ID Token")
+            return false
+        }
+        
+        // Prepara los headers con el token para enviar al backend
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)", // Incluye el token en el header de autorización
+            "Content-Type": "application/json"
+        ]
+            
+        let taskRequest = session.request(url, method: .get, headers: headers).validate()
+        let response = await taskRequest.serializingData().response
+            
+        switch response.result {
+        case .success(let data):
+            do {
+                // Intentar decodificar la respuesta JSON en un objeto Response
+                let response = try JSONDecoder().decode(Response.self, from: data)
+                
+                return response.perfilRegistrado!
+            } catch {
+                return false
+            }
+        case let .failure(error):
+            debugPrint(error.localizedDescription)
+            
+            // Imprimir el cuerpo de la respuesta en caso de error
+            if let data = response.data {
+                let errorResponse = String(decoding: data, as: UTF8.self)
+                print("\(errorResponse)")
+            }
+            return false
+            }
+    }
+    
     @MainActor
     func GoogleLogin(url: URL) async -> Int? {
         // Obtener el UIViewController desde SwiftUI
@@ -180,7 +218,7 @@ class SessionAPIService {
             let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
             
             // Iniciar sesión en Firebase con las credenciales
-            let authResult = try await Auth.auth().signIn(with: credential)
+            _ = try await Auth.auth().signIn(with: credential)
             
             return(200)
             
@@ -201,22 +239,79 @@ class SessionAPIService {
         }
     }
     
+    func completarPerfil(url: URL, UserDatos: UserExterno) async -> Int? {
+        guard let idToken = await obtenerIDToken() else {
+            print("No se pudo obtener el ID Token")
+            return nil
+        }
+        
+        // Obtener el usuario actual
+        guard let currentUser = Auth.auth().currentUser else {
+            print("No hay usuario autenticado")
+            return nil
+        }
+        
+        // Obtener el UID de Firebase Authentication
+        let firebaseUID = currentUser.uid
+        
+        // Obtener nombre y correo electrónico desde Firebase
+        let nombre = currentUser.displayName ?? "Nombre no disponible"
+        let correoElectronico = currentUser.email ?? "Correo no disponible"
+        
+        // Prepara los headers con el token para enviar al backend
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)", // Incluye el token en el header de autorización
+            "Content-Type": "application/json"
+        ]
+        
+        let parameters: Parameters = [
+            "username" : UserDatos.username,
+            "nombre" : "\(nombre)",
+            "fechaNacimiento" : UserDatos.fechaNacimiento,
+            "correoElectronico" : "\(correoElectronico)",
+            "tipoSangre": UserDatos.tipoSangre,
+            "numeroEmergencia": UserDatos.numeroEmergencia,
+            "firebaseUID": "\(firebaseUID)"
+        ]
+        
+        let taskRequest = session.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate()
+        let response = await taskRequest.serializingData().response
+        
+        let statusCode = response.response?.statusCode
+        
+        switch response.result {
+        case .success(_):
+            return statusCode
+            
+        case let .failure(error):
+            debugPrint(error.localizedDescription)
+                
+            // Imprimir el cuerpo de la respuesta en caso de error
+            if let data = response.data {
+                let errorResponse = String(decoding: data, as: UTF8.self)
+                print("\(errorResponse)")
+            }
+            
+            return statusCode
+        }
+    }
+    
     // Función para obtener el ID Token de Firebase usando async/await
-        private func obtenerIDToken() async -> String? {
-            return await withCheckedContinuation { continuation in
-                // Obtener el ID Token del usuario actual
-                Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-                    if let error = error {
-                        print("Error al obtener el ID Token: \(error.localizedDescription)")
-                        continuation.resume(returning: nil)
-                    } else if let idToken = idToken {
-                        continuation.resume(returning: idToken)
-                    } else {
-                        continuation.resume(returning: nil)
-                    }
+    private func obtenerIDToken() async -> String? {
+        return await withCheckedContinuation { continuation in
+            // Obtener el ID Token del usuario actual
+            Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+                if let error = error {
+                    print("Error al obtener el ID Token: \(error.localizedDescription)")
+                    continuation.resume(returning: nil)
+                } else if let idToken = idToken {
+                    continuation.resume(returning: idToken)
+                } else {
+                    continuation.resume(returning: nil)
                 }
             }
         }
+    }
     
     
     func obtenerEmailDesdeBackend(username: String, URLUsername: URL) async throws -> String? {

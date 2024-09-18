@@ -11,12 +11,11 @@ import Foundation
 protocol SessionAPIProtocol {
     
     func registrarUsuario(UserDatos: UserNuevo) async -> Int?
-        
     func probarToken() async -> Response?
-    
-    func GoogleLogin() async -> Int?
-    
     func iniciarSesion(UserDatos: User) async -> Int?
+    func checarPerfilBackend() async -> Bool
+    func completarPerfil(UserDatos: UserExterno) async -> Int?
+    func GoogleLogin() async -> Int?
 }
 
 // Crear nuestra clase PokemonRespository y heredar de nuestro protocolo PokemonAPIProtocol
@@ -34,7 +33,7 @@ class SessionRepository: SessionAPIProtocol {
         }
     
     func registrarUsuario(UserDatos: UserNuevo) async -> Int? {
-        return await sessionService.registrarUsuario(url: URL(string:"\(Api.base)\(Api.routes.session)/registrarUsuario")!, UserDatos: UserDatos, urlStatus: URL(string:"\(Api.base)\(Api.routes.status)")!)
+        return await sessionService.registrarUsuario(url: URL(string:"\(Api.base)\(Api.routes.session)/registrarUsuario")!, UserDatos: UserDatos)
     }
     
     func probarToken() async -> Response? {
@@ -47,7 +46,16 @@ class SessionRepository: SessionAPIProtocol {
         return await sessionService.iniciarSesion(UserDatos: UserDatos, URLUsername: URL(string:"\(Api.base)\(Api.routes.session)/getUserEmail")!)
     }
     
+    func checarPerfilBackend() async -> Bool {
+        return await sessionService.checarPerfilBackend(url: URL(string:"\(Api.base)\(Api.routes.session)/perfilCompleto")!)
+    }
+    
+    func completarPerfil(UserDatos: UserExterno) async -> Int? {
+        return await sessionService.completarPerfil(url: URL(string:"\(Api.base)\(Api.routes.session)/registrarUsuario")!, UserDatos: UserDatos)
+    }
+    
     func GoogleLogin() async -> Int? {
         return await sessionService.GoogleLogin(url: URL(string:"\(Api.base)\(Api.routes.session)/registrarUsuario")!)
     }
+
 }
