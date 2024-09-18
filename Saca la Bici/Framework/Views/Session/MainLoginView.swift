@@ -77,42 +77,24 @@ struct MainLoginView: View {
                                 .frame(maxWidth: .infinity)
                             
                             VStack {
-                                Button(action: {
-                                    // Acción de autenticación con Google
-                                }) {
-                                    HStack(alignment: .center, spacing: 15.0) {
-                                        Image("GoogleLogo")
-                                            .resizable()
-                                            .frame(width: 20.0, height: 20.0)
-                                        Text("Registrarse con Google")
-                                            .font(.subheadline)
-                                            .foregroundColor(.black)
-                                    }
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(Color.gray.opacity(0.2))
-                                    .cornerRadius(10)
-                                }
-                                .buttonStyle(PlainButtonStyle())
+                                ExternalLoginButton(
+                                    action: {
+                                        await signUpViewModel.GoogleLogin()
+                                        // El listener se encarga del menu
+                                    },
+                                    buttonText: "Registrarse con Google",
+                                    imageName: "GoogleLogo",
+                                    systemImage: false
+                                )
                                 
-                                Button(action: {
-                                    // Acción de autenticación con Apple
-                                }) {
-                                    HStack(alignment: .center, spacing: 15.0) {
-                                        Image(systemName: "apple.logo")
-                                            .resizable()
-                                            .frame(width: 20.0, height: 25.0)
-                                            .foregroundColor(.black)
-                                        Text("Registrarse con Apple")
-                                            .font(.subheadline)
-                                            .foregroundColor(.black)
-                                    }
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(Color.gray.opacity(0.2))
-                                    .cornerRadius(10)
-                                }
-                                .buttonStyle(PlainButtonStyle())
+                                ExternalLoginButton(
+                                    action: {
+                                        // Acción de autenticación con Apple
+                                    },
+                                    buttonText: "Registrarse con Apple",
+                                    imageName: "apple.logo",
+                                    systemImage: true
+                                )
                             }
                             
                             Spacer().frame(height: 10)
@@ -131,8 +113,8 @@ struct MainLoginView: View {
                 VStack {
                     Spacer()
                     
-                    RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 500)
+                    RoundedRectangle(cornerRadius: 25.0)
+                        .frame(maxWidth: .infinity, maxHeight: 500)
                         .foregroundColor(Color(red: 0.961, green: 0.802, blue: 0.048))
                 }.zIndex(2)
                 
@@ -140,7 +122,7 @@ struct MainLoginView: View {
                     Spacer()
                     
                     Rectangle()
-                        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 25)
+                        .frame(maxWidth: .infinity, maxHeight: 25)
                         .foregroundColor(Color(red: 0.961, green: 0.802, blue: 0.048))
                 }.zIndex(1)
             }

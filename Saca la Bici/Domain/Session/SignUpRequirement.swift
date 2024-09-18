@@ -12,6 +12,7 @@ protocol SignUpRequirementProtocol {
     func registrarUsuario(UserDatos: UserNuevo) async -> Int?
     func checarPerfilBackend() async -> Bool
     func completarPerfil(UserDatos: UserExterno) async -> Int?
+    func GoogleLogin() async -> Int?
 }
 
 class SignUpRequirement : SignUpRequirementProtocol {
@@ -37,6 +38,10 @@ class SignUpRequirement : SignUpRequirementProtocol {
     
     func completarPerfil(UserDatos: UserExterno) async -> Int? {
         return await sessionRepository.completarPerfil(UserDatos: UserDatos)
+    }
+    
+    func GoogleLogin() async -> Int? {
+        return await sessionRepository.GoogleLogin()
     }
     
 }
