@@ -67,11 +67,10 @@ class LoginViewModel: ObservableObject {
         if (responseStatus == 500) {
             self.messageAlert = "Error al iniciar sesión con Google. Favor intentar de nuevo"
             self.showAlert = true
-        // No mostrar error si se cancelo. 
+            // No mostrar error si se cancelo.
         } else if (responseStatus == -1) {
             self.showAlert = false
         }
-            
     }
     
    

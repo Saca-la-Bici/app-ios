@@ -48,6 +48,7 @@
 		25C302C42C9A9515005AD742 /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C32C9A9515005AD742 /* PasswordField.swift */; };
 		25C302C62C9A9780005AD742 /* EmailField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C52C9A9780005AD742 /* EmailField.swift */; };
 		25C302C82C9A9E7C005AD742 /* CompletarDatosStep2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */; };
+		25C302CA2C9AAF9A005AD742 /* ExternalLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C92C9AAF9A005AD742 /* ExternalLoginButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		25C302C32C9A9515005AD742 /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
 		25C302C52C9A9780005AD742 /* EmailField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailField.swift; sourceTree = "<group>"; };
 		25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletarDatosStep2View.swift; sourceTree = "<group>"; };
+		25C302C92C9AAF9A005AD742 /* ExternalLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalLoginButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,6 +332,7 @@
 				25C302C12C9A9390005AD742 /* TelefonoEmergenciaField.swift */,
 				25C302C32C9A9515005AD742 /* PasswordField.swift */,
 				25C302C52C9A9780005AD742 /* EmailField.swift */,
+				25C302C92C9AAF9A005AD742 /* ExternalLoginButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -495,6 +498,7 @@
 				252B64EB2C99FE7200A362C5 /* User.swift in Sources */,
 				252B64ED2C99FE7200A362C5 /* APIRoutes.swift in Sources */,
 				252B64EE2C99FE7200A362C5 /* SessionAPIService.swift in Sources */,
+				25C302CA2C9AAF9A005AD742 /* ExternalLoginButton.swift in Sources */,
 				252B64EF2C99FE7200A362C5 /* SessionRepository.swift in Sources */,
 				252B64D52C99FE5900A362C5 /* SignUpStep3View.swift in Sources */,
 				252B64D62C99FE5900A362C5 /* MenuTabs.swift in Sources */,

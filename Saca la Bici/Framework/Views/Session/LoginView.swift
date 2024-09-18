@@ -71,27 +71,15 @@ struct LoginView: View {
                         .foregroundColor(Color.gray)
                         .frame(maxWidth: .infinity)
                     
-                    Button(action: {
-                        Task {
+                    ExternalLoginButton(
+                        action: {
                             await loginViewModel.GoogleLogin()
                             // El listener se encarga del menu
-                        }
-                    }) {
-                        HStack(alignment: .center, spacing: 15.0) {
-                            Image("GoogleLogo")
-                                .resizable()
-                                .frame(width: 20.0, height: 20.0)
-                            Text("Continuar con Google")
-                                .font(.subheadline)
-                                .foregroundColor(Color.primary)
-                            
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(10)
-                    }
-                    .buttonStyle(PlainButtonStyle())
+                        },
+                        buttonText: "Continuar con Google",
+                        imageName: "GoogleLogo",
+                        systemImage: false 
+                    )
                     
                     Spacer()
                 }
