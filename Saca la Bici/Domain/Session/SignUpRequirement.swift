@@ -10,7 +10,7 @@ import Foundation
 // Creas el protocolo de la historia de usuario
 protocol SignUpRequirementProtocol {
     func registrarUsuario(UserDatos: UserNuevo) async -> Int?
-    func checarPerfilBackend() async -> Bool
+    func checarPerfilBackend() async throws -> Response
     func completarPerfil(UserDatos: UserExterno) async -> Int?
     func GoogleLogin() async -> Int?
 }
@@ -32,8 +32,8 @@ class SignUpRequirement : SignUpRequirementProtocol {
         return await sessionRepository.registrarUsuario(UserDatos: UserDatos)
     }
     
-    func checarPerfilBackend() async -> Bool {
-        return await sessionRepository.checarPerfilBackend()
+    func checarPerfilBackend() async throws -> Response {
+        return try await sessionRepository.checarPerfilBackend()
     }
     
     func completarPerfil(UserDatos: UserExterno) async -> Int? {
