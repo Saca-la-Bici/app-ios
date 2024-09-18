@@ -37,18 +37,7 @@ struct CompletarDatosStep1View: View {
                         Spacer().frame(height: 30)
                         
                         // Título
-                        HStack(alignment: .center, spacing: 15) {
-                            Text("Completar Registro")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                            Text("_")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundColor(Color(red: 0.961, green: 0.802, blue: 0.048))
-                            Image("Bici")
-                                .resizable()
-                                .frame(width: 40, height: 24)
-                        }
+                        TituloComponent(title: "Completar Registro", separator: "_", imageName: "Bici", separatorBool: true)
                         
                         Spacer().frame(height: 30)
                         

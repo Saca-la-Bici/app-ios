@@ -36,14 +36,7 @@ struct SignUpStep1View: View {
                     Spacer().frame(height: 30)
                     
                     // Título
-                    HStack(alignment: .center, spacing: 15) {
-                        Text("Crear cuenta")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Image("Bici")
-                            .resizable()
-                            .frame(width: 40, height: 24)
-                    }
+                    TituloComponent(title: "Crear cuenta", imageName: "Bici", separatorBool: false)
                     
                     Spacer().frame(height: 50)
                     

@@ -34,18 +34,7 @@ struct CompletarDatosStep2View: View {
                 VStack(alignment: .leading, spacing: 20) {
                     
                     // Título
-                    HStack(alignment: .center, spacing: 15) {
-                        Text("Completar Registro")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Text("__")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(Color(red: 0.961, green: 0.802, blue: 0.048))
-                        Image("Bici")
-                            .resizable()
-                            .frame(width: 40, height: 24)
-                    }
+                    TituloComponent(title: "Completar Registro", separator: "__", imageName: "Bici", separatorBool: true)
                     
                     Spacer().frame(height: 30)
                     

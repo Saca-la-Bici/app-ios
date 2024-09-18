@@ -53,29 +53,19 @@ struct MainLoginView: View {
                         
                         VStack {
                             // Botón para crear cuenta
-                            NavigationLink("Crea una cuenta", value: "register")
-                                .font(.headline)
-                                .bold()
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .foregroundColor(.white)
-                                .background(Color(red: 0.961, green: 0.802, blue: 0.048))
-                                .cornerRadius(10)
-                                .buttonStyle(PlainButtonStyle())
+                            MainViewButton(title: "Iniciar sesión",
+                                           pathValue: "login",
+                                             foregroundColor: .black,
+                                             backgroundColor: .white,
+                                             hasOverlay: true,
+                                             path: $path)
                             
-                            // Botón para iniciar sesión
-                            NavigationLink("Iniciar sesión", value: "login")
-                                .font(.subheadline)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .foregroundColor(.black)
-                                .background(Color.white)
-                                .cornerRadius(10)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.gray, lineWidth: 1)
-                                )
-                                .buttonStyle(PlainButtonStyle())
+                            MainViewButton(title: "Crea una cuenta",
+                                             pathValue: "register",
+                                             foregroundColor: .white,
+                                             backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
+                                             hasOverlay: false,
+                                             path: $path)
                         }
                         
                         Spacer().frame(height: 10)
