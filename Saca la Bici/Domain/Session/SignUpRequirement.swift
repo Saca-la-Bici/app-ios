@@ -10,6 +10,8 @@ import Foundation
 // Creas el protocolo de la historia de usuario
 protocol SignUpRequirementProtocol {
     func registrarUsuario(UserDatos: UserNuevo) async -> Int?
+    func checarPerfilBackend() async -> Bool
+    func completarPerfil(UserDatos: UserExterno) async -> Int?
 }
 
 class SignUpRequirement : SignUpRequirementProtocol {
@@ -27,6 +29,14 @@ class SignUpRequirement : SignUpRequirementProtocol {
     
     func registrarUsuario(UserDatos: UserNuevo) async -> Int? {
         return await sessionRepository.registrarUsuario(UserDatos: UserDatos)
+    }
+    
+    func checarPerfilBackend() async -> Bool {
+        return await sessionRepository.checarPerfilBackend()
+    }
+    
+    func completarPerfil(UserDatos: UserExterno) async -> Int? {
+        return await sessionRepository.completarPerfil(UserDatos: UserDatos)
     }
     
 }

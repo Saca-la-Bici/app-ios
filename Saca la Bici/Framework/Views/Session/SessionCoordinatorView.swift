@@ -7,14 +7,17 @@
 
 import SwiftUI
 
-// Main view to manage navigation flow on different presentations mode
 struct SessionCoordinatorView: View {
     @EnvironmentObject var sessionManager: SessionManager
 
     var body: some View {
         if sessionManager.isAuthenticated {
-            NavigationStack {
-                MenuView()
+            if sessionManager.isProfileComplete {
+                NavigationStack {
+                    MenuView()
+                }
+            } else {
+                CompletarDatosStep1View()
             }
         } else {
             MainLoginView()

@@ -37,13 +37,25 @@ class SignUpViewModel: ObservableObject {
     @Published var messageAlert = ""
     @Published var showAlert = false
     
-    // Llamas el requerimiento de user con sus funciones
+    // Closure que se llamará al completar el perfil
+    var onProfileComplete: (() -> Void)?
+    
     var signUpRequirement: SignUpRequirementProtocol
-        
+    
     init(signUpRequirement: SignUpRequirementProtocol = SignUpRequirement.shared) {
         self.signUpRequirement = signUpRequirement
     }
     
+    func obtenerNumeroDelMes() -> Int {
+        if let indice = months.firstIndex(of: selectedMonth) {
+            return indice + 1
+        } else {
+            print("Mes no encontrado en el array.")
+            return 0
+        }
+    }
+    
+    @MainActor
     func validarDatosStep1() {
         if self.email.isEmpty || self.username.isEmpty {
             self.messageAlert = "Correo o username vacío. Favor de intentar de nuevo."
@@ -52,9 +64,10 @@ class SignUpViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func validarDatosStep2() {
-        if (self.countryCode.isEmpty || self.phoneNumber.isEmpty || self.selectedBloodType == "Selecciona tu tipo de sangre") {
-            self.messageAlert = "Tipo de sangre o número de emergencia vacío. Favor de intentar de nuevo."
+        if (self.countryCode.isEmpty || self.phoneNumber.isEmpty || self.selectedBloodType == "Selecciona tu tipo de sangre" || self.nombreCompleto.isEmpty) {
+            self.messageAlert = "Falta de llenar algún dato. Favor de intentar de nuevo."
             self.showAlert = true
             return
         }
@@ -74,14 +87,53 @@ class SignUpViewModel: ObservableObject {
             return
         }
         
+        let numeroMes = obtenerNumeroDelMes()
+        let fechaNacimiento = "\(selectedYear)-\(numeroMes)-\(selectedDay)"
+        
         let numeroEmergencia = "+" + self.countryCode + self.phoneNumber
         
-        let usuarioNuevo = UserNuevo(username: self.username, password: self.confirmPassword, nombre: nombreCompleto, email: self.email, tipoSangre: self.selectedBloodType, numeroEmergencia: numeroEmergencia)
+        let usuarioNuevo = UserNuevo(username: self.username, password: self.confirmPassword, nombre: nombreCompleto, email: self.email, fechaNacimiento: fechaNacimiento, tipoSangre: self.selectedBloodType, numeroEmergencia: numeroEmergencia)
         
         let responseCode = await self.signUpRequirement.registrarUsuario(UserDatos: usuarioNuevo)
         
         if (responseCode != 201){
             self.messageAlert = "Hubo un error al registrar al usuario."
+            self.showAlert = true
+        }
+    }
+    
+    @MainActor
+    func validarCompletarDatos1() {
+        if (self.username.isEmpty) {
+            self.messageAlert = "El username se encuentra vacío. Favor de intentar de nuevo."
+            self.showAlert = true
+            return
+        }
+    }
+    
+    @MainActor
+    func completarRegistro() async {
+        
+        if (self.countryCode.isEmpty || self.phoneNumber.isEmpty || self.selectedBloodType == "Selecciona tu tipo de sangre") {
+            self.messageAlert = "Falta de llenar algún dato. Favor de intentar de nuevo."
+            self.showAlert = true
+            return
+        }
+        
+        let numeroMes = obtenerNumeroDelMes()
+        let fechaNacimiento = "\(selectedYear)-\(numeroMes)-\(selectedDay)"
+        
+        let numeroEmergencia = "+" + self.countryCode + self.phoneNumber
+        
+        let usuarioNuevo = UserExterno(username: self.username, fechaNacimiento: fechaNacimiento, tipoSangre: self.selectedBloodType, numeroEmergencia: numeroEmergencia)
+        
+        let responseCode = await self.signUpRequirement.completarPerfil(UserDatos: usuarioNuevo)
+        
+        if (responseCode == 200 || responseCode == 201){
+            // Llamar al closure para notificar el éxito
+            self.onProfileComplete?()
+        } else {
+            self.messageAlert = "Hubo un error al completar el registro."
             self.showAlert = true
         }
     }

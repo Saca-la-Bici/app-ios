@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 struct SignUpStep2View: View {
     
@@ -49,94 +48,39 @@ struct SignUpStep2View: View {
                             
                             Spacer().frame(height: 20)
                             
-                            Text("Tipo de Sangre")
-                                .font(.caption)
-                            Picker("Tipo de sangre", selection: $signUpViewModel.selectedBloodType) {
-                                ForEach(signUpViewModel.bloodTypes, id: \.self) {
-                                    Text($0)
-                                        .foregroundColor(Color(red: 123/255, green: 163/255, blue: 139/255))
-                                }
-                            }
-                            .pickerStyle(WheelPickerStyle())
-                            .frame(maxWidth: .infinity, maxHeight: 130)
-                            .cornerRadius(10)
-                            .padding(.top, -20)
+                            TipoSangrePicker(
+                                selectedBloodType: $signUpViewModel.selectedBloodType,
+                                bloodTypes: signUpViewModel.bloodTypes
+                            )
                             
-                            Text("Número de Emergencia")
-                                .font(.caption)
-                            HStack {
-                                Text("+")
-                                    .font(.title2)
-                                    .padding(.leading, 10)
-
-                                TextField("País", text: $signUpViewModel.countryCode)
-                                    .keyboardType(.numberPad)
-                                    .frame(width: 60)
-                                    .padding()
-                                    .cornerRadius(10)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(Color.gray, lineWidth: 1)
-                                    )
-                                    .onReceive(Just(signUpViewModel.countryCode)) { _ in
-                                        if signUpViewModel.countryCode.count > 3 {
-                                            signUpViewModel.countryCode = String(signUpViewModel.countryCode.prefix(3))
-                                        }
-                                    }
-                                
-                                TextField("Teléfono", text: $signUpViewModel.phoneNumber)
-                                    .keyboardType(.numberPad)
-                                    .padding()
-                                    .cornerRadius(10)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(Color.gray, lineWidth: 1)
-                                    )
-                                    .onReceive(Just(signUpViewModel.phoneNumber)) { _ in
-                                        if signUpViewModel.phoneNumber.count > 12 {
-                                            signUpViewModel.phoneNumber = String(signUpViewModel.phoneNumber.prefix(12))
-                                        }
-                                    }
-                            }
+                            TelefonoEmergenciaField(
+                                countryCode: $signUpViewModel.countryCode,
+                                phoneNumber: $signUpViewModel.phoneNumber
+                            )
                             
                             Spacer().frame(height: 30)
                             
-                            
-                            Text("Nombre Completo")
-                                .font(.caption)
-                            TextField("Escribe tu nombre Completo", text: $signUpViewModel.nombreCompleto)
-                                .padding()
-                                .cornerRadius(10)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.gray, lineWidth: 1)
-                                )
-                                .onReceive(Just(signUpViewModel.nombreCompleto)) { _ in
-                                    if signUpViewModel.nombreCompleto.count > 40 {
-                                        signUpViewModel.nombreCompleto = String(signUpViewModel.nombreCompleto.prefix(40))
-                                    }
-                                }
+                            TextoLimiteField(
+                                label: "Nombre Completo",
+                                placeholder: "Escribe tu nombre Completo...",
+                                text: $signUpViewModel.nombreCompleto,
+                                maxLength: 40,
+                                title: false
+                            )
                         }
                         
                         Spacer().frame(height: 30)
                         
-                        Button {
-                            signUpViewModel.validarDatosStep2()
-                            if !signUpViewModel.showAlert {
-                                path.append("finalizar")
+                        CustomButton(
+                            text: "Continuar",
+                            backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
+                            action: {
+                                signUpViewModel.validarDatosStep2()
+                                if !signUpViewModel.showAlert {
+                                    path.append("finalizar")
+                                }
                             }
-                        } label: {
-                            Text("Continuar")
-                                .font(.subheadline)
-                                .bold()
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .foregroundColor(.black)
-                                .background(Color(red: 0.961, green: 0.802, blue: 0.048))
-                                .cornerRadius(10)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        
+                        )
                     }
                     
                     Spacer()

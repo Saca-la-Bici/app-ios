@@ -37,93 +37,33 @@ struct SignUpStep3View: View {
                     
                     // Formulario
                     VStack(alignment: .leading,spacing: 20) {
-                
-                        VStack(alignment: .leading) {
-                            Text("Contraseña")
-                                .font(.caption)
-                            ZStack {
-                                if signUpViewModel.isPasswordVisible {
-                                    TextField("Contraseña", text: $signUpViewModel.password)
-                                        .textInputAutocapitalization(.never)
-                                } else {
-                                    SecureField("Contraseña", text: $signUpViewModel.password)
-                                        .textInputAutocapitalization(.never)
-                                }
-                            }
-                            .padding()
-                            .cornerRadius(10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.gray, lineWidth: 1)
-                            )
-                            .overlay(
-                                HStack {
-                                    Spacer()
-                                    Button(action: {
-                                        signUpViewModel.isPasswordVisible.toggle()
-                                    }) {
-                                        Image(systemName: signUpViewModel.isPasswordVisible ? "eye.slash" : "eye")
-                                            .foregroundColor(.gray)
-                                            .padding()
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                }
-                            )
-                            
-                            Spacer().frame(height: 20)
-                            
-                            Text("Confirmar contraseña")
-                                .font(.caption)
-                            ZStack {
-                                if signUpViewModel.isConfirmVisible {
-                                    TextField("Contraseña", text: $signUpViewModel.confirmPassword)
-                                        .textInputAutocapitalization(.never)
-                                } else {
-                                    SecureField("Contraseña", text: $signUpViewModel.confirmPassword)
-                                        .textInputAutocapitalization(.never)
-                                }
-                            }
-                                .padding()
-                                .cornerRadius(10)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.gray, lineWidth: 1)
-                                )
-                                .overlay(
-                                    HStack {
-                                        Spacer()
-                                        Button(action: {
-                                            signUpViewModel.isConfirmVisible.toggle()
-                                        }) {
-                                            Image(systemName: signUpViewModel.isConfirmVisible ? "eye.slash" : "eye")
-                                                .foregroundColor(.gray)
-                                                .padding()
-                                        }
-                                        .buttonStyle(PlainButtonStyle())
-                                    }
-                                )
-                        }
+                        
+                        PasswordField(
+                            password: $signUpViewModel.password,
+                            isPasswordVisible: $signUpViewModel.isPasswordVisible,
+                            text: "Contraseña"
+                        )
+                        
+                        Spacer().frame(height: 20)
+                        
+                        PasswordField(
+                            password: $signUpViewModel.confirmPassword,
+                            isPasswordVisible: $signUpViewModel.isConfirmVisible,
+                            text: "Confirmar Contraseña"
+                        )
                         
                         Spacer().frame(height: 30)
                         
-                        Button {
-                            Task {
-                                await signUpViewModel.registrarUsuario()
-                               // El listener se encarga automaticamente
+                        CustomButton(
+                            text: "Continuar",
+                            backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
+                            action: {
+                                Task {
+                                    await signUpViewModel.registrarUsuario()
+                                   // El listener se encarga automaticamente
+                                }
                             }
-                             
-                        } label: {
-                            Text("Continuar")
-                                .font(.subheadline)
-                                .bold()
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .foregroundColor(.black)
-                                .background(Color(red: 0.961, green: 0.802, blue: 0.048))
-                                .cornerRadius(10)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        
+                        )
                     }
                     
                     Spacer()
@@ -141,4 +81,3 @@ struct SignUpStep3View: View {
         }
     }
 }
-

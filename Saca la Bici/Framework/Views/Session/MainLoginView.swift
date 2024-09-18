@@ -18,7 +18,7 @@ struct MainLoginView: View {
     @StateObject var signUpViewModel = SignUpViewModel()
 
     var body: some View {
-        NavigationStack(path: $path) { // Cambiamos a NavigationStack
+        NavigationStack(path: $path) { 
             ZStack {
                 Group {
                     VStack(alignment: .center) {
@@ -84,7 +84,7 @@ struct MainLoginView: View {
                                         Image("GoogleLogo")
                                             .resizable()
                                             .frame(width: 20.0, height: 20.0)
-                                        Text("Continuar con Google")
+                                        Text("Registrarse con Google")
                                             .font(.subheadline)
                                             .foregroundColor(.black)
                                     }
@@ -103,7 +103,7 @@ struct MainLoginView: View {
                                             .resizable()
                                             .frame(width: 20.0, height: 25.0)
                                             .foregroundColor(.black)
-                                        Text("Continuar con Apple ID")
+                                        Text("Registrarse con Apple")
                                             .font(.subheadline)
                                             .foregroundColor(.black)
                                     }

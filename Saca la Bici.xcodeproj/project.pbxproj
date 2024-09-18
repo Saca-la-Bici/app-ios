@@ -39,6 +39,15 @@
 		252B65012C9A280800A362C5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 252B65002C9A280800A362C5 /* GoogleService-Info.plist */; };
 		252B65022C9A280800A362C5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 252B65002C9A280800A362C5 /* GoogleService-Info.plist */; };
 		252B65032C9A280800A362C5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 252B65002C9A280800A362C5 /* GoogleService-Info.plist */; };
+		252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */; };
+		25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302B92C9A8C99005AD742 /* CustomButton.swift */; };
+		25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */; };
+		25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */; };
+		25C302C02C9A91A3005AD742 /* TextoLimiteField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BF2C9A91A3005AD742 /* TextoLimiteField.swift */; };
+		25C302C22C9A9390005AD742 /* TelefonoEmergenciaField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C12C9A9390005AD742 /* TelefonoEmergenciaField.swift */; };
+		25C302C42C9A9515005AD742 /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C32C9A9515005AD742 /* PasswordField.swift */; };
+		25C302C62C9A9780005AD742 /* EmailField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C52C9A9780005AD742 /* EmailField.swift */; };
+		25C302C82C9A9E7C005AD742 /* CompletarDatosStep2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +97,15 @@
 		252B64E82C99FE7200A362C5 /* SessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRepository.swift; sourceTree = "<group>"; };
 		252B65002C9A280800A362C5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		252B65042C9A297700A362C5 /* Saca-la-Bici-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Saca-la-Bici-Info.plist"; sourceTree = SOURCE_ROOT; };
+		252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletarDatosStep1View.swift; sourceTree = "<group>"; };
+		25C302B92C9A8C99005AD742 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FechaNacimientoPicker.swift; sourceTree = "<group>"; };
+		25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipoSangrePicker.swift; sourceTree = "<group>"; };
+		25C302BF2C9A91A3005AD742 /* TextoLimiteField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextoLimiteField.swift; sourceTree = "<group>"; };
+		25C302C12C9A9390005AD742 /* TelefonoEmergenciaField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelefonoEmergenciaField.swift; sourceTree = "<group>"; };
+		25C302C32C9A9515005AD742 /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
+		25C302C52C9A9780005AD742 /* EmailField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailField.swift; sourceTree = "<group>"; };
+		25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletarDatosStep2View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,9 +253,9 @@
 		252B64E72C99FE7200A362C5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				252B64E22C99FE7200A362C5 /* APIRoutes.swift */,
-				252B64E32C99FE7200A362C5 /* User.swift */,
+				252B650D2C9A427D00A362C5 /* Objects */,
 				252B64E62C99FE7200A362C5 /* Network */,
+				252B650C2C9A426200A362C5 /* Repositories */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -246,7 +264,6 @@
 			isa = PBXGroup;
 			children = (
 				252B64E72C99FE7200A362C5 /* Models */,
-				252B64E82C99FE7200A362C5 /* SessionRepository.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -273,14 +290,48 @@
 		252B65052C9A37D600A362C5 /* Session */ = {
 			isa = PBXGroup;
 			children = (
+				25C302B82C9A8B95005AD742 /* Components */,
 				252B64CC2C99FE5900A362C5 /* MainLoginView.swift */,
 				252B64C52C99FE5900A362C5 /* LoginView.swift */,
 				252B64C92C99FE5900A362C5 /* SignUpStep1View.swift */,
 				252B64CA2C99FE5900A362C5 /* SignUpStep2View.swift */,
 				252B64CB2C99FE5900A362C5 /* SignUpStep3View.swift */,
 				252B64C72C99FE5900A362C5 /* SessionCoordinatorView.swift */,
+				252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */,
+				25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */,
 			);
 			path = Session;
+			sourceTree = "<group>";
+		};
+		252B650C2C9A426200A362C5 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				252B64E82C99FE7200A362C5 /* SessionRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		252B650D2C9A427D00A362C5 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				252B64E22C99FE7200A362C5 /* APIRoutes.swift */,
+				252B64E32C99FE7200A362C5 /* User.swift */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		25C302B82C9A8B95005AD742 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				25C302B92C9A8C99005AD742 /* CustomButton.swift */,
+				25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */,
+				25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */,
+				25C302BF2C9A91A3005AD742 /* TextoLimiteField.swift */,
+				25C302C12C9A9390005AD742 /* TelefonoEmergenciaField.swift */,
+				25C302C32C9A9515005AD742 /* PasswordField.swift */,
+				25C302C52C9A9780005AD742 /* EmailField.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -434,10 +485,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				252B64852C99FC5E00A362C5 /* Saca_la_BiciApp.swift in Sources */,
+				25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */,
 				252B64D12C99FE5900A362C5 /* SessionCoordinatorView.swift in Sources */,
 				252B64D22C99FE5900A362C5 /* UIApplicationExtensions.swift in Sources */,
 				252B64D32C99FE5900A362C5 /* SignUpStep1View.swift in Sources */,
 				252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */,
+				25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */,
+				25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */,
 				252B64EB2C99FE7200A362C5 /* User.swift in Sources */,
 				252B64ED2C99FE7200A362C5 /* APIRoutes.swift in Sources */,
 				252B64EE2C99FE7200A362C5 /* SessionAPIService.swift in Sources */,
@@ -445,11 +499,17 @@
 				252B64D52C99FE5900A362C5 /* SignUpStep3View.swift in Sources */,
 				252B64D62C99FE5900A362C5 /* MenuTabs.swift in Sources */,
 				252B64D72C99FE5900A362C5 /* ResultView.swift in Sources */,
+				25C302C22C9A9390005AD742 /* TelefonoEmergenciaField.swift in Sources */,
 				252B64D82C99FE5900A362C5 /* MainLoginView.swift in Sources */,
+				252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */,
 				252B64D92C99FE5900A362C5 /* SessionManager.swift in Sources */,
+				25C302C62C9A9780005AD742 /* EmailField.swift in Sources */,
+				25C302C42C9A9515005AD742 /* PasswordField.swift in Sources */,
 				252B64DA2C99FE5900A362C5 /* SignUpViewModel.swift in Sources */,
 				252B64DB2C99FE5900A362C5 /* LoginView.swift in Sources */,
+				25C302C82C9A9E7C005AD742 /* CompletarDatosStep2View.swift in Sources */,
 				252B64E02C99FE6F00A362C5 /* LoginRequirement.swift in Sources */,
+				25C302C02C9A91A3005AD742 /* TextoLimiteField.swift in Sources */,
 				252B64E12C99FE6F00A362C5 /* SignUpRequirement.swift in Sources */,
 				252B64DC2C99FE5900A362C5 /* LoginViewModel.swift in Sources */,
 			);
