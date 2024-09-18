@@ -11,6 +11,8 @@ import FirebaseAuth
 class SessionManager: ObservableObject {
     @Published var isAuthenticated: Bool = false
     @Published var isProfileComplete: Bool = false
+    @Published var isErrorLogin: Bool = false
+    @Published var errorMessage: String? = nil
 
     private var authStateListenerHandle: AuthStateDidChangeListenerHandle?
     
@@ -67,11 +69,41 @@ class SessionManager: ObservableObject {
         }
     }
     
-    private func checkProfileCompleteness() {
+    func checkProfileCompleteness() {
         Task {
-            let isComplete = await signUpRequirement.checarPerfilBackend()
-            DispatchQueue.main.async {
-                self.isProfileComplete = isComplete
+            do {
+                let response = try await signUpRequirement.checarPerfilBackend()
+                
+                if response.StatusCode == 500 {
+                    DispatchQueue.main.async {
+                        self.isErrorLogin = true
+                        self.errorMessage = "Hubo un error interno en el servidor. Inténtalo más tarde."
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.isProfileComplete = response.perfilRegistrado!
+                        self.isErrorLogin = false
+                        self.errorMessage = nil
+                    }
+                }
+            } catch let urlError as URLError {
+                DispatchQueue.main.async {
+                    switch urlError.code {
+                    case .notConnectedToInternet:
+                        self.errorMessage = "No tienes conexión a Internet. Verifica tu conexión e intenta nuevamente."
+                        self.isErrorLogin = true
+                    case .timedOut:
+                        self.errorMessage = "La solicitud ha excedido el tiempo de espera. Inténtalo de nuevo más tarde."
+                        self.isErrorLogin = true
+                    default:
+                        self.errorMessage = "Hubo un error al iniciar sesión. Inténtelo más tarde."
+                        self.isErrorLogin = true
+                    }
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.errorMessage = "Hubo un error al iniciar sesión. Inténtelo más tarde."
+                }
             }
         }
     }

@@ -12,6 +12,7 @@ struct Response: Codable {
     var correoElectronico: String?
     var error: String?
     var perfilRegistrado: Bool?
+    var StatusCode: Int?
 }
 
 struct UserNuevo: Codable {

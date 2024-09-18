@@ -13,7 +13,7 @@ protocol SessionAPIProtocol {
     func registrarUsuario(UserDatos: UserNuevo) async -> Int?
     func probarToken() async -> Response?
     func iniciarSesion(UserDatos: User) async -> Int?
-    func checarPerfilBackend() async -> Bool
+    func checarPerfilBackend() async throws -> Response
     func completarPerfil(UserDatos: UserExterno) async -> Int?
     func GoogleLogin() async -> Int?
 }
@@ -46,8 +46,8 @@ class SessionRepository: SessionAPIProtocol {
         return await sessionService.iniciarSesion(UserDatos: UserDatos, URLUsername: URL(string:"\(Api.base)\(Api.routes.session)/getUserEmail")!)
     }
     
-    func checarPerfilBackend() async -> Bool {
-        return await sessionService.checarPerfilBackend(url: URL(string:"\(Api.base)\(Api.routes.session)/perfilCompleto")!)
+    func checarPerfilBackend() async throws -> Response {
+        return try await sessionService.checarPerfilBackend(url: URL(string:"\(Api.base)\(Api.routes.session)/perfilCompleto")!)
     }
     
     func completarPerfil(UserDatos: UserExterno) async -> Int? {

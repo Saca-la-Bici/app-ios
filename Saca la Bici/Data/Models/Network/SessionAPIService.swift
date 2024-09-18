@@ -154,12 +154,12 @@ class SessionAPIService {
             }
         }
     
-    func checarPerfilBackend(url: URL) async -> Bool {
-        // Obtener el ID Token usando async/await
+    func checarPerfilBackend(url: URL) async throws -> Response {
+        var emptyResponse = Response(StatusCode: 500)
+        
         guard let idToken = await obtenerIDToken() else {
-            print("No se pudo obtener el ID Token")
-            return false
-        }
+                throw URLError(.badServerResponse)
+            }
         
         // Prepara los headers con el token para enviar al backend
         let headers: HTTPHeaders = [
@@ -169,16 +169,20 @@ class SessionAPIService {
             
         let taskRequest = session.request(url, method: .get, headers: headers).validate()
         let response = await taskRequest.serializingData().response
+        
+        let statusCode = response.response?.statusCode
             
         switch response.result {
         case .success(let data):
             do {
                 // Intentar decodificar la respuesta JSON en un objeto Response
-                let response = try JSONDecoder().decode(Response.self, from: data)
+                var response = try JSONDecoder().decode(Response.self, from: data)
+                response.StatusCode = statusCode
                 
-                return response.perfilRegistrado!
+                return response
             } catch {
-                return false
+                emptyResponse.StatusCode = statusCode
+                return emptyResponse
             }
         case let .failure(error):
             debugPrint(error.localizedDescription)
@@ -188,8 +192,20 @@ class SessionAPIService {
                 let errorResponse = String(decoding: data, as: UTF8.self)
                 print("\(errorResponse)")
             }
-            return false
+            
+            if let afError = error.asAFError {
+                switch afError {
+                case .sessionTaskFailed(let urlError as URLError):
+                    // Re-throw para manejar específicamente en el SessionManager
+                    throw urlError
+                default:
+                    // Otros errores de Alamofire
+                    throw afError
+                }
+            } else {
+                throw error
             }
+        }
     }
     
     @MainActor
@@ -204,6 +220,9 @@ class SessionAPIService {
         let strongPresentingViewController = presentingViewController
 
         do {
+            // Matas la sesion antigua por cualquier cosa.
+            try Auth.auth().signOut()
+            
             // Iniciar el proceso de inicio de sesión con Google
             let signInResult = try await GIDSignIn.sharedInstance.signIn(withPresenting: strongPresentingViewController)
             
