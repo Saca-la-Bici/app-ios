@@ -13,10 +13,26 @@ struct SignUpStep1View: View {
     @ObservedObject var signUpViewModel = SignUpViewModel()
     
     var body: some View {
-        ScrollView {
-            ZStack {
+        ZStack {
+            VStack {
+                Spacer()
+                ImagenAmarillaFondo()
+                    .fill(Color.yellow)
+                    .frame(height: 200)
+                    .overlay(
+                        ImagenAmarillaFondo()
+                            .stroke(Color.black, lineWidth: 2)
+                            .offset(y: -10)
+                            .offset(x: 30)
+                    )
+                    .offset(y: 80)
+            }
+            .ignoresSafeArea()
+            .zIndex(1)
+            
+            // Contenido del formulario
+            ScrollView {
                 VStack(alignment: .leading) {
-                    
                     Spacer().frame(height: 30)
                     
                     // Título
@@ -27,18 +43,17 @@ struct SignUpStep1View: View {
                         Image("Bici")
                             .resizable()
                             .frame(width: 40, height: 24)
-                        
                     }
                     
                     Spacer().frame(height: 50)
                     
                     // Formulario
-                    VStack(alignment: .leading,spacing: 20) {
+                    VStack(alignment: .leading, spacing: 20) {
                         
                         // Correo electrónico
                         EmailField(email: $signUpViewModel.email,
-                            text: "Correo electrónico",
-                            placeholder: "Escribe tu correo electrónico...")
+                                   text: "Correo electrónico",
+                                   placeholder: "Escribe tu correo electrónico...")
                         
                         // Nombre de usuario
                         TextoLimiteField(
@@ -63,6 +78,7 @@ struct SignUpStep1View: View {
                         
                         Spacer().frame(height: 10)
                         
+                        // Botón de continuar
                         CustomButton(
                             text: "Continuar",
                             backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
@@ -78,9 +94,8 @@ struct SignUpStep1View: View {
                     Spacer()
                 }
                 .padding(30)
-                .frame(maxWidth: .infinity)
-                .zIndex(2)
             }
+            .zIndex(2)
             .alert(isPresented: $signUpViewModel.showAlert) {
                 Alert(
                     title: Text("Oops!"),

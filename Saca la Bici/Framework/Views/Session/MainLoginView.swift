@@ -18,118 +18,103 @@ struct MainLoginView: View {
     @StateObject var signUpViewModel = SignUpViewModel()
 
     var body: some View {
-        NavigationStack(path: $path) { 
+        NavigationStack(path: $path) {
             ZStack {
-                Group {
-                    VStack(alignment: .center) {
-                        
-                        Image("Logo_SacaLaBici")
-                            .resizable()
-                            .frame(width: 188.0, height: 147.0)
-                        
-                        Spacer().frame(height: 30)
-                        
-                        VStack(alignment: .center, spacing: 20) {
-                            VStack(alignment: .center, spacing: 10) {
-                                Text("¡Explora y disfruta Querétaro!")
-                                    .font(.headline)
-                                    .bold()
-                                    .foregroundColor(Color.black)
-                                
-                                Text("Es genial tenerte aquí.")
-                                    .font(.subheadline)
-                                    .fontWeight(.light)
-                                    .foregroundColor(Color.black)
-                            }
-                            
-                            VStack {
-                                // Sign in
-                                NavigationLink("Crea una cuenta", value: "register")
-                                    .font(.headline)
-                                    .bold()
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .foregroundColor(.white)
-                                    .background(Color(red: 0.961, green: 0.802, blue: 0.048))
-                                    .cornerRadius(10)
-                                    .buttonStyle(PlainButtonStyle())
-                                
-                                // Log in
-                                NavigationLink("Iniciar sesión", value: "login")
-                                    .font(.subheadline)
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                    .background(Color.white)
-                                    .cornerRadius(10)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(Color.gray, lineWidth: 1)
-                                    )
-                                    .buttonStyle(PlainButtonStyle())
-                            }
-                            
-                            Spacer().frame(height: 0)
-                            
-                            Text("o continúa con")
-                                .font(.footnote)
-                                .foregroundColor(Color.gray)
-                                .frame(maxWidth: .infinity)
-                            
-                            VStack {
-                                ExternalLoginButton(
-                                    action: {
-                                        await signUpViewModel.GoogleLogin()
-                                        // El listener se encarga del menu
-                                    },
-                                    buttonText: "Registrarse con Google",
-                                    imageName: "GoogleLogo",
-                                    systemImage: false
-                                )
-                                
-                                ExternalLoginButton(
-                                    action: {
-                                        // Acción de autenticación con Apple
-                                    },
-                                    buttonText: "Registrarse con Apple",
-                                    imageName: "apple.logo",
-                                    systemImage: true
-                                )
-                            }
-                            
-                            Spacer().frame(height: 10)
-                        }
-                        .padding(.horizontal, 30.0)
-                        .padding(.vertical, 20.0)
-                        .background(.white)
+                VStack {
+                    Spacer()
+                    Color(red: 0.961, green: 0.802, blue: 0.048)
+                        .frame(height: 430)
                         .cornerRadius(25)
-                        
-                        Spacer()
-                    }
-                    .padding(.horizontal, 20)
                 }
-                .zIndex(3)
+                .edgesIgnoringSafeArea(.bottom)
                 
-                VStack {
-                    Spacer()
+                VStack(alignment: .center) {
                     
-                    RoundedRectangle(cornerRadius: 25.0)
-                        .frame(maxWidth: .infinity, maxHeight: 500)
-                        .foregroundColor(Color(red: 0.961, green: 0.802, blue: 0.048))
-                }.zIndex(2)
-                
-                VStack {
-                    Spacer()
+                    // Imagen del logo
+                    Image("Logo_SacaLaBici")
+                        .resizable()
+                        .frame(width: 188.0, height: 147.0)
+                        .padding(.top, 10) 
                     
-                    Rectangle()
-                        .frame(maxWidth: .infinity, maxHeight: 25)
-                        .foregroundColor(Color(red: 0.961, green: 0.802, blue: 0.048))
-                }.zIndex(1)
+                    Spacer().frame(height: 30)
+                    
+                    VStack(alignment: .center, spacing: 20) {
+                        VStack(alignment: .center, spacing: 10) {
+                            Text("¡Explora y disfruta Querétaro!")
+                                .font(.headline)
+                                .bold()
+                                .foregroundColor(Color.black)
+                            
+                            Text("Es genial tenerte aquí.")
+                                .font(.subheadline)
+                                .fontWeight(.light)
+                                .foregroundColor(Color.black)
+                        }
+                        
+                        VStack {
+                            // Botón para crear cuenta
+                            NavigationLink("Crea una cuenta", value: "register")
+                                .font(.headline)
+                                .bold()
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .foregroundColor(.white)
+                                .background(Color(red: 0.961, green: 0.802, blue: 0.048))
+                                .cornerRadius(10)
+                                .buttonStyle(PlainButtonStyle())
+                            
+                            // Botón para iniciar sesión
+                            NavigationLink("Iniciar sesión", value: "login")
+                                .font(.subheadline)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .foregroundColor(.black)
+                                .background(Color.white)
+                                .cornerRadius(10)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.gray, lineWidth: 1)
+                                )
+                                .buttonStyle(PlainButtonStyle())
+                        }
+                        
+                        Spacer().frame(height: 10)
+                        
+                        Text("o continúa con")
+                            .font(.footnote)
+                            .foregroundColor(Color.gray)
+                            .frame(maxWidth: .infinity)
+                        
+                        // Botones para opciones de Google y Apple
+                        VStack {
+                            ExternalLoginButton(
+                                action: {
+                                    await signUpViewModel.GoogleLogin()
+                                },
+                                buttonText: "Registrarse con Google",
+                                imageName: "GoogleLogo",
+                                systemImage: false
+                            )
+                            
+                            ExternalLoginButton(
+                                action: {
+                                    // Acción de autenticación con Apple
+                                },
+                                buttonText: "Registrarse con Apple",
+                                imageName: "apple.logo",
+                                systemImage: true
+                            )
+                        }
+                    }
+                    .padding(.horizontal, 30.0)
+                    .padding(.vertical, 20.0)
+                    .background(.white)
+                    .cornerRadius(25)
+                }
+                .padding(.horizontal, 20)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(red: 0.925, green: 0.925, blue: 0.925))
-            
-            // Definimos las vistas para las rutas de navegación
             .navigationDestination(for: String.self) { value in
                 switch value {
                 case "login":

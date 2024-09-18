@@ -13,8 +13,24 @@ struct SignUpStep3View: View {
     @ObservedObject var signUpViewModel = SignUpViewModel()
     
     var body: some View {
-        ScrollView {
-            ZStack {
+        ZStack {
+            VStack {
+                Spacer()
+                ImagenAmarillaFondo()
+                    .fill(Color.yellow)
+                    .frame(height: 250)
+                    .overlay(
+                        ImagenAmarillaFondo()
+                            .stroke(Color.black, lineWidth: 2)
+                            .offset(y: -10)
+                            .offset(x: 30)
+                    )
+                    .offset(y: 50)
+            }
+            .ignoresSafeArea()
+            .zIndex(1)
+            
+            ScrollView {
                 VStack(alignment: .leading) {
                     
                     Spacer().frame(height: 30)
@@ -44,8 +60,6 @@ struct SignUpStep3View: View {
                             text: "Contraseña"
                         )
                         
-                        Spacer().frame(height: 20)
-                        
                         PasswordField(
                             password: $signUpViewModel.confirmPassword,
                             isPasswordVisible: $signUpViewModel.isConfirmVisible,
@@ -69,9 +83,8 @@ struct SignUpStep3View: View {
                     Spacer()
                 }
                 .padding(30)
-                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-                .zIndex(2)
             }
+            .zIndex(2)
             .alert(isPresented: $signUpViewModel.showAlert) {
                 Alert(
                     title: Text("Oops!"),

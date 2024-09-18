@@ -14,8 +14,25 @@ struct SignUpStep2View: View {
     @ObservedObject var signUpViewModel = SignUpViewModel()
     
     var body: some View {
-        ScrollView {
-            ZStack {
+        ZStack {
+            VStack {
+                Spacer()
+                ImagenAmarillaFondo()
+                    .fill(Color.yellow)
+                    .frame(height: 200)
+                    .overlay(
+                        ImagenAmarillaFondo()
+                            .stroke(Color.black, lineWidth: 2)
+                            .offset(y: -10)
+                            .offset(x: 30)
+                    )
+                    .offset(y: 80)
+            }
+            .ignoresSafeArea()
+            .zIndex(1)
+            
+            
+            ScrollView {
                 VStack(alignment: .leading) {
                     
                     Spacer().frame(height: 30)
@@ -82,13 +99,10 @@ struct SignUpStep2View: View {
                             }
                         )
                     }
-                    
-                    Spacer()
                 }
                 .padding(30)
-                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-                .zIndex(2)
             }
+            .zIndex(2)
             .alert(isPresented: $signUpViewModel.showAlert) {
                 Alert(
                     title: Text("Oops!"),
