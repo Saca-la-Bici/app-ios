@@ -23,7 +23,7 @@ struct ExternalLoginButton: View {
                 if systemImage == true {
                     Image(systemName: imageName)
                         .resizable()
-                        .frame(width: 20.0, height: 25.0)
+                        .frame(width: 16.0, height: 20.0)
                         .foregroundColor(.black)
                 } else {
                     Image(imageName)
