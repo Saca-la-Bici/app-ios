@@ -35,13 +35,7 @@ struct LoginView: View {
                     Spacer().frame(height: 30)
                     
                     // Título
-                    HStack(alignment: .center, spacing: 15) {
-                        Text("Inicia Sesión")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Image(systemName: "bicycle")
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    TituloComponent(title: "Inicia Sesión", imageName: "Bici", separatorBool: false)
                     
                     Spacer().frame(height: 50)
                     

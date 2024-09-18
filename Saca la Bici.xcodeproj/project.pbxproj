@@ -50,6 +50,8 @@
 		25C302C82C9A9E7C005AD742 /* CompletarDatosStep2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */; };
 		25C302CA2C9AAF9A005AD742 /* ExternalLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C92C9AAF9A005AD742 /* ExternalLoginButton.swift */; };
 		25F3681B2C9B62CD003322CF /* ImagenAmarillaFondo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3681A2C9B62CD003322CF /* ImagenAmarillaFondo.swift */; };
+		25F3681D2C9B7B49003322CF /* TituloComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3681C2C9B7B49003322CF /* TituloComponent.swift */; };
+		25F3681F2C9B8032003322CF /* MainViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3681E2C9B8032003322CF /* MainViewButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +112,8 @@
 		25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletarDatosStep2View.swift; sourceTree = "<group>"; };
 		25C302C92C9AAF9A005AD742 /* ExternalLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalLoginButton.swift; sourceTree = "<group>"; };
 		25F3681A2C9B62CD003322CF /* ImagenAmarillaFondo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagenAmarillaFondo.swift; sourceTree = "<group>"; };
+		25F3681C2C9B7B49003322CF /* TituloComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TituloComponent.swift; sourceTree = "<group>"; };
+		25F3681E2C9B8032003322CF /* MainViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,6 +332,7 @@
 			isa = PBXGroup;
 			children = (
 				25C302B92C9A8C99005AD742 /* CustomButton.swift */,
+				25F3681E2C9B8032003322CF /* MainViewButton.swift */,
 				25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */,
 				25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */,
 				25C302BF2C9A91A3005AD742 /* TextoLimiteField.swift */,
@@ -336,6 +341,7 @@
 				25C302C52C9A9780005AD742 /* EmailField.swift */,
 				25C302C92C9AAF9A005AD742 /* ExternalLoginButton.swift */,
 				25F3681A2C9B62CD003322CF /* ImagenAmarillaFondo.swift */,
+				25F3681C2C9B7B49003322CF /* TituloComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -497,9 +503,11 @@
 				252B64D32C99FE5900A362C5 /* SignUpStep1View.swift in Sources */,
 				252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */,
 				25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */,
+				25F3681D2C9B7B49003322CF /* TituloComponent.swift in Sources */,
 				25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */,
 				252B64EB2C99FE7200A362C5 /* User.swift in Sources */,
 				252B64ED2C99FE7200A362C5 /* APIRoutes.swift in Sources */,
+				25F3681F2C9B8032003322CF /* MainViewButton.swift in Sources */,
 				252B64EE2C99FE7200A362C5 /* SessionAPIService.swift in Sources */,
 				25C302CA2C9AAF9A005AD742 /* ExternalLoginButton.swift in Sources */,
 				252B64EF2C99FE7200A362C5 /* SessionRepository.swift in Sources */,
