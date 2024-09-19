@@ -12,6 +12,7 @@ class SessionManager: ObservableObject {
     @Published var isAuthenticated: Bool = false
     @Published var isProfileComplete: Bool = false
     @Published var isErrorLogin: Bool = false
+    @Published var isLoading: Bool = true
     @Published var errorMessage: String? = nil
 
     private var authStateListenerHandle: AuthStateDidChangeListenerHandle?
@@ -37,9 +38,11 @@ class SessionManager: ObservableObject {
                     } else {
                         // For email/password sign-in, assume profile is complete
                         self?.isProfileComplete = true
+                        self?.isLoading = false
                     }
                 } else {
                     self?.isProfileComplete = false
+                    self?.isLoading = false
                 }
             }
         }
@@ -70,39 +73,40 @@ class SessionManager: ObservableObject {
     }
     
     func checkProfileCompleteness() {
+        self.isLoading = true
         Task {
             do {
                 let response = try await signUpRequirement.checarPerfilBackend()
                 
-                if response.StatusCode == 500 {
-                    DispatchQueue.main.async {
+                DispatchQueue.main.async {
+                    if response.StatusCode == 500 {
                         self.isErrorLogin = true
                         self.errorMessage = "Hubo un error interno en el servidor. Inténtalo más tarde."
-                    }
-                } else {
-                    DispatchQueue.main.async {
+                    } else {
                         self.isProfileComplete = response.perfilRegistrado!
                         self.isErrorLogin = false
                         self.errorMessage = nil
                     }
+                    self.isLoading = false // Finaliza la carga
                 }
             } catch let urlError as URLError {
                 DispatchQueue.main.async {
                     switch urlError.code {
                     case .notConnectedToInternet:
                         self.errorMessage = "No tienes conexión a Internet. Verifica tu conexión e intenta nuevamente."
-                        self.isErrorLogin = true
                     case .timedOut:
                         self.errorMessage = "La solicitud ha excedido el tiempo de espera. Inténtalo de nuevo más tarde."
-                        self.isErrorLogin = true
                     default:
                         self.errorMessage = "Hubo un error al iniciar sesión. Inténtelo más tarde."
-                        self.isErrorLogin = true
                     }
+                    self.isErrorLogin = true
+                    self.isLoading = false
                 }
             } catch {
                 DispatchQueue.main.async {
                     self.errorMessage = "Hubo un error al iniciar sesión. Inténtelo más tarde."
+                    self.isErrorLogin = true
+                    self.isLoading = false 
                 }
             }
         }
