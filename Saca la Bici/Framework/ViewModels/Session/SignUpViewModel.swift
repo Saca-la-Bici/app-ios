@@ -9,29 +9,19 @@ import Foundation
 
 class SignUpViewModel: ObservableObject {
     
-    // States
-    
     @Published var email: String = ""
     @Published var username: String = ""
     @Published var password: String = ""
     @Published var confirmPassword: String = ""
     @Published var isPasswordVisible: Bool = false
     @Published var isConfirmVisible: Bool = false
-    
-    @Published var selectedMonth: String = "Enero"
-    @Published var selectedDay: String = "1"
-    @Published var selectedYear: String = "2023"
+    @Published var fechaNacimiento: Date = Date()
     @Published var selectedBloodType = "Selecciona tu tipo de sangre"
     @Published var countryCode = ""
     @Published var phoneNumber = ""
     @Published var nombreCompleto: String = ""
 
-   
-    // Arrays
-    let months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
     let bloodTypes = ["Selecciona tu tipo de sangre", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]
-    let days = Array(1...31).map { "\($0)" }
-    let years = Array(1900...2023).reversed().map { "\($0)" }
     
     // Creas dos variables más por si se comete un error
     @Published var messageAlert = ""
@@ -44,15 +34,6 @@ class SignUpViewModel: ObservableObject {
     
     init(signUpRequirement: SignUpRequirementProtocol = SignUpRequirement.shared) {
         self.signUpRequirement = signUpRequirement
-    }
-    
-    func obtenerNumeroDelMes() -> Int {
-        if let indice = months.firstIndex(of: selectedMonth) {
-            return indice + 1
-        } else {
-            print("Mes no encontrado en el array.")
-            return 0
-        }
     }
     
     @MainActor
@@ -87,9 +68,6 @@ class SignUpViewModel: ObservableObject {
             return
         }
         
-        let numeroMes = obtenerNumeroDelMes()
-        let fechaNacimiento = "\(selectedYear)-\(numeroMes)-\(selectedDay)"
-        
         let numeroEmergencia = "+" + self.countryCode + self.phoneNumber
         
         let usuarioNuevo = UserNuevo(username: self.username, password: self.confirmPassword, nombre: nombreCompleto, email: self.email, fechaNacimiento: fechaNacimiento, tipoSangre: self.selectedBloodType, numeroEmergencia: numeroEmergencia)
@@ -119,9 +97,6 @@ class SignUpViewModel: ObservableObject {
             self.showAlert = true
             return
         }
-        
-        let numeroMes = obtenerNumeroDelMes()
-        let fechaNacimiento = "\(selectedYear)-\(numeroMes)-\(selectedDay)"
         
         let numeroEmergencia = "+" + self.countryCode + self.phoneNumber
         

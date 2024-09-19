@@ -52,19 +52,18 @@ struct MainLoginView: View {
                         }
                         
                         VStack {
-                            // Botón para crear cuenta
-                            MainViewButton(title: "Iniciar sesión",
-                                           pathValue: "login",
-                                             foregroundColor: .black,
-                                             backgroundColor: .white,
-                                             hasOverlay: true,
-                                             path: $path)
-                            
                             MainViewButton(title: "Crea una cuenta",
                                              pathValue: "register",
                                              foregroundColor: .white,
                                              backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                                              hasOverlay: false,
+                                             path: $path)
+                            
+                            MainViewButton(title: "Iniciar sesión",
+                                           pathValue: "login",
+                                             foregroundColor: .black,
+                                             backgroundColor: .white,
+                                             hasOverlay: true,
                                              path: $path)
                         }
                         

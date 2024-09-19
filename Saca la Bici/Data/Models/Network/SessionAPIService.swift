@@ -35,10 +35,14 @@ class SessionAPIService {
             // Obtener el ID Token del usuario autenticado
             let idToken = try await authResult.user.getIDToken()
             
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let fechaNacimientoString = dateFormatter.string(from: UserDatos.fechaNacimiento)
+            
             let parameters: Parameters = [
                 "username" : UserDatos.username,
                 "nombre" : UserDatos.nombre,
-                "fechaNacimiento" : UserDatos.fechaNacimiento,
+                "fechaNacimiento" : fechaNacimientoString,
                 "correoElectronico" : UserDatos.email,
                 "tipoSangre": UserDatos.tipoSangre,
                 "numeroEmergencia": UserDatos.numeroEmergencia,
@@ -283,10 +287,14 @@ class SessionAPIService {
             "Content-Type": "application/json"
         ]
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let fechaNacimientoString = dateFormatter.string(from: UserDatos.fechaNacimiento)
+        
         let parameters: Parameters = [
             "username" : UserDatos.username,
             "nombre" : "\(nombre)",
-            "fechaNacimiento" : UserDatos.fechaNacimiento,
+            "fechaNacimiento" : fechaNacimientoString,
             "correoElectronico" : "\(correoElectronico)",
             "tipoSangre": UserDatos.tipoSangre,
             "numeroEmergencia": UserDatos.numeroEmergencia,

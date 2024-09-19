@@ -61,12 +61,7 @@ struct SignUpStep1View: View {
                         
                         // Fecha de nacimiento
                         FechaNacimientoPicker(
-                            selectedMonth: $signUpViewModel.selectedMonth,
-                            selectedDay: $signUpViewModel.selectedDay,
-                            selectedYear: $signUpViewModel.selectedYear,
-                            months: signUpViewModel.months,
-                            days: signUpViewModel.days,
-                            years: signUpViewModel.years
+                            fechaSeleccion: $signUpViewModel.fechaNacimiento
                         )
                         
                         Spacer().frame(height: 10)
@@ -89,6 +84,9 @@ struct SignUpStep1View: View {
                 .padding(30)
             }
             .zIndex(2)
+            .onTapGesture {
+                UIApplication.shared.hideKeyboard()
+            }
             .alert(isPresented: $signUpViewModel.showAlert) {
                 Alert(
                     title: Text("Oops!"),
