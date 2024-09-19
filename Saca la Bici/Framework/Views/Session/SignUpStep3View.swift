@@ -74,6 +74,9 @@ struct SignUpStep3View: View {
                 .padding(30)
             }
             .zIndex(2)
+            .onTapGesture {
+                UIApplication.shared.hideKeyboard()
+            }
             .alert(isPresented: $signUpViewModel.showAlert) {
                 Alert(
                     title: Text("Oops!"),

@@ -72,6 +72,4 @@ class LoginViewModel: ObservableObject {
             self.showAlert = false
         }
     }
-    
-   
 }

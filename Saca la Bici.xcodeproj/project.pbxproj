@@ -304,9 +304,9 @@
 				252B64C92C99FE5900A362C5 /* SignUpStep1View.swift */,
 				252B64CA2C99FE5900A362C5 /* SignUpStep2View.swift */,
 				252B64CB2C99FE5900A362C5 /* SignUpStep3View.swift */,
-				252B64C72C99FE5900A362C5 /* SessionCoordinatorView.swift */,
 				252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */,
 				25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */,
+				252B64C72C99FE5900A362C5 /* SessionCoordinatorView.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";

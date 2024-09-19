@@ -103,6 +103,10 @@ struct LoginView: View {
                 }
             }
             .zIndex(2)
+            .onTapGesture {
+                UIApplication.shared.hideKeyboard()
+            }
+            
         }
     }
 }

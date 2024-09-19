@@ -20,14 +20,14 @@ struct UserNuevo: Codable {
     var password: String
     var nombre: String
     var email: String
-    var fechaNacimiento: String
+    var fechaNacimiento: Date
     var tipoSangre: String
     var numeroEmergencia: String
 }
 
 struct UserExterno: Codable {
     var username: String
-    var fechaNacimiento: String
+    var fechaNacimiento: Date
     var tipoSangre: String
     var numeroEmergencia: String
 }

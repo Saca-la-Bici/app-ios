@@ -35,3 +35,9 @@ final class getViewController {
         return baseController
     }
 }
+
+extension UIApplication {
+    func hideKeyboard() {
+        self.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
