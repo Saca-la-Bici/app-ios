@@ -15,7 +15,7 @@ struct MenuView: View {
                     } else if selectedTab == 1 {
                         ResultView()
                     } else if selectedTab == 2 {
-                        ResultView()
+                        consultarAnuncio()
                     } else {
                         ResultView()
                     }

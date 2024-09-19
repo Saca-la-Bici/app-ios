@@ -64,8 +64,7 @@ struct YourApp: App {
   var body: some Scene {
     WindowGroup {
       NavigationView {
-          SessionCoordinatorView()
-              .environmentObject(sessionManager)
+          consultarAnuncio()
       }
     }
   }

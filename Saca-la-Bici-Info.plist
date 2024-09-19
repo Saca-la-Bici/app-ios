@@ -2,8 +2,28 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>CFBundleURLTypes</key>
 	<array>
+		<dict>
+			<key>NSAppTransportSecurity</key>
+			<dict>
+				<key>NSExceptionDomains</key>
+				<dict>
+					<key>3.145.117.182</key>
+					<dict>
+						<key>NSExceptionAllowsInsecureHTTPLoads</key>
+						<true/>
+					</dict>
+				</dict>
+				<key>NSAllowsArbitraryLoads</key>
+				<true/>
+			</dict>
+		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
@@ -12,6 +32,16 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.1054674373507-kvk2tgh8d163p17rtemdl3auebmejebi</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>AWS</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>ec2-3-145-117-182.us-east-2.compute.amazonaws.com</string>
 			</array>
 		</dict>
 	</array>
