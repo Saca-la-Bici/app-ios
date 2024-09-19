@@ -4,6 +4,7 @@
 //
 //  Created by Maria Jose Gaytan Gil on 17/09/24.
 //
+
 import SwiftUI
 import Foundation
 
@@ -56,5 +57,18 @@ class AnuncioViewModel: ObservableObject {
         }
     }
 
+    // Función para eliminar un anuncio
+       func eliminarAnuncio(idAnuncio: String) {
+           repository.eliminarAnuncio(idAnuncio: idAnuncio) { result in
+               DispatchQueue.main.async {
+                   switch result {
+                   case .success(let message):
+                       self.successMessage = message
+                       self.fetchAnuncios()
+                   case .failure(let error):
+                       self.errorMessage = error.localizedDescription
+                   }
+               }
+           }
+       }
 }
-

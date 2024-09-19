@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct consultarAnuncio: View {
-    @StateObject private var viewModel = AnuncioViewModel()
+    @ObservedObject private var viewModel = AnuncioViewModel()
     @State private var showAddAnuncioView = false
     @State private var alertMessage = ""
-    
+    @State private var showDeleteConfirmation = false
+    @State private var selectedAnuncio: Anuncio?
+    @State private var showModifyView = false
+
     var body: some View {
         NavigationView {
             VStack {
@@ -48,70 +51,81 @@ struct consultarAnuncio: View {
                         .foregroundColor(.red)
                         .padding()
                 } else {
-                    ScrollView {
-                        VStack(spacing: 16) {
-                            ForEach(viewModel.anuncios) { anuncio in
+                    List {
+                        ForEach(viewModel.anuncios) { anuncio in
+                            HStack {
+                                Text(anuncio.icon)
+                                    .font(.title)
+                                    .foregroundColor(.white)
+                                    .frame(width: 44, height: 44)
+                                    .background(Color.purple)
+                                    .clipShape(Circle())
+
                                 VStack(alignment: .leading, spacing: 8) {
-                                    HStack(alignment: .center, spacing: 12) {
-                                        Text(anuncio.icon)
-                                            .font(.title)
-                                            .foregroundColor(.white)
-                                            .frame(width: 44, height: 44)
-                                            .background(Color.purple)
-                                            .clipShape(Circle())
+                                    Text(anuncio.titulo)
+                                        .font(.headline)
+                                        .fontWeight(.bold)
 
-                                        VStack(alignment: .leading, spacing: 8) {
-                                            Text(anuncio.titulo)
-                                                .font(.headline)
-                                                .fontWeight(.bold)
-
-                                            Text(anuncio.contenido)
-                                                .font(.subheadline)
-                                                .foregroundColor(.secondary)
-                                        }
-                                        .padding(.vertical, 16)
-                                    }
-                                    .padding(.horizontal, 16)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text(anuncio.contenido)
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
                                 }
-                                .background(Color(UIColor.systemGray6))
-                                .cornerRadius(12)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color(UIColor.systemGray4), lineWidth: 1)
-                                )
-                                .padding(.horizontal)
+                                .padding(.vertical, 8)
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color(UIColor.systemGray6))
+                            .cornerRadius(12)
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(Color.white)
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    selectedAnuncio = anuncio
+                                    showDeleteConfirmation = true
+                                } label: {
+                                    Label("Eliminar", systemImage: "trash")
+                                }
+
+                                Button {
+                                    selectedAnuncio = anuncio
+                                    showModifyView = true
+                                } label: {
+                                    Label("Modificar", systemImage: "pencil")
+                                }
+                                .tint(.blue)
                             }
                         }
-                        .padding(.top)
+                        .padding(.bottom, 8)
                     }
+                    .listStyle(PlainListStyle())
                 }
             }
-            .background(Color(UIColor.systemBackground))
+            .background(Color.white)
             .onAppear {
                 viewModel.fetchAnuncios()
             }
             .sheet(isPresented: $showAddAnuncioView) {
                 AnadirAnuncioView(viewModel: viewModel)
             }
-            .alert(isPresented: Binding<Bool>(
-                get: {
-                    viewModel.successMessage != nil || viewModel.errorMessage != nil
-                },
-                set: { _ in
-                    viewModel.successMessage = nil
-                    viewModel.errorMessage = nil
-                }
-            )) {
+            .sheet(isPresented: $showModifyView) {
+                AnadirAnuncioView(viewModel: viewModel)
+            }
+            .alert(isPresented: $showDeleteConfirmation) {
                 Alert(
-                    title: Text("Anuncio"),
-                    message: Text(viewModel.successMessage ?? viewModel.errorMessage ?? ""),
-                    dismissButton: .default(Text("OK"))
+                    title: Text("¿Seguro quieres eliminar el anuncio?"),
+                    message: Text("Una vez eliminado no se podrá recuperar."),
+                    primaryButton: .destructive(Text("Eliminar")) {
+                        if let anuncio = selectedAnuncio {
+                            viewModel.eliminarAnuncio(idAnuncio: anuncio.id)
+                        }
+                    },
+                    secondaryButton: .cancel(Text("Cancelar"))
                 )
             }
         }
     }
 }
+
 
 #Preview {
     consultarAnuncio()

@@ -29,4 +29,12 @@ class AnuncioRepository {
             completion(result) 
         }
     }
+    
+    
+        func eliminarAnuncio(idAnuncio: String, completion: @escaping (Result<String, Error>) -> Void) {
+            apiService.eliminarAnuncio(idAnuncio: idAnuncio) { result in
+                completion(result)
+            }
+        }
 }
+

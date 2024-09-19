@@ -12,7 +12,7 @@ struct Anuncio: Identifiable, Codable {
     var IDUsuario: Int
     var titulo: String
     var contenido: String
-    var imagen: String
+    var imagen: String?
     var createdAt: String
     var fechaCaducidad: String
 
