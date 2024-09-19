@@ -11,10 +11,15 @@ struct SessionCoordinatorView: View {
     @EnvironmentObject var sessionManager: SessionManager
     @State private var showErrorAlert = false
     @State private var alertMessage = ""
+    @State private var isAppLoading = false
+    @State private var hasLaunchedOnce = false
 
     var body: some View {
         Group {
-            if sessionManager.isAuthenticated {
+            if isAppLoading || sessionManager.isLoading {
+                LoadingView()
+            }
+            else if sessionManager.isAuthenticated {
                 if sessionManager.isProfileComplete {
                     NavigationStack {
                         MenuView()
@@ -45,6 +50,19 @@ struct SessionCoordinatorView: View {
                 alertMessage = message
                 showErrorAlert = true
             }
+        }
+        .onAppear {
+            triggerAppLoading()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            triggerAppLoading()
+        }
+    }
+    
+    private func triggerAppLoading() {
+        isAppLoading = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            isAppLoading = false
         }
     }
 }
