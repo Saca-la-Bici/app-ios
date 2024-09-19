@@ -54,9 +54,6 @@ struct SessionCoordinatorView: View {
         .onAppear {
             triggerAppLoading()
         }
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-            triggerAppLoading()
-        }
     }
     
     private func triggerAppLoading() {
