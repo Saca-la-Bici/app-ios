@@ -13,9 +13,10 @@ struct SessionCoordinatorView: View {
     @State private var alertMessage = ""
     @State private var isAppLoading = false
     @State private var hasLaunchedOnce = false
+    @State private var pendingErrorMessage: String?
 
     var body: some View {
-        Group {
+        ZStack {
             if isAppLoading || sessionManager.isLoading {
                 LoadingView()
             }
@@ -47,12 +48,31 @@ struct SessionCoordinatorView: View {
         }
         .onReceive(sessionManager.$errorMessage) { errorMessage in
             if let message = errorMessage {
-                alertMessage = message
-                showErrorAlert = true
+                if isAppLoading || sessionManager.isLoading {
+                    pendingErrorMessage = message
+                } else {
+                    alertMessage = message
+                    showErrorAlert = true
+                }
             }
+        }
+        .onChange(of: isAppLoading) {
+            checkAndShowPendingError()
+        }
+
+        .onChange(of: sessionManager.isLoading) {
+            checkAndShowPendingError()
         }
         .onAppear {
             triggerAppLoading()
+        }
+    }
+    
+    private func checkAndShowPendingError() {
+        if !isAppLoading && !sessionManager.isLoading, let message = pendingErrorMessage {
+            alertMessage = message
+            showErrorAlert = true
+            pendingErrorMessage = nil
         }
     }
     
