@@ -13,6 +13,7 @@ struct Response: Codable {
     var error: String?
     var perfilRegistrado: Bool?
     var StatusCode: Int?
+    var usernameExistente: Bool?
 }
 
 struct UserNuevo: Codable {

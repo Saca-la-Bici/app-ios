@@ -11,6 +11,7 @@ import Foundation
 protocol SignUpRequirementProtocol {
     func registrarUsuario(UserDatos: UserNuevo) async -> Int?
     func checarPerfilBackend() async throws -> Response
+    func verificarUsernameExistente(username: String) async -> Bool?
     func completarPerfil(UserDatos: UserExterno) async -> Int?
     func GoogleLogin() async -> Int?
 }
@@ -42,6 +43,10 @@ class SignUpRequirement : SignUpRequirementProtocol {
     
     func GoogleLogin() async -> Int? {
         return await sessionRepository.GoogleLogin()
+    }
+    
+    func verificarUsernameExistente(username: String) async -> Bool? {
+        return await sessionRepository.verificarUsernameExistente(username: username)
     }
     
 }

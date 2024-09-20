@@ -71,9 +71,11 @@ struct SignUpStep1View: View {
                             text: "Continuar",
                             backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                             action: {
-                                signUpViewModel.validarDatosStep1()
-                                if !signUpViewModel.showAlert {
-                                    path.append("continue")
+                                Task {
+                                    await signUpViewModel.validarDatosStep1()
+                                    if !signUpViewModel.showAlert {
+                                        path.append("continue")
+                                    }
                                 }
                             }
                         )
