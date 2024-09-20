@@ -13,7 +13,6 @@ class SessionManager: ObservableObject {
     @Published var isProfileComplete: Bool = false
     @Published var isErrorLogin: Bool = false
     @Published var isLoading: Bool = true
-    @Published var isRegistering: Bool = false
     @Published var errorMessage: String? = nil
 
     private var authStateListenerHandle: AuthStateDidChangeListenerHandle?
@@ -32,12 +31,6 @@ class SessionManager: ObservableObject {
     private func setupAuthStateListener() {
         authStateListenerHandle = Auth.auth().addStateDidChangeListener { [weak self] auth, user in
             DispatchQueue.main.async {
-                // Verificar si se está registrando
-                if self!.isRegistering == true {
-                    // No manejar cambios de estado durante el registro
-                    return
-                }
-
                 self?.isAuthenticated = user != nil
                 if let user = user {
                     if self?.isExternalSignIn(user: user) == true {

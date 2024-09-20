@@ -37,9 +37,30 @@ class SignUpViewModel: ObservableObject {
     }
     
     @MainActor
-    func validarDatosStep1() {
+    func validarDatosStep1() async {
         if self.email.isEmpty || self.username.isEmpty {
             self.messageAlert = "Correo o username vacío. Favor de intentar de nuevo."
+            self.showAlert = true
+            return
+        }
+        
+        if !self.email.contains("@") || !self.email.contains(".") {
+            self.messageAlert = "El correo electrónico proporcionado no es válido. Favor de intentar de nuevo."
+            self.showAlert = true
+            return
+        }
+        
+        print(self.username)
+        
+        let usernameDisponible = await self.signUpRequirement.verificarUsernameExistente(username: self.username)
+        
+        if usernameDisponible == nil {
+            self.messageAlert = "Hubo un error al procesar tu petición. Favor de intentar de nuevo."
+            self.showAlert = true
+            return
+
+        } else if usernameDisponible! == true {
+            self.messageAlert = "El username proporcionado ya está en uso. Favor de intentar de nuevo."
             self.showAlert = true
             return
         }
@@ -68,13 +89,27 @@ class SignUpViewModel: ObservableObject {
             return
         }
         
+        if (self.password.count < 6) {
+            self.messageAlert = "La contraseña es demasiado corta. Debe tener al menos 6 caracteres."
+            self.showAlert = true
+            return
+        }
+        
         let numeroEmergencia = "+" + self.countryCode + self.phoneNumber
         
         let usuarioNuevo = UserNuevo(username: self.username, password: self.confirmPassword, nombre: nombreCompleto, email: self.email, fechaNacimiento: fechaNacimiento, tipoSangre: self.selectedBloodType, numeroEmergencia: numeroEmergencia)
         
         let responseCode = await self.signUpRequirement.registrarUsuario(UserDatos: usuarioNuevo)
         
-        if (responseCode != 201){
+        if (responseCode == 406){
+            self.messageAlert = "La contraseña es demasiado corta. Debe tener al menos 6 caracteres."
+            self.showAlert = true
+        }
+        else if (responseCode == 405){
+            self.messageAlert = "El correo electrónico proporcionado no es válido."
+            self.showAlert = true
+        }
+        else if (responseCode != 201){
             self.messageAlert = "Hubo un error al registrar al usuario."
             self.showAlert = true
         }

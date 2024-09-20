@@ -12,7 +12,6 @@ struct SessionCoordinatorView: View {
     @State private var showErrorAlert = false
     @State private var alertMessage = ""
     @State private var isAppLoading = false
-    @State private var hasLaunchedOnce = false
     @State private var pendingErrorMessage: String?
 
     var body: some View {

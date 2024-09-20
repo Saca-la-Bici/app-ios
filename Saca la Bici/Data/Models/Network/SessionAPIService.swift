@@ -78,8 +78,24 @@ class SessionAPIService {
                 
                 return statusCode
             }
-        } catch {
-            print("Error al registrar en Firebase: \(error.localizedDescription)")
+        } catch let error as NSError {
+            // Convertir el error a AuthErrorCode para manejar casos específicos
+            if let authError = AuthErrorCode(rawValue: error.code) {
+                switch authError {
+                case .weakPassword:
+                    print("Error: La contraseña es demasiado corta. Debe tener al menos 6 caracteres.")
+                    return 406
+                case .invalidEmail:
+                    print("Error: El correo electrónico proporcionado no es válido.")
+                    return 405
+                default:
+                    // Manejar otros errores de Firebase Authentication
+                    print("Error al registrar en Firebase: \(error.localizedDescription)")
+                }
+            } else {
+                // Manejar errores que no son de Firebase Authentication
+                print("Error desconocido al registrar en Firebase: \(error.localizedDescription)")
+            }
             return nil
         }
     }
@@ -98,6 +114,7 @@ class SessionAPIService {
                     return nil
                 }
             }
+            
             // Iniciar sesión en Firebase Authentication con el correo y la contraseña
             let authResult = try await Auth.auth().signIn(withEmail: usuarioOEmail, password: UserDatos.password)
             
@@ -340,6 +357,42 @@ class SessionAPIService {
         }
     }
     
+    func verificarUsernameExistente(username: String, URLUsername: URL) async -> Bool? {
+        
+        let parameters: Parameters = [
+            "username" : username
+        ]
+        
+        // Prepara los headers con el token para enviar al backend
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json"
+        ]
+            
+        let taskRequest = session.request(URLUsername, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: headers).validate()
+        let response = await taskRequest.serializingData().response
+        
+        switch response.result {
+        case .success(let data):
+            do {
+                // Intentar decodificar la respuesta JSON en un objeto Response
+                let response = try JSONDecoder().decode(Response.self, from: data)
+            
+                return response.usernameExistente
+                
+            } catch {
+                return nil
+            }
+        case let .failure(error):
+            debugPrint(error.localizedDescription)
+            
+            // Imprimir el cuerpo de la respuesta en caso de error
+            if let data = response.data {
+                let errorResponse = String(decoding: data, as: UTF8.self)
+                print("\(errorResponse)")
+            }
+            return nil
+            }
+    }
     
     func obtenerEmailDesdeBackend(username: String, URLUsername: URL) async throws -> String? {
         

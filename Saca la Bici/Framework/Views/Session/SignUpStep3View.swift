@@ -63,13 +63,8 @@ struct SignUpStep3View: View {
                             backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                             action: {
                                 Task {
-                                    sessionManager.isRegistering = true
                                     await signUpViewModel.registrarUsuario()
                                    // El listener se encarga automaticamente
-                                    
-                                    if (signUpViewModel.showAlert == false) {
-                                        sessionManager.isRegistering = false
-                                    }
                                 }
                             }
                         )
@@ -86,10 +81,7 @@ struct SignUpStep3View: View {
             .alert(isPresented: $signUpViewModel.showAlert) {
                 Alert(
                     title: Text("Oops!"),
-                    message: Text(signUpViewModel.messageAlert),
-                    dismissButton: .default(Text("OK")) {
-                        sessionManager.isRegistering = false
-                    }
+                    message: Text(signUpViewModel.messageAlert)
                 )
             }
         }
