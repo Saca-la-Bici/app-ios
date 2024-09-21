@@ -21,7 +21,7 @@ struct FechaNacimientoPicker: View {
             Spacer().frame(height: 20)
             
             DatePicker(
-                    "Start Date",
+                    "",
                      selection: $fechaSeleccion,
                      in: ...Calendar.current.date(byAdding: .year, value: -13, to: Date())!,
                      displayedComponents: [.date]

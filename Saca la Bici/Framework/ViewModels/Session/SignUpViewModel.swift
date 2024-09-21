@@ -50,8 +50,6 @@ class SignUpViewModel: ObservableObject {
             return
         }
         
-        print(self.username)
-        
         let usernameDisponible = await self.signUpRequirement.verificarUsernameExistente(username: self.username)
         
         if usernameDisponible == nil {
