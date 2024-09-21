@@ -7,12 +7,12 @@
 
 import Foundation
 import FirebaseAuth
+import AuthenticationServices
 import Alamofire
-import FirebaseCore
 import GoogleSignIn
 
 // Singleton
-class SessionAPIService {
+class SessionAPIService: NSObject {
     // Se usa la libería de Alamofire y se usa static let para que sea inmutable y si se crean varias instancias que sea igual para todas dichas instancias.
     static let shared = SessionAPIService()
     
@@ -279,6 +279,33 @@ class SessionAPIService {
         }
     }
     
+    func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int {
+        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+            print("Credenciales inválidas")
+            return 500
+        }
+        
+        guard let appleIDToken = appleIDCredential.identityToken,
+              let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+            print("No se pudo obtener el token de identidad")
+            return 500
+        }
+        
+        // Crear credencial de Firebase
+        let credential = OAuthProvider.appleCredential(withIDToken: idTokenString,
+                                                                rawNonce: nonce,
+                                                                fullName: appleIDCredential.fullName)
+        
+        do {
+            // Iniciar sesión en Firebase con las credenciales
+            _ = try await Auth.auth().signIn(with: credential)
+            return 200
+        } catch {
+            print("Error al autenticar con Firebase: \(error.localizedDescription)")
+            return 500
+        }
+    }
+    
     func completarPerfil(url: URL, UserDatos: UserExterno) async -> Int? {
         guard let idToken = await obtenerIDToken() else {
             print("No se pudo obtener el ID Token")
@@ -413,7 +440,7 @@ class SessionAPIService {
             do {
                 // Intentar decodificar la respuesta JSON en un objeto Response
                 let response = try JSONDecoder().decode(Response.self, from: data)
-            
+                
                 return response.correoElectronico
                 
             } catch {
@@ -428,6 +455,6 @@ class SessionAPIService {
                 print("\(errorResponse)")
             }
             return nil
-            }
+        }
     }
 }

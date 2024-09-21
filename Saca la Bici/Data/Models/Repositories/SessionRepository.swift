@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AuthenticationServices
 
 // Se crea el protocolo para que lo hereden la clase o el struct (como la base)
 protocol SessionAPIProtocol {
@@ -17,6 +18,7 @@ protocol SessionAPIProtocol {
     func completarPerfil(UserDatos: UserExterno) async -> Int?
     func verificarUsernameExistente(username: String) async -> Bool?
     func GoogleLogin() async -> Int?
+    func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int
 }
 
 // Crear nuestra clase PokemonRespository y heredar de nuestro protocolo PokemonAPIProtocol
@@ -55,12 +57,15 @@ class SessionRepository: SessionAPIProtocol {
         return await sessionService.completarPerfil(url: URL(string:"\(Api.base)\(Api.routes.session)/registrarUsuario")!, UserDatos: UserDatos)
     }
     
+    func verificarUsernameExistente(username: String) async -> Bool? {
+        return await sessionService.verificarUsernameExistente(username: username, URLUsername: URL(string:"\(Api.base)\(Api.routes.session)/getUsername")!)
+    }
+    
     func GoogleLogin() async -> Int? {
         return await sessionService.GoogleLogin(url: URL(string:"\(Api.base)\(Api.routes.session)/registrarUsuario")!)
     }
     
-    func verificarUsernameExistente(username: String) async -> Bool? {
-        return await sessionService.verificarUsernameExistente(username: username, URLUsername: URL(string:"\(Api.base)\(Api.routes.session)/getUsername")!)
+    func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int {
+        return await sessionService.AppleLogin(authorization: authorization, nonce: nonce)
     }
-
 }

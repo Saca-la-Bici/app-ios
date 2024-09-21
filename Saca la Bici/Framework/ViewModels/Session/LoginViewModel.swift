@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import AuthenticationServices
 
 // Tipo observable para que la interfaz sepa de cambios
 class LoginViewModel: ObservableObject {
@@ -20,6 +21,9 @@ class LoginViewModel: ObservableObject {
     // Creas dos variables más por si se comete un error
     @Published var messageAlert = ""
     @Published var showAlert = false
+    
+    // Variable para almacenar el nonce raw
+    private var rawNonce: String?
     
     // Llamas el requerimiento de user con sus funciones
     var loginRequirement: LoginRequirementProtocol
@@ -70,6 +74,55 @@ class LoginViewModel: ObservableObject {
             // No mostrar error si se cancelo.
         } else if (responseStatus == -1) {
             self.showAlert = false
+        }
+    }
+    
+    // Función para preparar el nonce y devolver el nonce hasheado
+    func prepareNonce() -> String {
+        let nonce = AppleCryptoHelpers.randomNonceString()
+        let hashedNonce = AppleCryptoHelpers.sha256(nonce)
+        self.rawNonce = nonce
+        return hashedNonce
+    }
+    
+    @MainActor
+    // Función para manejar la autenticación con Apple
+    func AppleLogin(result: Result<ASAuthorization, Error>) async {
+        switch result {
+        case .success(let authorization):
+            defer {
+                self.rawNonce = nil // Limpiar el nonce después de usarlo
+            }
+            
+            guard let nonce = rawNonce else {
+                self.messageAlert = "Estado inválido"
+                self.showAlert = true
+                return
+            }
+            
+            let responseStatus = await loginRequirement.AppleLogin(authorization: authorization, nonce: nonce)
+            
+            if responseStatus == 200 {
+                // Autenticación exitosa
+                self.showAlert = false
+            } else if responseStatus == -1 {
+                // El usuario canceló el inicio de sesión
+                self.showAlert = false
+            } else {
+                // Error en la autenticación
+                self.messageAlert = "Error al iniciar sesión con Apple. Favor intentar de nuevo"
+                self.showAlert = true
+            }
+            
+        case .failure(let error):
+            if (error as NSError).code == ASAuthorizationError.canceled.rawValue {
+                // El usuario canceló la autenticación
+                self.showAlert = false
+            } else {
+                print("Error en Sign in with Apple: \(error.localizedDescription)")
+                self.messageAlert = "Error al iniciar sesión con Apple. Favor intentar de nuevo"
+                self.showAlert = true
+            }
         }
     }
 }

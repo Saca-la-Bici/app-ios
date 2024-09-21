@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 
 struct MainLoginView: View {
     // Para manejar las sesiones
@@ -16,6 +17,7 @@ struct MainLoginView: View {
     
     // ViewModel para pasar a las otras vistas
     @StateObject var signUpViewModel = SignUpViewModel()
+    @StateObject var loginViewModel = LoginViewModel()
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -85,14 +87,23 @@ struct MainLoginView: View {
                                 systemImage: false
                             )
                             
-                            ExternalLoginButton(
-                                action: {
-                                    // Acción de autenticación con Apple
+                            Spacer().frame(height: 20)
+                            
+                            SignInWithAppleButton(
+                                .signIn,
+                                onRequest: { request in
+                                    let hashedNonce = loginViewModel.prepareNonce()
+                                    request.requestedScopes = [.fullName, .email]
+                                    request.nonce = hashedNonce
                                 },
-                                buttonText: "Registrarse con Apple",
-                                imageName: "apple.logo",
-                                systemImage: true
+                                onCompletion: { result in
+                                    Task {
+                                        await loginViewModel.AppleLogin(result: result)
+                                    }
+                                }
                             )
+                            .signInWithAppleButtonStyle(.whiteOutline)
+                            .frame(height: 50)
                         }
                     }
                     .padding(.horizontal, 30.0)

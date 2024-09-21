@@ -6,14 +6,15 @@
 //
 
 import Foundation
+import AuthenticationServices
 
 // Creas el protocolo de la historia de usuario
 protocol LoginRequirementProtocol {
     // El protocolo con las 2 funciones a llamar
     func probarToken() async -> Response?
-    func GoogleLogin() async -> Int?
     func iniciarSesion(UserDatos: User) async -> Int?
-}
+    func GoogleLogin() async -> Int?
+    func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int}
 
 class LoginRequirement : LoginRequirementProtocol {
     
@@ -38,6 +39,10 @@ class LoginRequirement : LoginRequirementProtocol {
     
     func GoogleLogin() async -> Int? {
         return await sessionRepository.GoogleLogin()
+    }
+    
+    func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int {
+        return await sessionRepository.AppleLogin(authorization: authorization, nonce: nonce)
     }
     
 }
