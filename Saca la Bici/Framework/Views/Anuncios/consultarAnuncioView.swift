@@ -108,7 +108,9 @@ struct consultarAnuncio: View {
                 AnadirAnuncioView(viewModel: viewModel)
             }
             .sheet(isPresented: $showModifyView) {
-                AnadirAnuncioView(viewModel: viewModel)
+                if let anuncio = selectedAnuncio {
+                    ModificarAnuncioView(viewModel: viewModel, anuncio: anuncio)
+                }
             }
             .alert(isPresented: $showDeleteConfirmation) {
                 Alert(
@@ -125,7 +127,6 @@ struct consultarAnuncio: View {
         }
     }
 }
-
 
 #Preview {
     consultarAnuncio()

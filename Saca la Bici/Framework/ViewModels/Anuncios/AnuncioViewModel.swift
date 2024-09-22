@@ -71,4 +71,23 @@ class AnuncioViewModel: ObservableObject {
                }
            }
        }
+    
+    // Función para modificar un anuncio
+       func modificarAnuncio(anuncio: Anuncio, nuevoTitulo: String, nuevoContenido: String) {
+           repository.modificarAnuncio(idAnuncio: anuncio.id, titulo: nuevoTitulo, contenido: nuevoContenido) { [weak self] result in
+               DispatchQueue.main.async {
+                   switch result {
+                   case .success(let message):
+                       self?.successMessage = message
+                       // Actualiza la lista de anuncios localmente
+                       if let index = self?.anuncios.firstIndex(where: { $0.id == anuncio.id }) {
+                           self?.anuncios[index].titulo = nuevoTitulo
+                           self?.anuncios[index].contenido = nuevoContenido
+                       }
+                   case .failure(let error):
+                       self?.errorMessage = "Error al modificar el anuncio: \(error.localizedDescription)"
+                   }
+               }
+           }
+       }
 }

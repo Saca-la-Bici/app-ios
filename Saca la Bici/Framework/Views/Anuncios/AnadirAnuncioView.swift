@@ -92,9 +92,9 @@ struct AnadirAnuncioView: View {
                                    .frame(width: 200, height: 200)
                                    .cornerRadius(10)
                                
-                               // (Opcional) Botón para eliminar la imagen seleccionada
+                               
                                Button(action: {
-                                   selectedImageData = nil // Elimina la imagen seleccionada
+                                   selectedImageData = nil
                                }) {
                                    Text("Eliminar Imagen")
                                        .foregroundColor(.red)

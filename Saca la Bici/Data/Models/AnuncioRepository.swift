@@ -36,5 +36,9 @@ class AnuncioRepository {
                 completion(result)
             }
         }
+    
+    func modificarAnuncio(idAnuncio: String, titulo: String, contenido: String, completion: @escaping (Result<String, Error>) -> Void) {
+            apiService.modificarAnuncio(idAnuncio: idAnuncio, titulo: titulo, contenido: contenido, completion: completion)
+        }
 }
 

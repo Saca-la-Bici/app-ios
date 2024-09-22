@@ -12,7 +12,7 @@ class AnuncioAPIService {
     
     // Función para obtener los anuncios existentes
     func fetchAnuncios(completion: @escaping (Result<[Anuncio], Error>) -> Void) {
-        let url = "http://10.25.100.97:3000/anuncios/consultar"
+        let url = "http://192.168.0.5:3000/anuncios/consultar"
         
         AF.request(url, method: .get)
             .validate()
@@ -28,7 +28,7 @@ class AnuncioAPIService {
     
     // Función para registrar un nuevo anuncio
     func registrarAnuncio(_ anuncio: Anuncio, completion: @escaping (Result<String, Error>) -> Void) {
-        let url = "http://10.25.100.97:3000/anuncios/registrar"
+        let url = "http://192.168.0.5:3000/anuncios/registrar"
         let params: [String: Any] = [
             "IDUsuario": 1,  // fijo por ahora
             "titulo": anuncio.titulo,
@@ -50,7 +50,7 @@ class AnuncioAPIService {
     
     // Función para eliminar un anuncio
         func eliminarAnuncio(idAnuncio: String, completion: @escaping (Result<String, Error>) -> Void) {
-            let url = "http://10.25.100.97:3000/anuncios/eliminar/\(idAnuncio)"
+            let url = "http://192.168.0.5:3000/anuncios/eliminar/\(idAnuncio)"
             
             AF.request(url, method: .delete)
                 .validate()
@@ -58,6 +58,29 @@ class AnuncioAPIService {
                     switch response.result {
                     case .success:
                         completion(.success("Anuncio eliminado exitosamente"))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+        }
+    
+    // Función para modificar anuncio
+    func modificarAnuncio(idAnuncio: String, titulo: String, contenido: String, completion: @escaping (Result<String, Error>) -> Void) {
+            let url = "http://192.168.0.5:3000/anuncios/modificar/\(idAnuncio)"
+            
+            let params: [String: Any] = [
+                "IDUsuario": 1,
+                "titulo": titulo,
+                "contenido": contenido,
+                "imagen": "path/test"
+            ]
+            
+            AF.request(url, method: .put, parameters: params, encoding: JSONEncoding.default)
+                .validate()
+                .response { response in
+                    switch response.result {
+                    case .success:
+                        completion(.success("Anuncio modificado exitosamente."))
                     case .failure(let error):
                         completion(.failure(error))
                     }
