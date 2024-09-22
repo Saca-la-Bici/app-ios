@@ -11,13 +11,13 @@ struct ModificarAnuncioView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: AnuncioViewModel
     var anuncio: Anuncio
-
+    
     @State private var titulo: String
     @State private var contenido: String
     @State private var showValidationError = false
     @State private var validationErrorMessage = ""
     @State private var showSuccessAlert = false
-
+    
     // Inicializador personalizado
     init(viewModel: AnuncioViewModel, anuncio: Anuncio) {
         self.viewModel = viewModel
@@ -25,7 +25,7 @@ struct ModificarAnuncioView: View {
         _titulo = State(initialValue: anuncio.titulo)
         _contenido = State(initialValue: anuncio.contenido)
     }
-
+    
     var body: some View {
         VStack {
             // Header
@@ -74,9 +74,9 @@ struct ModificarAnuncioView: View {
             }
             .padding(.horizontal)
             .padding(.top, 10)
-
+            
             Spacer().frame(height: 40)
-
+            
             // Icono para subir imagen (opcional)
             Button(action: {
                 // Acción para subir imagen
@@ -87,7 +87,7 @@ struct ModificarAnuncioView: View {
                     RoundedRectangle(cornerRadius: 25)
                         .fill(Color.gray.opacity(0.2))
                         .frame(width: 100, height: 100)
-
+                    
                     // Si tienes una imagen, muéstrala; de lo contrario, muestra el icono por defecto
                     if let imagenURL = anuncio.imagen, !imagenURL.isEmpty {
                         AsyncImage(url: URL(string: imagenURL)) { image in
@@ -105,7 +105,7 @@ struct ModificarAnuncioView: View {
                             .frame(width: 60, height: 60)
                             .foregroundColor(Color.gray.opacity(0.1))
                     }
-
+                    
                     Image(systemName: "plus")
                         .resizable()
                         .scaledToFit()
@@ -113,15 +113,15 @@ struct ModificarAnuncioView: View {
                         .foregroundColor(Color.white.opacity(0.7))
                 }
             }
-
+            
             Spacer().frame(height: 20)
-
+            
             // Campo de texto para el título
             VStack(alignment: .leading) {
                 Text("Título")
                     .font(.subheadline)
                     .foregroundColor(.black)
-
+                
                 TextField("Título del anuncio", text: $titulo)
                     .padding(.horizontal, 11)
                     .padding(.vertical, 4)
@@ -132,13 +132,13 @@ struct ModificarAnuncioView: View {
             }
             .padding(.horizontal)
             .padding(.bottom, 20)
-
+            
             // Campo de texto para el contenido
             VStack(alignment: .leading) {
                 Text("Contenido")
                     .font(.subheadline)
                     .foregroundColor(.black)
-
+                
                 ZStack(alignment: .topLeading) {
                     if contenido.isEmpty {
                         Text("¿Qué quieres compartir?")
@@ -172,24 +172,6 @@ struct ModificarAnuncioView: View {
                     presentationMode.wrappedValue.dismiss()
                 }
             )
-        }
-    }
-
-    struct ModificarAnuncioView_Previews: PreviewProvider {
-        static var previews: some View {
-            let viewModel = AnuncioViewModel()
-            let ejemploAnuncio = Anuncio(
-                id: "12345",
-                IDUsuario: 1,
-                titulo: "Ejemplo",
-                contenido: "Descripción del ejemplo",
-                imagen: nil,
-                createdAt: "2024-09-21T12:00:00Z",
-                fechaCaducidad: "2024-10-21",
-                icon: "A",
-                backgroundColor: Color(UIColor.systemGray6)
-            )
-            ModificarAnuncioView(viewModel: viewModel, anuncio: ejemploAnuncio)
         }
     }
 }
