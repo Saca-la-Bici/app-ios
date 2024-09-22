@@ -64,7 +64,12 @@ struct SignUpStep3View: View {
                             action: {
                                 Task {
                                     await signUpViewModel.registrarUsuario()
-                                   // El listener se encarga automaticamente
+                                   
+                                    // Cambiar el estado de autenticación para loggear al usuario
+                                    if signUpViewModel.showAlert != true {
+                                        sessionManager.isAuthenticated = true
+                                        sessionManager.isProfileComplete = true
+                                    }
                                 }
                             }
                         )

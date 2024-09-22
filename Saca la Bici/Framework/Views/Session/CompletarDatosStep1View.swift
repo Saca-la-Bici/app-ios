@@ -66,9 +66,11 @@ struct CompletarDatosStep1View: View {
                             text: "Continuar",
                             backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                             action: {
-                                signUpViewModel.validarCompletarDatos1()
-                                if !signUpViewModel.showAlert {
-                                    path.append("completarDatos")
+                                Task {
+                                    await signUpViewModel.validarCompletarDatos1()
+                                    if !signUpViewModel.showAlert {
+                                        path.append("completarDatos")
+                                    }
                                 }
                             }
                         )

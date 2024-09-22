@@ -108,15 +108,28 @@ class SignUpViewModel: ObservableObject {
             self.showAlert = true
         }
         else if (responseCode != 201){
-            self.messageAlert = "Hubo un error al registrar al usuario."
+            self.messageAlert = "Hubo un error al registrar al usuario. Favor de intentar de nuevo."
             self.showAlert = true
         }
     }
     
     @MainActor
-    func validarCompletarDatos1() {
+    func validarCompletarDatos1() async {
         if (self.username.isEmpty) {
             self.messageAlert = "El username se encuentra vacío. Favor de intentar de nuevo."
+            self.showAlert = true
+            return
+        }
+        
+        let usernameDisponible = await self.signUpRequirement.verificarUsernameExistente(username: self.username)
+        
+        if usernameDisponible == nil {
+            self.messageAlert = "Hubo un error al procesar tu petición. Favor de intentar de nuevo."
+            self.showAlert = true
+            return
+
+        } else if usernameDisponible! == true {
+            self.messageAlert = "El username proporcionado ya está en uso. Favor de intentar de nuevo."
             self.showAlert = true
             return
         }

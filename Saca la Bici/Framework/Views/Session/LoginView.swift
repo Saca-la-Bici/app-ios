@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    
+    @EnvironmentObject var sessionManager: SessionManager
     @StateObject var loginViewModel = LoginViewModel()
     
     var body: some View {
@@ -70,7 +70,12 @@ struct LoginView: View {
                             action: {
                                 Task {
                                     await loginViewModel.iniciarSesion()
-                                    // El listener se encarga del menu
+                                    
+                                    // Cambiar el estado de autenticación para loggear al usuario
+                                    if loginViewModel.showAlert != true {
+                                        sessionManager.isAuthenticated = true
+                                        sessionManager.isProfileComplete = true
+                                    }
                                 }
                             }
                         )
