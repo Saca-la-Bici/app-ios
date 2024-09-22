@@ -74,24 +74,6 @@ struct LoginView: View {
                                 }
                             }
                         )
-                        
-                        // O continúa con
-                        Text("o continúa con")
-                            .font(.footnote)
-                            .foregroundColor(Color.gray)
-                            .frame(maxWidth: .infinity)
-                        
-                        ExternalLoginButton(
-                            action: {
-                                await loginViewModel.GoogleLogin()
-                                // El listener se encarga del menu
-                            },
-                            buttonText: "Continuar con Google",
-                            imageName: "GoogleLogo",
-                            systemImage: false
-                        )
-                        
-                        Spacer()
                     }
                 }
                 .padding(30)
