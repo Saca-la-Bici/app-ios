@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignUpStep3View: View {
     @EnvironmentObject var sessionManager: SessionManager
-    @Binding var path: [String]
+    @Binding var path: [SessionPaths]
     
     @ObservedObject var signUpViewModel = SignUpViewModel()
     

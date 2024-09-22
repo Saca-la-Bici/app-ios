@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignUpStep1View: View {
-    @Binding var path: [String]
+    @Binding var path: [SessionPaths]
     
     @ObservedObject var signUpViewModel = SignUpViewModel()
     
@@ -74,7 +74,7 @@ struct SignUpStep1View: View {
                                 Task {
                                     await signUpViewModel.validarDatosStep1()
                                     if !signUpViewModel.showAlert {
-                                        path.append("continue")
+                                        path.append(.continueRegistration)
                                     }
                                 }
                             }
@@ -105,7 +105,7 @@ struct SignInStep1View_Previews: PreviewProvider {
     }
 
     struct PreviewWrapper: View {
-        @State var path: [String] = []
+        @State var path: [SessionPaths] = []
 
         var body: some View {
             SignUpStep1View(path: $path)

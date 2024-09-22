@@ -10,7 +10,7 @@ import SwiftUI
 struct CompletarDatosStep1View: View {
     @EnvironmentObject var sessionManager: SessionManager
     @StateObject var signUpViewModel = SignUpViewModel()
-    @State private var path: [String] = []
+    @State private var path: [SessionPaths] = []
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -69,7 +69,7 @@ struct CompletarDatosStep1View: View {
                                 Task {
                                     await signUpViewModel.validarCompletarDatos1()
                                     if !signUpViewModel.showAlert {
-                                        path.append("completarDatos")
+                                        path.append(.completarDatos)
                                     }
                                 }
                             }
@@ -98,9 +98,9 @@ struct CompletarDatosStep1View: View {
                         message: Text(signUpViewModel.messageAlert)
                     )
                 }
-                .navigationDestination(for: String.self) { value in
+                .navigationDestination(for: SessionPaths.self) { value in
                     switch value {
-                    case "completarDatos":
+                    case .completarDatos:
                         CompletarDatosStep2View(path: $path, signUpViewModel: signUpViewModel)
                     default:
                         EmptyView()
