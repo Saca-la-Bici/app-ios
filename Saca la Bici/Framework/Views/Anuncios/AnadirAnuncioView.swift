@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct AnadirAnuncioView: View {
     @State private var titulo: String = ""
     @State private var descripcion: String = ""
     @Environment(\.presentationMode) var presentationMode
     var viewModel: AnuncioViewModel
+    @State private var selectedItem: PhotosPickerItem? = nil
+    @State private var selectedImageData: Data? = nil
+
 
     var body: some View {
         VStack {
@@ -45,6 +49,61 @@ struct AnadirAnuncioView: View {
 
             Spacer().frame(height: 40)
 
+            // Icono para subir imagen utilizando PhotosPicker
+                       if selectedImageData == nil {
+                           PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
+                               ZStack {
+                                   // Fondo más claro
+                                   RoundedRectangle(cornerRadius: 25)
+                                       .fill(Color.gray.opacity(0.2))
+                                       .frame(width: 100, height: 100)
+                                   
+                                   // Ícono de imagen detrás de la cruz
+                                   Image(systemName: "photo.fill")
+                                       .resizable()
+                                       .scaledToFit()
+                                       .frame(width: 60, height: 60)
+                                       .foregroundColor(Color.gray.opacity(0.1)) // Ícono de imagen más tenue
+                                   
+                                   // Ícono de cruz
+                                   Image(systemName: "plus")
+                                       .resizable()
+                                       .scaledToFit()
+                                       .frame(width: 35, height: 35)
+                                       .foregroundColor(Color.white.opacity(0.7)) // Cruz blanca
+                               }
+                           }
+                           .onChange(of: selectedItem) { newItem in
+                               Task {
+                                   if let data = try? await newItem?.loadTransferable(type: Data.self),
+                                      let uiImage = UIImage(data: data) {
+                                       selectedImageData = data
+                                   }
+                               }
+                           }
+                       }
+
+                       // Mostrar la imagen seleccionada si existe
+                       if let data = selectedImageData, let uiImage = UIImage(data: data) {
+                           VStack {
+                               Image(uiImage: uiImage)
+                                   .resizable()
+                                   .scaledToFit()
+                                   .frame(width: 200, height: 200)
+                                   .cornerRadius(10)
+                               
+                               // (Opcional) Botón para eliminar la imagen seleccionada
+                               Button(action: {
+                                   selectedImageData = nil // Elimina la imagen seleccionada
+                               }) {
+                                   Text("Eliminar Imagen")
+                                       .foregroundColor(.red)
+                                       .padding(.top, 5)
+                               }
+                           }
+                       }
+
+                       Spacer().frame(height: 20)
             
             VStack(alignment: .leading) {
                 Text("Título")

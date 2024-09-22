@@ -43,6 +43,8 @@
 		AE41A6E52C9A648B00921BDF /* consultarAnuncioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E42C9A648B00921BDF /* consultarAnuncioView.swift */; };
 		AE41A6E72C9A679700921BDF /* Anuncio.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E62C9A679000921BDF /* Anuncio.swift */; };
 		AE41A6E92C9A6AA200921BDF /* AnadirAnuncioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E82C9A6AA200921BDF /* AnadirAnuncioView.swift */; };
+		AEE34B862C9FA5BD00C2EECE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AEE34B852C9FA5BD00C2EECE /* GoogleService-Info.plist */; };
+		AEE34B8A2C9FA61800C2EECE /* modificarAnuncioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +100,8 @@
 		AE41A6E42C9A648B00921BDF /* consultarAnuncioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = consultarAnuncioView.swift; sourceTree = "<group>"; };
 		AE41A6E62C9A679000921BDF /* Anuncio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anuncio.swift; sourceTree = "<group>"; };
 		AE41A6E82C9A6AA200921BDF /* AnadirAnuncioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnadirAnuncioView.swift; sourceTree = "<group>"; };
+		AEE34B852C9FA5BD00C2EECE /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modificarAnuncioView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +178,7 @@
 				252B64D02C99FE5900A362C5 /* Framework */,
 				252B64DF2C99FE6F00A362C5 /* Domain */,
 				252B64EA2C99FE7200A362C5 /* Data */,
+				AEE34B852C9FA5BD00C2EECE /* GoogleService-Info.plist */,
 				252B65042C9A297700A362C5 /* Saca-la-Bici-Info.plist */,
 				252B647F2C99FC5E00A362C5 /* Assets.xcassets */,
 				252B64932C99FD2C00A362C5 /* Preview Content */,
@@ -311,6 +316,7 @@
 			children = (
 				AE41A6E82C9A6AA200921BDF /* AnadirAnuncioView.swift */,
 				AE41A6E42C9A648B00921BDF /* consultarAnuncioView.swift */,
+				AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */,
 			);
 			path = Anuncios;
 			sourceTree = "<group>";
@@ -446,6 +452,7 @@
 			files = (
 				252B64902C99FCD800A362C5 /* Preview Assets.xcassets in Resources */,
 				252B64832C99FC5E00A362C5 /* Assets.xcassets in Resources */,
+				AEE34B862C9FA5BD00C2EECE /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +483,7 @@
 				252B64D32C99FE5900A362C5 /* SignUpStep1View.swift in Sources */,
 				252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */,
 				252B64EB2C99FE7200A362C5 /* User.swift in Sources */,
+				AEE34B8A2C9FA61800C2EECE /* modificarAnuncioView.swift in Sources */,
 				252B64ED2C99FE7200A362C5 /* APIRoutes.swift in Sources */,
 				252B64EE2C99FE7200A362C5 /* SessionAPIService.swift in Sources */,
 				252B64EF2C99FE7200A362C5 /* SessionRepository.swift in Sources */,
