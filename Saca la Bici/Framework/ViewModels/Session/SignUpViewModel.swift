@@ -52,14 +52,14 @@ class SignUpViewModel: ObservableObject {
     
     // Validar que la cadena no contenga solo caracteres especiales usando expresión regular
     func isOnlyText(_ text: String) -> Bool {
-        let regex = "^[A-Za-z]+$"
+        let regex = "^[\\p{L} ]+$"
         let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
         return predicate.evaluate(with: text)
     }
     
     // Función para validar que la contraseña contenga al menos una minúscula, una mayúscula y un número
     func isValidPassword(_ password: String) -> Bool {
-        let regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>])$"
+        let regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>]).+$"
         let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
         return predicate.evaluate(with: password)
     }
