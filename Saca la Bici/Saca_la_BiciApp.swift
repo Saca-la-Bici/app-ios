@@ -38,7 +38,7 @@ struct YourApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    @StateObject var sessionManager = SessionManager()
+
     
     init() {
         let appearance = UINavigationBarAppearance()
