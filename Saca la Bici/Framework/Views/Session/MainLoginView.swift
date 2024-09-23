@@ -102,7 +102,7 @@ struct MainLoginView: View {
                                     }
                                 }
                             )
-                            .signInWithAppleButtonStyle(.whiteOutline)
+                            .signInWithAppleButtonStyle(.black)
                             .frame(height: 50)
                         }
                     }

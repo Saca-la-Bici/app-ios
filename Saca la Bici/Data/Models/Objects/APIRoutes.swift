@@ -9,7 +9,7 @@ import Foundation
 
 struct Api {
     // Esta es la base del URL (se usa en TODAS las llamadas)
-    static let base = "http://192.168.68.118:8080"
+    static let base = "http://10.25.89.116:8080"
     
     // Es las rutas del API, donde /pokemon es como un modulo. Puede haber más
     struct routes {
