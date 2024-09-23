@@ -140,7 +140,7 @@ class SignUpViewModel: ObservableObject {
         }
         
         if !isValidPassword(self.password) {
-            self.messageAlert = "La contraseña debe contener al menos una letra minúscula, una letra mayúscula un número y un caracter especial."
+            self.messageAlert = "La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un número y un carácter especial."
             self.showAlert = true
             return
         }
