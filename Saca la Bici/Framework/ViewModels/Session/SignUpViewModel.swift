@@ -67,25 +67,25 @@ class SignUpViewModel: ObservableObject {
     @MainActor
     func validarDatosStep1() async {
         if self.email.isEmpty || self.username.isEmpty {
-            self.messageAlert = "Correo o username vacío. Favor de intentar de nuevo."
+            self.messageAlert = "Correo o username vacío. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
         
         if !self.email.contains("@") || !self.email.contains(".") {
-            self.messageAlert = "El correo electrónico proporcionado no es válido. Favor de intentar de nuevo."
+            self.messageAlert = "El correo electrónico proporcionado no es válido. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
         
         if !isNotOnlyNumbers(self.username) {
-            self.messageAlert = "Por favor ingrese un username válido. Favor de intentar de nuevo."
+            self.messageAlert = "Por favor ingrese un username válido. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
 
         if !isNotOnlySpecialCharacters(self.username) {
-            self.messageAlert = "Por favor ingrese un username válido. Favor de intentar de nuevo."
+            self.messageAlert = "Por favor ingrese un username válido. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
@@ -93,12 +93,12 @@ class SignUpViewModel: ObservableObject {
         let usernameDisponible = await self.signUpRequirement.verificarUsernameExistente(username: self.username)
         
         if usernameDisponible == nil {
-            self.messageAlert = "Hubo un error al procesar tu petición. Favor de intentar de nuevo."
+            self.messageAlert = "Hubo un error al procesar tu petición. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
 
         } else if usernameDisponible! == true {
-            self.messageAlert = "El username proporcionado ya está en uso. Favor de intentar de nuevo."
+            self.messageAlert = "El username proporcionado ya está en uso. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
@@ -107,13 +107,13 @@ class SignUpViewModel: ObservableObject {
     @MainActor
     func validarDatosStep2() {
         if (self.countryCode.isEmpty || self.phoneNumber.isEmpty || self.selectedBloodType == "Selecciona tu tipo de sangre" || self.nombreCompleto.isEmpty) {
-            self.messageAlert = "Falta de llenar algún dato. Favor de intentar de nuevo."
+            self.messageAlert = "Falta de llenar algún dato. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
         
         if !isOnlyText(self.nombreCompleto) {
-            self.messageAlert = "Por favor ingrese un nombre válido. Favor de intentar de nuevo."
+            self.messageAlert = "Por favor ingrese un nombre válido. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
@@ -122,13 +122,13 @@ class SignUpViewModel: ObservableObject {
     @MainActor
     func registrarUsuario() async {
         if (self.password.isEmpty || self.confirmPassword.isEmpty) {
-            self.messageAlert = "Alguna de las dos contraseñas está vacía. Favor de intentar de nuevo."
+            self.messageAlert = "Alguna de las dos contraseñas está vacía. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
         
         if (self.password != self.confirmPassword) {
-            self.messageAlert = "Las contraseñas no son iguales. Favor de intentar de nuevo."
+            self.messageAlert = "Las contraseñas no son iguales. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
@@ -160,7 +160,7 @@ class SignUpViewModel: ObservableObject {
             self.showAlert = true
         }
         else if (responseCode != 201){
-            self.messageAlert = "Hubo un error al registrar al usuario. Favor de intentar de nuevo."
+            self.messageAlert = "Hubo un error al registrar al usuario. Favor de intentarlo de nuevo."
             self.showAlert = true
         }
     }
@@ -168,19 +168,19 @@ class SignUpViewModel: ObservableObject {
     @MainActor
     func validarCompletarDatos1() async {
         if (self.username.isEmpty) {
-            self.messageAlert = "El username se encuentra vacío. Favor de intentar de nuevo."
+            self.messageAlert = "El username se encuentra vacío. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
         
         if !isNotOnlyNumbers(self.username) {
-            self.messageAlert = "Por favor ingrese un username válido. Favor de intentar de nuevo."
+            self.messageAlert = "Por favor ingrese un username válido. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
 
         if !isNotOnlySpecialCharacters(self.username) {
-            self.messageAlert = "Por favor ingrese un username válido. Favor de intentar de nuevo."
+            self.messageAlert = "Por favor ingrese un username válido. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
@@ -188,12 +188,12 @@ class SignUpViewModel: ObservableObject {
         let usernameDisponible = await self.signUpRequirement.verificarUsernameExistente(username: self.username)
         
         if usernameDisponible == nil {
-            self.messageAlert = "Hubo un error al procesar tu petición. Favor de intentar de nuevo."
+            self.messageAlert = "Hubo un error al procesar tu petición. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
 
         } else if usernameDisponible! == true {
-            self.messageAlert = "El username proporcionado ya está en uso. Favor de intentar de nuevo."
+            self.messageAlert = "El username proporcionado ya está en uso. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
@@ -203,7 +203,7 @@ class SignUpViewModel: ObservableObject {
     func completarRegistro() async {
         
         if (self.countryCode.isEmpty || self.phoneNumber.isEmpty || self.selectedBloodType == "Selecciona tu tipo de sangre") {
-            self.messageAlert = "Falta de llenar algún dato. Favor de intentar de nuevo."
+            self.messageAlert = "Falta de llenar algún dato. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
@@ -228,7 +228,7 @@ class SignUpViewModel: ObservableObject {
         let responseStatus = await self.signUpRequirement.GoogleLogin()
         
         if (responseStatus == 500) {
-            self.messageAlert = "Error al iniciar sesión con Google. Favor intentar de nuevo"
+            self.messageAlert = "Error al iniciar sesión con Google. Favor intentarlo de nuevo"
             self.showAlert = true
             // No mostrar error si se cancelo.
         } else if (responseStatus == -1) {
