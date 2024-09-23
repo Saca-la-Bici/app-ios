@@ -68,16 +68,6 @@ struct CompletarDatosStep2View: View {
                     )
                     
                     Spacer().frame(height: 0)
-                    
-                    // Botón para continuar con otra cuenta
-                    CustomButton(
-                        text: "Continuar con otra cuenta",
-                        backgroundColor: .red,
-                        action: {
-                            sessionManager.signOut()
-                        }
-                    )
-                    
                 }
                 .padding(30)
             }

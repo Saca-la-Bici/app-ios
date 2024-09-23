@@ -34,7 +34,16 @@ struct CompletarDatosStep1View: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
                         
-                        Spacer().frame(height: 30)
+                        // Botón para continuar con otra cuenta en la esquina derecha superior
+                        HStack {
+                            Button(action: {
+                                sessionManager.signOut()
+                            }) {
+                                Image(systemName: "xmark")
+                                    .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
+                            }
+                        }
+                        .padding(.top, -10)
                         
                         // Título
                         TituloComponent(title: "Completar Registro", separator: "_", imageName: "Bici", separatorBool: true)
@@ -76,15 +85,6 @@ struct CompletarDatosStep1View: View {
                         )
                         
                         Spacer().frame(height: 0)
-                        
-                        // Botón para continuar con otra cuenta
-                        CustomButton(
-                            text: "Continuar con otra cuenta",
-                            backgroundColor: .red,
-                            action: {
-                                sessionManager.signOut()
-                            }
-                        )
                     }
                     .padding(30)
                 }
