@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignUpStep3View: View {
     @EnvironmentObject var sessionManager: SessionManager
-    @Binding var path: [String]
+    @Binding var path: [SessionPaths]
     
     @ObservedObject var signUpViewModel = SignUpViewModel()
     
@@ -64,7 +64,12 @@ struct SignUpStep3View: View {
                             action: {
                                 Task {
                                     await signUpViewModel.registrarUsuario()
-                                   // El listener se encarga automaticamente
+                                   
+                                    // Cambiar el estado de autenticación para loggear al usuario
+                                    if signUpViewModel.showAlert != true {
+                                        sessionManager.isAuthenticated = true
+                                        sessionManager.isProfileComplete = true
+                                    }
                                 }
                             }
                         )

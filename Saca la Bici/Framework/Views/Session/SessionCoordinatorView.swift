@@ -21,9 +21,7 @@ struct SessionCoordinatorView: View {
             }
             else if sessionManager.isAuthenticated {
                 if sessionManager.isProfileComplete {
-                    NavigationStack {
-                        MenuView()
-                    }
+                    MenuView()
                 } else {
                     if sessionManager.isErrorLogin {
                         MainLoginView()

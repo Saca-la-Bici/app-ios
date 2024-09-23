@@ -13,7 +13,7 @@ struct MainLoginView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
     // Estado para la pila de navegación
-    @State private var path: [String] = []
+    @State private var path: [SessionPaths] = []
     
     // ViewModel para pasar a las otras vistas
     @StateObject var signUpViewModel = SignUpViewModel()
@@ -55,14 +55,14 @@ struct MainLoginView: View {
                         
                         VStack {
                             MainViewButton(title: "Crea una cuenta",
-                                             pathValue: "register",
+                                           pathValue: .register,
                                              foregroundColor: .white,
                                              backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                                              hasOverlay: false,
                                              path: $path)
                             
                             MainViewButton(title: "Iniciar sesión",
-                                           pathValue: "login",
+                                           pathValue: .login,
                                              foregroundColor: .black,
                                              backgroundColor: .white,
                                              hasOverlay: true,
@@ -82,7 +82,7 @@ struct MainLoginView: View {
                                 action: {
                                     await signUpViewModel.GoogleLogin()
                                 },
-                                buttonText: "Registrarse con Google",
+                                buttonText: "Continúa con Google",
                                 imageName: "GoogleLogo",
                                 systemImage: false
                             )
@@ -115,15 +115,15 @@ struct MainLoginView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(red: 0.925, green: 0.925, blue: 0.925))
-            .navigationDestination(for: String.self) { value in
+            .navigationDestination(for: SessionPaths.self) { value in
                 switch value {
-                case "login":
+                case .login:
                     LoginView()
-                case "register":
+                case .register:
                     SignUpStep1View(path: $path, signUpViewModel: signUpViewModel)
-                case "continue":
+                case .continueRegistration:
                     SignUpStep2View(path: $path, signUpViewModel: signUpViewModel)
-                case "finalizar":
+                case .finalizar:
                     SignUpStep3View(path: $path, signUpViewModel: signUpViewModel)
                 default:
                     EmptyView()

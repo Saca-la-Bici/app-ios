@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    
+    @EnvironmentObject var sessionManager: SessionManager
     @StateObject var loginViewModel = LoginViewModel()
     
     var body: some View {
@@ -70,28 +70,15 @@ struct LoginView: View {
                             action: {
                                 Task {
                                     await loginViewModel.iniciarSesion()
-                                    // El listener se encarga del menu
+                                    
+                                    // Cambiar el estado de autenticación para loggear al usuario
+                                    if loginViewModel.showAlert != true {
+                                        sessionManager.isAuthenticated = true
+                                        sessionManager.isProfileComplete = true
+                                    }
                                 }
                             }
                         )
-                        
-                        // O continúa con
-                        Text("o continúa con")
-                            .font(.footnote)
-                            .foregroundColor(Color.gray)
-                            .frame(maxWidth: .infinity)
-                        
-                        ExternalLoginButton(
-                            action: {
-                                await loginViewModel.GoogleLogin()
-                                // El listener se encarga del menu
-                            },
-                            buttonText: "Continuar con Google",
-                            imageName: "GoogleLogo",
-                            systemImage: false
-                        )
-                        
-                        Spacer()
                     }
                 }
                 .padding(30)

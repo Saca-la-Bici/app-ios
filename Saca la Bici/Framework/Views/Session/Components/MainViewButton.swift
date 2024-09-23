@@ -9,11 +9,11 @@ import SwiftUI
 
 struct MainViewButton: View {
     var title: String
-    var pathValue: String
+    var pathValue: SessionPaths
     var foregroundColor: Color
     var backgroundColor: Color
     var hasOverlay: Bool
-    @Binding var path: [String]
+    @Binding var path: [SessionPaths]
     
     var body: some View {
         Button(action: {

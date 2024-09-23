@@ -10,6 +10,7 @@ import FirebaseAuth
 
 class SessionManager: ObservableObject {
     @Published var isAuthenticated: Bool = false
+    @Published var isFireBaseAuthenticated: Bool = false
     @Published var isProfileComplete: Bool = false
     @Published var isErrorLogin: Bool = false
     @Published var isLoading: Bool = true
@@ -31,14 +32,11 @@ class SessionManager: ObservableObject {
     private func setupAuthStateListener() {
         authStateListenerHandle = Auth.auth().addStateDidChangeListener { [weak self] auth, user in
             DispatchQueue.main.async {
-                self?.isAuthenticated = user != nil
+                self?.isFireBaseAuthenticated = user != nil
                 if let user = user {
                     if self?.isExternalSignIn(user: user) == true {
+                        self?.isAuthenticated = true
                         self?.checkProfileCompleteness()
-                    } else {
-                        // For email/password sign-in, assume profile is complete
-                        self?.isProfileComplete = true
-                        self?.isLoading = false
                     }
                 } else {
                     self?.isProfileComplete = false
@@ -116,6 +114,8 @@ class SessionManager: ObservableObject {
         do {
             try Auth.auth().signOut()
             isProfileComplete = false
+            isAuthenticated = false
+            isFireBaseAuthenticated = false
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }

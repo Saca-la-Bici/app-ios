@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CompletarDatosStep2View: View {
-    @Binding var path: [String]
+    @Binding var path: [SessionPaths]
     @EnvironmentObject var sessionManager: SessionManager
     @ObservedObject var signUpViewModel: SignUpViewModel
 
