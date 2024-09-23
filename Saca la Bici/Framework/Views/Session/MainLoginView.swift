@@ -80,7 +80,7 @@ struct MainLoginView: View {
                                 action: {
                                     await signUpViewModel.GoogleLogin()
                                 },
-                                buttonText: "Registrarse con Google",
+                                buttonText: "Continúa con Google",
                                 imageName: "GoogleLogo",
                                 systemImage: false
                             )

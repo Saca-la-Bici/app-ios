@@ -67,25 +67,25 @@ class SignUpViewModel: ObservableObject {
     @MainActor
     func validarDatosStep1() async {
         if self.email.isEmpty || self.username.isEmpty {
-            self.messageAlert = "Correo o username vacío. Favor de intentarlo de nuevo."
+            self.messageAlert = "El correo o username está vacío."
             self.showAlert = true
             return
         }
         
         if !self.email.contains("@") || !self.email.contains(".") {
-            self.messageAlert = "El correo electrónico proporcionado no es válido. Favor de intentarlo de nuevo."
+            self.messageAlert = "El correo electrónico proporcionado no es válido."
             self.showAlert = true
             return
         }
         
         if !isNotOnlyNumbers(self.username) {
-            self.messageAlert = "Por favor ingrese un username válido. Favor de intentarlo de nuevo."
+            self.messageAlert = "Por favor ingrese un username válido."
             self.showAlert = true
             return
         }
 
         if !isNotOnlySpecialCharacters(self.username) {
-            self.messageAlert = "Por favor ingrese un username válido. Favor de intentarlo de nuevo."
+            self.messageAlert = "Por favor ingrese un username válido."
             self.showAlert = true
             return
         }
@@ -98,7 +98,7 @@ class SignUpViewModel: ObservableObject {
             return
 
         } else if usernameDisponible! == true {
-            self.messageAlert = "El username proporcionado ya está en uso. Favor de intentarlo de nuevo."
+            self.messageAlert = "El username proporcionado ya está en uso. Favor de intentarlo con otro."
             self.showAlert = true
             return
         }
@@ -113,7 +113,7 @@ class SignUpViewModel: ObservableObject {
         }
         
         if !isOnlyText(self.nombreCompleto) {
-            self.messageAlert = "Por favor ingrese un nombre válido. Favor de intentarlo de nuevo."
+            self.messageAlert = "Por favor ingrese un nombre válido."
             self.showAlert = true
             return
         }
@@ -168,19 +168,19 @@ class SignUpViewModel: ObservableObject {
     @MainActor
     func validarCompletarDatos1() async {
         if (self.username.isEmpty) {
-            self.messageAlert = "El username se encuentra vacío. Favor de intentarlo de nuevo."
+            self.messageAlert = "El username se encuentra vacío."
             self.showAlert = true
             return
         }
         
         if !isNotOnlyNumbers(self.username) {
-            self.messageAlert = "Por favor ingrese un username válido. Favor de intentarlo de nuevo."
+            self.messageAlert = "Por favor ingrese un username válido."
             self.showAlert = true
             return
         }
 
         if !isNotOnlySpecialCharacters(self.username) {
-            self.messageAlert = "Por favor ingrese un username válido. Favor de intentarlo de nuevo."
+            self.messageAlert = "Por favor ingrese un username válido."
             self.showAlert = true
             return
         }
@@ -193,7 +193,7 @@ class SignUpViewModel: ObservableObject {
             return
 
         } else if usernameDisponible! == true {
-            self.messageAlert = "El username proporcionado ya está en uso. Favor de intentarlo de nuevo."
+            self.messageAlert = "El username proporcionado ya está en uso. Favor de intentarlo con otro."
             self.showAlert = true
             return
         }
@@ -218,7 +218,7 @@ class SignUpViewModel: ObservableObject {
             // Llamar al closure para notificar el éxito
             self.onProfileComplete?()
         } else {
-            self.messageAlert = "Hubo un error al completar el registro."
+            self.messageAlert = "Hubo un error al completar el registro. Favor de intentarlo de nuevo."
             self.showAlert = true
         }
     }
