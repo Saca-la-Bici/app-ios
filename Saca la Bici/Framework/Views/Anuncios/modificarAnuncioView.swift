@@ -77,7 +77,6 @@ struct ModificarAnuncioView: View {
             
             Spacer().frame(height: 40)
             
-            // Icono para subir imagen (opcional)
             Button(action: {
                 // Acción para subir imagen
                 // Implementar lógica para seleccionar y subir una nueva imagen

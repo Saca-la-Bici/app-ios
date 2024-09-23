@@ -107,10 +107,13 @@ struct consultarAnuncio: View {
             .sheet(isPresented: $showAddAnuncioView) {
                 AnadirAnuncioView(viewModel: viewModel)
             }
-            .sheet(isPresented: $showModifyView) {
-                if let anuncio = selectedAnuncio {
-                    ModificarAnuncioView(viewModel: viewModel, anuncio: anuncio)
-                }
+            .sheet(isPresented: Binding(
+                get: { selectedAnuncio != nil && showModifyView },
+                set: { newValue in
+                    if !newValue { selectedAnuncio = nil }
+                    showModifyView = newValue
+                })) {
+                    ModificarAnuncioView(viewModel: viewModel, anuncio: selectedAnuncio!)
             }
             .alert(isPresented: $showDeleteConfirmation) {
                 Alert(
