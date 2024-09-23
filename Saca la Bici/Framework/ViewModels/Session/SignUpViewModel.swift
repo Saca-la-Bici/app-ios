@@ -36,6 +36,34 @@ class SignUpViewModel: ObservableObject {
         self.signUpRequirement = signUpRequirement
     }
     
+    // Validar que la cadena no contenga solo números usando expresión regular
+    func isNotOnlyNumbers(_ text: String) -> Bool {
+        let regex = "^(?!\\d+$).+"
+        let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
+        return predicate.evaluate(with: text)
+    }
+
+    // Validar que la cadena no contenga solo caracteres especiales usando expresión regular
+    func isNotOnlySpecialCharacters(_ text: String) -> Bool {
+        let regex = "^(?=.*[A-Za-z0-9]).+$"
+        let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
+        return predicate.evaluate(with: text)
+    }
+    
+    // Validar que la cadena no contenga solo caracteres especiales usando expresión regular
+    func isOnlyText(_ text: String) -> Bool {
+        let regex = "^[A-Za-z]+$"
+        let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
+        return predicate.evaluate(with: text)
+    }
+    
+    // Función para validar que la contraseña contenga al menos una minúscula, una mayúscula y un número
+    func isValidPassword(_ password: String) -> Bool {
+        let regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>])$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
+        return predicate.evaluate(with: password)
+    }
+    
     @MainActor
     func validarDatosStep1() async {
         if self.email.isEmpty || self.username.isEmpty {
@@ -46,6 +74,18 @@ class SignUpViewModel: ObservableObject {
         
         if !self.email.contains("@") || !self.email.contains(".") {
             self.messageAlert = "El correo electrónico proporcionado no es válido. Favor de intentar de nuevo."
+            self.showAlert = true
+            return
+        }
+        
+        if !isNotOnlyNumbers(self.username) {
+            self.messageAlert = "Por favor ingrese un username válido. Favor de intentar de nuevo."
+            self.showAlert = true
+            return
+        }
+
+        if !isNotOnlySpecialCharacters(self.username) {
+            self.messageAlert = "Por favor ingrese un username válido. Favor de intentar de nuevo."
             self.showAlert = true
             return
         }
@@ -71,6 +111,12 @@ class SignUpViewModel: ObservableObject {
             self.showAlert = true
             return
         }
+        
+        if !isOnlyText(self.nombreCompleto) {
+            self.messageAlert = "Por favor ingrese un nombre válido. Favor de intentar de nuevo."
+            self.showAlert = true
+            return
+        }
     }
     
     @MainActor
@@ -87,8 +133,14 @@ class SignUpViewModel: ObservableObject {
             return
         }
         
-        if (self.password.count < 6) {
-            self.messageAlert = "La contraseña es demasiado corta. Debe tener al menos 6 caracteres."
+        if (self.password.count < 8) {
+            self.messageAlert = "La contraseña es demasiado corta. Debe tener al menos 8 caracteres."
+            self.showAlert = true
+            return
+        }
+        
+        if !isValidPassword(self.password) {
+            self.messageAlert = "La contraseña debe contener al menos una letra minúscula, una letra mayúscula un número y un caracter especial."
             self.showAlert = true
             return
         }
@@ -117,6 +169,18 @@ class SignUpViewModel: ObservableObject {
     func validarCompletarDatos1() async {
         if (self.username.isEmpty) {
             self.messageAlert = "El username se encuentra vacío. Favor de intentar de nuevo."
+            self.showAlert = true
+            return
+        }
+        
+        if !isNotOnlyNumbers(self.username) {
+            self.messageAlert = "Por favor ingrese un username válido. Favor de intentar de nuevo."
+            self.showAlert = true
+            return
+        }
+
+        if !isNotOnlySpecialCharacters(self.username) {
+            self.messageAlert = "Por favor ingrese un username válido. Favor de intentar de nuevo."
             self.showAlert = true
             return
         }
