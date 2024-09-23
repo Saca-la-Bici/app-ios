@@ -75,9 +75,10 @@ struct consultarAnuncio: View {
                             .padding()
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .background(Color(UIColor.systemGray6))
-                            .cornerRadius(12)
+                            .cornerRadius(20)
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(Color.white)
+                            .padding(.horizontal, 16)
                             .swipeActions(edge: .trailing) {
                                 Button(role: .destructive) {
                                     selectedAnuncio = anuncio
