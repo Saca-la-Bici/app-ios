@@ -1,0 +1,13 @@
+name: SwiftLint
+
+on:
+  push: Jesus0204-patch-1
+  pull_request: 
+
+jobs:
+  swiftlint:
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Ejecutar SwiftLint
+        uses: norio-nomura/action-swiftlint@3.2.1
