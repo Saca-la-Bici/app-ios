@@ -2,9 +2,9 @@ name: SwiftLint
 
 on:
   push:
-    branches: [ "main", "Jesus0204-patch-1" ]
+    branches: [ "main", "develop", "release/0.1", "release/0.2", "release/0.3"]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "develop", "release/0.1", "release/0.2", "release/0.3"]
 
 jobs:
   swiftlint:
