@@ -52,6 +52,8 @@ struct ModificarAnuncioView: View {
                         .font(.title2)
                         .foregroundColor(.black)
                 }
+                .buttonStyle(PlainButtonStyle())
+                
                 Spacer()
                 Text("Modificar anuncio")
                     .font(.headline)
@@ -82,6 +84,7 @@ struct ModificarAnuncioView: View {
                         .font(.title2)
                         .foregroundColor(.yellow)
                 }
+                .buttonStyle(PlainButtonStyle())
             }
             .padding(.horizontal)
             .padding(.top, 10)
@@ -186,6 +189,9 @@ struct ModificarAnuncioView: View {
             .padding(.bottom, 20)
     
             Spacer()
+        }
+        .onTapGesture {
+            UIApplication.shared.hideKeyboard()
         }
         .padding(.bottom, 20)
         // Único modificador de alerta utilizando activeAlert

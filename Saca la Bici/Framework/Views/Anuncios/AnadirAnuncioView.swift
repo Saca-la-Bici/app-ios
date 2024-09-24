@@ -39,6 +39,7 @@ struct AnadirAnuncioView: View {
                         .font(.title2)
                         .foregroundColor(.black)
                 }
+                .buttonStyle(PlainButtonStyle())
                 Spacer()
                 Text("Añadir anuncio")
                     .font(.headline)
@@ -64,6 +65,7 @@ struct AnadirAnuncioView: View {
                         .font(.title2)
                         .foregroundColor(.yellow)
                 }
+                .buttonStyle(PlainButtonStyle())
             }
             .padding(.horizontal)
             .padding(.top, 10)
@@ -166,6 +168,9 @@ struct AnadirAnuncioView: View {
             .padding(.horizontal)
 
             Spacer()
+        }
+        .onTapGesture {
+            UIApplication.shared.hideKeyboard()
         }
         .padding(.bottom, 20)
         // unica alerta utilizando activeAlert

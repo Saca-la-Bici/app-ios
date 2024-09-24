@@ -12,9 +12,9 @@ struct Api {
     static let base = "http://3.145.117.182:8080"
     
     // Es las rutas del API, donde /pokemon es como un modulo. Puede haber más
-    struct routes {
+    struct Routes {
         static let session = "/session"
         static let status = "/status"
-        static let consultarAnuncio = "/anuncios/consultar"
+        static let anuncios = "/anuncios"
     }
 }

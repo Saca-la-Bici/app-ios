@@ -11,8 +11,7 @@ import Foundation
 class AnuncioAPIService {
     
     // Función para obtener los anuncios existentes
-    func fetchAnuncios(completion: @escaping (Result<[Anuncio], Error>) -> Void) {
-        let url = "http://192.168.0.5:3000/anuncios/consultar"
+    func fetchAnuncios(url: URL, completion: @escaping (Result<[Anuncio], Error>) -> Void) {
         
         AF.request(url, method: .get)
             .validate()
@@ -37,8 +36,8 @@ class AnuncioAPIService {
 
     
     // Función para registrar un nuevo anuncio
-    func registrarAnuncio(_ anuncio: Anuncio, completion: @escaping (Result<String, Error>) -> Void) {
-        let url = "http://192.168.0.5:3000/anuncios/registrar"
+    func registrarAnuncio(url: URL, _ anuncio: Anuncio, completion: @escaping (Result<String, Error>) -> Void) {
+        
         let params: [String: Any] = [
             "IDUsuario": 1,  // fijo por ahora
             "titulo": anuncio.titulo,
@@ -59,8 +58,7 @@ class AnuncioAPIService {
     }
     
     // Función para eliminar un anuncio
-        func eliminarAnuncio(idAnuncio: String, completion: @escaping (Result<String, Error>) -> Void) {
-            let url = "http://192.168.0.5:3000/anuncios/eliminar/\(idAnuncio)"
+        func eliminarAnuncio(url: URL, completion: @escaping (Result<String, Error>) -> Void) {
             
             AF.request(url, method: .delete)
                 .validate()
@@ -75,8 +73,7 @@ class AnuncioAPIService {
         }
     
     // Función para modificar anuncio
-    func modificarAnuncio(idAnuncio: String, titulo: String, contenido: String, completion: @escaping (Result<String, Error>) -> Void) {
-            let url = "http://192.168.0.5:3000/anuncios/modificar/\(idAnuncio)"
+    func modificarAnuncio(url: URL, titulo: String, contenido: String, completion: @escaping (Result<String, Error>) -> Void) {
             
             let params: [String: Any] = [
                 "IDUsuario": 1,

@@ -212,10 +212,8 @@
 		252B64E72C99FE7200A362C5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				AE41A6E62C9A679000921BDF /* Anuncio.swift */,
-				AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */,
-				252B64E22C99FE7200A362C5 /* APIRoutes.swift */,
-				252B64E32C99FE7200A362C5 /* User.swift */,
+				259EF8B82CA26D03007CE3FE /* Objects */,
+				259EF8B92CA26D3A007CE3FE /* Repositories */,
 				252B64E62C99FE7200A362C5 /* Network */,
 			);
 			path = Models;
@@ -227,6 +225,24 @@
 				252B64E72C99FE7200A362C5 /* Models */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		259EF8B82CA26D03007CE3FE /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				252B64E22C99FE7200A362C5 /* APIRoutes.swift */,
+				AE41A6E62C9A679000921BDF /* Anuncio.swift */,
+				252B64E32C99FE7200A362C5 /* User.swift */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		259EF8B92CA26D3A007CE3FE /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		AE41A6C52C9A607600921BDF /* ViewModels */ = {
