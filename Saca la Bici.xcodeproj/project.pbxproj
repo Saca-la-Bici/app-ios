@@ -8,12 +8,60 @@
 
 /* Begin PBXBuildFile section */
 		252B64832C99FC5E00A362C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 252B647F2C99FC5E00A362C5 /* Assets.xcassets */; };
-		252B64842C99FC5E00A362C5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64802C99FC5E00A362C5 /* ContentView.swift */; };
 		252B64852C99FC5E00A362C5 /* Saca_la_BiciApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64812C99FC5E00A362C5 /* Saca_la_BiciApp.swift */; };
 		252B64872C99FC5E00A362C5 /* Saca_la_BiciTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64862C99FC5E00A362C5 /* Saca_la_BiciTests.swift */; };
 		252B648A2C99FC5E00A362C5 /* Saca_la_BiciUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64882C99FC5E00A362C5 /* Saca_la_BiciUITests.swift */; };
 		252B648B2C99FC5E00A362C5 /* Saca_la_BiciUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64892C99FC5E00A362C5 /* Saca_la_BiciUITestsLaunchTests.swift */; };
 		252B64902C99FCD800A362C5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 252B648E2C99FCD800A362C5 /* Preview Assets.xcassets */; };
+		252B64D12C99FE5900A362C5 /* SessionCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64C72C99FE5900A362C5 /* SessionCoordinatorView.swift */; };
+		252B64D22C99FE5900A362C5 /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64CE2C99FE5900A362C5 /* UIApplicationExtensions.swift */; };
+		252B64D32C99FE5900A362C5 /* SignUpStep1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64C92C99FE5900A362C5 /* SignUpStep1View.swift */; };
+		252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64CA2C99FE5900A362C5 /* SignUpStep2View.swift */; };
+		252B64D52C99FE5900A362C5 /* SignUpStep3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64CB2C99FE5900A362C5 /* SignUpStep3View.swift */; };
+		252B64D62C99FE5900A362C5 /* MenuTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64C82C99FE5900A362C5 /* MenuTabs.swift */; };
+		252B64D72C99FE5900A362C5 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64C62C99FE5900A362C5 /* ResultView.swift */; };
+		252B64D82C99FE5900A362C5 /* MainLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64CC2C99FE5900A362C5 /* MainLoginView.swift */; };
+		252B64D92C99FE5900A362C5 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64C32C99FE5900A362C5 /* SessionManager.swift */; };
+		252B64DA2C99FE5900A362C5 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64C22C99FE5900A362C5 /* SignUpViewModel.swift */; };
+		252B64DB2C99FE5900A362C5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64C52C99FE5900A362C5 /* LoginView.swift */; };
+		252B64DC2C99FE5900A362C5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64C12C99FE5900A362C5 /* LoginViewModel.swift */; };
+		252B64E02C99FE6F00A362C5 /* LoginRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64DD2C99FE6F00A362C5 /* LoginRequirement.swift */; };
+		252B64E12C99FE6F00A362C5 /* SignUpRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64DE2C99FE6F00A362C5 /* SignUpRequirement.swift */; };
+		252B64EB2C99FE7200A362C5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64E32C99FE7200A362C5 /* User.swift */; };
+		252B64ED2C99FE7200A362C5 /* APIRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64E22C99FE7200A362C5 /* APIRoutes.swift */; };
+		252B64EE2C99FE7200A362C5 /* SessionAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64E42C99FE7200A362C5 /* SessionAPIService.swift */; };
+		252B64EF2C99FE7200A362C5 /* SessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B64E82C99FE7200A362C5 /* SessionRepository.swift */; };
+		252B64F32C99FF1000A362C5 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 252B64F22C99FF1000A362C5 /* Alamofire */; };
+		252B64F62C99FFBD00A362C5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 252B64F52C99FFBD00A362C5 /* FirebaseAuth */; };
+		252B64F82C99FFBD00A362C5 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 252B64F72C99FFBD00A362C5 /* FirebaseAuthCombine-Community */; };
+		252B64FB2C99FFE200A362C5 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 252B64FA2C99FFE200A362C5 /* GoogleSignIn */; };
+		252B64FD2C99FFE200A362C5 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 252B64FC2C99FFE200A362C5 /* GoogleSignInSwift */; };
+		252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */; };
+		259CBB9A2C9E29C00067B550 /* AppleCryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259CBB992C9E29C00067B550 /* AppleCryptoHelpers.swift */; };
+		259CBBA02CA0E44A0067B550 /* SessionPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259CBB9F2CA0E44A0067B550 /* SessionPaths.swift */; };
+		259EF8B72CA23899007CE3FE /* UserProfileSessionAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259EF8B62CA23899007CE3FE /* UserProfileSessionAPIService.swift */; };
+		25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302B92C9A8C99005AD742 /* CustomButton.swift */; };
+		25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */; };
+		25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */; };
+		25C302C02C9A91A3005AD742 /* TextoLimiteField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BF2C9A91A3005AD742 /* TextoLimiteField.swift */; };
+		25C302C22C9A9390005AD742 /* TelefonoEmergenciaField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C12C9A9390005AD742 /* TelefonoEmergenciaField.swift */; };
+		25C302C42C9A9515005AD742 /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C32C9A9515005AD742 /* PasswordField.swift */; };
+		25C302C62C9A9780005AD742 /* EmailField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C52C9A9780005AD742 /* EmailField.swift */; };
+		25C302C82C9A9E7C005AD742 /* CompletarDatosStep2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */; };
+		25C302CA2C9AAF9A005AD742 /* ExternalLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C92C9AAF9A005AD742 /* ExternalLoginButton.swift */; };
+		25D0E5132CA326B800B431A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25D0E5122CA326B800B431A9 /* GoogleService-Info.plist */; };
+		25F3681B2C9B62CD003322CF /* ImagenAmarillaFondo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3681A2C9B62CD003322CF /* ImagenAmarillaFondo.swift */; };
+		25F3681D2C9B7B49003322CF /* TituloComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3681C2C9B7B49003322CF /* TituloComponent.swift */; };
+		25F3681F2C9B8032003322CF /* MainViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3681E2C9B8032003322CF /* MainViewButton.swift */; };
+		25F368212C9BAEA3003322CF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F368202C9BAEA3003322CF /* LoadingView.swift */; };
+		AE41A6D92C9A613800921BDF /* AnuncioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6D82C9A612F00921BDF /* AnuncioViewModel.swift */; };
+		AE41A6DD2C9A62F400921BDF /* ConsultarAnuncioRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6DC2C9A62E400921BDF /* ConsultarAnuncioRequirement.swift */; };
+		AE41A6E12C9A633100921BDF /* AnuncioRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */; };
+		AE41A6E32C9A637200921BDF /* AnuncioAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E22C9A636B00921BDF /* AnuncioAPIService.swift */; };
+		AE41A6E52C9A648B00921BDF /* consultarAnuncioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E42C9A648B00921BDF /* consultarAnuncioView.swift */; };
+		AE41A6E72C9A679700921BDF /* Anuncio.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E62C9A679000921BDF /* Anuncio.swift */; };
+		AE41A6E92C9A6AA200921BDF /* AnadirAnuncioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E82C9A6AA200921BDF /* AnadirAnuncioView.swift */; };
+		AEE34B8A2C9FA61800C2EECE /* modificarAnuncioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,12 +86,57 @@
 		252B63AB2C99F16900A362C5 /* Saca la BiciTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Saca la BiciTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		252B63B52C99F16900A362C5 /* Saca la BiciUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Saca la BiciUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		252B647F2C99FC5E00A362C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		252B64802C99FC5E00A362C5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		252B64812C99FC5E00A362C5 /* Saca_la_BiciApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saca_la_BiciApp.swift; sourceTree = "<group>"; };
 		252B64862C99FC5E00A362C5 /* Saca_la_BiciTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saca_la_BiciTests.swift; sourceTree = "<group>"; };
 		252B64882C99FC5E00A362C5 /* Saca_la_BiciUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saca_la_BiciUITests.swift; sourceTree = "<group>"; };
 		252B64892C99FC5E00A362C5 /* Saca_la_BiciUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saca_la_BiciUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		252B648E2C99FCD800A362C5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		252B64C12C99FE5900A362C5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		252B64C22C99FE5900A362C5 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		252B64C32C99FE5900A362C5 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		252B64C52C99FE5900A362C5 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		252B64C62C99FE5900A362C5 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
+		252B64C72C99FE5900A362C5 /* SessionCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCoordinatorView.swift; sourceTree = "<group>"; };
+		252B64C82C99FE5900A362C5 /* MenuTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTabs.swift; sourceTree = "<group>"; };
+		252B64C92C99FE5900A362C5 /* SignUpStep1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep1View.swift; sourceTree = "<group>"; };
+		252B64CA2C99FE5900A362C5 /* SignUpStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep2View.swift; sourceTree = "<group>"; };
+		252B64CB2C99FE5900A362C5 /* SignUpStep3View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep3View.swift; sourceTree = "<group>"; };
+		252B64CC2C99FE5900A362C5 /* MainLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginView.swift; sourceTree = "<group>"; };
+		252B64CE2C99FE5900A362C5 /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
+		252B64DD2C99FE6F00A362C5 /* LoginRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequirement.swift; sourceTree = "<group>"; };
+		252B64DE2C99FE6F00A362C5 /* SignUpRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRequirement.swift; sourceTree = "<group>"; };
+		252B64E22C99FE7200A362C5 /* APIRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRoutes.swift; sourceTree = "<group>"; };
+		252B64E32C99FE7200A362C5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		252B64E42C99FE7200A362C5 /* SessionAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionAPIService.swift; sourceTree = "<group>"; };
+		252B64E82C99FE7200A362C5 /* SessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRepository.swift; sourceTree = "<group>"; };
+		252B65042C9A297700A362C5 /* Saca-la-Bici-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Saca-la-Bici-Info.plist"; sourceTree = SOURCE_ROOT; };
+		252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletarDatosStep1View.swift; sourceTree = "<group>"; };
+		259CBB982C9E0E5A0067B550 /* Saca la Bici.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Saca la Bici.entitlements"; sourceTree = "<group>"; };
+		259CBB992C9E29C00067B550 /* AppleCryptoHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleCryptoHelpers.swift; sourceTree = "<group>"; };
+		259CBB9F2CA0E44A0067B550 /* SessionPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPaths.swift; sourceTree = "<group>"; };
+		259EF8B62CA23899007CE3FE /* UserProfileSessionAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileSessionAPIService.swift; sourceTree = "<group>"; };
+		25C302B92C9A8C99005AD742 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FechaNacimientoPicker.swift; sourceTree = "<group>"; };
+		25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipoSangrePicker.swift; sourceTree = "<group>"; };
+		25C302BF2C9A91A3005AD742 /* TextoLimiteField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextoLimiteField.swift; sourceTree = "<group>"; };
+		25C302C12C9A9390005AD742 /* TelefonoEmergenciaField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelefonoEmergenciaField.swift; sourceTree = "<group>"; };
+		25C302C32C9A9515005AD742 /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
+		25C302C52C9A9780005AD742 /* EmailField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailField.swift; sourceTree = "<group>"; };
+		25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletarDatosStep2View.swift; sourceTree = "<group>"; };
+		25C302C92C9AAF9A005AD742 /* ExternalLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalLoginButton.swift; sourceTree = "<group>"; };
+		25D0E5122CA326B800B431A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		25F3681A2C9B62CD003322CF /* ImagenAmarillaFondo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagenAmarillaFondo.swift; sourceTree = "<group>"; };
+		25F3681C2C9B7B49003322CF /* TituloComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TituloComponent.swift; sourceTree = "<group>"; };
+		25F3681E2C9B8032003322CF /* MainViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewButton.swift; sourceTree = "<group>"; };
+		25F368202C9BAEA3003322CF /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		AE41A6D82C9A612F00921BDF /* AnuncioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnuncioViewModel.swift; sourceTree = "<group>"; };
+		AE41A6DC2C9A62E400921BDF /* ConsultarAnuncioRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarAnuncioRequirement.swift; sourceTree = "<group>"; };
+		AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnuncioRepository.swift; sourceTree = "<group>"; };
+		AE41A6E22C9A636B00921BDF /* AnuncioAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnuncioAPIService.swift; sourceTree = "<group>"; };
+		AE41A6E42C9A648B00921BDF /* consultarAnuncioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = consultarAnuncioView.swift; sourceTree = "<group>"; };
+		AE41A6E62C9A679000921BDF /* Anuncio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anuncio.swift; sourceTree = "<group>"; };
+		AE41A6E82C9A6AA200921BDF /* AnadirAnuncioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnadirAnuncioView.swift; sourceTree = "<group>"; };
+		AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modificarAnuncioView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +144,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				252B64FD2C99FFE200A362C5 /* GoogleSignInSwift in Frameworks */,
+				252B64F32C99FF1000A362C5 /* Alamofire in Frameworks */,
+				252B64FB2C99FFE200A362C5 /* GoogleSignIn in Frameworks */,
+				252B64F82C99FFBD00A362C5 /* FirebaseAuthCombine-Community in Frameworks */,
+				252B64F62C99FFBD00A362C5 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,8 +209,13 @@
 		252B64922C99FD0F00A362C5 /* Saca la Bici */ = {
 			isa = PBXGroup;
 			children = (
+				259CBB982C9E0E5A0067B550 /* Saca la Bici.entitlements */,
 				252B64812C99FC5E00A362C5 /* Saca_la_BiciApp.swift */,
-				252B64802C99FC5E00A362C5 /* ContentView.swift */,
+				252B64D02C99FE5900A362C5 /* Framework */,
+				252B64DF2C99FE6F00A362C5 /* Domain */,
+				252B64EA2C99FE7200A362C5 /* Data */,
+				252B65042C9A297700A362C5 /* Saca-la-Bici-Info.plist */,
+				25D0E5122CA326B800B431A9 /* GoogleService-Info.plist */,
 				252B647F2C99FC5E00A362C5 /* Assets.xcassets */,
 				252B64932C99FD2C00A362C5 /* Preview Content */,
 			);
@@ -127,6 +230,182 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		252B64C42C99FE5900A362C5 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				252B64FE2C9A01FD00A362C5 /* Session */,
+				AE41A6D52C9A60E000921BDF /* Anuncios */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		252B64CD2C99FE5900A362C5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				252B65052C9A37D600A362C5 /* Session */,
+				AE41A6DA2C9A629800921BDF /* Anuncios */,
+				252B64C62C99FE5900A362C5 /* ResultView.swift */,
+				252B64C82C99FE5900A362C5 /* MenuTabs.swift */,
+				25F368202C9BAEA3003322CF /* LoadingView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		252B64CF2C99FE5900A362C5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				252B64CE2C99FE5900A362C5 /* UIApplicationExtensions.swift */,
+				259CBB992C9E29C00067B550 /* AppleCryptoHelpers.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		252B64D02C99FE5900A362C5 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				252B64C42C99FE5900A362C5 /* ViewModels */,
+				252B64CD2C99FE5900A362C5 /* Views */,
+				252B64CF2C99FE5900A362C5 /* Extensions */,
+			);
+			path = Framework;
+			sourceTree = "<group>";
+		};
+		252B64DF2C99FE6F00A362C5 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				252B64FF2C9A021D00A362C5 /* Session */,
+				AE41A6DB2C9A62DB00921BDF /* Anuncios */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		252B64E62C99FE7200A362C5 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				252B64E42C99FE7200A362C5 /* SessionAPIService.swift */,
+				259EF8B62CA23899007CE3FE /* UserProfileSessionAPIService.swift */,
+				AE41A6E22C9A636B00921BDF /* AnuncioAPIService.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		252B64E72C99FE7200A362C5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				252B650D2C9A427D00A362C5 /* Objects */,
+				252B64E62C99FE7200A362C5 /* Network */,
+				252B650C2C9A426200A362C5 /* Repositories */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		252B64EA2C99FE7200A362C5 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				252B64E72C99FE7200A362C5 /* Models */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		252B64FE2C9A01FD00A362C5 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				252B64C12C99FE5900A362C5 /* LoginViewModel.swift */,
+				252B64C22C99FE5900A362C5 /* SignUpViewModel.swift */,
+				252B64C32C99FE5900A362C5 /* SessionManager.swift */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		252B64FF2C9A021D00A362C5 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				252B64DD2C99FE6F00A362C5 /* LoginRequirement.swift */,
+				252B64DE2C99FE6F00A362C5 /* SignUpRequirement.swift */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		252B65052C9A37D600A362C5 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				25C302B82C9A8B95005AD742 /* Components */,
+				252B64CC2C99FE5900A362C5 /* MainLoginView.swift */,
+				252B64C52C99FE5900A362C5 /* LoginView.swift */,
+				252B64C92C99FE5900A362C5 /* SignUpStep1View.swift */,
+				252B64CA2C99FE5900A362C5 /* SignUpStep2View.swift */,
+				252B64CB2C99FE5900A362C5 /* SignUpStep3View.swift */,
+				252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */,
+				25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */,
+				252B64C72C99FE5900A362C5 /* SessionCoordinatorView.swift */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		252B650C2C9A426200A362C5 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				252B64E82C99FE7200A362C5 /* SessionRepository.swift */,
+				AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		252B650D2C9A427D00A362C5 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				252B64E22C99FE7200A362C5 /* APIRoutes.swift */,
+				252B64E32C99FE7200A362C5 /* User.swift */,
+				259CBB9F2CA0E44A0067B550 /* SessionPaths.swift */,
+				AE41A6E62C9A679000921BDF /* Anuncio.swift */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		25C302B82C9A8B95005AD742 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				25C302B92C9A8C99005AD742 /* CustomButton.swift */,
+				25F3681E2C9B8032003322CF /* MainViewButton.swift */,
+				25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */,
+				25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */,
+				25C302BF2C9A91A3005AD742 /* TextoLimiteField.swift */,
+				25C302C12C9A9390005AD742 /* TelefonoEmergenciaField.swift */,
+				25C302C32C9A9515005AD742 /* PasswordField.swift */,
+				25C302C52C9A9780005AD742 /* EmailField.swift */,
+				25C302C92C9AAF9A005AD742 /* ExternalLoginButton.swift */,
+				25F3681A2C9B62CD003322CF /* ImagenAmarillaFondo.swift */,
+				25F3681C2C9B7B49003322CF /* TituloComponent.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		AE41A6D52C9A60E000921BDF /* Anuncios */ = {
+			isa = PBXGroup;
+			children = (
+				AE41A6D82C9A612F00921BDF /* AnuncioViewModel.swift */,
+			);
+			path = Anuncios;
+			sourceTree = "<group>";
+		};
+		AE41A6DA2C9A629800921BDF /* Anuncios */ = {
+			isa = PBXGroup;
+			children = (
+				AE41A6E82C9A6AA200921BDF /* AnadirAnuncioView.swift */,
+				AE41A6E42C9A648B00921BDF /* consultarAnuncioView.swift */,
+				AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */,
+			);
+			path = Anuncios;
+			sourceTree = "<group>";
+		};
+		AE41A6DB2C9A62DB00921BDF /* Anuncios */ = {
+			isa = PBXGroup;
+			children = (
+				AE41A6DC2C9A62E400921BDF /* ConsultarAnuncioRequirement.swift */,
+			);
+			path = Anuncios;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,6 +414,7 @@
 			buildConfigurationList = 252B63BF2C99F16900A362C5 /* Build configuration list for PBXNativeTarget "Saca la Bici" */;
 			buildPhases = (
 				252B63972C99F16700A362C5 /* Sources */,
+				25BC18602CA2296000E21088 /* ShellScript */,
 				252B63982C99F16700A362C5 /* Frameworks */,
 				252B63992C99F16700A362C5 /* Resources */,
 			);
@@ -144,6 +424,11 @@
 			);
 			name = "Saca la Bici";
 			packageProductDependencies = (
+				252B64F22C99FF1000A362C5 /* Alamofire */,
+				252B64F52C99FFBD00A362C5 /* FirebaseAuth */,
+				252B64F72C99FFBD00A362C5 /* FirebaseAuthCombine-Community */,
+				252B64FA2C99FFE200A362C5 /* GoogleSignIn */,
+				252B64FC2C99FFE200A362C5 /* GoogleSignInSwift */,
 			);
 			productName = "Saca la Bici";
 			productReference = 252B639B2C99F16700A362C5 /* Saca la Bici.app */;
@@ -221,6 +506,11 @@
 			);
 			mainGroup = 252B63922C99F16700A362C5;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				252B64F12C99FF1000A362C5 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				252B64F42C99FFBD00A362C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				252B64F92C99FFE200A362C5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 252B639C2C99F16700A362C5 /* Products */;
 			projectDirPath = "";
@@ -240,6 +530,7 @@
 			files = (
 				252B64902C99FCD800A362C5 /* Preview Assets.xcassets in Resources */,
 				252B64832C99FC5E00A362C5 /* Assets.xcassets in Resources */,
+				25D0E5132CA326B800B431A9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,13 +550,77 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		25BC18602CA2296000E21088 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint --fix && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		252B63972C99F16700A362C5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				252B64842C99FC5E00A362C5 /* ContentView.swift in Sources */,
 				252B64852C99FC5E00A362C5 /* Saca_la_BiciApp.swift in Sources */,
+				25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */,
+				252B64D12C99FE5900A362C5 /* SessionCoordinatorView.swift in Sources */,
+				252B64D22C99FE5900A362C5 /* UIApplicationExtensions.swift in Sources */,
+				252B64D32C99FE5900A362C5 /* SignUpStep1View.swift in Sources */,
+				252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */,
+				25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */,
+				25F3681D2C9B7B49003322CF /* TituloComponent.swift in Sources */,
+				25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */,
+				252B64EB2C99FE7200A362C5 /* User.swift in Sources */,
+				252B64ED2C99FE7200A362C5 /* APIRoutes.swift in Sources */,
+				25F3681F2C9B8032003322CF /* MainViewButton.swift in Sources */,
+				252B64EE2C99FE7200A362C5 /* SessionAPIService.swift in Sources */,
+				25C302CA2C9AAF9A005AD742 /* ExternalLoginButton.swift in Sources */,
+				25F368212C9BAEA3003322CF /* LoadingView.swift in Sources */,
+				252B64EF2C99FE7200A362C5 /* SessionRepository.swift in Sources */,
+				252B64D52C99FE5900A362C5 /* SignUpStep3View.swift in Sources */,
+				252B64D62C99FE5900A362C5 /* MenuTabs.swift in Sources */,
+				252B64D72C99FE5900A362C5 /* ResultView.swift in Sources */,
+				25C302C22C9A9390005AD742 /* TelefonoEmergenciaField.swift in Sources */,
+				252B64D82C99FE5900A362C5 /* MainLoginView.swift in Sources */,
+				252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */,
+				252B64D92C99FE5900A362C5 /* SessionManager.swift in Sources */,
+				25C302C62C9A9780005AD742 /* EmailField.swift in Sources */,
+				259CBB9A2C9E29C00067B550 /* AppleCryptoHelpers.swift in Sources */,
+				25C302C42C9A9515005AD742 /* PasswordField.swift in Sources */,
+				252B64DA2C99FE5900A362C5 /* SignUpViewModel.swift in Sources */,
+				252B64DB2C99FE5900A362C5 /* LoginView.swift in Sources */,
+				25C302C82C9A9E7C005AD742 /* CompletarDatosStep2View.swift in Sources */,
+				259CBBA02CA0E44A0067B550 /* SessionPaths.swift in Sources */,
+				252B64E02C99FE6F00A362C5 /* LoginRequirement.swift in Sources */,
+				25F3681B2C9B62CD003322CF /* ImagenAmarillaFondo.swift in Sources */,
+				259EF8B72CA23899007CE3FE /* UserProfileSessionAPIService.swift in Sources */,
+				25C302C02C9A91A3005AD742 /* TextoLimiteField.swift in Sources */,
+				252B64E12C99FE6F00A362C5 /* SignUpRequirement.swift in Sources */,
+				252B64DC2C99FE5900A362C5 /* LoginViewModel.swift in Sources */,
+				AEE34B8A2C9FA61800C2EECE /* modificarAnuncioView.swift in Sources */,
+				AE41A6E92C9A6AA200921BDF /* AnadirAnuncioView.swift in Sources */,
+				AE41A6E52C9A648B00921BDF /* consultarAnuncioView.swift in Sources */,
+				AE41A6D92C9A613800921BDF /* AnuncioViewModel.swift in Sources */,
+				AE41A6DD2C9A62F400921BDF /* ConsultarAnuncioRequirement.swift in Sources */,
+				AE41A6E72C9A679700921BDF /* Anuncio.swift in Sources */,
+				AE41A6E12C9A633100921BDF /* AnuncioRepository.swift in Sources */,
+				AE41A6E32C9A637200921BDF /* AnuncioAPIService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +781,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Saca la Bici/Saca la Bici.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -433,12 +789,16 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = G236Y8PA2F;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Saca-la-Bici-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -459,6 +819,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Saca la Bici/Saca la Bici.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -466,12 +827,16 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = G236Y8PA2F;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Saca-la-Bici-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -615,6 +980,61 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		252B64F12C99FF1000A362C5 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
+		252B64F42C99FFBD00A362C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.2.0;
+			};
+		};
+		252B64F92C99FFE200A362C5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		252B64F22C99FF1000A362C5 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 252B64F12C99FF1000A362C5 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		252B64F52C99FFBD00A362C5 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 252B64F42C99FFBD00A362C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		252B64F72C99FFBD00A362C5 /* FirebaseAuthCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 252B64F42C99FFBD00A362C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAuthCombine-Community";
+		};
+		252B64FA2C99FFE200A362C5 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 252B64F92C99FFE200A362C5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		252B64FC2C99FFE200A362C5 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 252B64F92C99FFE200A362C5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 252B63932C99F16700A362C5 /* Project object */;
 }
