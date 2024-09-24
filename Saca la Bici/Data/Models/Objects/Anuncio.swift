@@ -15,7 +15,6 @@ struct Anuncio: Identifiable, Codable {
     var imagen: String?
     var createdAt: String
     var fechaCaducidad: String
-
     
     var icon: String = "A"  // Valor por defecto por ahora (imagen del usuario)
     var backgroundColor: Color = Color(UIColor.systemGray6)
@@ -30,7 +29,6 @@ struct Anuncio: Identifiable, Codable {
         case fechaCaducidad
     }
 }
-
 
 struct ResponseMessage: Codable {
     let message: String

@@ -13,7 +13,7 @@ struct MenuView: View {
                     if selectedTab == 0 {
                     } else if selectedTab == 1 {
                     } else if selectedTab == 2 {
-                        consultarAnuncio()
+                        ConsultarAnuncio()
                     } else {
                     }
                 }

@@ -32,7 +32,6 @@ class AnuncioRepository {
         }
     }
     
-    
         func eliminarAnuncio(idAnuncio: String, completion: @escaping (Result<String, Error>) -> Void) {
             apiService.eliminarAnuncio(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/eliminar/\(idAnuncio)")!) { result in
                 completion(result)
@@ -40,7 +39,7 @@ class AnuncioRepository {
         }
     
     func modificarAnuncio(idAnuncio: String, titulo: String, contenido: String, completion: @escaping (Result<String, Error>) -> Void) {
-            apiService.modificarAnuncio(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/modificar/\(idAnuncio)")!, titulo: titulo, contenido: contenido, completion: completion)
+            apiService.modificarAnuncio(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/modificar/\(idAnuncio)")!,
+                                        titulo: titulo, contenido: contenido, completion: completion)
         }
 }
-

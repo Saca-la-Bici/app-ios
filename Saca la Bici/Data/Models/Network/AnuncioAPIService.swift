@@ -33,7 +33,6 @@ class AnuncioAPIService {
                 }
             }
     }
-
     
     // Función para registrar un nuevo anuncio
     func registrarAnuncio(url: URL, _ anuncio: Anuncio, completion: @escaping (Result<String, Error>) -> Void) {
@@ -94,4 +93,3 @@ class AnuncioAPIService {
                 }
         }
 }
-

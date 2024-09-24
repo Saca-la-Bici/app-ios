@@ -15,8 +15,8 @@ struct ModificarAnuncioView: View {
     
     @State private var titulo: String
     @State private var contenido: String
-    @State private var selectedItem: PhotosPickerItem? = nil
-    @State private var selectedImageData: Data? = nil
+    @State private var selectedItem: PhotosPickerItem?
+    @State private var selectedImageData: Data?
     
     // Enum para manejar las alertas activas
     enum ActiveAlert: Identifiable {
@@ -47,11 +47,11 @@ struct ModificarAnuncioView: View {
                 Button(action: {
                     // Acción para cerrar la vista
                     presentationMode.wrappedValue.dismiss()
-                }) {
+                }, label: {
                     Image(systemName: "xmark")
                         .font(.title2)
                         .foregroundColor(.black)
-                }
+                })
                 .buttonStyle(PlainButtonStyle())
                 
                 Spacer()
@@ -79,11 +79,11 @@ struct ModificarAnuncioView: View {
                         nuevoTitulo: titulo,
                         nuevoContenido: contenido
                     )
-                }) {
+                }, label: {
                     Image(systemName: "checkmark")
                         .font(.title2)
                         .foregroundColor(.yellow)
-                }
+                })
                 .buttonStyle(PlainButtonStyle())
             }
             .padding(.horizontal)
@@ -112,7 +112,7 @@ struct ModificarAnuncioView: View {
                             .foregroundColor(Color.white.opacity(0.7))
                     }
                 }
-                .onChange(of: selectedItem) { newItem in
+                .onChange(of: selectedItem) { _, newItem in
                     Task {
                         if let data = try? await newItem?.loadTransferable(type: Data.self),
                            let uiImage = UIImage(data: data) {
@@ -133,11 +133,11 @@ struct ModificarAnuncioView: View {
                     
                     Button(action: {
                         selectedImageData = nil
-                    }) {
+                    }, label: {
                         Text("Eliminar Imagen")
                             .foregroundColor(.red)
                             .padding(.top, 5)
-                    }
+                    })
                 }
             }
 
@@ -228,13 +228,13 @@ struct ModificarAnuncioView: View {
             }
         }
         // Observa cambios en errorMessage para mostrar la alerta de error
-        .onChange(of: viewModel.errorMessage) { newValue in
+        .onChange(of: viewModel.errorMessage) { _, newValue in
             if newValue != nil {
                 activeAlert = .errorGeneral
             }
         }
         // Observa cambios en successMessage para mostrar la alerta de éxito
-        .onChange(of: viewModel.successMessage) { newValue in
+        .onChange(of: viewModel.successMessage) { _, newValue in
             if newValue != nil {
                 activeAlert = .success
             }

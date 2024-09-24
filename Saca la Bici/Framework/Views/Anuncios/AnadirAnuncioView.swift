@@ -13,8 +13,8 @@ struct AnadirAnuncioView: View {
     @State private var descripcion: String = ""
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: AnuncioViewModel
-    @State private var selectedItem: PhotosPickerItem? = nil
-    @State private var selectedImageData: Data? = nil
+    @State private var selectedItem: PhotosPickerItem?
+    @State private var selectedImageData: Data?
     
     // Enum para manejar las alertas activas
     enum ActiveAlert: Identifiable {
@@ -34,11 +34,11 @@ struct AnadirAnuncioView: View {
             HStack {
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()
-                }) {
+                }, label: {
                     Image(systemName: "xmark")
                         .font(.title2)
                         .foregroundColor(.black)
-                }
+                })
                 .buttonStyle(PlainButtonStyle())
                 Spacer()
                 Text("Añadir anuncio")
@@ -60,11 +60,11 @@ struct AnadirAnuncioView: View {
                     
                     // Llamar al viewModel para registrar el anuncio
                     viewModel.registrarAnuncio(titulo: titulo, contenido: descripcion)
-                }) {
+                }, label: {
                     Image(systemName: "checkmark")
                         .font(.title2)
                         .foregroundColor(.yellow)
-                }
+                })
                 .buttonStyle(PlainButtonStyle())
             }
             .padding(.horizontal)
@@ -93,7 +93,7 @@ struct AnadirAnuncioView: View {
                             .foregroundColor(Color.white.opacity(0.7))
                     }
                 }
-                .onChange(of: selectedItem) { newItem in
+                .onChange(of: selectedItem) { _, newItem in
                     Task {
                         if let data = try? await newItem?.loadTransferable(type: Data.self),
                            let uiImage = UIImage(data: data) {
@@ -114,11 +114,11 @@ struct AnadirAnuncioView: View {
                     
                     Button(action: {
                         selectedImageData = nil
-                    }) {
+                    }, label: {
                         Text("Eliminar Imagen")
                             .foregroundColor(.red)
                             .padding(.top, 5)
-                    }
+                    })
                 }
             }
 
@@ -197,7 +197,7 @@ struct AnadirAnuncioView: View {
                 )
             }
         }
-        .onChange(of: viewModel.successMessage) { newValue in
+        .onChange(of: viewModel.successMessage) { _, newValue in
             if newValue != nil {
                 activeAlert = .success
             }

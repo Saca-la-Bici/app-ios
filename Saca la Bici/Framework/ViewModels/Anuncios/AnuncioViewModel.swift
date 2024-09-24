@@ -10,8 +10,8 @@ import Foundation
 
 class AnuncioViewModel: ObservableObject {
     @Published var anuncios: [Anuncio] = []
-    @Published var errorMessage: String? = nil
-    @Published var successMessage: String? = nil
+    @Published var errorMessage: String?
+    @Published var successMessage: String?
     
     private let repository: AnuncioRepository
     
@@ -41,7 +41,8 @@ class AnuncioViewModel: ObservableObject {
 
     // Función para registrar un anuncio
     func registrarAnuncio(titulo: String, contenido: String) {
-        let nuevoAnuncio = Anuncio(id: UUID().uuidString, IDUsuario: 1, titulo: titulo, contenido: contenido, imagen: "", createdAt: "", fechaCaducidad: "")
+        let nuevoAnuncio = Anuncio(id: UUID().uuidString, IDUsuario: 1,
+                                   titulo: titulo, contenido: contenido, imagen: "", createdAt: "", fechaCaducidad: "")
 
         repository.postAnuncio(nuevoAnuncio) { result in
             DispatchQueue.main.async {

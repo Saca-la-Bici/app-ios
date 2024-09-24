@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct consultarAnuncio: View {
+struct ConsultarAnuncio: View {
     @ObservedObject private var viewModel = AnuncioViewModel()
     @State private var showAddAnuncioView = false
     @State private var alertMessage = ""
@@ -32,11 +32,11 @@ struct consultarAnuncio: View {
 
                     Button(action: {
                         showAddAnuncioView = true
-                    }) {
+                    }, label: {
                         Image(systemName: "plus")
                             .foregroundColor(.black)
                             .padding(.trailing)
-                    }
+                    })
                     .buttonStyle(PlainButtonStyle())
                 }
                 .padding()
@@ -135,5 +135,5 @@ struct consultarAnuncio: View {
 }
 
 #Preview {
-    consultarAnuncio()
+    ConsultarAnuncio()
 }

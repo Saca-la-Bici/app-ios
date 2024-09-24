@@ -10,8 +10,8 @@ import SwiftUI
 import Foundation
 
 // https://medium.com/@kennjthn12/authentication-using-google-sign-in-with-swift-31039941dabf
-final class getViewController {
-    static let shared = getViewController()
+final class GetViewController {
+    static let shared = GetViewController()
     private init() {}
     
     @MainActor
