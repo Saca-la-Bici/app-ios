@@ -18,7 +18,7 @@ struct MainViewButton: View {
     var body: some View {
         Button(action: {
             path.append(pathValue)
-        }) {
+        }, label: {
             Text(title)
                 .font(.headline)
                 .bold()
@@ -31,7 +31,7 @@ struct MainViewButton: View {
                     hasOverlay ? RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.gray, lineWidth: 1) : nil
                 )
-        }
+        })
         .buttonStyle(PlainButtonStyle())
     }
 }

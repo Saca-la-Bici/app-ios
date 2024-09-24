@@ -18,7 +18,7 @@ struct TituloComponent: View {
             Text(title)
                 .font(.title2)
                 .fontWeight(.bold)
-            if (separatorBool == true) {
+            if separatorBool == true {
                 Text(separator ?? "")
                     .font(.title2)
                     .fontWeight(.bold)

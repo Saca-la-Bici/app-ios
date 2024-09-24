@@ -112,4 +112,3 @@ struct SignInStep1View_Previews: PreviewProvider {
         }
     }
 }
-

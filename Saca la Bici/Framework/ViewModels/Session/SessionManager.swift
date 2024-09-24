@@ -14,7 +14,7 @@ class SessionManager: ObservableObject {
     @Published var isProfileComplete: Bool = false
     @Published var isErrorLogin: Bool = false
     @Published var isLoading: Bool = true
-    @Published var errorMessage: String? = nil
+    @Published var errorMessage: String?
 
     private var authStateListenerHandle: AuthStateDidChangeListenerHandle?
     
@@ -30,7 +30,7 @@ class SessionManager: ObservableObject {
     }
 
     private func setupAuthStateListener() {
-        authStateListenerHandle = Auth.auth().addStateDidChangeListener { [weak self] auth, user in
+        authStateListenerHandle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
             DispatchQueue.main.async {
                 self?.isFireBaseAuthenticated = user != nil
                 if let user = user {

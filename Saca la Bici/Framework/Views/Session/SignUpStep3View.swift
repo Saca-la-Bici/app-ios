@@ -42,7 +42,7 @@ struct SignUpStep3View: View {
                     Spacer().frame(height: 30)
                     
                     // Formulario
-                    VStack(alignment: .leading,spacing: 20) {
+                    VStack(alignment: .leading, spacing: 20) {
                         
                         PasswordField(
                             password: $signUpViewModel.password,

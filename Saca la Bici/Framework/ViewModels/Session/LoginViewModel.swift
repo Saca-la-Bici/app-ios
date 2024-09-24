@@ -45,7 +45,7 @@ class LoginViewModel: ObservableObject {
         
         let responseStatus = await self.loginRequirement.iniciarSesion(UserDatos: UserData)
         
-        if (responseStatus != 200){
+        if responseStatus != 200 {
             self.messageAlert = "El usuario o contraseña ingresada es incorrecta. Favor de intentarlo de nuevo."
             self.showAlert = true
         }
@@ -68,11 +68,11 @@ class LoginViewModel: ObservableObject {
     func GoogleLogin() async {
         let responseStatus = await self.loginRequirement.GoogleLogin()
         
-        if (responseStatus == 500) {
+        if responseStatus == 500 {
             self.messageAlert = "Error al iniciar sesión con Google. Favor intentarlo de nuevo"
             self.showAlert = true
             // No mostrar error si se cancelo.
-        } else if (responseStatus == -1) {
+        } else if responseStatus == -1 {
             self.showAlert = false
         }
     }

@@ -16,7 +16,7 @@ protocol SignUpRequirementProtocol {
     func GoogleLogin() async -> Int?
 }
 
-class SignUpRequirement : SignUpRequirementProtocol {
+class SignUpRequirement: SignUpRequirementProtocol {
     
     // Singleton para que lo use el Requirement
     static let shared = SignUpRequirement()

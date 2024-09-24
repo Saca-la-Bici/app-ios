@@ -35,4 +35,3 @@ struct FechaNacimientoPicker: View {
         }
     }
 }
-

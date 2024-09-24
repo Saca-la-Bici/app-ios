@@ -18,7 +18,7 @@ struct ExternalLoginButton: View {
             Task {
                 await action()
             }
-        }) {
+        }, label: {
             HStack(alignment: .center, spacing: 15.0) {
                 if systemImage == true {
                     Image(systemName: imageName)
@@ -38,7 +38,7 @@ struct ExternalLoginButton: View {
             .padding()
             .background(Color.gray.opacity(0.2))
             .cornerRadius(10)
-        }
+        })
         .buttonStyle(PlainButtonStyle())
     }
 }

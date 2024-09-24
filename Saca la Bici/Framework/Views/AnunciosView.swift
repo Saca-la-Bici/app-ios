@@ -15,7 +15,7 @@ struct Anuncio: Identifiable {
     var backgroundColor: Color
 }
 
-struct consultarAnuncio: View {
+struct ConsultarAnuncio: View {
     let anuncios = [
         Anuncio(title: "Conteo Ciclista Querétaro 2024",
                 message: "✨¡Habemus resultados del conteo ciclista Querétaro!🚴‍♂️🚴‍♀️ Conócelos con nosotrxs hoy martes 27 de agosto a las 18:00 hrs.",
@@ -94,8 +94,6 @@ struct consultarAnuncio: View {
     }
 }
 
-
 #Preview {
-    consultarAnuncio()
+    ConsultarAnuncio()
 }
-

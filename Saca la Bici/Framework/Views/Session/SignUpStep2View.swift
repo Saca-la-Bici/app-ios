@@ -31,7 +31,6 @@ struct SignUpStep2View: View {
             .ignoresSafeArea()
             .zIndex(1)
             
-            
             ScrollView {
                 VStack(alignment: .leading) {
                     
@@ -43,7 +42,7 @@ struct SignUpStep2View: View {
                     Spacer().frame(height: 30)
                     
                     // Formulario
-                    VStack(alignment: .leading,spacing: 20) {
+                    VStack(alignment: .leading, spacing: 20) {
                         
                         // Contraseña
                         VStack(alignment: .leading) {

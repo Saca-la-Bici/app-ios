@@ -25,7 +25,6 @@ struct TextoLimiteField: View {
                 Text(label)
                     .font(.caption)
             }
-
             
             TextField(placeholder, text: $text)
                 .textInputAutocapitalization(.never)

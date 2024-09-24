@@ -39,21 +39,21 @@ class SignUpViewModel: ObservableObject {
     // Validar que la cadena no contenga solo números usando expresión regular
     func isNotOnlyNumbers(_ text: String) -> Bool {
         let regex = "^(?!\\d+$).+"
-        let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
+        let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
         return predicate.evaluate(with: text)
     }
 
     // Validar que la cadena no contenga solo caracteres especiales usando expresión regular
     func isNotOnlySpecialCharacters(_ text: String) -> Bool {
         let regex = "^(?=.*[A-Za-z0-9]).+$"
-        let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
+        let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
         return predicate.evaluate(with: text)
     }
     
     // Validar que la cadena no contenga solo caracteres especiales usando expresión regular
     func isOnlyText(_ text: String) -> Bool {
         let regex = "^[\\p{L} ]+$"
-        let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
+        let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
         return predicate.evaluate(with: text)
     }
     
@@ -106,7 +106,8 @@ class SignUpViewModel: ObservableObject {
     
     @MainActor
     func validarDatosStep2() {
-        if (self.countryCode.isEmpty || self.phoneNumber.isEmpty || self.selectedBloodType == "Selecciona tu tipo de sangre" || self.nombreCompleto.isEmpty) {
+        if self.countryCode.isEmpty || self.phoneNumber.isEmpty ||
+            self.selectedBloodType == "Selecciona tu tipo de sangre" || self.nombreCompleto.isEmpty {
             self.messageAlert = "Falta de llenar algún dato. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
@@ -121,19 +122,19 @@ class SignUpViewModel: ObservableObject {
     
     @MainActor
     func registrarUsuario() async {
-        if (self.password.isEmpty || self.confirmPassword.isEmpty) {
+        if self.password.isEmpty || self.confirmPassword.isEmpty {
             self.messageAlert = "Alguna de las dos contraseñas está vacía. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
         
-        if (self.password != self.confirmPassword) {
+        if self.password != self.confirmPassword {
             self.messageAlert = "Las contraseñas no son iguales. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
         
-        if (self.password.count < 8) {
+        if self.password.count < 8 {
             self.messageAlert = "La contraseña es demasiado corta. Debe tener al menos 8 caracteres."
             self.showAlert = true
             return
@@ -147,19 +148,19 @@ class SignUpViewModel: ObservableObject {
         
         let numeroEmergencia = "+" + self.countryCode + self.phoneNumber
         
-        let usuarioNuevo = UserNuevo(username: self.username, password: self.confirmPassword, nombre: nombreCompleto, email: self.email, fechaNacimiento: fechaNacimiento, tipoSangre: self.selectedBloodType, numeroEmergencia: numeroEmergencia)
+        let usuarioNuevo = UserNuevo(username: self.username, password: self.confirmPassword,
+                                     nombre: nombreCompleto, email: self.email, fechaNacimiento: fechaNacimiento,
+                                     tipoSangre: self.selectedBloodType, numeroEmergencia: numeroEmergencia)
         
         let responseCode = await self.signUpRequirement.registrarUsuario(UserDatos: usuarioNuevo)
         
-        if (responseCode == 406){
+        if responseCode == 406 {
             self.messageAlert = "La contraseña es demasiado corta. Debe tener al menos 6 caracteres."
             self.showAlert = true
-        }
-        else if (responseCode == 405){
+        } else if responseCode == 405 {
             self.messageAlert = "El correo electrónico proporcionado no es válido."
             self.showAlert = true
-        }
-        else if (responseCode != 201){
+        } else if responseCode != 201 {
             self.messageAlert = "Hubo un error al registrar al usuario. Favor de intentarlo de nuevo."
             self.showAlert = true
         }
@@ -167,7 +168,7 @@ class SignUpViewModel: ObservableObject {
     
     @MainActor
     func validarCompletarDatos1() async {
-        if (self.username.isEmpty) {
+        if self.username.isEmpty {
             self.messageAlert = "El username se encuentra vacío."
             self.showAlert = true
             return
@@ -202,7 +203,7 @@ class SignUpViewModel: ObservableObject {
     @MainActor
     func completarRegistro() async {
         
-        if (self.countryCode.isEmpty || self.phoneNumber.isEmpty || self.selectedBloodType == "Selecciona tu tipo de sangre") {
+        if self.countryCode.isEmpty || self.phoneNumber.isEmpty || self.selectedBloodType == "Selecciona tu tipo de sangre" {
             self.messageAlert = "Falta de llenar algún dato. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
@@ -210,11 +211,12 @@ class SignUpViewModel: ObservableObject {
         
         let numeroEmergencia = "+" + self.countryCode + self.phoneNumber
         
-        let usuarioNuevo = UserExterno(username: self.username, fechaNacimiento: fechaNacimiento, tipoSangre: self.selectedBloodType, numeroEmergencia: numeroEmergencia)
+        let usuarioNuevo = UserExterno(username: self.username, fechaNacimiento: fechaNacimiento,
+                                       tipoSangre: self.selectedBloodType, numeroEmergencia: numeroEmergencia)
         
         let responseCode = await self.signUpRequirement.completarPerfil(UserDatos: usuarioNuevo)
         
-        if (responseCode == 200 || responseCode == 201){
+        if responseCode == 200 || responseCode == 201 {
             // Llamar al closure para notificar el éxito
             self.onProfileComplete?()
         } else {
@@ -227,11 +229,11 @@ class SignUpViewModel: ObservableObject {
     func GoogleLogin() async {
         let responseStatus = await self.signUpRequirement.GoogleLogin()
         
-        if (responseStatus == 500) {
+        if responseStatus == 500 {
             self.messageAlert = "Error al iniciar sesión con Google. Favor intentarlo de nuevo"
             self.showAlert = true
             // No mostrar error si se cancelo.
-        } else if (responseStatus == -1) {
+        } else if responseStatus == -1 {
             self.showAlert = false
         }
     }

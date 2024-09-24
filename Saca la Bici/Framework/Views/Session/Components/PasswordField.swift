@@ -34,11 +34,11 @@ struct PasswordField: View {
                     Spacer()
                     Button(action: {
                         isPasswordVisible.toggle() // Muestra u oculta la contraseña
-                    }) {
+                    }, label: {
                         Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
                             .foregroundColor(.gray)
                             .padding()
-                    }
+                    })
                     .buttonStyle(PlainButtonStyle())
                 }
             )

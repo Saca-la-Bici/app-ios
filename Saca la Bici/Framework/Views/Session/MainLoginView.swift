@@ -138,4 +138,3 @@ struct MainLoginView_Previews: PreviewProvider {
         MainLoginView()
     }
 }
-

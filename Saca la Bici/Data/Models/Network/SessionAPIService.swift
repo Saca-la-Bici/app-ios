@@ -11,7 +11,6 @@ import AuthenticationServices
 import Alamofire
 import GoogleSignIn
 
-// Singleton
 class SessionAPIService: NSObject {
     // Se usa la libería de Alamofire y se usa static let para que sea inmutable y si se crean varias instancias que sea igual para todas dichas instancias.
     static let shared = SessionAPIService()
@@ -19,11 +18,11 @@ class SessionAPIService: NSObject {
     // Crear una sesión personalizada con tiempos de espera ajustados
     let session = Session(configuration: {
         let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 7.5 // Tiempo de espera de 5 segundos para la solicitud
-        configuration.timeoutIntervalForResource = 15 // Tiempo de espera de 5 segundos para el recurso
+        configuration.timeoutIntervalForRequest = 7.5 // Tiempo de espera de 7.5 segundos para la solicitud
+        configuration.timeoutIntervalForResource = 15 // Tiempo de espera de 15 segundos para el recurso
         return configuration
     }())
-    
+
     func registrarUsuario(url: URL, UserDatos: UserNuevo) async -> Int? {
         do {
             // Crear el usuario en Firebase Authentication
@@ -40,10 +39,10 @@ class SessionAPIService: NSObject {
             let fechaNacimientoString = dateFormatter.string(from: UserDatos.fechaNacimiento)
             
             let parameters: Parameters = [
-                "username" : UserDatos.username,
-                "nombre" : UserDatos.nombre,
-                "fechaNacimiento" : fechaNacimientoString,
-                "correoElectronico" : UserDatos.email,
+                "username": UserDatos.username,
+                "nombre": UserDatos.nombre,
+                "fechaNacimiento": fechaNacimientoString,
+                "correoElectronico": UserDatos.email,
                 "tipoSangre": UserDatos.tipoSangre,
                 "numeroEmergencia": UserDatos.numeroEmergencia,
                 "firebaseUID": firebaseUID
@@ -61,7 +60,7 @@ class SessionAPIService: NSObject {
             let statusCode = response.response?.statusCode
             
             switch response.result {
-            case .success(_):
+            case .success:
                 return statusCode
                 
             case let .failure(error):
@@ -107,7 +106,8 @@ class SessionAPIService: NSObject {
             // Verificar si el input es un nombre de usuario (no contiene '@')
             if !usuarioOEmail.contains("@") {
                 // Obtener el correo electrónico desde tu backend
-                if let userEmail = try await obtenerEmailDesdeBackend(username: usuarioOEmail, URLUsername: URLUsername) {
+                if let userEmail = try await UserProfileSessionAPIService().obtenerEmailDesdeBackend(
+                    username: usuarioOEmail, URLUsername: URLUsername) {
                     usuarioOEmail = userEmail
                 } else {
                     print("Nombre de usuario no encontrado")
@@ -131,8 +131,7 @@ class SessionAPIService: NSObject {
             // Falta hacer la llamada al back para mostrar info despues de iniciar sesion.
             
             return 200 // Código de éxito, o el código que desees manejar
-        }
-        catch {
+        } catch {
             // Manejo de errores de inicio de sesión
             print("Error al iniciar sesión: \(error.localizedDescription)")
             return nil // Error, devuelve nil o el código de error correspondiente
@@ -145,16 +144,16 @@ class SessionAPIService: NSObject {
             print("No se pudo obtener el ID Token")
             return nil
         }
-                
+        
         // Prepara los headers con el token para enviar al backend
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(idToken)", // Incluye el token en el header de autorización
             "Content-Type": "application/json"
         ]
-            
+        
         let taskRequest = session.request(url, method: .get, headers: headers).validate()
         let response = await taskRequest.serializingData().response
-            
+        
         switch response.result {
         case .success(let data):
             do {
@@ -172,67 +171,13 @@ class SessionAPIService: NSObject {
                 print("\(errorResponse)")
             }
             return nil
-            }
-        }
-    
-    func checarPerfilBackend(url: URL) async throws -> Response {
-        var emptyResponse = Response(StatusCode: 500)
-        
-        guard let idToken = await obtenerIDToken() else {
-                throw URLError(.badServerResponse)
-            }
-        
-        // Prepara los headers con el token para enviar al backend
-        let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(idToken)", // Incluye el token en el header de autorización
-            "Content-Type": "application/json"
-        ]
-            
-        let taskRequest = session.request(url, method: .get, headers: headers).validate()
-        let response = await taskRequest.serializingData().response
-        
-        let statusCode = response.response?.statusCode
-            
-        switch response.result {
-        case .success(let data):
-            do {
-                // Intentar decodificar la respuesta JSON en un objeto Response
-                var response = try JSONDecoder().decode(Response.self, from: data)
-                response.StatusCode = statusCode
-                
-                return response
-            } catch {
-                emptyResponse.StatusCode = statusCode
-                return emptyResponse
-            }
-        case let .failure(error):
-            debugPrint(error.localizedDescription)
-            
-            // Imprimir el cuerpo de la respuesta en caso de error
-            if let data = response.data {
-                let errorResponse = String(decoding: data, as: UTF8.self)
-                print("\(errorResponse)")
-            }
-            
-            if let afError = error.asAFError {
-                switch afError {
-                case .sessionTaskFailed(let urlError as URLError):
-                    // Re-throw para manejar específicamente en el SessionManager
-                    throw urlError
-                default:
-                    // Otros errores de Alamofire
-                    throw afError
-                }
-            } else {
-                throw error
-            }
         }
     }
     
     @MainActor
     func GoogleLogin(url: URL) async -> Int? {
         // Obtener el UIViewController desde SwiftUI
-        guard let presentingViewController = getViewController.shared.topViewController() else {
+        guard let presentingViewController = GetViewController.shared.topViewController() else {
             print("No se pudo obtener el UIViewController para presentar la interfaz de Google Sign-In")
             return nil
         }
@@ -293,8 +238,8 @@ class SessionAPIService: NSObject {
         
         // Crear credencial de Firebase
         let credential = OAuthProvider.appleCredential(withIDToken: idTokenString,
-                                                                rawNonce: nonce,
-                                                                fullName: appleIDCredential.fullName)
+                                                                    rawNonce: nonce,
+                                                                    fullName: appleIDCredential.fullName)
         
         do {
             // Iniciar sesión en Firebase con las credenciales
@@ -303,67 +248,6 @@ class SessionAPIService: NSObject {
         } catch {
             print("Error al autenticar con Firebase: \(error.localizedDescription)")
             return 500
-        }
-    }
-    
-    func completarPerfil(url: URL, UserDatos: UserExterno) async -> Int? {
-        guard let idToken = await obtenerIDToken() else {
-            print("No se pudo obtener el ID Token")
-            return nil
-        }
-        
-        // Obtener el usuario actual
-        guard let currentUser = Auth.auth().currentUser else {
-            print("No hay usuario autenticado")
-            return nil
-        }
-        
-        // Obtener el UID de Firebase Authentication
-        let firebaseUID = currentUser.uid
-        
-        // Obtener nombre y correo electrónico desde Firebase
-        let nombre = currentUser.displayName ?? "Nombre no disponible"
-        let correoElectronico = currentUser.email ?? "Correo no disponible"
-        
-        // Prepara los headers con el token para enviar al backend
-        let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(idToken)", // Incluye el token en el header de autorización
-            "Content-Type": "application/json"
-        ]
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let fechaNacimientoString = dateFormatter.string(from: UserDatos.fechaNacimiento)
-        
-        let parameters: Parameters = [
-            "username" : UserDatos.username,
-            "nombre" : "\(nombre)",
-            "fechaNacimiento" : fechaNacimientoString,
-            "correoElectronico" : "\(correoElectronico)",
-            "tipoSangre": UserDatos.tipoSangre,
-            "numeroEmergencia": UserDatos.numeroEmergencia,
-            "firebaseUID": "\(firebaseUID)"
-        ]
-        
-        let taskRequest = session.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate()
-        let response = await taskRequest.serializingData().response
-        
-        let statusCode = response.response?.statusCode
-        
-        switch response.result {
-        case .success(_):
-            return statusCode
-            
-        case let .failure(error):
-            debugPrint(error.localizedDescription)
-                
-            // Imprimir el cuerpo de la respuesta en caso de error
-            if let data = response.data {
-                let errorResponse = String(decoding: data, as: UTF8.self)
-                print("\(errorResponse)")
-            }
-            
-            return statusCode
         }
     }
     
@@ -381,80 +265,6 @@ class SessionAPIService: NSObject {
                     continuation.resume(returning: nil)
                 }
             }
-        }
-    }
-    
-    func verificarUsernameExistente(username: String, URLUsername: URL) async -> Bool? {
-        
-        let parameters: Parameters = [
-            "username" : username
-        ]
-        
-        // Prepara los headers con el token para enviar al backend
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/json"
-        ]
-            
-        let taskRequest = session.request(URLUsername, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: headers).validate()
-        let response = await taskRequest.serializingData().response
-        
-        switch response.result {
-        case .success(let data):
-            do {
-                // Intentar decodificar la respuesta JSON en un objeto Response
-                let response = try JSONDecoder().decode(Response.self, from: data)
-            
-                return response.usernameExistente
-                
-            } catch {
-                return nil
-            }
-        case let .failure(error):
-            debugPrint(error.localizedDescription)
-            
-            // Imprimir el cuerpo de la respuesta en caso de error
-            if let data = response.data {
-                let errorResponse = String(decoding: data, as: UTF8.self)
-                print("\(errorResponse)")
-            }
-            return nil
-            }
-    }
-    
-    func obtenerEmailDesdeBackend(username: String, URLUsername: URL) async throws -> String? {
-        
-        let parameters: Parameters = [
-            "username" : username
-        ]
-        
-        // Prepara los headers con el token para enviar al backend
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/json"
-        ]
-            
-        let taskRequest = session.request(URLUsername, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: headers).validate()
-        let response = await taskRequest.serializingData().response
-        
-        switch response.result {
-        case .success(let data):
-            do {
-                // Intentar decodificar la respuesta JSON en un objeto Response
-                let response = try JSONDecoder().decode(Response.self, from: data)
-                
-                return response.correoElectronico
-                
-            } catch {
-                return nil
-            }
-        case let .failure(error):
-            debugPrint(error.localizedDescription)
-            
-            // Imprimir el cuerpo de la respuesta en caso de error
-            if let data = response.data {
-                let errorResponse = String(decoding: data, as: UTF8.self)
-                print("\(errorResponse)")
-            }
-            return nil
         }
     }
 }

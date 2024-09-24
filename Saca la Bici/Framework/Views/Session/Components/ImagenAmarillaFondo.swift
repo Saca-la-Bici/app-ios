@@ -21,4 +21,3 @@ struct ImagenAmarillaFondo: Shape {
         return path
     }
 }
-

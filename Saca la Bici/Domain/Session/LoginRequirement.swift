@@ -16,7 +16,7 @@ protocol LoginRequirementProtocol {
     func GoogleLogin() async -> Int?
     func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int}
 
-class LoginRequirement : LoginRequirementProtocol {
+class LoginRequirement: LoginRequirementProtocol {
     
     // Singleton para que lo use el Requirement
     static let shared = LoginRequirement()

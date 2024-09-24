@@ -38,10 +38,10 @@ struct CompletarDatosStep1View: View {
                         HStack {
                             Button(action: {
                                 sessionManager.signOut()
-                            }) {
+                            }, label: {
                                 Image(systemName: "xmark")
                                     .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
-                            }
+                            })
                         }
                         .padding(.top, -10)
                         

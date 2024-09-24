@@ -30,39 +30,44 @@ class SessionRepository: SessionAPIProtocol {
     // Se crea la variable tipo NetworkAPIService con la librería Alamofire
     let sessionService: SessionAPIService
     
+    let userProfileService: UserProfileSessionAPIService
+    
     // Se inicializa con la variable singleton
-    init(sessionService: SessionAPIService = SessionAPIService.shared) {
+    init(sessionService: SessionAPIService = SessionAPIService.shared,
+         userProfileService: UserProfileSessionAPIService = UserProfileSessionAPIService.shared) {
             self.sessionService = sessionService
+            self.userProfileService = userProfileService
         }
     
     func registrarUsuario(UserDatos: UserNuevo) async -> Int? {
-        return await sessionService.registrarUsuario(url: URL(string:"\(Api.base)\(Api.routes.session)/registrarUsuario")!, UserDatos: UserDatos)
+        return await sessionService.registrarUsuario(url: URL(string: "\(Api.base)\(Api.Routes.session)/registrarUsuario")!, UserDatos: UserDatos)
     }
     
     func probarToken() async -> Response? {
         // Llamas la función usando el URL base, el modulo y limite que fue pasado usando await porque es asincronico
-        return await sessionService.probarToken(url: URL(string:"\(Api.base)")!)
+        return await sessionService.probarToken(url: URL(string: "\(Api.base)")!)
     }
     
     // Tomar en cuenta la llamada al back para mostrar info
     func iniciarSesion(UserDatos: User) async -> Int? {
-        return await sessionService.iniciarSesion(UserDatos: UserDatos, URLUsername: URL(string:"\(Api.base)\(Api.routes.session)/getUserEmail")!)
+        return await sessionService.iniciarSesion(UserDatos: UserDatos, URLUsername: URL(string: "\(Api.base)\(Api.Routes.session)/getUserEmail")!)
     }
     
     func checarPerfilBackend() async throws -> Response {
-        return try await sessionService.checarPerfilBackend(url: URL(string:"\(Api.base)\(Api.routes.session)/perfilCompleto")!)
+        return try await userProfileService.checarPerfilBackend(url: URL(string: "\(Api.base)\(Api.Routes.session)/perfilCompleto")!)
     }
     
     func completarPerfil(UserDatos: UserExterno) async -> Int? {
-        return await sessionService.completarPerfil(url: URL(string:"\(Api.base)\(Api.routes.session)/registrarUsuario")!, UserDatos: UserDatos)
+        return await userProfileService.completarPerfil(url: URL(string: "\(Api.base)\(Api.Routes.session)/registrarUsuario")!, UserDatos: UserDatos)
     }
     
     func verificarUsernameExistente(username: String) async -> Bool? {
-        return await sessionService.verificarUsernameExistente(username: username, URLUsername: URL(string:"\(Api.base)\(Api.routes.session)/getUsername")!)
+        return await userProfileService.verificarUsernameExistente(
+            username: username, URLUsername: URL(string: "\(Api.base)\(Api.Routes.session)/getUsername")!)
     }
     
     func GoogleLogin() async -> Int? {
-        return await sessionService.GoogleLogin(url: URL(string:"\(Api.base)\(Api.routes.session)/registrarUsuario")!)
+        return await sessionService.GoogleLogin(url: URL(string: "\(Api.base)\(Api.Routes.session)/registrarUsuario")!)
     }
     
     func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int {
