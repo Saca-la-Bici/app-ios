@@ -7,9 +7,9 @@
 
 import XCTest
 
-final class Saca_la_BiciUITestsLaunchTests: XCTestCase {
+final class SacalaBiciUITestsLaunchTests: XCTestCase {
 
-    override class var runsForEachTargetApplicationUIConfiguration: Bool {
+    override static var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }
 
