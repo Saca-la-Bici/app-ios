@@ -159,7 +159,7 @@ struct ModificarAnuncioView: View {
             
             // Campo de texto para el contenido
             VStack(alignment: .leading) {
-                Text("Contenido")
+                Text("Descripción")
                     .font(.subheadline)
                     .foregroundColor(.black)
                 
