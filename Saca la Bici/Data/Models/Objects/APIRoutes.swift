@@ -15,5 +15,6 @@ struct Api {
     struct Routes {
         static let session = "/session"
         static let status = "/status"
+        static let anuncios = "/anuncios"
     }
 }
