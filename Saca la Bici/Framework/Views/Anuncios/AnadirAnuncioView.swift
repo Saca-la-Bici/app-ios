@@ -1,6 +1,6 @@
 //
 //  AnadirAnuncioView.swift
-//  template
+//  Template
 //
 //  Created by Diego Lira on 08/09/24.
 //
@@ -12,18 +12,25 @@ struct AnadirAnuncioView: View {
     @State private var titulo: String = ""
     @State private var descripcion: String = ""
     @Environment(\.presentationMode) var presentationMode
-    var viewModel: AnuncioViewModel
+    @ObservedObject var viewModel: AnuncioViewModel
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImageData: Data? = nil
     
-    // Variables de estado para las alertas
-    @State private var showValidationError = false
-    @State private var validationErrorMessage = ""
-    @State private var showSuccessAlert = false
+    // Enum para manejar las alertas activas
+    enum ActiveAlert: Identifiable {
+        case error
+        case success
+
+        var id: Int {
+            hashValue
+        }
+    }
+    
+    // Variable de estado para la alerta activa
+    @State private var activeAlert: ActiveAlert?
 
     var body: some View {
         VStack {
-            // Header
             HStack {
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()
@@ -40,21 +47,18 @@ struct AnadirAnuncioView: View {
                 Button(action: {
                     // Validaciones
                     if titulo.trimmingCharacters(in: .whitespaces).isEmpty {
-                        validationErrorMessage = "El título no puede estar vacío."
-                        showValidationError = true
+                        viewModel.errorMessage = "El título no puede estar vacío."
+                        activeAlert = .error
                         return
                     }
                     if descripcion.trimmingCharacters(in: .whitespaces).isEmpty {
-                        validationErrorMessage = "La descripción no puede estar vacía."
-                        showValidationError = true
+                        viewModel.errorMessage = "La descripción no puede estar vacía."
+                        activeAlert = .error
                         return
                     }
                     
-                    // Llamar al ViewModel para registrar el anuncio
+                    // Llamar al viewModel para registrar el anuncio
                     viewModel.registrarAnuncio(titulo: titulo, contenido: descripcion)
-                    
-                    // Mostrar alerta de éxito
-                    showSuccessAlert = true
                 }) {
                     Image(systemName: "checkmark")
                         .font(.title2)
@@ -66,7 +70,7 @@ struct AnadirAnuncioView: View {
 
             Spacer().frame(height: 40)
 
-            // Icono para subir imagen utilizando PhotosPicker
+            // Icono para subir una imagen
             if selectedImageData == nil {
                 PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
                     ZStack {
@@ -97,7 +101,7 @@ struct AnadirAnuncioView: View {
                 }
             }
 
-            // Mostrar la imagen seleccionada si existe
+            // Mostrar la imagen si existe
             if let data = selectedImageData, let uiImage = UIImage(data: data) {
                 VStack {
                     Image(uiImage: uiImage)
@@ -118,7 +122,7 @@ struct AnadirAnuncioView: View {
 
             Spacer().frame(height: 20)
             
-            // Campo de texto para el título
+            // Titulo
             VStack(alignment: .leading) {
                 Text("Título")
                     .font(.subheadline)
@@ -135,26 +139,28 @@ struct AnadirAnuncioView: View {
             .padding(.horizontal)
             .padding(.bottom, 20)
 
-            // Campo de texto para la descripción
+            // Descripción
             VStack(alignment: .leading) {
                 Text("Descripción")
                     .font(.subheadline)
                     .foregroundColor(.black)
 
                 ZStack(alignment: .topLeading) {
-                    if descripcion.isEmpty {
-                        Text("¿Qué quieres compartir?")
-                            .foregroundColor(Color(.placeholderText))
-                            .padding(.horizontal, 5)
-                            .padding(.vertical, 12)
-                    }
                     TextEditor(text: $descripcion)
+                        .padding(8)
                         .frame(height: 150)
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.gray.opacity(0.5), lineWidth: 1)
                         )
                         .padding(.top, 5)
+
+                    if descripcion.isEmpty {
+                        Text("¿Qué quieres compartir?")
+                            .foregroundColor(Color(.placeholderText))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 16)
+                    }
                 }
             }
             .padding(.horizontal)
@@ -162,22 +168,34 @@ struct AnadirAnuncioView: View {
             Spacer()
         }
         .padding(.bottom, 20)
-        // Alertas
-        .alert(isPresented: $showValidationError) {
-            Alert(
-                title: Text("Error"),
-                message: Text(validationErrorMessage),
-                dismissButton: .default(Text("OK"))
-            )
+        // unica alerta utilizando activeAlert
+        .alert(item: $activeAlert) { alertType in
+            switch alertType {
+            case .error:
+                return Alert(
+                    title: Text("Error"),
+                    message: Text(viewModel.errorMessage ?? "Error desconocido."),
+                    dismissButton: .default(Text("OK")) {
+                        // Clear the error message if needed
+                        viewModel.errorMessage = nil
+                    }
+                )
+            case .success:
+                return Alert(
+                    title: Text("Éxito"),
+                    message: Text(viewModel.successMessage ?? "Anuncio agregado correctamente."),
+                    dismissButton: .default(Text("OK")) {
+                        // Clear the success message and dismiss the view
+                        viewModel.successMessage = nil
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                )
+            }
         }
-        .alert(isPresented: $showSuccessAlert) {
-            Alert(
-                title: Text("Éxito"),
-                message: Text("El anuncio ha sido agregado correctamente."),
-                dismissButton: .default(Text("OK")) {
-                    presentationMode.wrappedValue.dismiss()
-                }
-            )
+        .onChange(of: viewModel.successMessage) { newValue in
+            if newValue != nil {
+                activeAlert = .success
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Anuncio: Identifiable, Codable {
     var id: String
-    var IDUsuario: Int
+    var IDUsuario: Int?
     var titulo: String
     var contenido: String
     var imagen: String?

@@ -21,10 +21,20 @@ class AnuncioAPIService {
                 case .success(let anuncios):
                     completion(.success(anuncios))
                 case .failure(let error):
+                    if let data = response.data {
+                        do {
+                            let message = try JSONDecoder().decode(ResponseMessage.self, from: data)
+                            print("Server error: \(message.message)")
+                        } catch {
+                            print("Decoding error message failed: \(error.localizedDescription)")
+                        }
+                    }
+                    print("Network error: \(error.localizedDescription)")
                     completion(.failure(error))
                 }
             }
     }
+
     
     // Función para registrar un nuevo anuncio
     func registrarAnuncio(_ anuncio: Anuncio, completion: @escaping (Result<String, Error>) -> Void) {
