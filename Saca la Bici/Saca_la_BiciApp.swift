@@ -37,9 +37,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct SacalaBiciApp: App {
     // Register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-
+    
+    @StateObject var sessionManager = SessionManager()
+    
     init() {
         let appearance = UINavigationBarAppearance()
+        
         let darkerYellow = UIColor(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0, alpha: 1.0)
         
         appearance.backButtonAppearance.normal.titleTextAttributes = [
@@ -49,20 +52,22 @@ struct SacalaBiciApp: App {
         if let backImage = UIImage(systemName: "chevron.left")?.withTintColor(darkerYellow, renderingMode: .alwaysOriginal) {
             appearance.setBackIndicatorImage(backImage, transitionMaskImage: backImage)
         }
-        
+      
         appearance.titleTextAttributes = [.foregroundColor: darkerYellow]
         
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().compactAppearance = appearance
+
         UINavigationBar.appearance().tintColor = darkerYellow
     }
     
-    var body: some Scene {
-        WindowGroup {
-            NavigationView {
-                ConsultarAnuncio()
-            }
-        }
+  var body: some Scene {
+    WindowGroup {
+      NavigationView {
+          SessionCoordinatorView()
+              .environmentObject(sessionManager)
+      }
     }
+  }
 }

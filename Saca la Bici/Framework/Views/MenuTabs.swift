@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct MenuView: View {
-    @State private var selectedTab = 3
+    @State private var selectedTab = 2
 
     var body: some View {
         NavigationView {
@@ -11,10 +11,13 @@ struct MenuView: View {
                 // Contenido del TabView personalizado
                 VStack {
                     if selectedTab == 0 {
+                       ResultView()
                     } else if selectedTab == 1 {
+                        ResultView()
                     } else if selectedTab == 2 {
                         ConsultarAnuncio()
                     } else {
+                        ResultView()
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
