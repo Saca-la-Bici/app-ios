@@ -1,8 +1,10 @@
 name: SwiftLint
 
 on:
-  push: Jesus0204-patch-1
-  pull_request: 
+  push:
+    branches: [ "main", "Jesus0204-patch-1" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   swiftlint:
