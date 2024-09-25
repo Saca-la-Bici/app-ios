@@ -14,40 +14,27 @@ class AnuncioRepository {
         self.apiService = apiService
     }
     
-    func getAnuncios(completion: @escaping (Result<[Anuncio], Error>) -> Void) {
-        apiService.fetchAnuncios(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/consultar")!) { result in
-            switch result {
-            case .success(let anuncios):
-                let anunciosValidos = anuncios.filter { AnuncioRequirement.esValido(anuncio: $0) }
-                completion(.success(anunciosValidos))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func getAnuncios() async throws -> [Anuncio] {
+        let anuncios = try await apiService.fetchAnuncios()
+        let anunciosValidos = anuncios.filter { AnuncioRequirement.esValido(anuncio: $0) }
+        return anunciosValidos
     }
     
-    func postAnuncio(_ anuncio: Anuncio, completion: @escaping (Result<String, Error>) -> Void) {
-            // Llamamos a la función de `apiService` sin manejar la URL aquí,
-            // ya que la URL está dentro del `apiService`.
-            apiService.registrarAnuncio(anuncio) { result in
-                // Pasamos el resultado a través del completion handler
-                switch result {
-                case .success(let message):
-                    completion(.success(message))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        }
+    func postAnuncio(_ anuncio: Anuncio) async throws -> String {
+        let message = try await apiService.registrarAnuncio(anuncio)
+        return message
+    }
     
-        func eliminarAnuncio(idAnuncio: String, completion: @escaping (Result<String, Error>) -> Void) {
-            apiService.eliminarAnuncio(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/eliminar/\(idAnuncio)")!) { result in
-                completion(result)
-            }
-        }
+    func eliminarAnuncio(idAnuncio: String) async throws -> String {
+        let message = try await apiService.eliminarAnuncio(anuncioID: idAnuncio)
+        return message
+    }
+
     
-    func modificarAnuncio(idAnuncio: String, titulo: String, contenido: String, completion: @escaping (Result<String, Error>) -> Void) {
-            apiService.modificarAnuncio(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/modificar/\(idAnuncio)")!,
-                                        titulo: titulo, contenido: contenido, completion: completion)
-        }
+    func modificarAnuncio(_ anuncio: Anuncio) async throws -> Anuncio {
+        let updatedAnuncio = try await apiService.modificarAnuncio(anuncio, anuncioID: anuncio.id)
+        return updatedAnuncio
+    }
+
+
 }

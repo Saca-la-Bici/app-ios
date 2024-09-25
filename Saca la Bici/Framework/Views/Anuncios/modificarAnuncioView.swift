@@ -60,7 +60,6 @@ struct ModificarAnuncioView: View {
                     .foregroundColor(.black)
                 Spacer()
                 Button(action: {
-                    // Acción para confirmar el anuncio
                     // Validaciones
                     if titulo.trimmingCharacters(in: .whitespaces).isEmpty {
                         viewModel.errorMessage = "El título no puede estar vacío."
@@ -68,17 +67,19 @@ struct ModificarAnuncioView: View {
                         return
                     }
                     if contenido.trimmingCharacters(in: .whitespaces).isEmpty {
-                        viewModel.errorMessage = "El contenido no puede estar vacío."
+                        viewModel.errorMessage = "La descripción no puede estar vacía."
                         activeAlert = .validationError
                         return
                     }
                     
                     // Llamar al ViewModel para modificar el anuncio
-                    viewModel.modificarAnuncio(
-                        anuncio: anuncio,
-                        nuevoTitulo: titulo,
-                        nuevoContenido: contenido
-                    )
+                    Task {
+                        await viewModel.modificarAnuncio(
+                            anuncio: anuncio,
+                            nuevoTitulo: titulo,
+                            nuevoContenido: contenido
+                        )
+                    }
                 }, label: {
                     Image(systemName: "checkmark")
                         .font(.title2)
@@ -112,7 +113,7 @@ struct ModificarAnuncioView: View {
                             .foregroundColor(Color.white.opacity(0.7))
                     }
                 }
-                .onChange(of: selectedItem) { _, newItem in
+                .onChange(of: selectedItem) { newItem in
                     Task {
                         if let data = try? await newItem?.loadTransferable(type: Data.self),
                            let uiImage = UIImage(data: data) {
@@ -241,3 +242,4 @@ struct ModificarAnuncioView: View {
         }
     }
 }
+

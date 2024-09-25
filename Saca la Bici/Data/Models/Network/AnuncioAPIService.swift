@@ -12,147 +12,137 @@ import FirebaseAuth
 class AnuncioAPIService {
     
     // Función para obtener los anuncios existentes
-    func fetchAnuncios(url: URL, completion: @escaping (Result<[Anuncio], Error>) -> Void) {
-        obtenerIDToken { idToken in
-            guard let idToken = idToken else {
-                completion(.failure(NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])))
-                return
-            }
-
-            let headers: HTTPHeaders = [
-                "Authorization": "Bearer \(idToken)",
-                "Content-Type": "application/json"
-            ]
-
-            AF.request(url, method: .get, headers: headers)
-                .validate()
-                .responseDecodable(of: [Anuncio].self) { response in
-                    switch response.result {
-                    case .success(let anuncios):
-                        completion(.success(anuncios))
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                }
-        }
-    }
-
-    
-    // Función para registrar un nuevo anuncio
-    func registrarAnuncio(_ anuncio: Anuncio, completion: @escaping (Result<String, Error>) -> Void) {
-        let urlString = "http://192.168.0.5:3000/anuncios/registrar"
+    func fetchAnuncios() async throws -> [Anuncio] {
+        let urlString = "http://10.25.100.97:3000/anuncios/consultar"
+        
         guard let url = URL(string: urlString) else {
-            completion(.failure(NSError(domain: "URL", code: 400, userInfo: [NSLocalizedDescriptionKey: "URL inválida"])))
-            return
+            throw NSError(domain: "URL", code: 400, userInfo: [NSLocalizedDescriptionKey: "URL inválida"])
         }
-
-        obtenerIDToken { idToken in
-            guard let idToken = idToken else {
-                completion(.failure(NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])))
-                return
-            }
-
-            let headers: HTTPHeaders = [
-                "Authorization": "Bearer \(idToken)",
-                "Content-Type": "application/json"
-            ]
-
-            let params: [String: Any] = [
-                "titulo": anuncio.titulo,
-                "contenido": anuncio.contenido,
-                "imagen": ""
-            ]
-
-            AF.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers)
+        
+        guard let idToken = await obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
+        
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+        
+        do {
+            let anuncios = try await AF.request(url, method: .get, headers: headers)
                 .validate()
-                .responseDecodable(of: ResponseMessage.self) { response in
-                    switch response.result {
-                    case .success(let responseMessage):
-                        completion(.success(responseMessage.message))
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                }
+                .serializingDecodable([Anuncio].self)
+                .value
+            
+            return anuncios
+        } catch {
+            print("Error al obtener anuncios: \(error.localizedDescription)")
+            throw error
         }
     }
 
-
+    // Función para registrar un nuevo anuncio
+    func registrarAnuncio(_ anuncio: Anuncio) async throws -> String {
+        let urlString = "http://10.25.100.97:3000/anuncios/registrar"
+        guard let url = URL(string: urlString) else {
+            throw NSError(domain: "URL", code: 400, userInfo: [NSLocalizedDescriptionKey: "URL inválida"])
+        }
+        
+        guard let idToken = await obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+        
+        let params: [String: Any] = [
+            "titulo": anuncio.titulo,
+            "contenido": anuncio.contenido,
+            "imagen": ""
+        ]
+        
+        let responseMessage = try await AF.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers)
+            .validate()
+            .serializingDecodable(ResponseMessage.self)
+            .value
+        
+        return responseMessage.message
+    }
     
     // Función para eliminar un anuncio
-    func eliminarAnuncio(url: URL, completion: @escaping (Result<String, Error>) -> Void) {
-        obtenerIDToken { idToken in
-            guard let idToken = idToken else {
-                completion(.failure(NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])))
-                return
-            }
-
-            let headers: HTTPHeaders = [
-                "Authorization": "Bearer \(idToken)",
-                "Content-Type": "application/json"
-            ]
-
-            AF.request(url, method: .delete, headers: headers)
-                .validate()
-                .response { response in
-                    switch response.result {
-                    case .success:
-                        completion(.success("Anuncio eliminado exitosamente"))
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                }
+    func eliminarAnuncio(anuncioID: String) async throws -> String {
+        let urlString = "http://10.25.100.97:3000/anuncios/eliminar/\(anuncioID)"
+        
+        guard let url = URL(string: urlString) else {
+            throw NSError(domain: "URL", code: 400, userInfo: [NSLocalizedDescriptionKey: "URL no válida"])
         }
+        
+        guard let idToken = await obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
+        
+        print("Token: ", idToken)
+
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+        
+        _ = try await AF.request(url, method: .delete, headers: headers)
+            .validate()
+            .serializingData()
+            .value
+        
+        return "Anuncio eliminado exitosamente"
+    }
+
+
+    
+    // Función para modificar un anuncio existente
+    func modificarAnuncio(_ anuncio: Anuncio, anuncioID: String) async throws -> Anuncio {
+        let urlString = "http://10.25.100.97:3000/anuncios/modificar/\(anuncioID)"
+        guard let url = URL(string: urlString) else {
+            throw NSError(domain: "URL", code: 400, userInfo: [NSLocalizedDescriptionKey: "URL inválida"])
+        }
+        
+        guard let idToken = await obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
+
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+        
+        let params: [String: Any] = [
+            "titulo": anuncio.titulo,
+            "contenido": anuncio.contenido,
+            "imagen": ""
+        ]
+        
+        let responseData = try await AF.request(url, method: .patch, parameters: params, encoding: JSONEncoding.default, headers: headers)
+            .validate()
+            .serializingDecodable(Anuncio.self)  
+            .value
+        
+        return responseData
     }
 
     
-    // Función para modificar anuncio
-    func modificarAnuncio(url: URL, titulo: String, contenido: String, completion: @escaping (Result<String, Error>) -> Void) {
-        obtenerIDToken { idToken in
-            guard let idToken = idToken else {
-                completion(.failure(NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])))
-                return
-            }
-
-            let headers: HTTPHeaders = [
-                "Authorization": "Bearer \(idToken)",
-                "Content-Type": "application/json"
-            ]
-
-            let params: [String: Any] = [
-                "titulo": titulo,
-                "contenido": contenido,
-                "imagen": "path/test"
-            ]
-
-            AF.request(url, method: .put, parameters: params, encoding: JSONEncoding.default, headers: headers)
-                .validate()
-                .response { response in
-                    switch response.result {
-                    case .success:
-                        completion(.success("Anuncio modificado exitosamente."))
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                }
-        }
-    }
-
-    
-    // Función para obtener el ID Token del usuario autenticado
-        func obtenerIDToken(completion: @escaping (String?) -> Void) {
-            guard let user = Auth.auth().currentUser else {
-                completion(nil)
-                return
-            }
-            
-            user.getIDToken { idToken, error in
+    // Función para obtener el ID Token de forma asincrónica
+    private func obtenerIDToken() async -> String? {
+        return await withCheckedContinuation { continuation in
+            Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
                 if let error = error {
-                    print("Error al obtener el ID Token: \(error)")
-                    completion(nil)
-                    return
+                    print("Error al obtener el ID Token: \(error.localizedDescription)")
+                    continuation.resume(returning: nil)
+                } else {
+                    continuation.resume(returning: idToken)
                 }
-                
-                completion(idToken)
             }
         }
+    }
 }
