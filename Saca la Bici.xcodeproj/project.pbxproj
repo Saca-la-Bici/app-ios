@@ -50,6 +50,9 @@
 		25C302C82C9A9E7C005AD742 /* CompletarDatosStep2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */; };
 		25C302CA2C9AAF9A005AD742 /* ExternalLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302C92C9AAF9A005AD742 /* ExternalLoginButton.swift */; };
 		25D0E5132CA326B800B431A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25D0E5122CA326B800B431A9 /* GoogleService-Info.plist */; };
+		25D0E5152CA37BE200B431A9 /* ReestablecerContraseñaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D0E5142CA37BE200B431A9 /* ReestablecerContraseñaView.swift */; };
+		25D0E5172CA3813600B431A9 /* RestablecerContraseñaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D0E5162CA3813600B431A9 /* RestablecerContraseñaViewModel.swift */; };
+		25D0E5192CA38C6C00B431A9 /* RestablecerContraseñaRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D0E5182CA38C6C00B431A9 /* RestablecerContraseñaRequirement.swift */; };
 		25F3681B2C9B62CD003322CF /* ImagenAmarillaFondo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3681A2C9B62CD003322CF /* ImagenAmarillaFondo.swift */; };
 		25F3681D2C9B7B49003322CF /* TituloComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3681C2C9B7B49003322CF /* TituloComponent.swift */; };
 		25F3681F2C9B8032003322CF /* MainViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3681E2C9B8032003322CF /* MainViewButton.swift */; };
@@ -125,6 +128,9 @@
 		25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletarDatosStep2View.swift; sourceTree = "<group>"; };
 		25C302C92C9AAF9A005AD742 /* ExternalLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalLoginButton.swift; sourceTree = "<group>"; };
 		25D0E5122CA326B800B431A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		25D0E5142CA37BE200B431A9 /* ReestablecerContraseñaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReestablecerContraseñaView.swift"; sourceTree = "<group>"; };
+		25D0E5162CA3813600B431A9 /* RestablecerContraseñaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RestablecerContraseñaViewModel.swift"; sourceTree = "<group>"; };
+		25D0E5182CA38C6C00B431A9 /* RestablecerContraseñaRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RestablecerContraseñaRequirement.swift"; sourceTree = "<group>"; };
 		25F3681A2C9B62CD003322CF /* ImagenAmarillaFondo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagenAmarillaFondo.swift; sourceTree = "<group>"; };
 		25F3681C2C9B7B49003322CF /* TituloComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TituloComponent.swift; sourceTree = "<group>"; };
 		25F3681E2C9B8032003322CF /* MainViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewButton.swift; sourceTree = "<group>"; };
@@ -293,8 +299,8 @@
 			isa = PBXGroup;
 			children = (
 				252B650D2C9A427D00A362C5 /* Objects */,
-				252B64E62C99FE7200A362C5 /* Network */,
 				252B650C2C9A426200A362C5 /* Repositories */,
+				252B64E62C99FE7200A362C5 /* Network */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -312,6 +318,7 @@
 			children = (
 				252B64C12C99FE5900A362C5 /* LoginViewModel.swift */,
 				252B64C22C99FE5900A362C5 /* SignUpViewModel.swift */,
+				25D0E5162CA3813600B431A9 /* RestablecerContraseñaViewModel.swift */,
 				252B64C32C99FE5900A362C5 /* SessionManager.swift */,
 			);
 			path = Session;
@@ -322,6 +329,7 @@
 			children = (
 				252B64DD2C99FE6F00A362C5 /* LoginRequirement.swift */,
 				252B64DE2C99FE6F00A362C5 /* SignUpRequirement.swift */,
+				25D0E5182CA38C6C00B431A9 /* RestablecerContraseñaRequirement.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -338,6 +346,7 @@
 				252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */,
 				25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */,
 				252B64C72C99FE5900A362C5 /* SessionCoordinatorView.swift */,
+				25D0E5142CA37BE200B431A9 /* ReestablecerContraseñaView.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -584,6 +593,7 @@
 				252B64D32C99FE5900A362C5 /* SignUpStep1View.swift in Sources */,
 				252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */,
 				25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */,
+				25D0E5172CA3813600B431A9 /* RestablecerContraseñaViewModel.swift in Sources */,
 				25F3681D2C9B7B49003322CF /* TituloComponent.swift in Sources */,
 				25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */,
 				252B64EB2C99FE7200A362C5 /* User.swift in Sources */,
@@ -591,6 +601,7 @@
 				25F3681F2C9B8032003322CF /* MainViewButton.swift in Sources */,
 				252B64EE2C99FE7200A362C5 /* SessionAPIService.swift in Sources */,
 				25C302CA2C9AAF9A005AD742 /* ExternalLoginButton.swift in Sources */,
+				25D0E5152CA37BE200B431A9 /* ReestablecerContraseñaView.swift in Sources */,
 				25F368212C9BAEA3003322CF /* LoadingView.swift in Sources */,
 				252B64EF2C99FE7200A362C5 /* SessionRepository.swift in Sources */,
 				252B64D52C99FE5900A362C5 /* SignUpStep3View.swift in Sources */,
@@ -607,6 +618,7 @@
 				252B64DB2C99FE5900A362C5 /* LoginView.swift in Sources */,
 				25C302C82C9A9E7C005AD742 /* CompletarDatosStep2View.swift in Sources */,
 				259CBBA02CA0E44A0067B550 /* SessionPaths.swift in Sources */,
+				25D0E5192CA38C6C00B431A9 /* RestablecerContraseñaRequirement.swift in Sources */,
 				252B64E02C99FE6F00A362C5 /* LoginRequirement.swift in Sources */,
 				25F3681B2C9B62CD003322CF /* ImagenAmarillaFondo.swift in Sources */,
 				259EF8B72CA23899007CE3FE /* UserProfileSessionAPIService.swift in Sources */,
