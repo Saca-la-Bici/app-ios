@@ -9,7 +9,6 @@ import SwiftUI
 
 struct Anuncio: Identifiable, Codable {
     var id: String
-    var IDUsuario: Int?
     var titulo: String
     var contenido: String
     var imagen: String?
@@ -21,7 +20,6 @@ struct Anuncio: Identifiable, Codable {
     
     enum CodingKeys: String, CodingKey {
         case id = "_id"
-        case IDUsuario
         case titulo
         case contenido
         case imagen

@@ -27,10 +27,18 @@ class AnuncioRepository {
     }
     
     func postAnuncio(_ anuncio: Anuncio, completion: @escaping (Result<String, Error>) -> Void) {
-        apiService.registrarAnuncio(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/registrar")!, anuncio) { result in
-            completion(result)
+            // Llamamos a la función de `apiService` sin manejar la URL aquí,
+            // ya que la URL está dentro del `apiService`.
+            apiService.registrarAnuncio(anuncio) { result in
+                // Pasamos el resultado a través del completion handler
+                switch result {
+                case .success(let message):
+                    completion(.success(message))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
         }
-    }
     
         func eliminarAnuncio(idAnuncio: String, completion: @escaping (Result<String, Error>) -> Void) {
             apiService.eliminarAnuncio(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/eliminar/\(idAnuncio)")!) { result in
