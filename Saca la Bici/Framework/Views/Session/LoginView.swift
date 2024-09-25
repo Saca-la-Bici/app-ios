@@ -75,6 +75,9 @@ struct LoginView: View {
                                     if loginViewModel.showAlert != true {
                                         sessionManager.isAuthenticated = true
                                         sessionManager.isProfileComplete = true
+                                        UserDefaults.standard.set(true, forKey: "isRegistrationComplete")
+                                    } else {
+                                        UserDefaults.standard.set(false, forKey: "isRegistrationComplete")
                                     }
                                 }
                             }
