@@ -60,7 +60,9 @@ struct RestablecerContrasenaView: View {
                     text: "Verificar",
                     backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                     action: {
-                        restablecerContraseñaViewModel.verificarContraseña()
+                        Task {
+                            await restablecerContraseñaViewModel.verificarContraseña()
+                        }
                     }
                 )
             }
@@ -81,6 +83,8 @@ struct RestablecerContrasenaView: View {
                     isPasswordVisible: $restablecerContraseñaViewModel.showConfirmPassword,
                     text: "Confirmar Nueva Contraseña"
                 )
+                
+                Spacer().frame(height: 40)
                 
                 CustomButton(
                     text: "Restablecer Contraseña",

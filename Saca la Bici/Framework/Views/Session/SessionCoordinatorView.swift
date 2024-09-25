@@ -17,7 +17,7 @@ struct SessionCoordinatorView: View {
     var body: some View {
         ZStack {
             if isAppLoading || sessionManager.isLoading {
-                LoadingView()
+                MenuView()
             } else if sessionManager.isAuthenticated {
                 if sessionManager.isProfileComplete {
                     MenuView()

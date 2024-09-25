@@ -10,7 +10,7 @@ import Foundation
 // Creas el protocolo de la historia de usuario
 protocol RestablecerContraseñaRequirementProtocol {
     
-    func reauthenticateUser(currentPassword: String) -> Bool
+    func reauthenticateUser(currentPassword: String) async -> Bool
     
 }
 
@@ -27,8 +27,8 @@ class RestablecerContraseñaRequirement: RestablecerContraseñaRequirementProtoc
         self.sessionRepository = sessionRepository
     }
     
-    func reauthenticateUser(currentPassword: String) -> Bool {
-        return sessionRepository.reauthenticateUser(currentPassword: currentPassword)
+    func reauthenticateUser(currentPassword: String) async -> Bool {
+        return await sessionRepository.reauthenticateUser(currentPassword: currentPassword)
     }
     
 }

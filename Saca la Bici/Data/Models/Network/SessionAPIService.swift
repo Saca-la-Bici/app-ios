@@ -289,7 +289,7 @@ class SessionAPIService: NSObject {
     }
     
     // Función para reautenticar al usuario
-    func reauthenticateUser(currentPassword: String) -> Bool {
+    func reauthenticateUser(currentPassword: String) async -> Bool {
         // Obtener el usuario actual
         guard let user = Auth.auth().currentUser, let email = user.email else {
             print("Usuario no encontrado")
@@ -299,18 +299,12 @@ class SessionAPIService: NSObject {
         // Crear las credenciales usando el proveedor de correo electrónico y contraseña
         let credential = EmailAuthProvider.credential(withEmail: email, password: currentPassword)
         
-        var reauthenticationResult = false
-        
-        user.reauthenticate(with: credential) { _, error in
-          if let error = error {
-              reauthenticationResult = false
-              print(error)
-          } else {
-              reauthenticationResult = true
-          }
+        do {
+            try await user.reauthenticate(with: credential)
+            return true
+        } catch {
+            print("Reauthentication failed: \(error.localizedDescription)")
+            return false
         }
-        
-        // Se regresa el resultado final
-        return reauthenticationResult
     }
 }

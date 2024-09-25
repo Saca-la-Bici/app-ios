@@ -27,14 +27,15 @@ class RestablecerContraseñaViewModel: ObservableObject {
         self.restablecerContraseñaRequirement = restablecerContraseñaRequirement
     }
     
-    func verificarContraseña () {
+    @MainActor
+    func verificarContraseña () async {
         if currentPassword.isEmpty {
             self.showAlert = true
             self.messageAlert = "Por favor ingresa tu contraseña actual."
             return
         }
         
-        let usuarioReautenticado = restablecerContraseñaRequirement.reauthenticateUser(currentPassword: self.currentPassword)
+        let usuarioReautenticado = await restablecerContraseñaRequirement.reauthenticateUser(currentPassword: self.currentPassword)
         
         if usuarioReautenticado == true {
             self.showNuevaContraseñaFields = true
