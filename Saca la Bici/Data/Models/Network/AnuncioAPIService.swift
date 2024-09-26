@@ -7,89 +7,119 @@
 
 import Alamofire
 import Foundation
+import FirebaseAuth
 
 class AnuncioAPIService {
     
     // Función para obtener los anuncios existentes
-    func fetchAnuncios(url: URL, completion: @escaping (Result<[Anuncio], Error>) -> Void) {
+    func fetchAnuncios(url: URL) async throws -> [Anuncio] {
+
+        guard let idToken = await obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
         
-        AF.request(url, method: .get)
-            .validate()
-            .responseDecodable(of: [Anuncio].self) { response in
-                switch response.result {
-                case .success(let anuncios):
-                    completion(.success(anuncios))
-                case .failure(let error):
-                    if let data = response.data {
-                        do {
-                            let message = try JSONDecoder().decode(ResponseMessage.self, from: data)
-                            print("Server error: \(message.message)")
-                        } catch {
-                            print("Decoding error message failed: \(error.localizedDescription)")
-                        }
-                    }
-                    print("Network error: \(error.localizedDescription)")
-                    completion(.failure(error))
-                }
-            }
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+        
+        do {
+            let anuncios = try await AF.request(url, method: .get, headers: headers)
+                .validate()
+                .serializingDecodable([Anuncio].self)
+                .value
+            
+            return anuncios
+        } catch {
+            print("Error al obtener anuncios: \(error.localizedDescription)")
+            throw error
+        }
     }
-    
+
     // Función para registrar un nuevo anuncio
-    func registrarAnuncio(url: URL, _ anuncio: Anuncio, completion: @escaping (Result<String, Error>) -> Void) {
+    func registrarAnuncio(url: URL, _ anuncio: Anuncio) async throws -> String {
+        
+        guard let idToken = await obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
         
         let params: [String: Any] = [
-            "IDUsuario": 1,  // fijo por ahora
             "titulo": anuncio.titulo,
             "contenido": anuncio.contenido,
             "imagen": ""
         ]
         
-        AF.request(url, method: .post, parameters: params, encoding: JSONEncoding.default)
+        let responseMessage = try await AF.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers)
             .validate()
-            .responseDecodable(of: ResponseMessage.self) { response in
-                switch response.result {
-                case .success(let responseMessage):
-                    completion(.success(responseMessage.message))  
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
+            .serializingDecodable(ResponseMessage.self)
+            .value
+        
+        return responseMessage.message
     }
     
     // Función para eliminar un anuncio
-        func eliminarAnuncio(url: URL, completion: @escaping (Result<String, Error>) -> Void) {
-            
-            AF.request(url, method: .delete)
-                .validate()
-                .response { response in
-                    switch response.result {
-                    case .success:
-                        completion(.success("Anuncio eliminado exitosamente"))
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                }
+    func eliminarAnuncio(url: URL, anuncioID: String) async throws -> String {
+        
+        guard let idToken = await obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
+        
+        print("Token: ", idToken)
+
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+        
+        _ = try await AF.request(url, method: .delete, headers: headers)
+            .validate()
+            .serializingData()
+            .value
+        
+        return "Anuncio eliminado exitosamente"
+    }
     
-    // Función para modificar anuncio
-    func modificarAnuncio(url: URL, titulo: String, contenido: String, completion: @escaping (Result<String, Error>) -> Void) {
-            
-            let params: [String: Any] = [
-                "IDUsuario": 1,
-                "titulo": titulo,
-                "contenido": contenido,
-                "imagen": "path/test"
-            ]
-            
-            AF.request(url, method: .put, parameters: params, encoding: JSONEncoding.default)
-                .validate()
-                .response { response in
-                    switch response.result {
-                    case .success:
-                        completion(.success("Anuncio modificado exitosamente."))
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                }
+    // Función para modificar un anuncio existente
+    func modificarAnuncio(url: URL, _ anuncio: Anuncio, anuncioID: String) async throws -> Anuncio {
+        guard let idToken = await obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
+
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+        
+        let params: [String: Any] = [
+            "titulo": anuncio.titulo,
+            "contenido": anuncio.contenido,
+            "imagen": ""
+        ]
+        
+        let responseData = try await AF.request(url, method: .patch, parameters: params, encoding: JSONEncoding.default, headers: headers)
+            .validate()
+            .serializingDecodable(Anuncio.self)
+            .value
+        
+        return responseData
+    }
+    
+    // Función para obtener el ID Token de forma asincrónica
+    private func obtenerIDToken() async -> String? {
+        return await withCheckedContinuation { continuation in
+            Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+                if let error = error {
+                    print("Error al obtener el ID Token: \(error.localizedDescription)")
+                    continuation.resume(returning: nil)
+                } else {
+                    continuation.resume(returning: idToken)
+                }
+            }
+        }
+    }
 }
