@@ -24,6 +24,8 @@ class RestablecerContraseñaViewModel: ObservableObject {
     @Published var messageAlert = ""
     @Published var showAlert = false
     
+    @Published var alertSuccess = false
+    
     var restablecerContraseñaRequirement: RestablecerContraseñaRequirement
     
     init(restablecerContraseñaRequirement: RestablecerContraseñaRequirement = RestablecerContraseñaRequirement.shared) {
@@ -98,16 +100,20 @@ class RestablecerContraseñaViewModel: ObservableObject {
         if self.emailOrUsername.isEmpty {
             self.messageAlert = "Correo o username vacío. Favor de intentarlo de nuevo."
             self.showAlert = true
+            self.alertSuccess = false
             return
         }
         
         let emailSent = await restablecerContraseñaRequirement.emailRestablecerContraseña(emailOrUsername: self.emailOrUsername)
         
         if emailSent == true {
-            self.buttonLabel = "¡Enlace enviado!"
+            self.showAlert = true
+            self.messageAlert = "¡El enlace ha sido enviado!"
+            self.alertSuccess = true
         } else {
             self.showAlert = true
             self.messageAlert = "Hubo un error al enviar el enlace. Favor de intentarlo de nuevo."
+            self.alertSuccess = false
         }
     }
     

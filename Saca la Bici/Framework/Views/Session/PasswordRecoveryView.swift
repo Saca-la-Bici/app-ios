@@ -79,10 +79,7 @@ struct PasswordRecoveryView: View {
                             .buttonStyle(PlainButtonStyle())
                         }
                         
-                    }
-                    
-                    Spacer()
-                }
+                    }                }
             }
             .zIndex(2)
             .padding(30)
@@ -91,13 +88,23 @@ struct PasswordRecoveryView: View {
                 UIApplication.shared.hideKeyboard()
             }
             .alert(isPresented: $restablecerContraseñaViewModel.showAlert) {
-                Alert(
-                    title: Text("Oops!"),
-                    message: Text(restablecerContraseñaViewModel.messageAlert)
-                )
+                if restablecerContraseñaViewModel.alertSuccess == true {
+                    return Alert(
+                        title: Text("¡Éxito!"),
+                        message: Text(restablecerContraseñaViewModel.messageAlert),
+                        dismissButton: .default(Text("OK")) {
+                            path.removeLast()
+                        }
+                    )
+                } else {
+                    return Alert(
+                        title: Text("Oops!"),
+                        message: Text(restablecerContraseñaViewModel.messageAlert),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
             }
         }
-        
     }
 }
 
