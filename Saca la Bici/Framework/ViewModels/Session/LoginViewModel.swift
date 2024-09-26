@@ -49,7 +49,7 @@ class LoginViewModel: ObservableObject {
             self.messageAlert = "El usuario o contraseña ingresada es incorrecta. Favor de intentarlo de nuevo."
             self.showAlert = true
         } else if responseStatus != 200 {
-            self.messageAlert = "Hubo un error al procesar el inicio se sesión.  Favor de intentarlo de nuevo."
+            self.messageAlert = "Hubo un error al procesar el inicio se sesión. Favor de intentarlo de nuevo."
             self.showAlert = true
         }
     }

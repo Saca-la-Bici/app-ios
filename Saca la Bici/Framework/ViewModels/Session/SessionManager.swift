@@ -34,13 +34,16 @@ class SessionManager: ObservableObject {
             DispatchQueue.main.async {
                 self?.isFireBaseAuthenticated = user != nil
                 if let user = user {
-                    if self?.isExternalSignIn(user: user) == true {
+                    let isRegistrationComplete = UserDefaults.standard.bool(forKey: "isRegistrationComplete")
+                    if isRegistrationComplete || self?.isExternalSignIn(user: user) == true {
                         self?.isAuthenticated = true
                         self?.checkProfileCompleteness()
                     }
                 } else {
+                    self?.isAuthenticated = false
                     self?.isProfileComplete = false
                     self?.isLoading = false
+                    UserDefaults.standard.set(false, forKey: "isRegistrationComplete")
                 }
             }
         }
@@ -116,6 +119,7 @@ class SessionManager: ObservableObject {
             isProfileComplete = false
             isAuthenticated = false
             isFireBaseAuthenticated = false
+            UserDefaults.standard.set(false, forKey: "isRegistrationComplete")
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
