@@ -13,6 +13,10 @@ struct RodadasResponse: Codable {
     let ruta: Ruta
 }
 
+struct EventosResponse: Codable {
+    let _id: String
+    let informacion: [Actividad]
+}
 
 struct Actividad: Codable, Identifiable {
     let _id: String

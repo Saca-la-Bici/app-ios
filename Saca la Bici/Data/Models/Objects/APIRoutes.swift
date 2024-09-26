@@ -22,5 +22,6 @@ struct Api {
         static let actividades = "/actividades"
         static let consultar = "/consultar"
         static let rodadas = "/rodadas"
+        static let eventos = "/eventos"
     }
 }

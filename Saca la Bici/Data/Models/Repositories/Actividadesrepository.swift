@@ -13,6 +13,11 @@ struct Rodada: Identifiable {
     let ruta: Ruta
 }
 
+struct Evento: Identifiable {
+    let id: String
+    let actividad: Actividad
+}
+
 class ActividadesRepository {
 
     private let apiService: APIService
@@ -38,6 +43,26 @@ class ActividadesRepository {
             return rodadas
         } catch {
             print("Error en ActividadesRepository.getRodadas: \(error)")
+            throw error
+        }
+    }
+    
+    func getEventos() async throws -> [Evento] {
+        guard let url = URL(string: "\(Api.baseURL)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.eventos)") else {
+            throw URLError(.badURL)
+        }
+
+        do {
+            let eventosResponses = try await apiService.fetchEventos(url: url)
+
+            let eventos = eventosResponses.flatMap { response in
+                response.informacion.map { actividad in
+                    Evento(id: actividad._id, actividad: actividad)
+                }
+            }
+            return eventos
+        } catch {
+            print("Error en ActividadesRepository.getEventos: \(error)")
             throw error
         }
     }

@@ -24,4 +24,19 @@ class APIService {
                 }
         }
     }
+    
+    func fetchEventos(url: URL) async throws -> [EventosResponse] {
+        return try await withCheckedThrowingContinuation { continuation in
+            AF.request(url)
+                .validate()
+                .responseDecodable(of: [EventosResponse].self) { response in
+                    switch response.result {
+                    case .success(let eventos):
+                        continuation.resume(returning: eventos)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
+                }
+        }
+    }
 }

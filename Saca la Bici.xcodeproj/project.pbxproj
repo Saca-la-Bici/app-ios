@@ -73,6 +73,7 @@
 		AE7EE0082CA5C7C0004BA4AA /* activityCardAdminView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7EE0072CA5C7C0004BA4AA /* activityCardAdminView.swift */; };
 		AE7EE00A2CA5C7CE004BA4AA /* activityCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7EE0092CA5C7CE004BA4AA /* activityCardView.swift */; };
 		AE7EE00C2CA5C943004BA4AA /* eventosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7EE00B2CA5C943004BA4AA /* eventosView.swift */; };
+		AE9FEC762CA60F49004EA70F /* EventosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9FEC752CA60F41004EA70F /* EventosViewModel.swift */; };
 		AEE34B8A2C9FA61800C2EECE /* modificarAnuncioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */; };
 /* End PBXBuildFile section */
 
@@ -160,6 +161,7 @@
 		AE7EE0072CA5C7C0004BA4AA /* activityCardAdminView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = activityCardAdminView.swift; sourceTree = "<group>"; };
 		AE7EE0092CA5C7CE004BA4AA /* activityCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = activityCardView.swift; sourceTree = "<group>"; };
 		AE7EE00B2CA5C943004BA4AA /* eventosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eventosView.swift; sourceTree = "<group>"; };
+		AE9FEC752CA60F41004EA70F /* EventosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventosViewModel.swift; sourceTree = "<group>"; };
 		AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modificarAnuncioView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -439,6 +441,7 @@
 		AE6819BD2CA5FDA0002B2B1D /* Actividades */ = {
 			isa = PBXGroup;
 			children = (
+				AE9FEC752CA60F41004EA70F /* EventosViewModel.swift */,
 				AE6819BE2CA5FDAC002B2B1D /* RodadasViewModel.swift */,
 			);
 			path = Actividades;
@@ -671,6 +674,7 @@
 				252B64D92C99FE5900A362C5 /* SessionManager.swift in Sources */,
 				25C302C62C9A9780005AD742 /* EmailField.swift in Sources */,
 				259CBB9A2C9E29C00067B550 /* AppleCryptoHelpers.swift in Sources */,
+				AE9FEC762CA60F49004EA70F /* EventosViewModel.swift in Sources */,
 				AE6819C62CA5FE51002B2B1D /* ActividadesAPIService.swift in Sources */,
 				25C302C42C9A9515005AD742 /* PasswordField.swift in Sources */,
 				252B64DA2C99FE5900A362C5 /* SignUpViewModel.swift in Sources */,

@@ -18,3 +18,15 @@ class GetRodadasUseCase {
         return try await repository.getRodadas()
     }
 }
+
+class GetEventosUseCase {
+    private let repository: ActividadesRepository
+    
+    init(repository: ActividadesRepository = ActividadesRepository()) {
+        self.repository = repository
+    }
+    
+    func execute() async throws -> [Evento] {
+        return try await repository.getEventos()
+    }
+}
