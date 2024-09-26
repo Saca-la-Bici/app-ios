@@ -18,7 +18,6 @@ class AnuncioAPIService {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
         
-        
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(idToken)",
             "Content-Type": "application/json"
@@ -84,8 +83,6 @@ class AnuncioAPIService {
         
         return "Anuncio eliminado exitosamente"
     }
-
-
     
     // Función para modificar un anuncio existente
     func modificarAnuncio(url: URL, _ anuncio: Anuncio, anuncioID: String) async throws -> Anuncio {
@@ -111,8 +108,6 @@ class AnuncioAPIService {
         
         return responseData
     }
-
-
     
     // Función para obtener el ID Token de forma asincrónica
     private func obtenerIDToken() async -> String? {

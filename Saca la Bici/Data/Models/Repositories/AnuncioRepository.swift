@@ -26,15 +26,15 @@ class AnuncioRepository {
     }
     
     func eliminarAnuncio(idAnuncio: String) async throws -> String {
-        let message = try await apiService.eliminarAnuncio(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/eliminar/\(idAnuncio)")!, anuncioID: idAnuncio)
+        let message = try await apiService.eliminarAnuncio(
+            url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/eliminar/\(idAnuncio)")!, anuncioID: idAnuncio)
         return message
     }
-
     
     func modificarAnuncio(_ anuncio: Anuncio, idAnuncio: String) async throws -> Anuncio {
-        let updatedAnuncio = try await apiService.modificarAnuncio(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/modificar/\(idAnuncio)")!, anuncio, anuncioID: anuncio.id)
+        let updatedAnuncio = try await apiService.modificarAnuncio(
+            url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/modificar/\(idAnuncio)")!, anuncio, anuncioID: anuncio.id)
         return updatedAnuncio
     }
-
 
 }

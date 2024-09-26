@@ -32,7 +32,7 @@ class AnuncioViewModel: ObservableObject {
     }
     
     private func observeAuthenticationState() {
-        authStateListenerHandle = Auth.auth().addStateDidChangeListener { [weak self] auth, user in
+        authStateListenerHandle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
             Task { @MainActor in
                 self?.isUserAuthenticated = user != nil
             }
@@ -101,8 +101,6 @@ class AnuncioViewModel: ObservableObject {
             self.handleError(error)
         }
     }
-
-
     
     private func handleError(_ error: Error) {
         if let afError = error as? AFError {

@@ -113,7 +113,7 @@ struct ModificarAnuncioView: View {
                             .foregroundColor(Color.white.opacity(0.7))
                     }
                 }
-                .onChange(of: selectedItem) { newItem in
+                .onChange(of: selectedItem) { _, newItem in
                     Task {
                         if let data = try? await newItem?.loadTransferable(type: Data.self),
                            let uiImage = UIImage(data: data) {
@@ -242,4 +242,3 @@ struct ModificarAnuncioView: View {
         }
     }
 }
-
