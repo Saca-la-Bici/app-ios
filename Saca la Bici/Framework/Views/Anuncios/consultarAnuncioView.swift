@@ -29,15 +29,17 @@ struct ConsultarAnuncio: View {
                     Image(systemName: "bell")
                         .foregroundColor(.black)
                         .padding(.trailing)
-
-                    Button(action: {
-                        showAddAnuncioView = true
-                    }, label: {
-                        Image(systemName: "plus")
-                            .foregroundColor(.black)
-                            .padding(.trailing)
-                    })
-                    .buttonStyle(PlainButtonStyle())
+                    
+                    if viewModel.isUserAdmin {
+                        Button(action: {
+                            showAddAnuncioView = true
+                        }, label: {
+                            Image(systemName: "plus")
+                                .foregroundColor(.black)
+                                .padding(.trailing)
+                        })
+                        .buttonStyle(PlainButtonStyle())
+                    }
                 }
                 .padding()
 
@@ -80,20 +82,22 @@ struct ConsultarAnuncio: View {
                         .listRowBackground(Color.white)
                         .padding(.horizontal, 16)
                         .swipeActions(edge: .trailing) {
-                            Button(role: .destructive) {
-                                selectedAnuncio = anuncio
-                                showDeleteConfirmation = true
-                            } label: {
-                                Label("Eliminar", systemImage: "trash")
-                            }
+                            if viewModel.isUserAdmin {
+                                Button(role: .destructive) {
+                                    selectedAnuncio = anuncio
+                                    showDeleteConfirmation = true
+                                } label: {
+                                    Label("Eliminar", systemImage: "trash")
+                                }
 
-                            Button {
-                                selectedAnuncio = anuncio
-                                showModifyView = true
-                            } label: {
-                                Label("Modificar", systemImage: "pencil")
+                                Button {
+                                    selectedAnuncio = anuncio
+                                    showModifyView = true
+                                } label: {
+                                    Label("Modificar", systemImage: "pencil")
+                                }
+                                .tint(.blue)
                             }
-                            .tint(.blue)
                         }
                     }
                     .padding(.bottom, 8)
