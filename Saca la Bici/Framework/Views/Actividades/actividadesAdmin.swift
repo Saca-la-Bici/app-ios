@@ -70,67 +70,6 @@ struct AdminView: View {
     }
 }
 
-struct RodadasAdminView: View {
-    var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                // Ejemplo de tarjeta de actividad
-                ActivityCardAdminView(
-                    activityTitle: "Rodada Nocturna",
-                    activityType: "Rodada",
-                    level: "Nivel 1",
-                    date: "Sábado 24 agosto 2024",
-                    time: "19:00",
-                    duration: "1 hrs",
-                    location: "Centro histórico",
-                    attendees: 67
-                )
-            }
-            .padding(.horizontal)
-        }
-    }
-}
-
-struct EventosAdminView: View {
-    var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                // Ejemplo de tarjeta de actividad
-                ActivityCardAdminView(
-                    activityTitle: "Día Mundial del Medio Ambiente",
-                    activityType: "Evento",
-                    date: "Jueves 5 junio 2025",
-                    time: "13:00",
-                    location: "Epigmenio González",
-                    attendees: 32
-                )
-                // Agrega más tarjetas o contenido aquí
-            }
-            .padding(.horizontal)
-        }
-    }
-}
-
-struct TalleresAdminView: View {
-    var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                // Ejemplo de tarjeta de actividad
-                ActivityCardAdminView(
-                    activityTitle: "Taller de Mantenimiento de Bicicletas",
-                    activityType: "Taller",
-                    date: "Lunes 10 julio 2025",
-                    time: "10:00",
-                    location: "Parque Central",
-                    attendees: 20
-                )
-                // Agrega más tarjetas o contenido aquí
-            }
-            .padding(.horizontal)
-        }
-    }
-}
-
 struct AdminView_Previews: PreviewProvider {
     static var previews: some View {
         AdminView()

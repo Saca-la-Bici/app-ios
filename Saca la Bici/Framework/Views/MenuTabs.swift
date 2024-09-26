@@ -13,7 +13,7 @@ struct MenuView: View {
                     if selectedTab == 0 {
                         ActividadesView()
                     } else if selectedTab == 1 {
-                        ResultView()
+                        AdminView()
                     } else if selectedTab == 2 {
                         ConsultarAnuncio()
                     } else {
