@@ -99,7 +99,7 @@ class SessionAPIService: NSObject {
         }
     }
     
-    func iniciarSesion(UserDatos: User, URLUsername: URL) async -> Int? {
+    func iniciarSesion(UserDatos: User, URLUsername: URL, url: URL) async -> Int? {
         do {
             var usuarioOEmail = UserDatos.emailorUsername
             
@@ -127,14 +127,34 @@ class SessionAPIService: NSObject {
                 "Content-Type": "application/json"
             ]
             
-            print(headers)
-            // Falta hacer la llamada al back para mostrar info despues de iniciar sesion.
+            /* Para checar si el backend esta funcionando.
+             Despues esto se cambia por la función de consultar actividades */
             
-            return 200 // Código de éxito, o el código que desees manejar
+            let taskRequest = session.request(url, method: .get, headers: headers).validate()
+            let response = await taskRequest.serializingData().response
+            
+            let statusCode = response.response?.statusCode
+            
+            switch response.result {
+            case .success:
+                    return statusCode
+            case let .failure(error):
+                // Ya que dio error, sacas al usuario de la sesion de Firebase
+                try Auth.auth().signOut()
+                debugPrint(error.localizedDescription)
+                
+                // Imprimir el cuerpo de la respuesta en caso de error
+                if let data = response.data {
+                    let errorResponse = String(decoding: data, as: UTF8.self)
+                    print("\(errorResponse)")
+                }
+                
+                return statusCode
+            }
         } catch {
             // Manejo de errores de inicio de sesión
             print("Error al iniciar sesión: \(error.localizedDescription)")
-            return nil // Error, devuelve nil o el código de error correspondiente
+            return 1 // Error, devuelve nil o el código de error correspondiente
         }
     }
     

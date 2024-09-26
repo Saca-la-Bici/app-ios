@@ -50,7 +50,9 @@ class SessionRepository: SessionAPIProtocol {
     
     // Tomar en cuenta la llamada al back para mostrar info
     func iniciarSesion(UserDatos: User) async -> Int? {
-        return await sessionService.iniciarSesion(UserDatos: UserDatos, URLUsername: URL(string: "\(Api.base)\(Api.Routes.session)/getUserEmail")!)
+        return await sessionService.iniciarSesion(UserDatos: UserDatos,
+                                                  URLUsername: URL(string: "\(Api.base)\(Api.Routes.session)/getUserEmail")!,
+                                                  url: URL(string: "\(Api.base)")!)
     }
     
     func checarPerfilBackend() async throws -> Response {
