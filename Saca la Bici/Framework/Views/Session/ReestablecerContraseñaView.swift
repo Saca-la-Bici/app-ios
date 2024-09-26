@@ -90,7 +90,9 @@ struct RestablecerContrasenaView: View {
                     text: "Restablecer Contraseña",
                     backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                     action: {
-                        
+                        Task {
+                            await restablecerContraseñaViewModel.restablecerContraseña()
+                        }
                     }
                 )
             }

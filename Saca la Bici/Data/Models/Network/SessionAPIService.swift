@@ -307,4 +307,20 @@ class SessionAPIService: NSObject {
             return false
         }
     }
+    
+    func restablecerContraseña(newPassword: String) async -> Bool {
+        // Obtener el usuario actual
+        guard let user = Auth.auth().currentUser, let email = user.email else {
+            print("Usuario no encontrado")
+            return false
+        }
+        
+        do {
+            try await user.updatePassword(to: newPassword)
+            return true
+        } catch {
+            print("Restablcer contraseña fallida: \(error.localizedDescription)")
+            return false
+        }
+    }
 }

@@ -20,6 +20,7 @@ protocol SessionAPIProtocol {
     func GoogleLogin() async -> Int?
     func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int
     func reauthenticateUser(currentPassword: String) async -> Bool
+    func restablecerContraseña(newPassword: String) async -> Bool
 }
 
 // Crear nuestra clase PokemonRespository y heredar de nuestro protocolo PokemonAPIProtocol
@@ -79,5 +80,9 @@ class SessionRepository: SessionAPIProtocol {
     
     func reauthenticateUser(currentPassword: String) async -> Bool {
         return await sessionService.reauthenticateUser(currentPassword: currentPassword)
+    }
+    
+    func restablecerContraseña(newPassword: String) async -> Bool {
+        return await sessionService.restablecerContraseña(newPassword: newPassword)
     }
 }

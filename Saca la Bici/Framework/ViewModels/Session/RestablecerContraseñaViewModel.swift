@@ -27,6 +27,13 @@ class RestablecerContraseñaViewModel: ObservableObject {
         self.restablecerContraseñaRequirement = restablecerContraseñaRequirement
     }
     
+    // Función para validar que la contraseña contenga al menos una minúscula, una mayúscula y un número
+    func isValidPassword(_ password: String) -> Bool {
+        let regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>]).+$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
+        return predicate.evaluate(with: password)
+    }
+    
     @MainActor
     func verificarContraseña () async {
         if currentPassword.isEmpty {
@@ -42,6 +49,43 @@ class RestablecerContraseñaViewModel: ObservableObject {
         } else {
             self.showAlert = true
             self.messageAlert = "La contraseña ingresada no es correcta. Por favor intenta de nuevo."
+            return
+        }
+    }
+    
+    @MainActor
+    func restablecerContraseña () async {
+        if self.newPassword.isEmpty || self.confirmPassword.isEmpty {
+            self.messageAlert = "Alguna de las dos contraseñas está vacía. Favor de intentarlo de nuevo."
+            self.showAlert = true
+            return
+        }
+        
+        if self.newPassword != self.confirmPassword {
+            self.messageAlert = "Las contraseñas no son iguales. Favor de intentarlo de nuevo."
+            self.showAlert = true
+            return
+        }
+        
+        if self.newPassword.count < 8 {
+            self.messageAlert = "La contraseña es demasiado corta. Debe tener al menos 8 caracteres."
+            self.showAlert = true
+            return
+        }
+        
+        if !isValidPassword(self.newPassword) {
+            self.messageAlert = "La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un número y un carácter especial."
+            self.showAlert = true
+            return
+        }
+        
+        let usuarioReautenticado = await restablecerContraseñaRequirement.restablecerContraseña(newPassword: self.newPassword)
+        
+        if usuarioReautenticado == true {
+            self.showNuevaContraseñaFields = true
+        } else {
+            self.showAlert = true
+            self.messageAlert = "Hubo un error al restablecer la contraseña. Por favor intente de nuevo."
             return
         }
     }

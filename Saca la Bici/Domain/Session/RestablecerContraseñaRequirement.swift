@@ -11,7 +11,7 @@ import Foundation
 protocol RestablecerContraseñaRequirementProtocol {
     
     func reauthenticateUser(currentPassword: String) async -> Bool
-    
+    func restablecerContraseña(newPassword: String) async -> Bool
 }
 
 class RestablecerContraseñaRequirement: RestablecerContraseñaRequirementProtocol {
@@ -29,6 +29,10 @@ class RestablecerContraseñaRequirement: RestablecerContraseñaRequirementProtoc
     
     func reauthenticateUser(currentPassword: String) async -> Bool {
         return await sessionRepository.reauthenticateUser(currentPassword: currentPassword)
+    }
+    
+    func restablecerContraseña(newPassword: String) async -> Bool {
+        return await sessionRepository.restablecerContraseña(newPassword: newPassword)
     }
     
 }
