@@ -65,7 +65,7 @@
 		AE6819C22CA5FDEB002B2B1D /* ActividadesRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6819C12CA5FDE0002B2B1D /* ActividadesRequirement.swift */; };
 		AE6819C42CA5FE40002B2B1D /* Actividades.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6819C32CA5FE3D002B2B1D /* Actividades.swift */; };
 		AE6819C62CA5FE51002B2B1D /* ActividadesAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6819C52CA5FE49002B2B1D /* ActividadesAPIService.swift */; };
-		AE6819C82CA5FE61002B2B1D /* Actividadesrepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6819C72CA5FE55002B2B1D /* Actividadesrepository.swift */; };
+		AE6819C82CA5FE61002B2B1D /* ActividadesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6819C72CA5FE55002B2B1D /* ActividadesRepository.swift */; };
 		AE7EDFFE2CA5C783004BA4AA /* talleresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7EDFFD2CA5C783004BA4AA /* talleresView.swift */; };
 		AE7EE0002CA5C78D004BA4AA /* rodadasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7EDFFF2CA5C78D004BA4AA /* rodadasView.swift */; };
 		AE7EE0022CA5C7A8004BA4AA /* actividadesAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7EE0012CA5C7A8004BA4AA /* actividadesAdmin.swift */; };
@@ -74,6 +74,7 @@
 		AE7EE00A2CA5C7CE004BA4AA /* activityCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7EE0092CA5C7CE004BA4AA /* activityCardView.swift */; };
 		AE7EE00C2CA5C943004BA4AA /* eventosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7EE00B2CA5C943004BA4AA /* eventosView.swift */; };
 		AE9FEC762CA60F49004EA70F /* EventosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9FEC752CA60F41004EA70F /* EventosViewModel.swift */; };
+		AE9FEC782CA61791004EA70F /* TalleresViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9FEC772CA61788004EA70F /* TalleresViewModel.swift */; };
 		AEE34B8A2C9FA61800C2EECE /* modificarAnuncioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */; };
 /* End PBXBuildFile section */
 
@@ -153,7 +154,7 @@
 		AE6819C12CA5FDE0002B2B1D /* ActividadesRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesRequirement.swift; sourceTree = "<group>"; };
 		AE6819C32CA5FE3D002B2B1D /* Actividades.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actividades.swift; sourceTree = "<group>"; };
 		AE6819C52CA5FE49002B2B1D /* ActividadesAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesAPIService.swift; sourceTree = "<group>"; };
-		AE6819C72CA5FE55002B2B1D /* Actividadesrepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actividadesrepository.swift; sourceTree = "<group>"; };
+		AE6819C72CA5FE55002B2B1D /* ActividadesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesRepository.swift; sourceTree = "<group>"; };
 		AE7EDFFD2CA5C783004BA4AA /* talleresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talleresView.swift; sourceTree = "<group>"; };
 		AE7EDFFF2CA5C78D004BA4AA /* rodadasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rodadasView.swift; sourceTree = "<group>"; };
 		AE7EE0012CA5C7A8004BA4AA /* actividadesAdmin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = actividadesAdmin.swift; sourceTree = "<group>"; };
@@ -162,6 +163,7 @@
 		AE7EE0092CA5C7CE004BA4AA /* activityCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = activityCardView.swift; sourceTree = "<group>"; };
 		AE7EE00B2CA5C943004BA4AA /* eventosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eventosView.swift; sourceTree = "<group>"; };
 		AE9FEC752CA60F41004EA70F /* EventosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventosViewModel.swift; sourceTree = "<group>"; };
+		AE9FEC772CA61788004EA70F /* TalleresViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalleresViewModel.swift; sourceTree = "<group>"; };
 		AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modificarAnuncioView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -375,7 +377,7 @@
 		252B650C2C9A426200A362C5 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				AE6819C72CA5FE55002B2B1D /* Actividadesrepository.swift */,
+				AE6819C72CA5FE55002B2B1D /* ActividadesRepository.swift */,
 				252B64E82C99FE7200A362C5 /* SessionRepository.swift */,
 				AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */,
 			);
@@ -441,6 +443,7 @@
 		AE6819BD2CA5FDA0002B2B1D /* Actividades */ = {
 			isa = PBXGroup;
 			children = (
+				AE9FEC772CA61788004EA70F /* TalleresViewModel.swift */,
 				AE9FEC752CA60F41004EA70F /* EventosViewModel.swift */,
 				AE6819BE2CA5FDAC002B2B1D /* RodadasViewModel.swift */,
 			);
@@ -655,7 +658,7 @@
 				25F3681D2C9B7B49003322CF /* TituloComponent.swift in Sources */,
 				25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */,
 				252B64EB2C99FE7200A362C5 /* User.swift in Sources */,
-				AE6819C82CA5FE61002B2B1D /* Actividadesrepository.swift in Sources */,
+				AE6819C82CA5FE61002B2B1D /* ActividadesRepository.swift in Sources */,
 				AE6819C42CA5FE40002B2B1D /* Actividades.swift in Sources */,
 				AE7EE0042CA5C7B3004BA4AA /* actividadesUsuario.swift in Sources */,
 				252B64ED2C99FE7200A362C5 /* APIRoutes.swift in Sources */,
@@ -692,6 +695,7 @@
 				AEE34B8A2C9FA61800C2EECE /* modificarAnuncioView.swift in Sources */,
 				AE41A6E92C9A6AA200921BDF /* AnadirAnuncioView.swift in Sources */,
 				AE41A6E52C9A648B00921BDF /* consultarAnuncioView.swift in Sources */,
+				AE9FEC782CA61791004EA70F /* TalleresViewModel.swift in Sources */,
 				AE41A6D92C9A613800921BDF /* AnuncioViewModel.swift in Sources */,
 				AE41A6DD2C9A62F400921BDF /* ConsultarAnuncioRequirement.swift in Sources */,
 				AE41A6E72C9A679700921BDF /* Anuncio.swift in Sources */,

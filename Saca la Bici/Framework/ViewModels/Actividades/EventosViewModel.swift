@@ -31,7 +31,7 @@ class EventosViewModel: ObservableObject {
             } catch {
                 isLoading = false
                 errorMessage = error.localizedDescription
-                print("Error al obtener rodadas: \(error)")
+                print("Error al obtener eventos: \(error)")
             }
         }
     }

@@ -18,6 +18,11 @@ struct Evento: Identifiable {
     let actividad: Actividad
 }
 
+struct Taller: Identifiable {
+    let id: String
+    let actividad: Actividad
+}
+
 class ActividadesRepository {
 
     private let apiService: APIService
@@ -27,7 +32,6 @@ class ActividadesRepository {
     }
 
     func getRodadas() async throws -> [Rodada] {
-        // Construir la URL aquí
         guard let url = URL(string: "\(Api.baseURL)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.rodadas)") else {
             throw URLError(.badURL)
         }
@@ -63,6 +67,26 @@ class ActividadesRepository {
             return eventos
         } catch {
             print("Error en ActividadesRepository.getEventos: \(error)")
+            throw error
+        }
+    }
+    
+    func getTalleres() async throws -> [Taller] {
+        guard let url = URL(string: "\(Api.baseURL)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.talleres)") else {
+            throw URLError(.badURL)
+        }
+        
+        do {
+            let talleresResponses = try await apiService.fetchTalleres(url: url)
+
+            let talleres = talleresResponses.flatMap { response in
+                response.informacion.map { actividad in
+                    Taller(id: actividad._id, actividad: actividad)
+                }
+            }
+            return talleres
+        } catch {
+            print("Error en ActividadesRepository.getTalleres: \(error)")
             throw error
         }
     }

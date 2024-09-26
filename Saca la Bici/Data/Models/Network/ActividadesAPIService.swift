@@ -39,4 +39,19 @@ class APIService {
                 }
         }
     }
+    
+    func fetchTalleres(url: URL) async throws -> [TalleresResponse] {
+        return try await withCheckedThrowingContinuation { continuation in
+            AF.request(url)
+                .validate()
+                .responseDecodable(of: [TalleresResponse].self) { response in
+                    switch response.result {
+                    case .success(let talleres):
+                        continuation.resume(returning: talleres)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
+                }
+        }
+    }
 }

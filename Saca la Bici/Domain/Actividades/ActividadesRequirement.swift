@@ -30,3 +30,15 @@ class GetEventosUseCase {
         return try await repository.getEventos()
     }
 }
+
+class GetTalleresUseCase {
+    private let repository: ActividadesRepository
+    
+    init(repository: ActividadesRepository = ActividadesRepository()) {
+        self.repository = repository
+    }
+    
+    func execute() async throws -> [Taller] {
+        return try await repository.getTalleres()
+    }
+}

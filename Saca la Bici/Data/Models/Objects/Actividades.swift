@@ -18,6 +18,11 @@ struct EventosResponse: Codable {
     let informacion: [Actividad]
 }
 
+struct TalleresResponse: Codable {
+    let _id: String
+    let informacion: [Actividad]
+}
+
 struct Actividad: Codable, Identifiable {
     let _id: String
     let titulo: String

@@ -112,17 +112,3 @@ struct ActivityCardView: View {
         .padding(.horizontal)
     }
 }
-
-struct ActivityCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        ActivityCardView(
-            activityTitle: "Rodada Nocturna",
-            level: "Nivel 1",
-            date: "Sábado 24 agosto 2024",
-            time: "19:00",
-            duration: "1 hrs",
-            location: "Centro histórico",
-            attendees: 67
-        )
-    }
-}
