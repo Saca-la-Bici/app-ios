@@ -12,13 +12,8 @@ import FirebaseAuth
 class AnuncioAPIService {
     
     // Función para obtener los anuncios existentes
-    func fetchAnuncios() async throws -> [Anuncio] {
-        let urlString = "http://10.25.100.97:3000/anuncios/consultar"
-        
-        guard let url = URL(string: urlString) else {
-            throw NSError(domain: "URL", code: 400, userInfo: [NSLocalizedDescriptionKey: "URL inválida"])
-        }
-        
+    func fetchAnuncios(url: URL) async throws -> [Anuncio] {
+
         guard let idToken = await obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
@@ -43,11 +38,7 @@ class AnuncioAPIService {
     }
 
     // Función para registrar un nuevo anuncio
-    func registrarAnuncio(_ anuncio: Anuncio) async throws -> String {
-        let urlString = "http://10.25.100.97:3000/anuncios/registrar"
-        guard let url = URL(string: urlString) else {
-            throw NSError(domain: "URL", code: 400, userInfo: [NSLocalizedDescriptionKey: "URL inválida"])
-        }
+    func registrarAnuncio(url: URL, _ anuncio: Anuncio) async throws -> String {
         
         guard let idToken = await obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
@@ -73,12 +64,7 @@ class AnuncioAPIService {
     }
     
     // Función para eliminar un anuncio
-    func eliminarAnuncio(anuncioID: String) async throws -> String {
-        let urlString = "http://10.25.100.97:3000/anuncios/eliminar/\(anuncioID)"
-        
-        guard let url = URL(string: urlString) else {
-            throw NSError(domain: "URL", code: 400, userInfo: [NSLocalizedDescriptionKey: "URL no válida"])
-        }
+    func eliminarAnuncio(url: URL, anuncioID: String) async throws -> String {
         
         guard let idToken = await obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
@@ -102,12 +88,7 @@ class AnuncioAPIService {
 
     
     // Función para modificar un anuncio existente
-    func modificarAnuncio(_ anuncio: Anuncio, anuncioID: String) async throws -> Anuncio {
-        let urlString = "http://10.25.100.97:3000/anuncios/modificar/\(anuncioID)"
-        guard let url = URL(string: urlString) else {
-            throw NSError(domain: "URL", code: 400, userInfo: [NSLocalizedDescriptionKey: "URL inválida"])
-        }
-        
+    func modificarAnuncio(url: URL, _ anuncio: Anuncio, anuncioID: String) async throws -> Anuncio {
         guard let idToken = await obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
@@ -125,11 +106,12 @@ class AnuncioAPIService {
         
         let responseData = try await AF.request(url, method: .patch, parameters: params, encoding: JSONEncoding.default, headers: headers)
             .validate()
-            .serializingDecodable(Anuncio.self)  
+            .serializingDecodable(Anuncio.self)
             .value
         
         return responseData
     }
+
 
     
     // Función para obtener el ID Token de forma asincrónica

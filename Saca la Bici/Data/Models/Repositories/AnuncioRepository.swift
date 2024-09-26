@@ -15,24 +15,24 @@ class AnuncioRepository {
     }
     
     func getAnuncios() async throws -> [Anuncio] {
-        let anuncios = try await apiService.fetchAnuncios()
+        let anuncios = try await apiService.fetchAnuncios(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/consultar")!)
         let anunciosValidos = anuncios.filter { AnuncioRequirement.esValido(anuncio: $0) }
         return anunciosValidos
     }
     
     func postAnuncio(_ anuncio: Anuncio) async throws -> String {
-        let message = try await apiService.registrarAnuncio(anuncio)
+        let message = try await apiService.registrarAnuncio(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/registrar")!, anuncio)
         return message
     }
     
     func eliminarAnuncio(idAnuncio: String) async throws -> String {
-        let message = try await apiService.eliminarAnuncio(anuncioID: idAnuncio)
+        let message = try await apiService.eliminarAnuncio(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/eliminar/\(idAnuncio)")!, anuncioID: idAnuncio)
         return message
     }
 
     
-    func modificarAnuncio(_ anuncio: Anuncio) async throws -> Anuncio {
-        let updatedAnuncio = try await apiService.modificarAnuncio(anuncio, anuncioID: anuncio.id)
+    func modificarAnuncio(_ anuncio: Anuncio, idAnuncio: String) async throws -> Anuncio {
+        let updatedAnuncio = try await apiService.modificarAnuncio(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/modificar/\(idAnuncio)")!, anuncio, anuncioID: anuncio.id)
         return updatedAnuncio
     }
 

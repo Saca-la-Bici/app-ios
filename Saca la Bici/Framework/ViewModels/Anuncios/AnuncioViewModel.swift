@@ -85,16 +85,14 @@ class AnuncioViewModel: ObservableObject {
     
     func modificarAnuncio(anuncio: Anuncio, nuevoTitulo: String, nuevoContenido: String) async {
         do {
-
             var anuncioModificado = anuncio
             anuncioModificado.titulo = nuevoTitulo
             anuncioModificado.contenido = nuevoContenido
-            
-  
-            let updatedAnuncio = try await repository.modificarAnuncio(anuncioModificado)
+
+            // Asegúrate de pasar el ID del anuncio a modificar
+            let updatedAnuncio = try await repository.modificarAnuncio(anuncioModificado, idAnuncio: anuncio.id)
             
             self.successMessage = "Anuncio modificado exitosamente."
-            
 
             if let index = self.anuncios.firstIndex(where: { $0.id == anuncio.id }) {
                 self.anuncios[index] = updatedAnuncio
