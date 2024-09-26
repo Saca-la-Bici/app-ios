@@ -11,13 +11,13 @@ struct MenuView: View {
                 // Contenido del TabView personalizado
                 VStack {
                     if selectedTab == 0 {
-                        RestablecerContrasenaView()
+                        ResultView()
                     } else if selectedTab == 1 {
                         ResultView()
                     } else if selectedTab == 2 {
                         ConsultarAnuncio()
                     } else {
-                        ResultView()
+                        ProfileView()
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

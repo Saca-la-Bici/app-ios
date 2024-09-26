@@ -41,6 +41,8 @@
 		259CBBA02CA0E44A0067B550 /* SessionPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259CBB9F2CA0E44A0067B550 /* SessionPaths.swift */; };
 		259EF8B72CA23899007CE3FE /* UserProfileSessionAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259EF8B62CA23899007CE3FE /* UserProfileSessionAPIService.swift */; };
 		25A7BE4C2CA4F11A00FCB8B6 /* PasswordRecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BE4B2CA4F11A00FCB8B6 /* PasswordRecoveryView.swift */; };
+		25A7BE4F2CA61C0600FCB8B6 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BE4E2CA61C0600FCB8B6 /* ConfigurationView.swift */; };
+		25A7BE512CA61C9500FCB8B6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BE502CA61C9500FCB8B6 /* ProfileView.swift */; };
 		25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302B92C9A8C99005AD742 /* CustomButton.swift */; };
 		25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */; };
 		25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */; };
@@ -120,6 +122,8 @@
 		259CBB9F2CA0E44A0067B550 /* SessionPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPaths.swift; sourceTree = "<group>"; };
 		259EF8B62CA23899007CE3FE /* UserProfileSessionAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileSessionAPIService.swift; sourceTree = "<group>"; };
 		25A7BE4B2CA4F11A00FCB8B6 /* PasswordRecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryView.swift; sourceTree = "<group>"; };
+		25A7BE4E2CA61C0600FCB8B6 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
+		25A7BE502CA61C9500FCB8B6 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		25C302B92C9A8C99005AD742 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FechaNacimientoPicker.swift; sourceTree = "<group>"; };
 		25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipoSangrePicker.swift; sourceTree = "<group>"; };
@@ -252,6 +256,7 @@
 			children = (
 				252B65052C9A37D600A362C5 /* Session */,
 				AE41A6DA2C9A629800921BDF /* Anuncios */,
+				25A7BE4D2CA61BEE00FCB8B6 /* Profile */,
 				252B64C62C99FE5900A362C5 /* ResultView.swift */,
 				252B64C82C99FE5900A362C5 /* MenuTabs.swift */,
 				25F368202C9BAEA3003322CF /* LoadingView.swift */,
@@ -347,9 +352,9 @@
 				252B64CB2C99FE5900A362C5 /* SignUpStep3View.swift */,
 				252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */,
 				25C302C72C9A9E7C005AD742 /* CompletarDatosStep2View.swift */,
-				252B64C72C99FE5900A362C5 /* SessionCoordinatorView.swift */,
 				25D0E5142CA37BE200B431A9 /* ReestablecerContraseñaView.swift */,
 				25A7BE4B2CA4F11A00FCB8B6 /* PasswordRecoveryView.swift */,
+				252B64C72C99FE5900A362C5 /* SessionCoordinatorView.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -372,6 +377,15 @@
 				AE41A6E62C9A679000921BDF /* Anuncio.swift */,
 			);
 			path = Objects;
+			sourceTree = "<group>";
+		};
+		25A7BE4D2CA61BEE00FCB8B6 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				25A7BE4E2CA61C0600FCB8B6 /* ConfigurationView.swift */,
+				25A7BE502CA61C9500FCB8B6 /* ProfileView.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		25C302B82C9A8B95005AD742 /* Components */ = {
@@ -592,6 +606,7 @@
 				252B64852C99FC5E00A362C5 /* Saca_la_BiciApp.swift in Sources */,
 				25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */,
 				252B64D12C99FE5900A362C5 /* SessionCoordinatorView.swift in Sources */,
+				25A7BE4F2CA61C0600FCB8B6 /* ConfigurationView.swift in Sources */,
 				252B64D22C99FE5900A362C5 /* UIApplicationExtensions.swift in Sources */,
 				252B64D32C99FE5900A362C5 /* SignUpStep1View.swift in Sources */,
 				252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */,
@@ -620,6 +635,7 @@
 				252B64DA2C99FE5900A362C5 /* SignUpViewModel.swift in Sources */,
 				252B64DB2C99FE5900A362C5 /* LoginView.swift in Sources */,
 				25C302C82C9A9E7C005AD742 /* CompletarDatosStep2View.swift in Sources */,
+				25A7BE512CA61C9500FCB8B6 /* ProfileView.swift in Sources */,
 				259CBBA02CA0E44A0067B550 /* SessionPaths.swift in Sources */,
 				25A7BE4C2CA4F11A00FCB8B6 /* PasswordRecoveryView.swift in Sources */,
 				25D0E5192CA38C6C00B431A9 /* RestablecerContraseñaRequirement.swift in Sources */,
