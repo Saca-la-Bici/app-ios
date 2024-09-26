@@ -84,6 +84,9 @@ struct PasswordRecoveryView: View {
                     Spacer()
                 }
             }
+            .zIndex(2)
+            .padding(30)
+            .frame(maxWidth: .infinity)
             .onTapGesture {
                 UIApplication.shared.hideKeyboard()
             }
@@ -93,9 +96,6 @@ struct PasswordRecoveryView: View {
                     message: Text(restablecerContraseñaViewModel.messageAlert)
                 )
             }
-            .padding(30)
-            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-            .zIndex(2)
         }
         
     }

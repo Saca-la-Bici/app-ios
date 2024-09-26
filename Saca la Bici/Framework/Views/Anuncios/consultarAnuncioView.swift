@@ -27,14 +27,12 @@ struct ConsultarAnuncio: View {
                     Spacer()
 
                     Image(systemName: "bell")
-                        .foregroundColor(.black)
                         .padding(.trailing)
 
                     Button(action: {
                         showAddAnuncioView = true
                     }, label: {
                         Image(systemName: "plus")
-                            .foregroundColor(.black)
                             .padding(.trailing)
                     })
                     .buttonStyle(PlainButtonStyle())
@@ -101,7 +99,6 @@ struct ConsultarAnuncio: View {
                 .listStyle(PlainListStyle())
             }
         }
-        .background(Color.white)
         .onTapGesture {
             UIApplication.shared.hideKeyboard()
         }

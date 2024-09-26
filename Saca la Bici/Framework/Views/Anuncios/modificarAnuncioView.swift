@@ -50,14 +50,12 @@ struct ModificarAnuncioView: View {
                 }, label: {
                     Image(systemName: "xmark")
                         .font(.title2)
-                        .foregroundColor(.black)
                 })
                 .buttonStyle(PlainButtonStyle())
                 
                 Spacer()
                 Text("Modificar anuncio")
                     .font(.headline)
-                    .foregroundColor(.black)
                 Spacer()
                 Button(action: {
                     // Acción para confirmar el anuncio
@@ -147,7 +145,6 @@ struct ModificarAnuncioView: View {
             VStack(alignment: .leading) {
                 Text("Título")
                     .font(.subheadline)
-                    .foregroundColor(.black)
                 
                 TextField("Título del anuncio", text: $titulo)
                     .padding(.horizontal, 11)
@@ -164,7 +161,6 @@ struct ModificarAnuncioView: View {
             VStack(alignment: .leading) {
                 Text("Descripción")
                     .font(.subheadline)
-                    .foregroundColor(.black)
                 
                 ZStack(alignment: .topLeading) {
                     TextEditor(text: $contenido)
