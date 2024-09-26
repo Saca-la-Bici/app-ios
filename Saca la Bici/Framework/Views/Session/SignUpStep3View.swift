@@ -69,6 +69,9 @@ struct SignUpStep3View: View {
                                     if signUpViewModel.showAlert != true {
                                         sessionManager.isAuthenticated = true
                                         sessionManager.isProfileComplete = true
+                                        UserDefaults.standard.set(true, forKey: "isRegistrationComplete")
+                                    } else {
+                                        UserDefaults.standard.set(false, forKey: "isRegistrationComplete")
                                     }
                                 }
                             }
