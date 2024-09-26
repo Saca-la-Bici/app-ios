@@ -11,7 +11,7 @@ struct MenuView: View {
                 // Contenido del TabView personalizado
                 VStack {
                     if selectedTab == 0 {
-                       ResultView()
+                        ActividadesView()
                     } else if selectedTab == 1 {
                         ResultView()
                     } else if selectedTab == 2 {
