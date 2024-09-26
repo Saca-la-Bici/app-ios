@@ -310,7 +310,7 @@ class SessionAPIService: NSObject {
     
     func restablecerContraseña(newPassword: String) async -> Bool {
         // Obtener el usuario actual
-        guard let user = Auth.auth().currentUser, let email = user.email else {
+        guard let user = Auth.auth().currentUser else {
             print("Usuario no encontrado")
             return false
         }
@@ -320,6 +320,31 @@ class SessionAPIService: NSObject {
             return true
         } catch {
             print("Restablcer contraseña fallida: \(error.localizedDescription)")
+            return false
+        }
+    }
+    
+    func emailRestablecerContraseña(URLUsername: URL, emailOrUsername: String) async -> Bool {
+        
+        var email = emailOrUsername
+        
+        do {
+            // Verificar si el input es un nombre de usuario (no contiene '@')
+            if !emailOrUsername.contains("@") {
+                // Obtener el correo electrónico desde tu backend
+                if let userEmail = try await UserProfileSessionAPIService().obtenerEmailDesdeBackend(
+                    username: emailOrUsername, URLUsername: URLUsername) {
+                    email = userEmail
+                } else {
+                    print("Nombre de usuario no encontrado")
+                    return false
+                }
+            }
+            
+            try await Auth.auth().sendPasswordReset(withEmail: email)
+            return true
+        } catch {
+            print("Restablecer contraseña fallida: \(error.localizedDescription)")
             return false
         }
     }

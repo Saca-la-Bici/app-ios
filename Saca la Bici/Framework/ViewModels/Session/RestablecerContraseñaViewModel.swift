@@ -17,6 +17,9 @@ class RestablecerContraseñaViewModel: ObservableObject {
     @Published var showConfirmPassword = false
     @Published var showNuevaContraseñaFields = false
     
+    @Published var emailOrUsername: String = ""
+    @Published var buttonLabel: String = "Enviar enlace"
+    
     // Creas dos variables más por si se comete un error
     @Published var messageAlert = ""
     @Published var showAlert = false
@@ -87,6 +90,24 @@ class RestablecerContraseñaViewModel: ObservableObject {
             self.showAlert = true
             self.messageAlert = "Hubo un error al restablecer la contraseña. Por favor intente de nuevo."
             return
+        }
+    }
+    
+    @MainActor
+    func emailRestablecerContraseña() async {
+        if self.emailOrUsername.isEmpty {
+            self.messageAlert = "Correo o username vacío. Favor de intentarlo de nuevo."
+            self.showAlert = true
+            return
+        }
+        
+        let emailSent = await restablecerContraseñaRequirement.emailRestablecerContraseña(emailOrUsername: self.emailOrUsername)
+        
+        if emailSent == true {
+            self.buttonLabel = "¡Enlace enviado!"
+        } else {
+            self.showAlert = true
+            self.messageAlert = "Hubo un error al enviar el enlace. Favor de intentarlo de nuevo."
         }
     }
     

@@ -9,9 +9,7 @@ import SwiftUI
 
 struct PasswordRecoveryView: View {
     @Binding var path: [SessionPaths]
-    
-    @State var emailOrUsername: String = ""
-    @State var buttonLabel: String = "Enviar enlace"
+    @StateObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
     
     var body: some View {
         ZStack {
@@ -33,67 +31,67 @@ struct PasswordRecoveryView: View {
             .zIndex(1)
             
             ScrollView {
-                
-                Spacer().frame(height: 30)
-                
-                TituloComponent(title: "Recupera tu contraseña", imageName: "Bici", separatorBool: false)
-                
-                Spacer().frame(height: 50)
-                
-                // Mensaje
-                Text("Entendemos que estas cosas pasan. Enviaremos un enlace de recuperación a tu correo. Tú no te preocupes.")
-                    .font(.caption)
-                
-                Spacer().frame(height: 30)
-                
-                // Formulario
-                VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading) {
+                    Spacer().frame(height: 30)
                     
-                    // Correo electrónico
-                    VStack(alignment: .leading) {
-                        Text("Correo electrónico o usuario")
-                            .font(.caption)
-                        TextField("Correo electrónico o usuario", text: $emailOrUsername)
-                            .keyboardType(.emailAddress)
-                            .textInputAutocapitalization(.never)
-                            .padding()
-                            .cornerRadius(10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-                            )
-                    }
+                    TituloComponent(title: "Recupera tu contraseña", imageName: "Bici", separatorBool: false)
                     
-                    Button {
-                        buttonLabel = "¡Enlace enviado!"
-                    } label: {
-                        Text(buttonLabel)
-                            .font(.subheadline)
-                            .bold()
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .foregroundColor(.black)
-                            .background(Color(red: 0.961, green: 0.802, blue: 0.048))
-                            .cornerRadius(10)
-                    }
+                    Spacer().frame(height: 50)
                     
                     // Mensaje
-                    HStack {
-                        Text("¿Ya tienes una cuenta?")
-                            .font(.caption)
+                    Text("Entendemos que estas cosas pasan. Enviaremos un enlace de recuperación a tu correo. No te preocupes.")
+                        .font(.caption)
+                    
+                    Spacer().frame(height: 30)
+                    
+                    // Formulario
+                    VStack(alignment: .leading, spacing: 20) {
                         
-                        Button(action: {
-                            path.removeLast()
-                        }, label: {
-                            Text("Inicia sesión aquí")
+                        // Correo electrónico
+                        VStack(alignment: .leading) {
+                            EmailField(email: $restablecerContraseñaViewModel.emailOrUsername,
+                                       text: "Correo electrónico o usuario",
+                                       placeholder: "Escribe tu correo o usuario...")
+                        }
+                        
+                        CustomButton(
+                            text: restablecerContraseñaViewModel.buttonLabel,
+                            backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
+                            action: {
+                                Task {
+                                    await restablecerContraseñaViewModel.emailRestablecerContraseña()
+                                }
+                            }
+                        )
+                        
+                        // Mensaje
+                        HStack {
+                            Text("¿Ya tienes una cuenta?")
                                 .font(.caption)
-                                .underline()
-                        })
+                            
+                            Button(action: {
+                                path.removeLast()
+                            }, label: {
+                                Text("Inicia sesión aquí")
+                                    .font(.caption)
+                                    .underline()
+                            })
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                        
                     }
                     
+                    Spacer()
                 }
-                
-                Spacer()
+            }
+            .onTapGesture {
+                UIApplication.shared.hideKeyboard()
+            }
+            .alert(isPresented: $restablecerContraseñaViewModel.showAlert) {
+                Alert(
+                    title: Text("Oops!"),
+                    message: Text(restablecerContraseñaViewModel.messageAlert)
+                )
             }
             .padding(30)
             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
