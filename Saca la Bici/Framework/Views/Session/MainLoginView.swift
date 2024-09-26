@@ -118,13 +118,15 @@ struct MainLoginView: View {
             .navigationDestination(for: SessionPaths.self) { value in
                 switch value {
                 case .login:
-                    LoginView()
+                    LoginView(path: $path)
                 case .register:
                     SignUpStep1View(path: $path, signUpViewModel: signUpViewModel)
                 case .continueRegistration:
                     SignUpStep2View(path: $path, signUpViewModel: signUpViewModel)
                 case .finalizar:
                     SignUpStep3View(path: $path, signUpViewModel: signUpViewModel)
+                case .olvidar:
+                    PasswordRecoveryView(path: $path)
                 default:
                     EmptyView()
                 }
