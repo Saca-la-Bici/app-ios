@@ -357,10 +357,8 @@ class SessionAPIService: NSObject {
         }
         
         // Iterar sobre los proveedores vinculados al usuario
-        for proveedor in user.providerData {
-            if proveedor.providerID == "password" {
-                return true
-            }
+        for proveedor in user.providerData where proveedor.providerID == "password" {
+            return true
         }
         
         return false
