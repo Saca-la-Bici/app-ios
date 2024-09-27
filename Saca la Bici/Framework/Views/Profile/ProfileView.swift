@@ -35,6 +35,8 @@ struct ProfileView: View {
                 case .configuration:
                     ConfigurationView(path: $path)
                 case .profile:
+                    SeguridadAccesoView(path: $path)
+                case .password:
                     RestablecerContrasenaView(path: $path)
                 default:
                     EmptyView()

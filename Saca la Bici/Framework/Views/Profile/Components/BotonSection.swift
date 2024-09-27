@@ -21,14 +21,18 @@ struct BotonSection: View {
                     path.append(nextPath!)
                 }
             } label: {
-                Image(systemName: icono)
-                Text(titulo)
-                Spacer()
-                if button == true {
-                    Image(systemName: "chevron.forward")
-                        .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
-                        .scaleEffect(1.5)
+                HStack {
+                    Image(systemName: icono)
+                    Text(titulo)
+                    Spacer()
+                    if button == true {
+                        Image(systemName: "chevron.forward")
+                            .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
+                            .scaleEffect(1.5)
+                    }
                 }
+                .frame(maxWidth: .infinity)
+                .contentShape(Rectangle())
             }
             .buttonStyle(PlainButtonStyle())
         }

@@ -45,6 +45,7 @@
 		25A7BE512CA61C9500FCB8B6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BE502CA61C9500FCB8B6 /* ProfileView.swift */; };
 		25A7BE542CA649F600FCB8B6 /* BotonSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BE532CA649F600FCB8B6 /* BotonSection.swift */; };
 		25A7BE562CA64AEA00FCB8B6 /* ConfigurationPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BE552CA64AEA00FCB8B6 /* ConfigurationPaths.swift */; };
+		25A7BE582CA664A800FCB8B6 /* SeguridadAccesoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BE572CA664A800FCB8B6 /* SeguridadAccesoView.swift */; };
 		25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302B92C9A8C99005AD742 /* CustomButton.swift */; };
 		25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */; };
 		25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */; };
@@ -128,6 +129,7 @@
 		25A7BE502CA61C9500FCB8B6 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		25A7BE532CA649F600FCB8B6 /* BotonSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotonSection.swift; sourceTree = "<group>"; };
 		25A7BE552CA64AEA00FCB8B6 /* ConfigurationPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationPaths.swift; sourceTree = "<group>"; };
+		25A7BE572CA664A800FCB8B6 /* SeguridadAccesoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeguridadAccesoView.swift; sourceTree = "<group>"; };
 		25C302B92C9A8C99005AD742 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FechaNacimientoPicker.swift; sourceTree = "<group>"; };
 		25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipoSangrePicker.swift; sourceTree = "<group>"; };
@@ -378,8 +380,8 @@
 				252B64E22C99FE7200A362C5 /* APIRoutes.swift */,
 				252B64E32C99FE7200A362C5 /* User.swift */,
 				259CBB9F2CA0E44A0067B550 /* SessionPaths.swift */,
-				AE41A6E62C9A679000921BDF /* Anuncio.swift */,
 				25A7BE552CA64AEA00FCB8B6 /* ConfigurationPaths.swift */,
+				AE41A6E62C9A679000921BDF /* Anuncio.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -390,6 +392,7 @@
 				25A7BE522CA649E700FCB8B6 /* Components */,
 				25A7BE502CA61C9500FCB8B6 /* ProfileView.swift */,
 				25A7BE4E2CA61C0600FCB8B6 /* ConfigurationView.swift */,
+				25A7BE572CA664A800FCB8B6 /* SeguridadAccesoView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -538,11 +541,12 @@
 				};
 			};
 			buildConfigurationList = 252B63962C99F16700A362C5 /* Build configuration list for PBXProject "Saca la Bici" */;
-			developmentRegion = en;
+			developmentRegion = "es-419";
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				"es-419",
 			);
 			mainGroup = 252B63922C99F16700A362C5;
 			minimizedProjectReferenceProxies = 1;
@@ -644,6 +648,7 @@
 				252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */,
 				252B64D92C99FE5900A362C5 /* SessionManager.swift in Sources */,
 				25C302C62C9A9780005AD742 /* EmailField.swift in Sources */,
+				25A7BE582CA664A800FCB8B6 /* SeguridadAccesoView.swift in Sources */,
 				259CBB9A2C9E29C00067B550 /* AppleCryptoHelpers.swift in Sources */,
 				25C302C42C9A9515005AD742 /* PasswordField.swift in Sources */,
 				252B64DA2C99FE5900A362C5 /* SignUpViewModel.swift in Sources */,
