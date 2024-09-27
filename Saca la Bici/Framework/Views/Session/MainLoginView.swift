@@ -126,7 +126,7 @@ struct MainLoginView: View {
                 case .finalizar:
                     SignUpStep3View(path: $path, signUpViewModel: signUpViewModel)
                 case .olvidar:
-                    PasswordRecoveryView(path: $path)
+                    PasswordRecoveryView<SessionPaths>(path: $path, showIniciarSesion: true)
                 default:
                     EmptyView()
                 }

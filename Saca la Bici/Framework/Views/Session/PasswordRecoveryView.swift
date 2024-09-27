@@ -7,9 +7,12 @@
 
 import SwiftUI
 
-struct PasswordRecoveryView: View {
-    @Binding var path: [SessionPaths]
+struct PasswordRecoveryView<PathType: Equatable>: View {
+    @Binding var path: [PathType]
+    
     @StateObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
+    
+    var showIniciarSesion: Bool
     
     var body: some View {
         ZStack {
@@ -64,19 +67,21 @@ struct PasswordRecoveryView: View {
                             }
                         )
                         
-                        // Mensaje
-                        HStack {
-                            Text("¿Ya tienes una cuenta?")
-                                .font(.caption)
-                            
-                            Button(action: {
-                                path.removeLast()
-                            }, label: {
-                                Text("Inicia sesión aquí")
+                        if showIniciarSesion {
+                            // Mensaje
+                            HStack {
+                                Text("¿Ya tienes una cuenta?")
                                     .font(.caption)
-                                    .underline()
-                            })
-                            .buttonStyle(PlainButtonStyle())
+                                
+                                Button(action: {
+                                    path.removeLast()
+                                }, label: {
+                                    Text("Inicia sesión aquí")
+                                        .font(.caption)
+                                        .underline()
+                                })
+                                .buttonStyle(PlainButtonStyle())
+                            }
                         }
                         
                     }
@@ -115,9 +120,11 @@ struct PasswordRecoveryView_Previews: PreviewProvider {
 
     struct PreviewWrapper: View {
         @State var path: [SessionPaths] = []
+        
+        var showIniciarSesion: Bool = true
 
         var body: some View {
-            PasswordRecoveryView(path: $path)
+            PasswordRecoveryView(path: $path, showIniciarSesion: true)
         }
     }
 }

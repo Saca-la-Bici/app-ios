@@ -40,7 +40,9 @@ struct ProfileView: View {
                 case .profile:
                     SeguridadAccesoView(restablecerContraseñaViewModel: restablecerContraseñaViewModel, path: $path)
                 case .password:
-                    RestablecerContrasenaView(restablecerContraseñaViewModel: restablecerContraseñaViewModel, path: $path)
+                    RestablecerContrasenaView(path: $path)
+                case .olvidar:
+                    PasswordRecoveryView<ConfigurationPaths>(path: $path, showIniciarSesion: false )
                 default:
                     EmptyView()
                 }

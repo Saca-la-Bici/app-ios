@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RestablecerContrasenaView: View {
-    @ObservedObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
+    @StateObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
     
     @Binding var path: [ConfigurationPaths]
 
@@ -35,6 +35,17 @@ struct RestablecerContrasenaView: View {
                             isPasswordVisible: $restablecerContraseñaViewModel.showCurrentPassword,
                             text: "Contraseña actual"
                         )
+                        
+                        // ¿Olvidaste tu contraseña?
+                        Button(action: {
+                            path.append(.olvidar)
+                        }, label: {
+                            Text("¿Olvidaste tu contraseña?")
+                                .font(.caption)
+                                .underline()
+                        })
+                        .buttonStyle(PlainButtonStyle())
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         
                         Spacer().frame(height: 40)
                         

@@ -9,6 +9,7 @@ import Foundation
 
 enum ConfigurationPaths: Hashable {
     case configuration
+    case olvidar
     case profile
     case password
     case ayuda
