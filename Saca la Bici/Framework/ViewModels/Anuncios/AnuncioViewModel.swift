@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Foundation
-import FirebaseAuth
 import Alamofire
 
 @MainActor
@@ -15,33 +14,22 @@ class AnuncioViewModel: ObservableObject {
     @Published var anuncios: [Anuncio] = []
     @Published var errorMessage: String?
     @Published var successMessage: String?
-    @Published var isUserAuthenticated: Bool = false
+    
+    @Published var isUserAdmin: Bool = false
     
     private let repository: AnuncioRepository
-    private var authStateListenerHandle: AuthStateDidChangeListenerHandle?
     
     init(repository: AnuncioRepository = AnuncioRepository()) {
         self.repository = repository
-        self.observeAuthenticationState()
-    }
-    
-    deinit {
-        if let handle = authStateListenerHandle {
-            Auth.auth().removeStateDidChangeListener(handle)
-        }
-    }
-    
-    private func observeAuthenticationState() {
-        authStateListenerHandle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
-            Task { @MainActor in
-                self?.isUserAuthenticated = user != nil
-            }
-        }
     }
     
     func fetchAnuncios() async {
         do {
-            var anuncios = try await repository.getAnuncios()
+            // Llamas la función con el Rol y anuncios
+            let response = try await repository.getAnuncios()
+            
+            // Sacas los anuncios
+            var anuncios = response.anuncio
             anuncios = anuncios.map { anuncio in
                 var anuncioModificado = anuncio
                 anuncioModificado.icon = "A"
@@ -49,6 +37,10 @@ class AnuncioViewModel: ObservableObject {
                 return anuncioModificado
             }.reversed()
             self.anuncios = Array(anuncios)
+            
+            if response.rol == "Administrador" {
+                self.isUserAdmin = true
+            }
         } catch {
             self.handleError(error)
         }
