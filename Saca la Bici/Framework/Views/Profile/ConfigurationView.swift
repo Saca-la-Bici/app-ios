@@ -11,6 +11,8 @@ struct ConfigurationView: View {
     // Para manejar las sesiones
     @EnvironmentObject var sessionManager: SessionManager
     
+    @ObservedObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
+    
     @Binding var path: [ConfigurationPaths]
     
     var body: some View {

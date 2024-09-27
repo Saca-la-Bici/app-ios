@@ -19,6 +19,7 @@ class RestablecerContraseñaViewModel: ObservableObject {
     
     @Published var emailOrUsername: String = ""
     @Published var buttonLabel: String = "Enviar enlace"
+    @Published var showRestablecer: Bool = false
     
     // Creas dos variables más por si se comete un error
     @Published var messageAlert = ""
@@ -123,6 +124,17 @@ class RestablecerContraseñaViewModel: ObservableObject {
             self.showAlert = true
             self.messageAlert = "Hubo un error al enviar el enlace. Favor de intentarlo de nuevo."
             self.alertSuccess = false
+        }
+    }
+    
+    @MainActor
+    func esUsuarioConEmailPassword() {
+        let userConEmailAuth = restablecerContraseñaRequirement.esUsuarioConEmailPassword()
+        
+        if userConEmailAuth == true {
+            self.showRestablecer = true
+        } else {
+            self.showRestablecer = false
         }
     }
     

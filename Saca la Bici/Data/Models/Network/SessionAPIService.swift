@@ -348,4 +348,21 @@ class SessionAPIService: NSObject {
             return false
         }
     }
+    
+    func esUsuarioConEmailPassword () -> Bool {
+        // Obtener el usuario actual
+        guard let user = Auth.auth().currentUser else {
+            print("No hay un usuario autenticado actualmente.")
+            return false
+        }
+        
+        // Iterar sobre los proveedores vinculados al usuario
+        for proveedor in user.providerData {
+            if proveedor.providerID == "password" {
+                return true
+            }
+        }
+        
+        return false
+    }
 }

@@ -10,12 +10,15 @@ import SwiftUI
 struct ProfileView: View {
     @State private var path: [ConfigurationPaths] = []
     
+    @StateObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
+    
     var body: some View {
         NavigationStack(path: $path) {
             VStack {
                 Button {
                     Task {
                         path.append(.configuration)
+                        restablecerContraseñaViewModel.esUsuarioConEmailPassword()
                     }
                 } label: {
                     Text("Configuración")
@@ -33,11 +36,11 @@ struct ProfileView: View {
             .navigationDestination(for: ConfigurationPaths.self) { value in
                 switch value {
                 case .configuration:
-                    ConfigurationView(path: $path)
+                    ConfigurationView(restablecerContraseñaViewModel: restablecerContraseñaViewModel, path: $path)
                 case .profile:
-                    SeguridadAccesoView(path: $path)
+                    SeguridadAccesoView(restablecerContraseñaViewModel: restablecerContraseñaViewModel, path: $path)
                 case .password:
-                    RestablecerContrasenaView(path: $path)
+                    RestablecerContrasenaView(restablecerContraseñaViewModel: restablecerContraseñaViewModel, path: $path)
                 default:
                     EmptyView()
                 }

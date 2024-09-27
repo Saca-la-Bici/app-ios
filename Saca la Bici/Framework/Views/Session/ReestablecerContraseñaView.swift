@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct RestablecerContrasenaView: View {
+    @ObservedObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
     
     @Binding var path: [ConfigurationPaths]
-    @StateObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
 
     var body: some View {
         ZStack {

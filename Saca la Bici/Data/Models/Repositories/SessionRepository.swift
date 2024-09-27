@@ -22,6 +22,7 @@ protocol SessionAPIProtocol {
     func reauthenticateUser(currentPassword: String) async -> Bool
     func restablecerContraseña(newPassword: String) async -> Bool
     func emailRestablecerContraseña(emailOrUsername: String) async -> Bool
+    func esUsuarioConEmailPassword () -> Bool
 }
 
 // Crear nuestra clase PokemonRespository y heredar de nuestro protocolo PokemonAPIProtocol
@@ -90,5 +91,9 @@ class SessionRepository: SessionAPIProtocol {
     func emailRestablecerContraseña(emailOrUsername: String) async -> Bool {
         return await sessionService.emailRestablecerContraseña(
             URLUsername: URL(string: "\(Api.base)\(Api.Routes.session)/getUserEmail")!, emailOrUsername: emailOrUsername)
+    }
+    
+    func esUsuarioConEmailPassword () -> Bool {
+        return sessionService.esUsuarioConEmailPassword()
     }
 }

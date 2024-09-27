@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SeguridadAccesoView: View {
+    @ObservedObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
+    
     @Binding var path: [ConfigurationPaths]
     
     var body: some View {
@@ -44,26 +46,28 @@ struct SeguridadAccesoView: View {
                         .padding()
                         .padding(.horizontal, 5)
                         
-                        Divider()
-                        
-                        Spacer().frame(height: 20)
-                        
-                        Text("Seguridad y acceso a la cuenta")
-                            .foregroundColor(.gray)
-                            .font(.callout)
-                            .bold()
-                            .padding(.leading, 20)
-                        
-                        Spacer().frame(height: 20)
-                        
-                        VStack(alignment: .leading, spacing: 10) {
-                            BotonSection(icono: "person.badge.key",
-                                         titulo: "Restablece tu contraseña",
-                                         button: true,
-                                         path: $path,
-                                         nextPath: .password)
+                        if restablecerContraseñaViewModel.showRestablecer == true {
+                            Divider()
+                            
+                            Spacer().frame(height: 20)
+                            
+                            Text("Seguridad y acceso a la cuenta")
+                                .foregroundColor(.gray)
+                                .font(.callout)
+                                .bold()
+                                .padding(.leading, 20)
+                            
+                            Spacer().frame(height: 20)
+                            
+                            VStack(alignment: .leading, spacing: 10) {
+                                BotonSection(icono: "person.badge.key",
+                                             titulo: "Restablece tu contraseña",
+                                             button: true,
+                                             path: $path,
+                                             nextPath: .password)
+                            }
+                            .padding(.horizontal, 15)
                         }
-                        .padding(.horizontal, 15)
                         
                         Spacer().frame(height: 40)
                         
