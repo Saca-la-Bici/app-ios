@@ -50,6 +50,7 @@ struct MenuView: View {
                 .background(Color(red: 242.0 / 255.0, green: 240.0 / 255.0, blue: 234.0 / 255.0))
             }
             .navigationBarHidden(true)
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
     }
 }

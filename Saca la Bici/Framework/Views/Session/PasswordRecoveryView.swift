@@ -79,30 +79,30 @@ struct PasswordRecoveryView: View {
                             .buttonStyle(PlainButtonStyle())
                         }
                         
-                    }                }
+                    }
+                }
+                .padding(30)
+                .alert(isPresented: $restablecerContraseñaViewModel.showAlert) {
+                    if restablecerContraseñaViewModel.alertSuccess == true {
+                        return Alert(
+                            title: Text("¡Éxito!"),
+                            message: Text(restablecerContraseñaViewModel.messageAlert),
+                            dismissButton: .default(Text("OK")) {
+                                path.removeLast()
+                            }
+                        )
+                    } else {
+                        return Alert(
+                            title: Text("Oops!"),
+                            message: Text(restablecerContraseñaViewModel.messageAlert),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
+                }
             }
             .zIndex(2)
-            .padding(30)
-            .frame(maxWidth: .infinity)
             .onTapGesture {
                 UIApplication.shared.hideKeyboard()
-            }
-            .alert(isPresented: $restablecerContraseñaViewModel.showAlert) {
-                if restablecerContraseñaViewModel.alertSuccess == true {
-                    return Alert(
-                        title: Text("¡Éxito!"),
-                        message: Text(restablecerContraseñaViewModel.messageAlert),
-                        dismissButton: .default(Text("OK")) {
-                            path.removeLast()
-                        }
-                    )
-                } else {
-                    return Alert(
-                        title: Text("Oops!"),
-                        message: Text(restablecerContraseñaViewModel.messageAlert),
-                        dismissButton: .default(Text("OK"))
-                    )
-                }
             }
         }
     }
