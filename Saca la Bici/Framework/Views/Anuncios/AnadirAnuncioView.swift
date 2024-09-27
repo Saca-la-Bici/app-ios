@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import FirebaseAuth
 
 struct AnadirAnuncioView: View {
     @State private var titulo: String = ""
@@ -20,6 +21,7 @@ struct AnadirAnuncioView: View {
     enum ActiveAlert: Identifiable {
         case error
         case success
+        case notAuthenticated
 
         var id: Int {
             hashValue
@@ -28,7 +30,7 @@ struct AnadirAnuncioView: View {
     
     // Variable de estado para la alerta activa
     @State private var activeAlert: ActiveAlert?
-
+    
     var body: some View {
         VStack {
             HStack {
@@ -39,10 +41,14 @@ struct AnadirAnuncioView: View {
                         .font(.title2)
                 })
                 .buttonStyle(PlainButtonStyle())
+                
                 Spacer()
+                
                 Text("Añadir anuncio")
                     .font(.headline)
+              
                 Spacer()
+                
                 Button(action: {
                     // Validaciones
                     if titulo.trimmingCharacters(in: .whitespaces).isEmpty {
@@ -56,8 +62,17 @@ struct AnadirAnuncioView: View {
                         return
                     }
                     
-                    // Llamar al viewModel para registrar el anuncio
-                    viewModel.registrarAnuncio(titulo: titulo, contenido: descripcion)
+                    // Verificar autenticación
+                    if !viewModel.isUserAuthenticated {
+                        viewModel.errorMessage = "Debes iniciar sesión para añadir un anuncio."
+                        activeAlert = .notAuthenticated
+                        return
+                    }
+                    
+                    // Llamar al ViewModel para registrar el anuncio de forma asincrónica
+                    Task {
+                        await viewModel.registrarAnuncio(titulo: titulo, contenido: descripcion)
+                    }
                 }, label: {
                     Image(systemName: "checkmark")
                         .font(.title2)
@@ -67,7 +82,7 @@ struct AnadirAnuncioView: View {
             }
             .padding(.horizontal)
             .padding(.top, 10)
-
+    
             Spacer().frame(height: 40)
 
             // Icono para subir una imagen
@@ -122,7 +137,7 @@ struct AnadirAnuncioView: View {
 
             Spacer().frame(height: 20)
             
-            // Titulo
+            // Título
             VStack(alignment: .leading) {
                 Text("Título")
                     .font(.subheadline)
@@ -169,7 +184,7 @@ struct AnadirAnuncioView: View {
             UIApplication.shared.hideKeyboard()
         }
         .padding(.bottom, 20)
-        // unica alerta utilizando activeAlert
+        // Alerta
         .alert(item: $activeAlert) { alertType in
             switch alertType {
             case .error:
@@ -177,7 +192,6 @@ struct AnadirAnuncioView: View {
                     title: Text("Error"),
                     message: Text(viewModel.errorMessage ?? "Error desconocido."),
                     dismissButton: .default(Text("OK")) {
-                        // Clear the error message if needed
                         viewModel.errorMessage = nil
                     }
                 )
@@ -186,16 +200,35 @@ struct AnadirAnuncioView: View {
                     title: Text("Éxito"),
                     message: Text(viewModel.successMessage ?? "Anuncio agregado correctamente."),
                     dismissButton: .default(Text("OK")) {
-                        // Clear the success message and dismiss the view
                         viewModel.successMessage = nil
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                )
+            case .notAuthenticated:
+                return Alert(
+                    title: Text("No autenticado"),
+                    message: Text(viewModel.errorMessage ?? "Debes iniciar sesión para realizar esta acción."),
+                    dismissButton: .default(Text("OK")) {
+                        viewModel.errorMessage = nil
                         presentationMode.wrappedValue.dismiss()
                     }
                 )
             }
         }
+        // Observa cambios en successMessage para mostrar la alerta de éxito
         .onChange(of: viewModel.successMessage) { _, newValue in
             if newValue != nil {
                 activeAlert = .success
+            }
+        }
+        // Observa cambios en errorMessage para mostrar la alerta de error o notAuthenticated
+        .onChange(of: viewModel.errorMessage) { _, newValue in
+            if newValue != nil {
+                if viewModel.isUserAuthenticated {
+                    activeAlert = .error
+                } else {
+                    activeAlert = .notAuthenticated
+                }
             }
         }
     }

@@ -58,7 +58,6 @@ struct ModificarAnuncioView: View {
                     .font(.headline)
                 Spacer()
                 Button(action: {
-                    // Acción para confirmar el anuncio
                     // Validaciones
                     if titulo.trimmingCharacters(in: .whitespaces).isEmpty {
                         viewModel.errorMessage = "El título no puede estar vacío."
@@ -66,17 +65,19 @@ struct ModificarAnuncioView: View {
                         return
                     }
                     if contenido.trimmingCharacters(in: .whitespaces).isEmpty {
-                        viewModel.errorMessage = "El contenido no puede estar vacío."
+                        viewModel.errorMessage = "La descripción no puede estar vacía."
                         activeAlert = .validationError
                         return
                     }
                     
                     // Llamar al ViewModel para modificar el anuncio
-                    viewModel.modificarAnuncio(
-                        anuncio: anuncio,
-                        nuevoTitulo: titulo,
-                        nuevoContenido: contenido
-                    )
+                    Task {
+                        await viewModel.modificarAnuncio(
+                            anuncio: anuncio,
+                            nuevoTitulo: titulo,
+                            nuevoContenido: contenido
+                        )
+                    }
                 }, label: {
                     Image(systemName: "checkmark")
                         .font(.title2)

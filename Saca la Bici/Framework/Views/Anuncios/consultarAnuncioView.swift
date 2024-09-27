@@ -103,7 +103,9 @@ struct ConsultarAnuncio: View {
             UIApplication.shared.hideKeyboard()
         }
         .onAppear {
-            viewModel.fetchAnuncios()
+            Task {
+                await viewModel.fetchAnuncios()
+            }
         }
         .sheet(isPresented: $showAddAnuncioView) {
             AnadirAnuncioView(viewModel: viewModel)
@@ -122,7 +124,9 @@ struct ConsultarAnuncio: View {
                 message: Text("Una vez eliminado no se podrá recuperar."),
                 primaryButton: .destructive(Text("Eliminar")) {
                     if let anuncio = selectedAnuncio {
-                        viewModel.eliminarAnuncio(idAnuncio: anuncio.id)
+                        Task {
+                            await viewModel.eliminarAnuncio(idAnuncio: anuncio.id)
+                        }
                     }
                 },
                 secondaryButton: .cancel(Text("Cancelar"))
