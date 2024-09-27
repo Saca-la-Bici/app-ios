@@ -44,6 +44,7 @@ class RestablecerContraseñaViewModel: ObservableObject {
         if currentPassword.isEmpty {
             self.showAlert = true
             self.messageAlert = "Por favor ingresa tu contraseña actual."
+            self.alertSuccess = false
             return
         }
         
@@ -63,34 +64,42 @@ class RestablecerContraseñaViewModel: ObservableObject {
         if self.newPassword.isEmpty || self.confirmPassword.isEmpty {
             self.messageAlert = "Alguna de las dos contraseñas está vacía. Favor de intentarlo de nuevo."
             self.showAlert = true
+            self.alertSuccess = false
             return
         }
         
         if self.newPassword != self.confirmPassword {
             self.messageAlert = "Las contraseñas no son iguales. Favor de intentarlo de nuevo."
             self.showAlert = true
+            self.alertSuccess = false
             return
         }
         
         if self.newPassword.count < 8 {
             self.messageAlert = "La contraseña es demasiado corta. Debe tener al menos 8 caracteres."
             self.showAlert = true
+            self.alertSuccess = false
             return
         }
         
         if !isValidPassword(self.newPassword) {
             self.messageAlert = "La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un número y un carácter especial."
             self.showAlert = true
+            self.alertSuccess = false
             return
         }
         
-        let usuarioReautenticado = await restablecerContraseñaRequirement.restablecerContraseña(newPassword: self.newPassword)
+        let contraseñaNueva = await restablecerContraseñaRequirement.restablecerContraseña(newPassword: self.newPassword)
         
-        if usuarioReautenticado == true {
-            self.showNuevaContraseñaFields = true
+        if contraseñaNueva == true {
+            self.showAlert = true
+            self.messageAlert = "La contraseña ha sido restablecida. Ahora usa tu nueva contraseña para iniciar sesión."
+            self.alertSuccess = true
+            return
         } else {
             self.showAlert = true
             self.messageAlert = "Hubo un error al restablecer la contraseña. Por favor intente de nuevo."
+            self.alertSuccess = false
             return
         }
     }

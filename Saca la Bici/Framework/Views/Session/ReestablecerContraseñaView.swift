@@ -24,6 +24,8 @@ struct RestablecerContrasenaView: View {
                 Text("Guadalupe Rojas")
                     .font(.system(size: 15))
                 
+                Spacer().frame(height: 30)
+                
                 if restablecerContraseñaViewModel.showNuevaContraseñaFields == false {
                     
                     // Campo de Contraseña Actual
@@ -71,10 +73,6 @@ struct RestablecerContrasenaView: View {
                         action: {
                             Task {
                                 await restablecerContraseñaViewModel.restablecerContraseña()
-                                
-                                if restablecerContraseñaViewModel.showAlert == false {
-                                    path.removeLast()
-                                }
                             }
                         }
                     )
@@ -88,10 +86,21 @@ struct RestablecerContrasenaView: View {
             UIApplication.shared.hideKeyboard()
         }
         .alert(isPresented: $restablecerContraseñaViewModel.showAlert) {
-            Alert(
-                title: Text("Oops!"),
-                message: Text(restablecerContraseñaViewModel.messageAlert)
-            )
+            if restablecerContraseñaViewModel.alertSuccess == false {
+                return Alert(
+                    title: Text("Oops!"),
+                    message: Text(restablecerContraseñaViewModel.messageAlert)
+                    
+                )
+            } else {
+                return Alert(
+                    title: Text("¡Éxito!"),
+                    message: Text(restablecerContraseñaViewModel.messageAlert),
+                    dismissButton: .default(Text("OK")) {
+                        path.removeLast()
+                    }
+                )
+            }
         }
         .padding()
         .frame(maxHeight: .infinity, alignment: .top)
