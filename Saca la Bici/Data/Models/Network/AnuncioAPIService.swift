@@ -12,7 +12,7 @@ import FirebaseAuth
 class AnuncioAPIService {
     
     // Función para obtener los anuncios existentes
-    func fetchAnuncios(url: URL) async throws -> [Anuncio] {
+    func fetchAnuncios(url: URL) async throws -> AnunciosResponse {
 
         guard let idToken = await obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
@@ -24,12 +24,12 @@ class AnuncioAPIService {
         ]
         
         do {
-            let anuncios = try await AF.request(url, method: .get, headers: headers)
+            let response = try await AF.request(url, method: .get, headers: headers)
                 .validate()
-                .serializingDecodable([Anuncio].self)
+                .serializingDecodable(AnunciosResponse.self)
                 .value
             
-            return anuncios
+            return response
         } catch {
             print("Error al obtener anuncios: \(error.localizedDescription)")
             throw error

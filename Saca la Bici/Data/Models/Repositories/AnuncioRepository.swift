@@ -14,10 +14,16 @@ class AnuncioRepository {
         self.apiService = apiService
     }
     
-    func getAnuncios() async throws -> [Anuncio] {
-        let anuncios = try await apiService.fetchAnuncios(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/consultar")!)
+    func getAnuncios() async throws -> AnunciosResponse {
+        let response = try await apiService.fetchAnuncios(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/consultar")!)
+        
+        // Filtras los anuncios no validos
+        let anuncios = response.anuncio
         let anunciosValidos = anuncios.filter { AnuncioRequirement.esValido(anuncio: $0) }
-        return anunciosValidos
+        
+        // Vuelves a sacar el rol
+        let anuncioResponse = AnunciosResponse(anuncio: anunciosValidos, rol: response.rol)
+        return anuncioResponse
     }
     
     func postAnuncio(_ anuncio: Anuncio) async throws -> String {
