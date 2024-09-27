@@ -27,7 +27,6 @@ struct ConsultarAnuncio: View {
                     Spacer()
 
                     Image(systemName: "bell")
-                        .foregroundColor(.black)
                         .padding(.trailing)
                     
                     if viewModel.isUserAdmin {
@@ -35,7 +34,6 @@ struct ConsultarAnuncio: View {
                             showAddAnuncioView = true
                         }, label: {
                             Image(systemName: "plus")
-                                .foregroundColor(.black)
                                 .padding(.trailing)
                         })
                         .buttonStyle(PlainButtonStyle())
@@ -76,10 +74,9 @@ struct ConsultarAnuncio: View {
                         }
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color(UIColor.systemGray6))
+                        .background(Color(UIColor.systemGray5))
                         .cornerRadius(20)
                         .listRowInsets(EdgeInsets())
-                        .listRowBackground(Color.white)
                         .padding(.horizontal, 16)
                         .swipeActions(edge: .trailing) {
                             if viewModel.isUserAdmin {
@@ -105,7 +102,6 @@ struct ConsultarAnuncio: View {
                 .listStyle(PlainListStyle())
             }
         }
-        .background(Color.white)
         .onTapGesture {
             UIApplication.shared.hideKeyboard()
         }
