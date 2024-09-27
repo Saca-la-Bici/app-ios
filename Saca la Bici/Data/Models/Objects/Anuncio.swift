@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+struct AnunciosResponse: Codable {
+    let anuncio: [Anuncio]
+    let rol: String
+}
+
 struct Anuncio: Identifiable, Codable {
     var id: String
     var titulo: String

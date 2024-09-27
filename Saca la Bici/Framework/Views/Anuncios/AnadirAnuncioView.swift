@@ -21,7 +21,6 @@ struct AnadirAnuncioView: View {
     enum ActiveAlert: Identifiable {
         case error
         case success
-        case notAuthenticated
 
         var id: Int {
             hashValue
@@ -59,13 +58,6 @@ struct AnadirAnuncioView: View {
                     if descripcion.trimmingCharacters(in: .whitespaces).isEmpty {
                         viewModel.errorMessage = "La descripción no puede estar vacía."
                         activeAlert = .error
-                        return
-                    }
-                    
-                    // Verificar autenticación
-                    if !viewModel.isUserAuthenticated {
-                        viewModel.errorMessage = "Debes iniciar sesión para añadir un anuncio."
-                        activeAlert = .notAuthenticated
                         return
                     }
                     
@@ -204,15 +196,6 @@ struct AnadirAnuncioView: View {
                         presentationMode.wrappedValue.dismiss()
                     }
                 )
-            case .notAuthenticated:
-                return Alert(
-                    title: Text("No autenticado"),
-                    message: Text(viewModel.errorMessage ?? "Debes iniciar sesión para realizar esta acción."),
-                    dismissButton: .default(Text("OK")) {
-                        viewModel.errorMessage = nil
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                )
             }
         }
         // Observa cambios en successMessage para mostrar la alerta de éxito
@@ -224,11 +207,7 @@ struct AnadirAnuncioView: View {
         // Observa cambios en errorMessage para mostrar la alerta de error o notAuthenticated
         .onChange(of: viewModel.errorMessage) { _, newValue in
             if newValue != nil {
-                if viewModel.isUserAuthenticated {
-                    activeAlert = .error
-                } else {
-                    activeAlert = .notAuthenticated
-                }
+                activeAlert = .error
             }
         }
     }
