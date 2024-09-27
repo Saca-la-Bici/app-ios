@@ -52,8 +52,6 @@ struct SacalaBiciApp: App {
         if let backImage = UIImage(systemName: "chevron.left")?.withTintColor(darkerYellow, renderingMode: .alwaysOriginal) {
             appearance.setBackIndicatorImage(backImage, transitionMaskImage: backImage)
         }
-      
-        appearance.titleTextAttributes = [.foregroundColor: darkerYellow]
         
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance

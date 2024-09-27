@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @State private var path: [SessionPaths] = []
+    @State private var path: [ConfigurationPaths] = []
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -18,7 +18,7 @@ struct ProfileView: View {
                         path.append(.configuration)
                     }
                 } label: {
-                    Text("Consultar Perfil")
+                    Text("Configuración")
                         .font(.subheadline)
                         .bold()
                         .frame(maxWidth: .infinity)
@@ -30,10 +30,12 @@ struct ProfileView: View {
                 .padding()
                 .buttonStyle(PlainButtonStyle())
             }
-            .navigationDestination(for: SessionPaths.self) { value in
+            .navigationDestination(for: ConfigurationPaths.self) { value in
                 switch value {
                 case .configuration:
                     ConfigurationView(path: $path)
+                case .profile:
+                    RestablecerContrasenaView(path: $path)
                 default:
                     EmptyView()
                 }

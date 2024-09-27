@@ -9,28 +9,11 @@ import SwiftUI
 
 struct RestablecerContrasenaView: View {
     
+    @Binding var path: [ConfigurationPaths]
     @StateObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
 
     var body: some View {
         ScrollView {
-            // Encabezado con botón de regresar y título
-            HStack {
-                Button(action: {
-                    // Acción para regresar
-                }, label: {
-                    Image(systemName: "arrow.left")
-                        .font(.title2)
-                        .foregroundColor(.black)
-                })
-                Spacer()
-                Text("Seguridad y acceso a la cuenta")
-                    .font(.headline)
-                    .foregroundColor(.black)
-                Spacer()
-            }
-            .padding(.horizontal)
-            .padding(.top, 10)
-            
             VStack(spacing: 8) {
                 Image("Avatar")
                     .resizable()
@@ -97,6 +80,7 @@ struct RestablecerContrasenaView: View {
                 )
             }
         }
+        .navigationTitle("Restablecer Contraseña")
         .onTapGesture {
             UIApplication.shared.hideKeyboard()
         }
@@ -111,6 +95,16 @@ struct RestablecerContrasenaView: View {
     }
 }
 
-#Preview{
-    RestablecerContrasenaView()
+struct RestablecerContrasenaView_Previews: PreviewProvider {
+    static var previews: some View {
+        PreviewWrapper()
+    }
+
+    struct PreviewWrapper: View {
+        @State var path: [ConfigurationPaths] = []
+
+        var body: some View {
+            RestablecerContrasenaView(path: $path)
+        }
+    }
 }

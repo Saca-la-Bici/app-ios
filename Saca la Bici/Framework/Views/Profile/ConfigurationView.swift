@@ -11,7 +11,7 @@ struct ConfigurationView: View {
     // Para manejar las sesiones
     @EnvironmentObject var sessionManager: SessionManager
     
-    @Binding var path: [SessionPaths]
+    @Binding var path: [ConfigurationPaths]
     
     var body: some View {
         VStack(spacing: 0) {
@@ -27,12 +27,18 @@ struct ConfigurationView: View {
                             .padding(.leading, 20)
                         
                         Group {
-                            BotonSeccion(icono: "questionmark.circle", titulo: "Ayuda",
-                                button: true)
-                            BotonSeccion(icono: "info.circle", titulo: "Información",
-                                         button: true)
-                            BotonSeccion(icono: "figure.outdoor.cycle", titulo: "Cómo usar la app",
-                                         button: true)
+                            BotonSection(icono: "questionmark.circle", titulo: "Ayuda",
+                                button: true,
+                                         path: $path,
+                                         nextPath: .ayuda)
+                            BotonSection(icono: "info.circle", titulo: "Información",
+                                         button: true,
+                                         path: $path,
+                                         nextPath: .informacion)
+                            BotonSection(icono: "figure.outdoor.cycle", titulo: "Cómo usar la app",
+                                         button: true,
+                                         path: $path,
+                                         nextPath: .faqs)
                         }
                     }
                     .padding(.horizontal, 25)
@@ -46,8 +52,10 @@ struct ConfigurationView: View {
                             .bold()
                             .padding(.leading, 20)
                         
-                        BotonSeccion(icono: "person.circle", titulo: "Tu Cuenta",
-                                     button: true)
+                        BotonSection(icono: "person.circle", titulo: "Tu Cuenta",
+                                     button: true,
+                                     path: $path,
+                                     nextPath: .profile)
                     }
                     .padding(.horizontal, 25)
                     
@@ -60,10 +68,12 @@ struct ConfigurationView: View {
                             .bold()
                             .padding(.leading, 20)
                         
-                        BotonSeccion(icono: "globe", titulo: "Saca la Bici",
-                                     button: false)
-                        BotonSeccion(icono: "globe", titulo: "Rentabici",
-                                     button: false)
+                        BotonSection(icono: "globe", titulo: "Saca la Bici",
+                                     button: false,
+                                     path: $path)
+                        BotonSection(icono: "globe", titulo: "Rentabici",
+                                     button: false,
+                                     path: $path)
                     }
                     .padding(.horizontal, 25)
                     
@@ -89,40 +99,13 @@ struct ConfigurationView: View {
     }
 }
 
-// Subvista para los botones con íconos y títulos
-struct BotonSeccion: View {
-    var icono: String
-    var titulo: String
-    var button: Bool
-    
-    var body: some View {
-        HStack {
-            Button {
-            } label: {
-                Image(systemName: icono)
-                    .foregroundColor(.black)
-                Text(titulo)
-                    .foregroundColor(.black)
-                Spacer()
-                if button == true {
-                    Image(systemName: "chevron.forward")
-                        .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
-                        .scaleEffect(1.5)
-                }
-            }
-            .buttonStyle(PlainButtonStyle())
-        }
-        .padding(.vertical, 4)
-    }
-}
-
 struct ConfigurationView_Previews: PreviewProvider {
     static var previews: some View {
         PreviewWrapper()
     }
 
     struct PreviewWrapper: View {
-        @State var path: [SessionPaths] = []
+        @State var path: [ConfigurationPaths] = []
 
         var body: some View {
             ConfigurationView(path: $path)
