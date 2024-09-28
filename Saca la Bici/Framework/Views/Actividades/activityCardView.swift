@@ -94,9 +94,9 @@ struct ActivityCardView: View {
                 }
             }
             
-            Button(action: {
-                isJoined.toggle()  // Cambia el estado al pulsar el botón
-            }) {
+            Button {
+                isJoined.toggle()
+            } label: {
                 HStack {
                     Image(systemName: isJoined ? "xmark.circle" : "plus.circle")
                     Text(isJoined ? "Cancelar asistencia" : "Unirse")

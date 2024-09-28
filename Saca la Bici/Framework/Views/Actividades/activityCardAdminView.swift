@@ -99,7 +99,7 @@ struct ActivityCardAdminView: View {
             if activityType == "Rodada" {
                 Button(action: {
                     isStarted.toggle()
-                }) {
+                }, label: {
                     HStack {
                         Image(systemName: isStarted ? "pause.circle" : "play.circle")
                         Text(isStarted ? "Parar" : "Iniciar")
@@ -108,12 +108,13 @@ struct ActivityCardAdminView: View {
                     .foregroundColor(.white)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(isStarted ? Color.red : Color(hex: "#88B598"))  // Color ajustado
+                    .background(isStarted ? Color.red : Color(hex: "#88B598")) 
                     .cornerRadius(8)
-                }
+                })
                 
                 Button(action: {
-                }) {
+  
+                }, label: {
                     HStack {
                         Image(systemName: "person.circle")
                             .font(.headline)
@@ -124,12 +125,11 @@ struct ActivityCardAdminView: View {
                     .frame(maxWidth: .infinity)
                     .background(Color.yellow)
                     .cornerRadius(8)
-                }
+                })
             } else {
-
                 Button(action: {
                     isJoined.toggle()
-                }) {
+                }, label: {
                     HStack {
                         Image(systemName: isJoined ? "xmark.circle" : "plus.circle")
                         Text(isJoined ? "Cancelar asistencia" : "Unirse")
@@ -140,9 +140,10 @@ struct ActivityCardAdminView: View {
                     .frame(maxWidth: .infinity)
                     .background(isJoined ? Color.red : Color(hex: "#88B598"))
                     .cornerRadius(8)
-                }
+                })
                 .buttonStyle(PlainButtonStyle())
             }
+
         }
         .padding()
         .background(Color(UIColor.systemBackground))
