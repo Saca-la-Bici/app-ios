@@ -97,6 +97,14 @@ struct RestablecerContrasenaView: View {
                             title: Text("Oops!"),
                             message: Text(restablecerContraseñaViewModel.messageAlert)
                         )
+                    } else if restablecerContraseñaViewModel.alertTiempo == true {
+                        return Alert(
+                            title: Text("Oops!"),
+                            message: Text(restablecerContraseñaViewModel.messageAlert),
+                            dismissButton: .default(Text("OK")) {
+                                path.removeLast()
+                            }
+                        )
                     } else {
                         return Alert(
                             title: Text("¡Éxito!"),
