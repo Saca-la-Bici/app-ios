@@ -14,6 +14,12 @@ import GoogleSignIn
 class UserProfileSessionAPIService {
     static let shared = UserProfileSessionAPIService()
     
+    let firebaseTokenManager: FirebaseTokenManager
+    
+    init(firebaseTokenManager: FirebaseTokenManager = FirebaseTokenManager.shared) {
+            self.firebaseTokenManager = firebaseTokenManager
+        }
+    
     // Crear una sesión personalizada con tiempos de espera ajustados
     let session = Session(configuration: {
         let configuration = URLSessionConfiguration.default
@@ -26,7 +32,7 @@ class UserProfileSessionAPIService {
     func checarPerfilBackend(url: URL) async throws -> Response {
         var emptyResponse = Response(StatusCode: 500)
         
-        guard let idToken = await obtenerIDToken() else {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
                 throw URLError(.badServerResponse)
             }
         
@@ -79,7 +85,7 @@ class UserProfileSessionAPIService {
 
     // Función para completar el perfil del usuario
     func completarPerfil(url: URL, UserDatos: UserExterno) async -> Int? {
-        guard let idToken = await obtenerIDToken() else {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             print("No se pudo obtener el ID Token")
             return nil
         }
@@ -214,23 +220,6 @@ class UserProfileSessionAPIService {
                 print("\(errorResponse)")
             }
             return nil
-        }
-    }
-
-    // Función para obtener el ID Token de Firebase usando async/await
-    private func obtenerIDToken() async -> String? {
-        return await withCheckedContinuation { continuation in
-            // Obtener el ID Token del usuario actual
-            Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-                if let error = error {
-                    print("Error al obtener el ID Token: \(error.localizedDescription)")
-                    continuation.resume(returning: nil)
-                } else if let idToken = idToken {
-                    continuation.resume(returning: idToken)
-                } else {
-                    continuation.resume(returning: nil)
-                }
-            }
         }
     }
 }

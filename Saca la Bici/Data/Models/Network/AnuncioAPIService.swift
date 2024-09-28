@@ -11,10 +11,16 @@ import FirebaseAuth
 
 class AnuncioAPIService {
     
+    let firebaseTokenManager: FirebaseTokenManager
+    
+    init(firebaseTokenManager: FirebaseTokenManager = FirebaseTokenManager.shared) {
+            self.firebaseTokenManager = firebaseTokenManager
+        }
+    
     // Función para obtener los anuncios existentes
     func fetchAnuncios(url: URL) async throws -> AnunciosResponse {
 
-        guard let idToken = await obtenerIDToken() else {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
         
@@ -39,7 +45,7 @@ class AnuncioAPIService {
     // Función para registrar un nuevo anuncio
     func registrarAnuncio(url: URL, _ anuncio: Anuncio) async throws -> String {
         
-        guard let idToken = await obtenerIDToken() else {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
         
@@ -65,11 +71,9 @@ class AnuncioAPIService {
     // Función para eliminar un anuncio
     func eliminarAnuncio(url: URL, anuncioID: String) async throws -> String {
         
-        guard let idToken = await obtenerIDToken() else {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
-        
-        print("Token: ", idToken)
 
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(idToken)",
@@ -86,7 +90,7 @@ class AnuncioAPIService {
     
     // Función para modificar un anuncio existente
     func modificarAnuncio(url: URL, _ anuncio: Anuncio, anuncioID: String) async throws -> Anuncio {
-        guard let idToken = await obtenerIDToken() else {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
 
@@ -107,19 +111,5 @@ class AnuncioAPIService {
             .value
         
         return responseData
-    }
-    
-    // Función para obtener el ID Token de forma asincrónica
-    private func obtenerIDToken() async -> String? {
-        return await withCheckedContinuation { continuation in
-            Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-                if let error = error {
-                    print("Error al obtener el ID Token: \(error.localizedDescription)")
-                    continuation.resume(returning: nil)
-                } else {
-                    continuation.resume(returning: idToken)
-                }
-            }
-        }
     }
 }
