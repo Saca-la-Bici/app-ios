@@ -40,6 +40,7 @@
 		259CBB9A2C9E29C00067B550 /* AppleCryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259CBB992C9E29C00067B550 /* AppleCryptoHelpers.swift */; };
 		259CBBA02CA0E44A0067B550 /* SessionPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259CBB9F2CA0E44A0067B550 /* SessionPaths.swift */; };
 		259EF8B72CA23899007CE3FE /* UserProfileSessionAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259EF8B62CA23899007CE3FE /* UserProfileSessionAPIService.swift */; };
+		25A7BE602CA775CF00FCB8B6 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 25A7BE5F2CA775CF00FCB8B6 /* FirebaseMessaging */; };
 		25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302B92C9A8C99005AD742 /* CustomButton.swift */; };
 		25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */; };
 		25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */; };
@@ -144,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25A7BE602CA775CF00FCB8B6 /* FirebaseMessaging in Frameworks */,
 				252B64FD2C99FFE200A362C5 /* GoogleSignInSwift in Frameworks */,
 				252B64F32C99FF1000A362C5 /* Alamofire in Frameworks */,
 				252B64FB2C99FFE200A362C5 /* GoogleSignIn in Frameworks */,
@@ -429,6 +431,7 @@
 				252B64F72C99FFBD00A362C5 /* FirebaseAuthCombine-Community */,
 				252B64FA2C99FFE200A362C5 /* GoogleSignIn */,
 				252B64FC2C99FFE200A362C5 /* GoogleSignInSwift */,
+				25A7BE5F2CA775CF00FCB8B6 /* FirebaseMessaging */,
 			);
 			productName = "Saca la Bici";
 			productReference = 252B639B2C99F16700A362C5 /* Saca la Bici.app */;
@@ -1033,6 +1036,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 252B64F92C99FFE200A362C5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		25A7BE5F2CA775CF00FCB8B6 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 252B64F42C99FFBD00A362C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
