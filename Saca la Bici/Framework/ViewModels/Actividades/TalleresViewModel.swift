@@ -13,11 +13,8 @@ class TalleresViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
-    @Published var isUserAdmin: Bool = false
-    @Published var isUserStaff: Bool = false
-    @Published var isUser: Bool = false
-    
     private let getTalleresUseCase: GetTalleresUseCase
+    private var sessionManager = UserSessionManager.shared
     
     init(getTalleresUseCase: GetTalleresUseCase = GetTalleresUseCase(repository: ActividadesRepository())) {
         self.getTalleresUseCase = getTalleresUseCase
@@ -29,8 +26,9 @@ class TalleresViewModel: ObservableObject {
             do {
                 isLoading = true
                 errorMessage = nil
-                let talleres = try await getTalleresUseCase.execute()
+                let (talleres, rol) = try await getTalleresUseCase.execute()
                 self.talleres = talleres
+                sessionManager.updateRol(newRol: rol)
                 isLoading = false
             } catch {
                 isLoading = false
@@ -38,5 +36,17 @@ class TalleresViewModel: ObservableObject {
                 print("Error al obtener talleres: \(error)")
             }
         }
+    }
+    
+    func isUserAdmin() -> Bool {
+        return sessionManager.isAdmin()
+    }
+    
+    func isUserStaff() -> Bool {
+        return sessionManager.isStaff()
+    }
+    
+    func isUser() -> Bool {
+        return sessionManager.isUser()
     }
 }

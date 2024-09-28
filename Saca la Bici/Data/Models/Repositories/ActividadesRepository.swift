@@ -31,63 +31,67 @@ class ActividadesRepository {
         self.apiService = apiService
     }
 
-    func getRodadas() async throws -> [Rodada] {
+    func getRodadas() async throws -> (rodadas: [Rodada], rol: String) {
         guard let url = URL(string: "\(Api.base)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.rodadas)") else {
             throw URLError(.badURL)
         }
 
         do {
-            let rodadasResponses = try await apiService.fetchRodadas(url: url)
-
-            let rodadas = rodadasResponses.flatMap { response in
+            let response = try await apiService.fetchRodadas(url: url)
+            
+            let rodadas = response.rodadas.flatMap { response in
                 response.informacion.map { actividad in
                     Rodada(id: actividad._id, actividad: actividad, ruta: response.ruta)
                 }
             }
-            return rodadas
+            
+            return (rodadas, response.rol)
         } catch {
             print("Error en ActividadesRepository.getRodadas: \(error)")
             throw error
         }
     }
     
-    func getEventos() async throws -> [Evento] {
+    func getEventos() async throws -> (eventos: [Evento], rol: String) {
         guard let url = URL(string: "\(Api.base)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.eventos)") else {
             throw URLError(.badURL)
         }
 
         do {
-            let eventosResponses = try await apiService.fetchEventos(url: url)
-
-            let eventos = eventosResponses.flatMap { response in
+            let response = try await apiService.fetchEventos(url: url)
+            
+            let eventos = response.eventos.flatMap { response in
                 response.informacion.map { actividad in
                     Evento(id: actividad._id, actividad: actividad)
                 }
             }
-            return eventos
+            
+            return (eventos, response.rol)
         } catch {
             print("Error en ActividadesRepository.getEventos: \(error)")
             throw error
         }
     }
     
-    func getTalleres() async throws -> [Taller] {
+    func getTalleres() async throws -> (talleres: [Taller], rol: String) {
         guard let url = URL(string: "\(Api.base)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.talleres)") else {
             throw URLError(.badURL)
         }
         
         do {
-            let talleresResponses = try await apiService.fetchTalleres(url: url)
-
-            let talleres = talleresResponses.flatMap { response in
+            let response = try await apiService.fetchTalleres(url: url)
+            
+            let talleres = response.talleres.flatMap { response in
                 response.informacion.map { actividad in
                     Taller(id: actividad._id, actividad: actividad)
                 }
             }
-            return talleres
+            
+            return (talleres, response.rol)
         } catch {
             print("Error en ActividadesRepository.getTalleres: \(error)")
             throw error
         }
     }
+
 }

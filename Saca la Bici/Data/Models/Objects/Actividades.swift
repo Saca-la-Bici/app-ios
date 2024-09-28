@@ -7,6 +7,21 @@
 
 import Foundation
 
+struct RodadasApiResponse: Codable {
+    let rodadas: [RodadasResponse]
+    let rol: String
+}
+
+struct EventosApiResponse: Codable {
+    let eventos: [EventosResponse]
+    let rol: String
+}
+
+struct TalleresApiResponse: Codable {
+    let talleres: [TalleresResponse]
+    let rol: String
+}
+
 struct RodadasResponse: Codable {
     let _id: String
     let informacion: [Actividad]

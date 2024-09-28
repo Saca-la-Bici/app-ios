@@ -14,7 +14,7 @@ class GetRodadasUseCase {
         self.repository = repository
     }
     
-    func execute() async throws -> [Rodada] {
+    func execute() async throws -> (rodadas: [Rodada], rol: String) {
         return try await repository.getRodadas()
     }
 }
@@ -26,7 +26,7 @@ class GetEventosUseCase {
         self.repository = repository
     }
     
-    func execute() async throws -> [Evento] {
+    func execute() async throws -> (eventos: [Evento], rol: String) {
         return try await repository.getEventos()
     }
 }
@@ -38,7 +38,7 @@ class GetTalleresUseCase {
         self.repository = repository
     }
     
-    func execute() async throws -> [Taller] {
+    func execute() async throws -> (talleres: [Taller], rol: String) {
         return try await repository.getTalleres()
     }
 }

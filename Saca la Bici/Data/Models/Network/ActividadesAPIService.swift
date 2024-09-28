@@ -11,9 +11,14 @@ import FirebaseAuth
 
 class APIService {
     
-    func fetchRodadas(url: URL) async throws -> [RodadasResponse] {
-        
-        guard let idToken = await obtenerIDToken() else {
+    let firebaseTokenManager: FirebaseTokenManager
+    
+    init(firebaseTokenManager: FirebaseTokenManager = FirebaseTokenManager.shared) {
+            self.firebaseTokenManager = firebaseTokenManager
+        }
+    
+    func fetchRodadas(url: URL) async throws -> RodadasApiResponse {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
         
@@ -25,10 +30,10 @@ class APIService {
         return try await withCheckedThrowingContinuation { continuation in
             AF.request(url, headers: headers)
                 .validate()
-                .responseDecodable(of: [RodadasResponse].self) { response in
+                .responseDecodable(of: RodadasApiResponse.self) { response in
                     switch response.result {
-                    case .success(let rodadas):
-                        continuation.resume(returning: rodadas)
+                    case .success(let rodadasApiResponse):
+                        continuation.resume(returning: rodadasApiResponse)
                     case .failure(let error):
                         continuation.resume(throwing: error)
                     }
@@ -36,9 +41,9 @@ class APIService {
         }
     }
     
-    func fetchEventos(url: URL) async throws -> [EventosResponse] {
+    func fetchEventos(url: URL) async throws -> EventosApiResponse {
         
-        guard let idToken = await obtenerIDToken() else {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
         
@@ -50,10 +55,10 @@ class APIService {
         return try await withCheckedThrowingContinuation { continuation in
             AF.request(url, headers: headers)
                 .validate()
-                .responseDecodable(of: [EventosResponse].self) { response in
+                .responseDecodable(of: EventosApiResponse.self) { response in
                     switch response.result {
-                    case .success(let eventos):
-                        continuation.resume(returning: eventos)
+                    case .success(let eventosApiResponse):
+                        continuation.resume(returning: eventosApiResponse)
                     case .failure(let error):
                         continuation.resume(throwing: error)
                     }
@@ -61,9 +66,8 @@ class APIService {
         }
     }
     
-    func fetchTalleres(url: URL) async throws -> [TalleresResponse] {
-        
-        guard let idToken = await obtenerIDToken() else {
+    func fetchTalleres(url: URL) async throws -> TalleresApiResponse {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
         
@@ -75,28 +79,15 @@ class APIService {
         return try await withCheckedThrowingContinuation { continuation in
             AF.request(url, headers: headers)
                 .validate()
-                .responseDecodable(of: [TalleresResponse].self) { response in
+                .responseDecodable(of: TalleresApiResponse.self) { response in
                     switch response.result {
-                    case .success(let talleres):
-                        continuation.resume(returning: talleres)
+                    case .success(let talleresApiResponse):
+                        continuation.resume(returning: talleresApiResponse)
                     case .failure(let error):
                         continuation.resume(throwing: error)
                     }
                 }
         }
     }
-    
-    // Función para obtener el ID Token de forma asincrónica
-    private func obtenerIDToken() async -> String? {
-        return await withCheckedContinuation { continuation in
-            Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-                if let error = error {
-                    print("Error al obtener el ID Token: \(error.localizedDescription)")
-                    continuation.resume(returning: nil)
-                } else {
-                    continuation.resume(returning: idToken)
-                }
-            }
-        }
-    }
+
 }

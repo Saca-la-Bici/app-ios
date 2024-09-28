@@ -14,9 +14,11 @@ class RodadasViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private let getRodadasUseCase: GetRodadasUseCase
+    private var sessionManager = UserSessionManager.shared
     
     init(getRodadasUseCase: GetRodadasUseCase = GetRodadasUseCase(repository: ActividadesRepository())) {
         self.getRodadasUseCase = getRodadasUseCase
+        fetchRodadas()
     }
     
     func fetchRodadas() {
@@ -24,8 +26,9 @@ class RodadasViewModel: ObservableObject {
             do {
                 isLoading = true
                 errorMessage = nil
-                let rodadas = try await getRodadasUseCase.execute()
+                let (rodadas, rol) = try await getRodadasUseCase.execute()
                 self.rodadas = rodadas
+                sessionManager.updateRol(newRol: rol)
                 isLoading = false
             } catch {
                 isLoading = false
@@ -33,5 +36,17 @@ class RodadasViewModel: ObservableObject {
                 print("Error al obtener rodadas: \(error)")
             }
         }
+    }
+    
+    func isUserAdmin() -> Bool {
+        return sessionManager.isAdmin()
+    }
+    
+    func isUserStaff() -> Bool {
+        return sessionManager.isStaff()
+    }
+    
+    func isUser() -> Bool {
+        return sessionManager.isUser()
     }
 }

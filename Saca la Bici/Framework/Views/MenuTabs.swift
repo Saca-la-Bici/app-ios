@@ -3,6 +3,8 @@ import SwiftData
 
 struct MenuView: View {
     @State private var selectedTab = 2
+    // Obtiene el rol
+    @ObservedObject private var sessionManager = UserSessionManager.shared
 
     var body: some View {
         NavigationView {
@@ -11,9 +13,13 @@ struct MenuView: View {
                 // Contenido del TabView personalizado
                 VStack {
                     if selectedTab == 0 {
-                        ActividadesView()
+                        if sessionManager.isUser() {
+                            ActividadesView()
+                        } else if sessionManager.isAdmin() || sessionManager.isStaff() {
+                            AdminView()
+                        }
                     } else if selectedTab == 1 {
-                        AdminView()
+                        // Vista para el mapa
                     } else if selectedTab == 2 {
                         ConsultarAnuncio()
                     } else {
