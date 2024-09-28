@@ -11,13 +11,13 @@ struct MenuView: View {
                 // Contenido del TabView personalizado
                 VStack {
                     if selectedTab == 0 {
-                       ResultView()
+                        ResultView()
                     } else if selectedTab == 1 {
                         ResultView()
                     } else if selectedTab == 2 {
                         ConsultarAnuncio()
                     } else {
-                        ResultView()
+                        ProfileView()
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -50,6 +50,7 @@ struct MenuView: View {
                 .background(Color(red: 242.0 / 255.0, green: 240.0 / 255.0, blue: 234.0 / 255.0))
             }
             .navigationBarHidden(true)
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
     }
 }
