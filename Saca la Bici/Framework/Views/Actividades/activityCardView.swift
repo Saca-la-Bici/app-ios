@@ -23,13 +23,13 @@ struct ActivityCardView: View {
             HStack {
                 Text(activityTitle)
                     .font(.headline)
+                    .foregroundColor(.primary)
                 
                 Spacer()
                 
                 if let level = level {
                     Text(level)
                         .font(.caption)
-                        .foregroundColor(.white)
                         .padding(6)
                         .background(level == "Nivel 1" ? Color.green : (level == "Nivel 2" ? Color.orange : Color.gray))
                         .cornerRadius(8)
@@ -39,6 +39,7 @@ struct ActivityCardView: View {
                     HStack(spacing: 4) {
                         Image(systemName: "person.2")
                         Text("\(attendees)")
+                            .foregroundColor(.primary)
                     }
                 }
             }
@@ -50,6 +51,7 @@ struct ActivityCardView: View {
                         .foregroundColor(.gray)
                     Text(date)
                         .font(.subheadline)
+                        .foregroundColor(.primary)
                 }
             }
             
@@ -60,6 +62,7 @@ struct ActivityCardView: View {
                         .foregroundColor(.gray)
                     Text(time)
                         .font(.subheadline)
+                        .foregroundColor(.primary)
                 }
             }
             
@@ -70,6 +73,7 @@ struct ActivityCardView: View {
                         .foregroundColor(.gray)
                     Text(duration)
                         .font(.subheadline)
+                        .foregroundColor(.primary)
                 }
             }
             
@@ -86,6 +90,7 @@ struct ActivityCardView: View {
                         .foregroundColor(.gray)
                     Text(location)
                         .font(.subheadline)
+                        .foregroundColor(.primary)
                 }
             }
             
@@ -106,7 +111,7 @@ struct ActivityCardView: View {
             .buttonStyle(PlainButtonStyle())
         }
         .padding()
-        .background(Color.white)
+        .background(Color(UIColor.systemBackground))
         .cornerRadius(12)
         .shadow(radius: 5)
         .padding(.horizontal)

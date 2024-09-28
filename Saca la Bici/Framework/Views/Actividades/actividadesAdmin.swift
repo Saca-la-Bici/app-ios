@@ -23,13 +23,10 @@ struct AdminView: View {
                     Spacer()
                     
                     Image(systemName: "questionmark.circle")
-                        .foregroundColor(.black)
                     
                     Image(systemName: "bell")
-                        .foregroundColor(.black)
                     
                     Image(systemName: "plus")
-                        .foregroundColor(.black)
                         .padding(.trailing)
                 }
                 .padding()

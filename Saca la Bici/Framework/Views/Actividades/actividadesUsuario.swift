@@ -22,10 +22,8 @@ struct ActividadesView: View {
                     Spacer()
                     
                     Image(systemName: "questionmark.circle")
-                        .foregroundColor(.black)
                     
                     Image(systemName: "bell")
-                        .foregroundColor(.black)
                         .padding(.trailing)
                     
                 }
