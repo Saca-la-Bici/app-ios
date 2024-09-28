@@ -32,7 +32,7 @@ class ActividadesRepository {
     }
 
     func getRodadas() async throws -> [Rodada] {
-        guard let url = URL(string: "\(Api.baseURL)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.rodadas)") else {
+        guard let url = URL(string: "\(Api.base)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.rodadas)") else {
             throw URLError(.badURL)
         }
 
@@ -52,7 +52,7 @@ class ActividadesRepository {
     }
     
     func getEventos() async throws -> [Evento] {
-        guard let url = URL(string: "\(Api.baseURL)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.eventos)") else {
+        guard let url = URL(string: "\(Api.base)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.eventos)") else {
             throw URLError(.badURL)
         }
 
@@ -72,7 +72,7 @@ class ActividadesRepository {
     }
     
     func getTalleres() async throws -> [Taller] {
-        guard let url = URL(string: "\(Api.baseURL)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.talleres)") else {
+        guard let url = URL(string: "\(Api.base)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.talleres)") else {
             throw URLError(.badURL)
         }
         

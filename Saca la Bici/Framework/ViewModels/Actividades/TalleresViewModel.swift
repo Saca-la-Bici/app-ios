@@ -13,6 +13,10 @@ class TalleresViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
+    @Published var isUserAdmin: Bool = false
+    @Published var isUserStaff: Bool = false
+    @Published var isUser: Bool = false
+    
     private let getTalleresUseCase: GetTalleresUseCase
     
     init(getTalleresUseCase: GetTalleresUseCase = GetTalleresUseCase(repository: ActividadesRepository())) {
