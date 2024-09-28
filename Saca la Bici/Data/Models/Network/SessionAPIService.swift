@@ -15,6 +15,12 @@ class SessionAPIService: NSObject {
     // Se usa la libería de Alamofire y se usa static let para que sea inmutable y si se crean varias instancias que sea igual para todas dichas instancias.
     static let shared = SessionAPIService()
     
+    let firebaseTokenManager: FirebaseTokenManager
+    
+    init(firebaseTokenManager: FirebaseTokenManager = FirebaseTokenManager.shared) {
+            self.firebaseTokenManager = firebaseTokenManager
+        }
+    
     // Crear una sesión personalizada con tiempos de espera ajustados
     let session = Session(configuration: {
         let configuration = URLSessionConfiguration.default
@@ -160,7 +166,7 @@ class SessionAPIService: NSObject {
     
     func probarToken(url: URL) async -> Response? {
         // Obtener el ID Token usando async/await
-        guard let idToken = await obtenerIDToken() else {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             print("No se pudo obtener el ID Token")
             return nil
         }
@@ -270,24 +276,6 @@ class SessionAPIService: NSObject {
             return 500
         }
     }
-    
-    // Función para obtener el ID Token de Firebase usando async/await
-    private func obtenerIDToken() async -> String? {
-        return await withCheckedContinuation { continuation in
-            // Obtener el ID Token del usuario actual
-            Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-                if let error = error {
-                    print("Error al obtener el ID Token: \(error.localizedDescription)")
-                    continuation.resume(returning: nil)
-                } else if let idToken = idToken {
-                    continuation.resume(returning: idToken)
-                } else {
-                    continuation.resume(returning: nil)
-                }
-            }
-        }
-    }
-    
     // Función para reautenticar al usuario
     func reauthenticateUser(currentPassword: String) async -> Bool {
         // Obtener el usuario actual
@@ -319,7 +307,7 @@ class SessionAPIService: NSObject {
             try await user.updatePassword(to: newPassword)
             return true
         } catch {
-            print("Restablcer contraseña fallida: \(error.localizedDescription)")
+            print("Restablecer contraseña fallida: \(error.localizedDescription)")
             return false
         }
     }
