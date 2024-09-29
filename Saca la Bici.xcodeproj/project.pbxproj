@@ -72,6 +72,23 @@
 		AE41A6E72C9A679700921BDF /* Anuncio.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E62C9A679000921BDF /* Anuncio.swift */; };
 		AE41A6E92C9A6AA200921BDF /* AnadirAnuncioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E82C9A6AA200921BDF /* AnadirAnuncioView.swift */; };
 		AE8E78862CA9E3B7007F7365 /* Actividades.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78852CA9E3B3007F7365 /* Actividades.swift */; };
+		AE8E78882CA9E457007F7365 /* ActividadesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78872CA9E450007F7365 /* ActividadesRepository.swift */; };
+		AE8E788B2CA9E4B7007F7365 /* UserSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E788A2CA9E4B4007F7365 /* UserSessionManager.swift */; };
+		AE8E788D2CA9E4D9007F7365 /* ActividadesAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E788C2CA9E4CF007F7365 /* ActividadesAPIService.swift */; };
+		AE8E78902CA9E527007F7365 /* ActividadesRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E788F2CA9E520007F7365 /* ActividadesRequirement.swift */; };
+		AE8E78932CA9E567007F7365 /* EventosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78922CA9E562007F7365 /* EventosViewModel.swift */; };
+		AE8E78952CA9E57F007F7365 /* RodadasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78942CA9E57A007F7365 /* RodadasViewModel.swift */; };
+		AE8E78972CA9E59E007F7365 /* TalleresViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78962CA9E599007F7365 /* TalleresViewModel.swift */; };
+		AE8E789A2CA9E5E5007F7365 /* AdminEventosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78992CA9E5DD007F7365 /* AdminEventosView.swift */; };
+		AE8E789C2CA9E601007F7365 /* AdminRodadasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E789B2CA9E5FA007F7365 /* AdminRodadasView.swift */; };
+		AE8E789E2CA9E60C007F7365 /* AdminTalleresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E789D2CA9E606007F7365 /* AdminTalleresView.swift */; };
+		AE8E78A02CA9E61C007F7365 /* actividadesAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E789F2CA9E610007F7365 /* actividadesAdmin.swift */; };
+		AE8E78A22CA9E62A007F7365 /* actividadesUsuario.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78A12CA9E622007F7365 /* actividadesUsuario.swift */; };
+		AE8E78A42CA9E637007F7365 /* activityCardAdminView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78A32CA9E62D007F7365 /* activityCardAdminView.swift */; };
+		AE8E78A62CA9E645007F7365 /* activityCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78A52CA9E63C007F7365 /* activityCardView.swift */; };
+		AE8E78A82CA9E650007F7365 /* eventosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78A72CA9E649007F7365 /* eventosView.swift */; };
+		AE8E78AA2CA9E659007F7365 /* rodadasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78A92CA9E653007F7365 /* rodadasView.swift */; };
+		AE8E78AC2CA9E662007F7365 /* talleresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78AB2CA9E65C007F7365 /* talleresView.swift */; };
 		AEE34B8A2C9FA61800C2EECE /* modificarAnuncioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */; };
 /* End PBXBuildFile section */
 
@@ -158,6 +175,23 @@
 		AE41A6E62C9A679000921BDF /* Anuncio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anuncio.swift; sourceTree = "<group>"; };
 		AE41A6E82C9A6AA200921BDF /* AnadirAnuncioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnadirAnuncioView.swift; sourceTree = "<group>"; };
 		AE8E78852CA9E3B3007F7365 /* Actividades.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actividades.swift; sourceTree = "<group>"; };
+		AE8E78872CA9E450007F7365 /* ActividadesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesRepository.swift; sourceTree = "<group>"; };
+		AE8E788A2CA9E4B4007F7365 /* UserSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionManager.swift; sourceTree = "<group>"; };
+		AE8E788C2CA9E4CF007F7365 /* ActividadesAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesAPIService.swift; sourceTree = "<group>"; };
+		AE8E788F2CA9E520007F7365 /* ActividadesRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesRequirement.swift; sourceTree = "<group>"; };
+		AE8E78922CA9E562007F7365 /* EventosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventosViewModel.swift; sourceTree = "<group>"; };
+		AE8E78942CA9E57A007F7365 /* RodadasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RodadasViewModel.swift; sourceTree = "<group>"; };
+		AE8E78962CA9E599007F7365 /* TalleresViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalleresViewModel.swift; sourceTree = "<group>"; };
+		AE8E78992CA9E5DD007F7365 /* AdminEventosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminEventosView.swift; sourceTree = "<group>"; };
+		AE8E789B2CA9E5FA007F7365 /* AdminRodadasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminRodadasView.swift; sourceTree = "<group>"; };
+		AE8E789D2CA9E606007F7365 /* AdminTalleresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTalleresView.swift; sourceTree = "<group>"; };
+		AE8E789F2CA9E610007F7365 /* actividadesAdmin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = actividadesAdmin.swift; sourceTree = "<group>"; };
+		AE8E78A12CA9E622007F7365 /* actividadesUsuario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = actividadesUsuario.swift; sourceTree = "<group>"; };
+		AE8E78A32CA9E62D007F7365 /* activityCardAdminView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = activityCardAdminView.swift; sourceTree = "<group>"; };
+		AE8E78A52CA9E63C007F7365 /* activityCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = activityCardView.swift; sourceTree = "<group>"; };
+		AE8E78A72CA9E649007F7365 /* eventosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eventosView.swift; sourceTree = "<group>"; };
+		AE8E78A92CA9E653007F7365 /* rodadasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rodadasView.swift; sourceTree = "<group>"; };
+		AE8E78AB2CA9E65C007F7365 /* talleresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talleresView.swift; sourceTree = "<group>"; };
 		AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modificarAnuncioView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -255,6 +289,7 @@
 		252B64C42C99FE5900A362C5 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				AE8E78912CA9E558007F7365 /* Actividades */,
 				252B64FE2C9A01FD00A362C5 /* Session */,
 				AE41A6D52C9A60E000921BDF /* Anuncios */,
 			);
@@ -264,6 +299,7 @@
 		252B64CD2C99FE5900A362C5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AE8E78982CA9E5C2007F7365 /* Actividades */,
 				252B65052C9A37D600A362C5 /* Session */,
 				AE41A6DA2C9A629800921BDF /* Anuncios */,
 				25A7BE4D2CA61BEE00FCB8B6 /* Profile */,
@@ -296,6 +332,7 @@
 		252B64DF2C99FE6F00A362C5 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				AE8E788E2CA9E516007F7365 /* Actividades */,
 				252B64FF2C9A021D00A362C5 /* Session */,
 				AE41A6DB2C9A62DB00921BDF /* Anuncios */,
 			);
@@ -305,6 +342,8 @@
 		252B64E62C99FE7200A362C5 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				AE8E788C2CA9E4CF007F7365 /* ActividadesAPIService.swift */,
+				AE8E78892CA9E4A2007F7365 /* Managers */,
 				252B64E42C99FE7200A362C5 /* SessionAPIService.swift */,
 				259EF8B62CA23899007CE3FE /* UserProfileSessionAPIService.swift */,
 				AE41A6E22C9A636B00921BDF /* AnuncioAPIService.swift */,
@@ -373,6 +412,7 @@
 		252B650C2C9A426200A362C5 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				AE8E78872CA9E450007F7365 /* ActividadesRepository.swift */,
 				252B64E82C99FE7200A362C5 /* SessionRepository.swift */,
 				AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */,
 			);
@@ -453,6 +493,49 @@
 				AE41A6DC2C9A62E400921BDF /* ConsultarAnuncioRequirement.swift */,
 			);
 			path = Anuncios;
+			sourceTree = "<group>";
+		};
+		AE8E78892CA9E4A2007F7365 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				AE8E788A2CA9E4B4007F7365 /* UserSessionManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		AE8E788E2CA9E516007F7365 /* Actividades */ = {
+			isa = PBXGroup;
+			children = (
+				AE8E788F2CA9E520007F7365 /* ActividadesRequirement.swift */,
+			);
+			path = Actividades;
+			sourceTree = "<group>";
+		};
+		AE8E78912CA9E558007F7365 /* Actividades */ = {
+			isa = PBXGroup;
+			children = (
+				AE8E78962CA9E599007F7365 /* TalleresViewModel.swift */,
+				AE8E78942CA9E57A007F7365 /* RodadasViewModel.swift */,
+				AE8E78922CA9E562007F7365 /* EventosViewModel.swift */,
+			);
+			path = Actividades;
+			sourceTree = "<group>";
+		};
+		AE8E78982CA9E5C2007F7365 /* Actividades */ = {
+			isa = PBXGroup;
+			children = (
+				AE8E78AB2CA9E65C007F7365 /* talleresView.swift */,
+				AE8E78A92CA9E653007F7365 /* rodadasView.swift */,
+				AE8E78A72CA9E649007F7365 /* eventosView.swift */,
+				AE8E78A52CA9E63C007F7365 /* activityCardView.swift */,
+				AE8E78A32CA9E62D007F7365 /* activityCardAdminView.swift */,
+				AE8E78A12CA9E622007F7365 /* actividadesUsuario.swift */,
+				AE8E789F2CA9E610007F7365 /* actividadesAdmin.swift */,
+				AE8E789D2CA9E606007F7365 /* AdminTalleresView.swift */,
+				AE8E789B2CA9E5FA007F7365 /* AdminRodadasView.swift */,
+				AE8E78992CA9E5DD007F7365 /* AdminEventosView.swift */,
+			);
+			path = Actividades;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -628,10 +711,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				252B64852C99FC5E00A362C5 /* Saca_la_BiciApp.swift in Sources */,
+				AE8E78A02CA9E61C007F7365 /* actividadesAdmin.swift in Sources */,
+				AE8E78932CA9E567007F7365 /* EventosViewModel.swift in Sources */,
 				25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */,
+				AE8E789A2CA9E5E5007F7365 /* AdminEventosView.swift in Sources */,
 				252B64D12C99FE5900A362C5 /* SessionCoordinatorView.swift in Sources */,
 				25A7BE4F2CA61C0600FCB8B6 /* ConfigurationView.swift in Sources */,
+				AE8E78A62CA9E645007F7365 /* activityCardView.swift in Sources */,
 				AE8E78862CA9E3B7007F7365 /* Actividades.swift in Sources */,
+				AE8E78952CA9E57F007F7365 /* RodadasViewModel.swift in Sources */,
+				AE8E78A42CA9E637007F7365 /* activityCardAdminView.swift in Sources */,
 				252B64D22C99FE5900A362C5 /* UIApplicationExtensions.swift in Sources */,
 				252B64D32C99FE5900A362C5 /* SignUpStep1View.swift in Sources */,
 				252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */,
@@ -639,18 +728,23 @@
 				25D0E5172CA3813600B431A9 /* RestablecerContraseñaViewModel.swift in Sources */,
 				25F3681D2C9B7B49003322CF /* TituloComponent.swift in Sources */,
 				25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */,
+				AE8E78902CA9E527007F7365 /* ActividadesRequirement.swift in Sources */,
 				252B64EB2C99FE7200A362C5 /* User.swift in Sources */,
+				AE8E78AC2CA9E662007F7365 /* talleresView.swift in Sources */,
 				252B64ED2C99FE7200A362C5 /* APIRoutes.swift in Sources */,
 				25F3681F2C9B8032003322CF /* MainViewButton.swift in Sources */,
+				AE8E78972CA9E59E007F7365 /* TalleresViewModel.swift in Sources */,
 				252B64EE2C99FE7200A362C5 /* SessionAPIService.swift in Sources */,
 				25C302CA2C9AAF9A005AD742 /* ExternalLoginButton.swift in Sources */,
 				25D0E5152CA37BE200B431A9 /* ReestablecerContraseñaView.swift in Sources */,
 				25F368212C9BAEA3003322CF /* LoadingView.swift in Sources */,
 				252B64EF2C99FE7200A362C5 /* SessionRepository.swift in Sources */,
 				252B64D52C99FE5900A362C5 /* SignUpStep3View.swift in Sources */,
+				AE8E78A82CA9E650007F7365 /* eventosView.swift in Sources */,
 				252B64D62C99FE5900A362C5 /* MenuTabs.swift in Sources */,
 				252B64D72C99FE5900A362C5 /* ResultView.swift in Sources */,
 				25C302C22C9A9390005AD742 /* TelefonoEmergenciaField.swift in Sources */,
+				AE8E789E2CA9E60C007F7365 /* AdminTalleresView.swift in Sources */,
 				25A7BE5C2CA7713A00FCB8B6 /* FirebaseTokenManager.swift in Sources */,
 				252B64D82C99FE5900A362C5 /* MainLoginView.swift in Sources */,
 				252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */,
@@ -658,20 +752,26 @@
 				25C302C62C9A9780005AD742 /* EmailField.swift in Sources */,
 				25A7BE582CA664A800FCB8B6 /* SeguridadAccesoView.swift in Sources */,
 				259CBB9A2C9E29C00067B550 /* AppleCryptoHelpers.swift in Sources */,
+				AE8E78AA2CA9E659007F7365 /* rodadasView.swift in Sources */,
 				25C302C42C9A9515005AD742 /* PasswordField.swift in Sources */,
 				252B64DA2C99FE5900A362C5 /* SignUpViewModel.swift in Sources */,
 				252B64DB2C99FE5900A362C5 /* LoginView.swift in Sources */,
 				25C302C82C9A9E7C005AD742 /* CompletarDatosStep2View.swift in Sources */,
 				25A7BE512CA61C9500FCB8B6 /* ProfileView.swift in Sources */,
+				AE8E788D2CA9E4D9007F7365 /* ActividadesAPIService.swift in Sources */,
 				259CBBA02CA0E44A0067B550 /* SessionPaths.swift in Sources */,
 				25A7BE4C2CA4F11A00FCB8B6 /* PasswordRecoveryView.swift in Sources */,
 				25D0E5192CA38C6C00B431A9 /* RestablecerContraseñaRequirement.swift in Sources */,
+				AE8E78A22CA9E62A007F7365 /* actividadesUsuario.swift in Sources */,
+				AE8E78882CA9E457007F7365 /* ActividadesRepository.swift in Sources */,
 				252B64E02C99FE6F00A362C5 /* LoginRequirement.swift in Sources */,
 				25F3681B2C9B62CD003322CF /* ImagenAmarillaFondo.swift in Sources */,
 				259EF8B72CA23899007CE3FE /* UserProfileSessionAPIService.swift in Sources */,
 				25C302C02C9A91A3005AD742 /* TextoLimiteField.swift in Sources */,
 				252B64E12C99FE6F00A362C5 /* SignUpRequirement.swift in Sources */,
+				AE8E789C2CA9E601007F7365 /* AdminRodadasView.swift in Sources */,
 				252B64DC2C99FE5900A362C5 /* LoginViewModel.swift in Sources */,
+				AE8E788B2CA9E4B7007F7365 /* UserSessionManager.swift in Sources */,
 				AEE34B8A2C9FA61800C2EECE /* modificarAnuncioView.swift in Sources */,
 				AE41A6E92C9A6AA200921BDF /* AnadirAnuncioView.swift in Sources */,
 				AE41A6E52C9A648B00921BDF /* consultarAnuncioView.swift in Sources */,
