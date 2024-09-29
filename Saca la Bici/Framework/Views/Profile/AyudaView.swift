@@ -60,7 +60,6 @@ struct AyudaView: View {
             .onAppear {
                 Task {
                     await viewModel.getFAQs()
-                    print("FAQs cargados \(viewModel.temasFAQs.count)")
                 }
             }
         
