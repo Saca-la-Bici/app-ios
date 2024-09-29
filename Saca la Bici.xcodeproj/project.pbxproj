@@ -48,6 +48,7 @@
 		25A7BE582CA664A800FCB8B6 /* SeguridadAccesoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BE572CA664A800FCB8B6 /* SeguridadAccesoView.swift */; };
 		25A7BE5C2CA7713A00FCB8B6 /* FirebaseTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BE5B2CA7713A00FCB8B6 /* FirebaseTokenManager.swift */; };
 		25A7BE602CA775CF00FCB8B6 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 25A7BE5F2CA775CF00FCB8B6 /* FirebaseMessaging */; };
+		25A7BE622CA9B17C00FCB8B6 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BE612CA9B17C00FCB8B6 /* NotificationManager.swift */; };
 		25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302B92C9A8C99005AD742 /* CustomButton.swift */; };
 		25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */; };
 		25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */; };
@@ -133,6 +134,7 @@
 		25A7BE552CA64AEA00FCB8B6 /* ConfigurationPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationPaths.swift; sourceTree = "<group>"; };
 		25A7BE572CA664A800FCB8B6 /* SeguridadAccesoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeguridadAccesoView.swift; sourceTree = "<group>"; };
 		25A7BE5B2CA7713A00FCB8B6 /* FirebaseTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTokenManager.swift; sourceTree = "<group>"; };
+		25A7BE612CA9B17C00FCB8B6 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		25C302B92C9A8C99005AD742 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FechaNacimientoPicker.swift; sourceTree = "<group>"; };
 		25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipoSangrePicker.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				252B64C22C99FE5900A362C5 /* SignUpViewModel.swift */,
 				25D0E5162CA3813600B431A9 /* RestablecerContraseñaViewModel.swift */,
 				252B64C32C99FE5900A362C5 /* SessionManager.swift */,
+				25A7BE612CA9B17C00FCB8B6 /* NotificationManager.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -664,6 +667,7 @@
 				25A7BE512CA61C9500FCB8B6 /* ProfileView.swift in Sources */,
 				259CBBA02CA0E44A0067B550 /* SessionPaths.swift in Sources */,
 				25A7BE4C2CA4F11A00FCB8B6 /* PasswordRecoveryView.swift in Sources */,
+				25A7BE622CA9B17C00FCB8B6 /* NotificationManager.swift in Sources */,
 				25D0E5192CA38C6C00B431A9 /* RestablecerContraseñaRequirement.swift in Sources */,
 				252B64E02C99FE6F00A362C5 /* LoginRequirement.swift in Sources */,
 				25F3681B2C9B62CD003322CF /* ImagenAmarillaFondo.swift in Sources */,

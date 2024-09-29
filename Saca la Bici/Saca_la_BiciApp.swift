@@ -82,6 +82,22 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
             enviarTokenAlServidor(fcmToken)
         }
     }
+
+    // Manejar cuando el usuario toca una notificación
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+
+        // Aquí cambias la pestaña al tocar la notificación
+        // Si recibe anuncioID cambia a la de anuncios
+        if userInfo["anuncioID"] != nil {
+            DispatchQueue.main.async {
+                // Cambia la pestaña a "Anuncios"
+                NotificationManager.shared.selectedTab = 2
+            }
+        }
+
+        completionHandler()
+    }
     
     func enviarTokenAlServidor(_ token: String) {
         let url = URL(string: "\(Api.base)\(Api.Routes.session)/actualizarTokenNotificacion")!
