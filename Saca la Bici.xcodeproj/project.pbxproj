@@ -317,7 +317,6 @@
 			isa = PBXGroup;
 			children = (
 				252B650D2C9A427D00A362C5 /* Objects */,
-				252B650C2C9A426200A362C5 /* Repositories */,
 				252B64E62C99FE7200A362C5 /* Network */,
 			);
 			path = Models;
@@ -326,6 +325,7 @@
 		252B64EA2C99FE7200A362C5 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				252B650C2C9A426200A362C5 /* Repositories */,
 				252B64E72C99FE7200A362C5 /* Models */,
 			);
 			path = Data;
