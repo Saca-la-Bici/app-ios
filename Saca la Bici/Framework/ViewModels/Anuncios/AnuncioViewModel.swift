@@ -15,7 +15,9 @@ class AnuncioViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var successMessage: String?
     
-    @Published var isUserAdmin: Bool = false
+    @Published var registrarAnuncio: Bool = false
+    @Published var modificarAnuncio: Bool = false
+    @Published var eliminarAnuncio: Bool = false
     
     private let repository: AnuncioRepository
     
@@ -38,9 +40,18 @@ class AnuncioViewModel: ObservableObject {
             }.reversed()
             self.anuncios = Array(anuncios)
             
-            if response.rol == "Administrador" {
-                self.isUserAdmin = true
+            if response.permisos.contains("Registrar anuncio") {
+                self.registrarAnuncio = true
             }
+            
+            if response.permisos.contains("Modificar anuncio") {
+                self.modificarAnuncio = true
+            }
+            
+            if response.permisos.contains("Eliminar anuncio") {
+                self.eliminarAnuncio = true
+            }
+            
         } catch {
             self.handleError(error)
         }
