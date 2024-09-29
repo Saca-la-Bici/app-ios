@@ -13,4 +13,5 @@ enum SessionPaths: Hashable {
     case continueRegistration
     case finalizar
     case completarDatos
+    case olvidar
 }

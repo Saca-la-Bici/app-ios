@@ -38,7 +38,6 @@ struct AnadirAnuncioView: View {
                 }, label: {
                     Image(systemName: "xmark")
                         .font(.title2)
-                        .foregroundColor(.black)
                 })
                 .buttonStyle(PlainButtonStyle())
                 
@@ -46,8 +45,7 @@ struct AnadirAnuncioView: View {
                 
                 Text("Añadir anuncio")
                     .font(.headline)
-                    .foregroundColor(.black)
-                
+              
                 Spacer()
                 
                 Button(action: {
@@ -135,7 +133,6 @@ struct AnadirAnuncioView: View {
             VStack(alignment: .leading) {
                 Text("Título")
                     .font(.subheadline)
-                    .foregroundColor(.black)
 
                 TextField("Título del anuncio", text: $titulo)
                     .padding(.horizontal, 11)
@@ -152,7 +149,6 @@ struct AnadirAnuncioView: View {
             VStack(alignment: .leading) {
                 Text("Descripción")
                     .font(.subheadline)
-                    .foregroundColor(.black)
 
                 ZStack(alignment: .topLeading) {
                     TextEditor(text: $descripcion)

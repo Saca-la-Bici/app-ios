@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
+    @Binding var path: [SessionPaths]
     @EnvironmentObject var sessionManager: SessionManager
     @StateObject var loginViewModel = LoginViewModel()
     
@@ -56,7 +57,7 @@ struct LoginView: View {
                         
                         // ¿Olvidaste tu contraseña?
                         Button(action: {
-                            // Aquí puedes agregar la acción para la recuperación de contraseña
+                            path.append(.olvidar)
                         }, label: {
                             Text("¿Olvidaste tu contraseña?")
                                 .font(.caption)
@@ -103,6 +104,14 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        PreviewWrapper()
+    }
+
+    struct PreviewWrapper: View {
+        @State var path: [SessionPaths] = []
+
+        var body: some View {
+            LoginView(path: $path)
+        }
     }
 }
