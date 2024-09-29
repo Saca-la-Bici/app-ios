@@ -8,21 +8,22 @@
 import Foundation
 
 struct FAQResponse : Codable {
-    var faqs: [FAQ]
-    var rol: String
+    var code: Int
+    var msg: String
+    var data: [FAQ]
 }
 
 struct FAQ : Codable, Hashable, Identifiable {
-    var id = UUID() // ID para el protocolo Identifiable
-    var idPregunta: Int
-    var pregunta: String
-    var respuesta: String
-    var tema: String
-    var imagen: String
+    var id: Int { IdPregunta }
+    var IdPregunta: Int
+    var Pregunta: String
+    var Respuesta: String
+    var Tema: String
+    var Imagen: String
 }
 
 struct TemaFAQ : Identifiable {
-    var id = UUID()
+    var id = UUID() // ID para el protocolo Identifiable
     var tema: String
     var faqs: [FAQ]
 }

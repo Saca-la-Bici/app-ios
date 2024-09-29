@@ -108,6 +108,7 @@ struct ConsultarAnuncio: View {
         .onAppear {
             Task {
                 await viewModel.fetchAnuncios()
+                
             }
         }
         .sheet(isPresented: $showAddAnuncioView) {

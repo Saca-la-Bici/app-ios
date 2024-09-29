@@ -68,6 +68,7 @@
 		7B9C5ED42CA9E4D600441541 /* AyudaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED32CA9E4D600441541 /* AyudaViewModel.swift */; };
 		7B9C5ED62CA9E5C000441541 /* FAQModelo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED52CA9E5C000441541 /* FAQModelo.swift */; };
 		7B9C5ED82CA9EE7700441541 /* FAQRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED72CA9EE7700441541 /* FAQRepository.swift */; };
+		7B9C5EDA2CA9F08900441541 /* FAQAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED92CA9F08900441541 /* FAQAPIService.swift */; };
 		AE41A6D92C9A613800921BDF /* AnuncioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6D82C9A612F00921BDF /* AnuncioViewModel.swift */; };
 		AE41A6DD2C9A62F400921BDF /* ConsultarAnuncioRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6DC2C9A62E400921BDF /* ConsultarAnuncioRequirement.swift */; };
 		AE41A6E12C9A633100921BDF /* AnuncioRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */; };
@@ -157,6 +158,7 @@
 		7B9C5ED32CA9E4D600441541 /* AyudaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AyudaViewModel.swift; sourceTree = "<group>"; };
 		7B9C5ED52CA9E5C000441541 /* FAQModelo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQModelo.swift; sourceTree = "<group>"; };
 		7B9C5ED72CA9EE7700441541 /* FAQRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQRepository.swift; sourceTree = "<group>"; };
+		7B9C5ED92CA9F08900441541 /* FAQAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQAPIService.swift; sourceTree = "<group>"; };
 		AE41A6D82C9A612F00921BDF /* AnuncioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnuncioViewModel.swift; sourceTree = "<group>"; };
 		AE41A6DC2C9A62E400921BDF /* ConsultarAnuncioRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarAnuncioRequirement.swift; sourceTree = "<group>"; };
 		AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnuncioRepository.swift; sourceTree = "<group>"; };
@@ -316,6 +318,7 @@
 				259EF8B62CA23899007CE3FE /* UserProfileSessionAPIService.swift */,
 				AE41A6E22C9A636B00921BDF /* AnuncioAPIService.swift */,
 				25A7BE5B2CA7713A00FCB8B6 /* FirebaseTokenManager.swift */,
+				7B9C5ED92CA9F08900441541 /* FAQAPIService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -701,6 +704,7 @@
 				AE41A6DD2C9A62F400921BDF /* ConsultarAnuncioRequirement.swift in Sources */,
 				AE41A6E72C9A679700921BDF /* Anuncio.swift in Sources */,
 				AE41A6E12C9A633100921BDF /* AnuncioRepository.swift in Sources */,
+				7B9C5EDA2CA9F08900441541 /* FAQAPIService.swift in Sources */,
 				AE41A6E32C9A637200921BDF /* AnuncioAPIService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

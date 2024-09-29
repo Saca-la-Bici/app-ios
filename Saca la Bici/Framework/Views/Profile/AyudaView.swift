@@ -10,47 +10,11 @@ import Combine
 
 struct AyudaView: View {
     
-    // Datos de prueba
-    private let temasFAQ: [TemaFAQ] = [
-        TemaFAQ(
-            tema: "Tema 1",
-            faqs: [
-                FAQ(
-                    idPregunta: 1,
-                    pregunta: "Pregunta 1",
-                    respuesta: "Respuesta 1",
-                    tema: "Tema 1",
-                    imagen: ""),
-                FAQ(
-                    idPregunta: 2,
-                    pregunta: "Pregunta 2",
-                    respuesta: "Respuesta 2",
-                    tema: "Tema 1",
-                    imagen: "")
-            ]),
-        TemaFAQ(
-            tema: "Tema 2",
-            faqs: [
-                FAQ(
-                    idPregunta: 3,
-                    pregunta: "Pregunta 3",
-                    respuesta: "Respuesta 3",
-                    tema: "Tema 2",
-                    imagen: ""),
-                FAQ(
-                    idPregunta: 4,
-                    pregunta: "Pregunta 4",
-                    respuesta: "Respuesta 4",
-                    tema: "Tema 2",
-                    imagen: "")
-            ])
-    ]
-    
     // Sesión
     @EnvironmentObject var sessionManager: SessionManager
     
     // View Model
-    // @StateObject var viewModel = AyudaViewModel()
+    @StateObject var viewModel = AyudaViewModel()
     
     // Variables
     @State private var searchText: String = ""
@@ -77,11 +41,11 @@ struct AyudaView: View {
             
             // Preguntas frecuentes
             List {
-                ForEach(temasFAQ) { tema in
+                ForEach(viewModel.temasFAQs) { tema in
                     Section(header: Text(tema.tema)) {
                         ForEach(tema.faqs) { faq in
                             HStack {
-                                Text(faq.pregunta)
+                                Text(faq.Pregunta)
                                 Spacer()
                                 Image(systemName: "chevron.forward")
                                     .foregroundColor(Color(.black))
@@ -93,6 +57,12 @@ struct AyudaView: View {
             }
             
         }.padding()
+            .onAppear {
+                Task {
+                    await viewModel.getFAQs()
+                    print("FAQs cargados \(viewModel.temasFAQs.count)")
+                }
+            }
         
         Spacer()
     }
