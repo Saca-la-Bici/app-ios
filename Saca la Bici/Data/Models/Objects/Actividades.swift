@@ -9,17 +9,17 @@ import Foundation
 
 struct RodadasApiResponse: Codable {
     let rodadas: [RodadasResponse]
-    let rol: String
+    let permisos: [String]
 }
 
 struct EventosApiResponse: Codable {
     let eventos: [EventosResponse]
-    let rol: String
+    let permisos: [String]
 }
 
 struct TalleresApiResponse: Codable {
     let talleres: [TalleresResponse]
-    let rol: String
+    let permisos: [String]
 }
 
 struct RodadasResponse: Codable {

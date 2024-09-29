@@ -10,25 +10,25 @@ import SwiftUI
 class UserSessionManager: ObservableObject {
     static let shared = UserSessionManager()
     
-    @Published var rol: String = "Usuario"
+    @Published var permisos: [String] = []
     
     private init() {}
     
-    func updateRol(newRol: String) {
+    func updatePermisos(newPermisos: [String]) {
         DispatchQueue.main.async {
-            self.rol = newRol
+            self.permisos = newPermisos
         }
     }
-    
-    func isAdmin() -> Bool {
-        return rol == "Administrador"
+
+    func tienePermiso(_ permiso: String) -> Bool {
+        return permisos.contains(permiso)
     }
     
-    func isUser() -> Bool {
-        return rol == "Usuario"
+    func puedeConsultarActividades() -> Bool {
+        return tienePermiso("Consultar actividades")
     }
     
-    func isStaff() -> Bool {
-        return rol == "Staff"
+    func puedeIniciarRodada() -> Bool {
+        return tienePermiso("Iniciar rodada")
     }
 }

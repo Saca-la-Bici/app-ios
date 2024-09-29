@@ -14,7 +14,7 @@ class EventosViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private let getEventosUseCase: GetEventosUseCase
-    private var sessionManager = UserSessionManager.shared
+    private var UsersessionManager = UserSessionManager.shared
     
     init(getEventosUseCase: GetEventosUseCase = GetEventosUseCase(repository: ActividadesRepository())) {
         self.getEventosUseCase = getEventosUseCase
@@ -26,9 +26,9 @@ class EventosViewModel: ObservableObject {
             do {
                 isLoading = true
                 errorMessage = nil
-                let (eventos, rol) = try await getEventosUseCase.execute()
+                let (eventos, permisos) = try await getEventosUseCase.execute()
                 self.eventos = eventos
-                sessionManager.updateRol(newRol: rol)
+                UsersessionManager.updatePermisos(newPermisos: permisos)
                 isLoading = false
             } catch {
                 isLoading = false
@@ -38,15 +38,11 @@ class EventosViewModel: ObservableObject {
         }
     }
     
-    func isUserAdmin() -> Bool {
-        return sessionManager.isAdmin()
+    func puedeIniciarRodada() -> Bool {
+        return UsersessionManager.puedeIniciarRodada()
     }
     
-    func isUserStaff() -> Bool {
-        return sessionManager.isStaff()
-    }
-    
-    func isUser() -> Bool {
-        return sessionManager.isUser()
+    func puedeConsultarActividades() -> Bool {
+        return UsersessionManager.puedeConsultarActividades()
     }
 }

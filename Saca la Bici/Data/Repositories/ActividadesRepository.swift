@@ -31,7 +31,7 @@ class ActividadesRepository {
         self.apiService = apiService
     }
 
-    func getRodadas() async throws -> (rodadas: [Rodada], rol: String) {
+    func getRodadas() async throws -> (rodadas: [Rodada], permisos: [String]) {
         guard let url = URL(string: "\(Api.base)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.rodadas)") else {
             throw URLError(.badURL)
         }
@@ -45,14 +45,14 @@ class ActividadesRepository {
                 }
             }
             
-            return (rodadas, response.rol)
+            return (rodadas, response.permisos)  
         } catch {
             print("Error en ActividadesRepository.getRodadas: \(error)")
             throw error
         }
     }
     
-    func getEventos() async throws -> (eventos: [Evento], rol: String) {
+    func getEventos() async throws -> (eventos: [Evento], permisos: [String]) {
         guard let url = URL(string: "\(Api.base)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.eventos)") else {
             throw URLError(.badURL)
         }
@@ -66,14 +66,14 @@ class ActividadesRepository {
                 }
             }
             
-            return (eventos, response.rol)
+            return (eventos, response.permisos)
         } catch {
             print("Error en ActividadesRepository.getEventos: \(error)")
             throw error
         }
     }
     
-    func getTalleres() async throws -> (talleres: [Taller], rol: String) {
+    func getTalleres() async throws -> (talleres: [Taller], permisos: [String]) {
         guard let url = URL(string: "\(Api.base)\(Api.Routes.actividades)\(Api.Routes.consultar)\(Api.Routes.talleres)") else {
             throw URLError(.badURL)
         }
@@ -87,11 +87,10 @@ class ActividadesRepository {
                 }
             }
             
-            return (talleres, response.rol)
+            return (talleres, response.permisos)
         } catch {
             print("Error en ActividadesRepository.getTalleres: \(error)")
             throw error
         }
     }
-
 }

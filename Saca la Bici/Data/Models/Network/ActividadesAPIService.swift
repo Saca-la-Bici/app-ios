@@ -14,8 +14,8 @@ class APIService {
     let firebaseTokenManager: FirebaseTokenManager
     
     init(firebaseTokenManager: FirebaseTokenManager = FirebaseTokenManager.shared) {
-            self.firebaseTokenManager = firebaseTokenManager
-        }
+        self.firebaseTokenManager = firebaseTokenManager
+    }
     
     func fetchRodadas(url: URL) async throws -> RodadasApiResponse {
         guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
@@ -89,5 +89,4 @@ class APIService {
                 }
         }
     }
-
 }
