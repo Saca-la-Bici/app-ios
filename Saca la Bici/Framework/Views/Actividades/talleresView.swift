@@ -20,10 +20,11 @@ struct TalleresView: View {
                         .foregroundColor(.red)
                         .padding()
                 } else {
-                    ForEach(viewModel.talleres) {taller in
+                    ForEach(viewModel.talleres) { taller in
                         ActivityCardView(
                             activityTitle: taller.actividad.titulo,
-                            date: formatDate(taller.actividad.fecha),
+                            activityType: "Taller",
+                            date: FechaManager.shared.formatDate(taller.actividad.fecha),
                             time: taller.actividad.hora,
                             location: taller.actividad.ubicacion,
                             attendees: taller.actividad.personasInscritas
@@ -33,35 +34,5 @@ struct TalleresView: View {
                 }
             }
         }
-    }
-    
-    func formatDate(_ dateString: String) -> String {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        
-        if let date = formatter.date(from: dateString) {
-            return formatDateCustom(date)
-        }
-        
-        formatter.formatOptions = [.withInternetDateTime]
-        if let date = formatter.date(from: dateString) {
-            return formatDateCustom(date)
-        }
-        
-        return dateString
-    }
-    
-    func formatDateCustom(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .full
-        dateFormatter.timeStyle = .none
-        dateFormatter.locale = Locale(identifier: "es_MX")
-        return dateFormatter.string(from: date)
-    }
-}
-
-struct TalleresView_Previews: PreviewProvider {
-    static var previews: some View {
-        TalleresView()
     }
 }

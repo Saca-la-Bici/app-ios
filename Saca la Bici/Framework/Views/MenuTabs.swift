@@ -3,7 +3,6 @@ import SwiftData
 
 struct MenuView: View {
     @State private var selectedTab = 2
-    @ObservedObject private var UsersessionManager = UserSessionManager.shared
 
     var body: some View {
         NavigationView {
@@ -12,11 +11,7 @@ struct MenuView: View {
                 // Contenido del TabView personalizado
                 VStack {
                     if selectedTab == 0 {
-                        if UsersessionManager.puedeIniciarRodada() {
-                            AdminView()
-                        } else {
-                            ActividadesView()
-                        }
+                        ActividadesView()
                     } else if selectedTab == 1 {
                         ResultView()
                     } else if selectedTab == 2 {

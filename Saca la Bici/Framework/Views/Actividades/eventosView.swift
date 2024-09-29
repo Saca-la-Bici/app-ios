@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EventosView: View {
     @StateObject private var viewModel = EventosViewModel()
+    @ObservedObject private var userSessionManager = UserSessionManager.shared
     
     var body: some View {
         ScrollView {
@@ -20,10 +21,11 @@ struct EventosView: View {
                         .foregroundColor(.red)
                         .padding()
                 } else {
-                    ForEach(viewModel.eventos) {evento in
+                    ForEach(viewModel.eventos) { evento in
                         ActivityCardView(
                             activityTitle: evento.actividad.titulo,
-                            date: formatDate(evento.actividad.fecha),
+                            activityType: "Evento",
+                            date: FechaManager.shared.formatDate(evento.actividad.fecha),
                             time: evento.actividad.hora,
                             location: evento.actividad.ubicacion,
                             attendees: evento.actividad.personasInscritas
@@ -33,35 +35,5 @@ struct EventosView: View {
                 }
             }
         }
-    }
-    
-    func formatDate(_ dateString: String) -> String {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        
-        if let date = formatter.date(from: dateString) {
-            return formatDateCustom(date)
-        }
-        
-        formatter.formatOptions = [.withInternetDateTime]
-        if let date = formatter.date(from: dateString) {
-            return formatDateCustom(date)
-        }
-        
-        return dateString
-    }
-    
-    func formatDateCustom(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .full
-        dateFormatter.timeStyle = .none
-        dateFormatter.locale = Locale(identifier: "es_MX")
-        return dateFormatter.string(from: date)
-    }
-}
-
-struct EventosView_Previews: PreviewProvider {
-    static var previews: some View {
-        EventosView()
     }
 }
