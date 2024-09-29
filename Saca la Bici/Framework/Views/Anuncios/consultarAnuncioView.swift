@@ -29,7 +29,7 @@ struct ConsultarAnuncio: View {
                     Image(systemName: "bell")
                         .padding(.trailing)
                     
-                    if viewModel.registrarAnuncio {
+                    if viewModel.isUserAdmin {
                         Button(action: {
                             showAddAnuncioView = true
                         }, label: {
@@ -79,16 +79,14 @@ struct ConsultarAnuncio: View {
                         .listRowInsets(EdgeInsets())
                         .padding(.horizontal, 16)
                         .swipeActions(edge: .trailing) {
-                            if viewModel.eliminarAnuncio {
+                            if viewModel.isUserAdmin {
                                 Button(role: .destructive) {
                                     selectedAnuncio = anuncio
                                     showDeleteConfirmation = true
                                 } label: {
                                     Label("Eliminar", systemImage: "trash")
                                 }
-                            }
-                            
-                            if viewModel.modificarAnuncio {
+
                                 Button {
                                     selectedAnuncio = anuncio
                                     showModifyView = true
