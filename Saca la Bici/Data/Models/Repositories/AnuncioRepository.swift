@@ -22,7 +22,7 @@ class AnuncioRepository {
         let anunciosValidos = anuncios.filter { AnuncioRequirement.esValido(anuncio: $0) }
         
         // Vuelves a sacar el rol
-        let anuncioResponse = AnunciosResponse(anuncio: anunciosValidos, permisos: response.permisos)
+        let anuncioResponse = AnunciosResponse(anuncio: anunciosValidos, rol: response.rol)
         return anuncioResponse
     }
     

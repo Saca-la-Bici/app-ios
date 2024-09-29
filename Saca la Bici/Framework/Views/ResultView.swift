@@ -31,8 +31,22 @@ struct ResultView: View {
             .buttonStyle(PlainButtonStyle())
             
             Text(loginViewModel.textTest)
-                .padding()
+                .padding() 
             
+            Button {
+                sessionManager.signOut()
+            } label: {
+                Text("Cerrar Sesión")
+                    .font(.subheadline)
+                    .bold()
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .foregroundColor(.black)
+                    .background(.red)
+                    .cornerRadius(10)
+            }
+            .padding()
+            .buttonStyle(PlainButtonStyle())
         }
         .padding() // Padding general para el VStack
     }

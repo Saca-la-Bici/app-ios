@@ -36,7 +36,7 @@ class LoginViewModel: ObservableObject {
     func iniciarSesion() async {
         
         if self.emailOrUsername.isEmpty || self.password.isEmpty {
-            self.messageAlert = "Correo vacío o contraseña vacía. Favor de intentarlo de nuevo."
+            self.messageAlert = "Correo vacío o Contraseña vacía"
             self.showAlert = true
             return
         }

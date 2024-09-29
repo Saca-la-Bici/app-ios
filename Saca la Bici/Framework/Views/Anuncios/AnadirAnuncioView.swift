@@ -45,7 +45,7 @@ struct AnadirAnuncioView: View {
                 
                 Text("Añadir anuncio")
                     .font(.headline)
-              
+                
                 Spacer()
                 
                 Button(action: {

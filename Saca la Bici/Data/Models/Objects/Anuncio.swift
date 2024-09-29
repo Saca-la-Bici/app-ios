@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AnunciosResponse: Codable {
     let anuncio: [Anuncio]
-    let permisos: [String]
+    let rol: String
 }
 
 struct Anuncio: Identifiable, Codable {
