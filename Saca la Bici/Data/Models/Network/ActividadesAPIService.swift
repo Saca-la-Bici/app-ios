@@ -21,7 +21,7 @@ class APIService {
         guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
-        print(idToken)
+
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(idToken)",
             "Content-Type": "application/json"

@@ -1,5 +1,5 @@
 //
-//  activityCardView.swift
+//  ActivityCardView.swift
 //  template
 //
 //  Created by Maria Jose Gaytan Gil on 05/09/24.
@@ -23,13 +23,14 @@ struct ActivityCardView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
+            // Título y Nivel
             HStack {
                 Text(activityTitle)
                     .font(.headline)
                     .foregroundColor(.primary)
-
+                
                 Spacer()
-
+                
                 if let level = level {
                     Text(level)
                         .font(.caption)
@@ -37,7 +38,7 @@ struct ActivityCardView: View {
                         .background(level == "Nivel 1" ? Color.green : (level == "Nivel 2" ? Color.orange : Color.gray))
                         .cornerRadius(8)
                 }
-
+                
                 if let attendees = attendees {
                     HStack(spacing: 4) {
                         Image(systemName: "person.2")
@@ -46,7 +47,8 @@ struct ActivityCardView: View {
                     }
                 }
             }
-
+            
+            // Fecha
             if let date = date {
                 HStack {
                     Text("Fecha")
@@ -57,7 +59,8 @@ struct ActivityCardView: View {
                         .foregroundColor(.primary)
                 }
             }
-
+            
+            // Hora
             if let time = time {
                 HStack {
                     Text("Hora")
@@ -68,7 +71,8 @@ struct ActivityCardView: View {
                         .foregroundColor(.primary)
                 }
             }
-
+            
+            // Duración
             if let duration = duration {
                 HStack {
                     Text("Duración")
@@ -79,12 +83,14 @@ struct ActivityCardView: View {
                         .foregroundColor(.primary)
                 }
             }
-
+            
+            // Imagen Placeholder
             Rectangle()
                 .fill(Color.gray.opacity(0.3))
                 .frame(height: 100)
                 .cornerRadius(8)
-
+            
+            // Ubicación
             if let location = location {
                 HStack {
                     Text("Ubicación")
@@ -95,13 +101,15 @@ struct ActivityCardView: View {
                         .foregroundColor(.primary)
                 }
             }
-
-            // Botones según permisos
-            if userSessionManager.puedeIniciarRodada() {
+            
+            // Botones según tipo de actividad y permisos
+            if activityType.lowercased() == "rodada" && userSessionManager.puedeIniciarRodada() {
+                // Botones para Rodada
                 VStack(spacing: 8) {
-                    // Botón de iniciar actividad (color verde #88B598)
+                    // Botón de Iniciar/Parar Rodada
                     Button(action: {
                         isStarted.toggle()
+                        // Aquí puedes agregar lógica adicional para iniciar o parar la rodada
                     }, label: {
                         HStack {
                             Image(systemName: isStarted ? "pause.circle" : "play.circle")
@@ -115,14 +123,16 @@ struct ActivityCardView: View {
                         .cornerRadius(8)
                     })
                     
-                    // Botón de asistencia (color amarillo)
+                    // Botón de Asistencia
                     Button(action: {
                         // Lógica de asistencia
+                        // Implementa aquí la funcionalidad de asistencia
                     }, label: {
                         HStack {
                             Image(systemName: "person.circle")
                                 .font(.headline)
                             Text("Asistencia")
+                                .font(.headline)
                         }
                         .foregroundColor(.white)
                         .padding()
@@ -132,9 +142,10 @@ struct ActivityCardView: View {
                     })
                 }
             } else {
-                // Botón de unirse
+                // Botón de Unirse para otras actividades o si no tiene permiso para iniciar rodada
                 Button(action: {
                     isJoined.toggle()
+                    // Aquí puedes agregar lógica adicional para unirse o cancelar asistencia
                 }, label: {
                     HStack {
                         Image(systemName: isJoined ? "xmark.circle" : "plus.circle")
@@ -147,8 +158,8 @@ struct ActivityCardView: View {
                     .background(
                         isJoined
                             ? Color.red
-                            : (userSessionManager.puedeIniciarRodada()
-                                ? ColorManager.shared.colorFromHex("#88B598") // Verde si puede iniciar rodada
+                            : (userSessionManager.puedeIniciarRodada() && activityType.lowercased() != "rodada"
+                                ? ColorManager.shared.colorFromHex("#88B598") // Verde si puede iniciar rodada y no es rodada
                                 : Color.yellow) // Amarillo para los demás casos
                     )
                     .cornerRadius(8)
