@@ -30,7 +30,7 @@ struct AyudaView: View {
                 .multilineTextAlignment(.leading)
             
             // Input de búsqueda
-            TextField("¿Cuál es tu duda?", text: $searchText)
+            TextField("¿Cuál es tu duda?", text: $viewModel.searchText)
                 .textInputAutocapitalization(.never)
                 .padding()
                 .cornerRadius(10)
@@ -41,7 +41,7 @@ struct AyudaView: View {
             
             // Preguntas frecuentes
             List {
-                ForEach(viewModel.temasFAQs) { tema in
+                ForEach(viewModel.filteredFAQs) { tema in
                     Section(header: Text(tema.tema)) {
                         ForEach(tema.faqs) { faq in
                             HStack {

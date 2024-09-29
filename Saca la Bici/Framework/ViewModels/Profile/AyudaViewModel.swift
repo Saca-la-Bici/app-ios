@@ -7,6 +7,7 @@
 
 import Alamofire
 import Foundation
+import Combine
 
 class AyudaViewModel: ObservableObject {
     
@@ -14,21 +15,34 @@ class AyudaViewModel: ObservableObject {
     @Published var faqs: [FAQ] = []
     @Published var temasFAQs: [TemaFAQ] = []
     
+    // Para el filtrado
+    @Published var searchText: String = ""
+    
+    // FAQs filtrados
+    @Published var filteredFAQs: [TemaFAQ] = []
+    
     // Manejo de errores
     @Published var errorMessage: String?
     @Published var successMessage: String?
     
+    // Combine
+    private var cancellables = Set<AnyCancellable>()
+    
     // Singleton del repositorio
     let repository: FAQRepository
     
+    // Inicializar
     init(repository: FAQRepository = FAQRepository()) {
-        self.repository = repository
-    }
-    
-    
-    // Vars
-    @Published var searchText: String = ""
-    @Published var isSearching: Bool = false
+            self.repository = repository
+            
+            // Vincular el texto de búsqueda con el filtrado
+            $searchText
+                .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
+                .sink { [weak self] searchText in
+                    self?.filterFAQs(searchText)
+                }
+                .store(in: &cancellables)
+        }
     
     // Obtener preguntas frecuentes
     func getFAQs() async {
@@ -62,7 +76,22 @@ class AyudaViewModel: ObservableObject {
             self.handleError(error)
         }
     }
-
+    
+    // Filtrar FAQs
+        private func filterFAQs(_ searchText: String) {
+            if searchText.isEmpty {
+                // Mostrar todos los FAQs si no hay texto en el campo de búsqueda
+                filteredFAQs = temasFAQs
+            } else {
+                // Filtrar según el texto ingresado
+                filteredFAQs = temasFAQs.map { temaFAQ in
+                    let faqsFiltrados = temaFAQ.faqs.filter { faq in
+                        faq.Pregunta.lowercased().contains(searchText.lowercased())
+                    }
+                    return TemaFAQ(tema: temaFAQ.tema, faqs: faqsFiltrados)
+                }.filter { !$0.faqs.isEmpty } // Remover temas sin FAQs filtrados
+            }
+        }
     
     // Manejo de errores
     private func handleError(_ error: Error) {
