@@ -61,8 +61,9 @@ struct FAQView: View {
                         ForEach(tema.faqs) { faq in
                             FAQCard(
                                 faq: faq,
+                                permisos: viewModel.userPermissions,
                                 path: $path,
-                                nextPath: .faqDetail (faq: faq)
+                                nextPath: .faqDetail (faq: faq, permisos: viewModel.userPermissions)
                             )
                         }
                     }

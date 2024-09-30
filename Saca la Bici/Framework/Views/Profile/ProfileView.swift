@@ -37,8 +37,8 @@ struct ProfileView: View {
                 switch value {
                 case .faqs:
                     FAQView(path: $path)
-                case .faqDetail (let faq):
-                    FAQDetailView(faq: faq, path: $path)
+                case .faqDetail (let faq, let permisos):
+                    FAQDetailView(faq: faq, permisos: permisos, path: $path)
                 case .addFAQ:
                     AddFAQView(path: $path)
                 case .configuration:

@@ -11,6 +11,8 @@ struct FAQCard: View {
     
     // Parametros
     var faq: FAQ
+    var permisos: [String]
+    
     @Binding var path: [ConfigurationPaths]
     var nextPath: ConfigurationPaths?
     
