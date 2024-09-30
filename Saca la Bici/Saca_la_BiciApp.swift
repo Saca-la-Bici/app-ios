@@ -53,6 +53,7 @@ struct SacalaBiciApp: App {
             appearance.setBackIndicatorImage(backImage, transitionMaskImage: backImage)
         }
         
+        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(red: 215.0 / 255.0, green: 205.0 / 255.0, blue: 25.0 / 255.0, alpha: 1.0)
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().compactAppearance = appearance
