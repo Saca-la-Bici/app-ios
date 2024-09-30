@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ConsultarAnuncio: View {
     @ObservedObject private var viewModel = AnuncioViewModel()
+    @ObservedObject private var userSessionManager = UserSessionManager.shared
     @State private var showAddAnuncioView = false
     @State private var alertMessage = ""
     @State private var showDeleteConfirmation = false
@@ -29,7 +30,7 @@ struct ConsultarAnuncio: View {
                     Image(systemName: "bell")
                         .padding(.trailing)
                     
-                    if viewModel.registrarAnuncio {
+                    if userSessionManager.puedeRegistrarAnuncio() {
                         Button(action: {
                             showAddAnuncioView = true
                         }, label: {
@@ -74,12 +75,12 @@ struct ConsultarAnuncio: View {
                         }
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color(UIColor.systemGray5))
+                        .background(Color(red: 242.0 / 255.0, green: 240.0 / 255.0, blue: 234.0 / 255.0))
                         .cornerRadius(20)
                         .listRowInsets(EdgeInsets())
                         .padding(.horizontal, 16)
                         .swipeActions(edge: .trailing) {
-                            if viewModel.eliminarAnuncio {
+                            if userSessionManager.puedeEliminarAnuncio() {
                                 Button(role: .destructive) {
                                     selectedAnuncio = anuncio
                                     showDeleteConfirmation = true
@@ -88,7 +89,7 @@ struct ConsultarAnuncio: View {
                                 }
                             }
                             
-                            if viewModel.modificarAnuncio {
+                            if userSessionManager.puedeModificarAnuncio() {
                                 Button {
                                     selectedAnuncio = anuncio
                                     showModifyView = true
