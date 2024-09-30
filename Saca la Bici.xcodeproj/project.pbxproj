@@ -313,6 +313,7 @@
 		252B64DF2C99FE6F00A362C5 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				7B9C5EE82CAB64F000441541 /* Profile */,
 				252B64FF2C9A021D00A362C5 /* Session */,
 				AE41A6DB2C9A62DB00921BDF /* Anuncios */,
 			);
@@ -457,6 +458,13 @@
 			children = (
 				7B9C5ED32CA9E4D600441541 /* FAQViewModel.swift */,
 				7B9C5EE32CAA571000441541 /* AddFAQViewModel.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		7B9C5EE82CAB64F000441541 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Profile;
 			sourceTree = "<group>";

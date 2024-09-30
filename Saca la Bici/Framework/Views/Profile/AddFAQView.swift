@@ -18,6 +18,21 @@ struct AddFAQView: View {
     // Binding
     @Binding var path: [ConfigurationPaths]
     
+    @Environment(\.presentationMode) var presentationMode
+    
+    // Enum para manejar las alertas activas
+    enum ActiveAlert: Identifiable {
+        case error
+        case success
+
+        var id: Int {
+            hashValue
+        }
+    }
+    
+    // Estado de alerta
+    @State var activeAlert: ActiveAlert?
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 20) {
@@ -75,12 +90,20 @@ struct AddFAQView: View {
                 )
             
             Button(action: {
-                Task {
-                    await viewModel.addFAQ(
-                        tema: viewModel.temaSelected,
-                        pregunta: viewModel.pregunta,
-                        respuesta: viewModel.respuesta
-                    )
+                if viewModel.pregunta.isEmpty || viewModel.respuesta.isEmpty {
+                    viewModel.errorMessage = "Debe ingresar una pregunta y una respuesta"
+                    activeAlert = .error
+                } else {
+                    Task {
+                        await viewModel.addFAQ(
+                            tema: viewModel.temaSelected,
+                            pregunta: viewModel.pregunta,
+                            respuesta: viewModel.respuesta
+                        )
+                        
+                        activeAlert = .success
+                        
+                    }
                 }
             }, label: {
                 Text("Registrar pregunta")
@@ -97,6 +120,27 @@ struct AddFAQView: View {
             
         }.navigationTitle("Añadir pregunta")
         .padding()
+        .alert(item: $activeAlert) { alertType in
+            switch alertType {
+            case .error:
+                return Alert(
+                    title: Text("Error"),
+                    message: Text(viewModel.errorMessage ?? "Error desconocido."),
+                    dismissButton: .default(Text("OK")) {
+                        viewModel.errorMessage = nil
+                    }
+                )
+            case .success:
+                return Alert(
+                    title: Text("Éxito"),
+                    message: Text(viewModel.successMessage ?? "Anuncio agregado correctamente."),
+                    dismissButton: .default(Text("OK")) {
+                        viewModel.successMessage = nil
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                )
+            }
+        }
     
         
     }
