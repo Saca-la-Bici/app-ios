@@ -49,7 +49,8 @@ struct FAQView: View {
                         ForEach(tema.faqs) { faq in
                             FAQCard(
                                 faq: faq,
-                                path: $path
+                                path: $path,
+                                nextPath: .faqDetail (faq: faq)
                             )
                         }
                     }

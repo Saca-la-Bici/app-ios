@@ -12,9 +12,13 @@ struct FAQCard: View {
     // Parametros
     var faq: FAQ
     @Binding var path: [ConfigurationPaths]
+    var nextPath: ConfigurationPaths?
     
     var body: some View {
         Button {
+            if nextPath != nil {
+                path.append(nextPath!)
+            }
         } label: {
             HStack {
                 Text(faq.Pregunta)

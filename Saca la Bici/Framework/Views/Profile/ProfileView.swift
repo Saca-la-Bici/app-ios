@@ -37,6 +37,8 @@ struct ProfileView: View {
                 switch value {
                 case .faqs:
                     FAQView(path: $path)
+                case .faqDetail (let faq):
+                    FAQDetailView(faq: faq, path: $path)
                 case .configuration:
                     ConfigurationView(restablecerContraseñaViewModel: restablecerContraseñaViewModel, path: $path)
                 case .profile:

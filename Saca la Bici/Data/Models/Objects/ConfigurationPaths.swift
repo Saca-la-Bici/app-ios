@@ -15,5 +15,5 @@ enum ConfigurationPaths: Hashable {
     case ayuda
     case informacion
     case faqs
-    case faqDetail
+    case faqDetail (faq: FAQ)
 }
