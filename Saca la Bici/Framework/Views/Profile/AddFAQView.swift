@@ -12,10 +12,8 @@ struct AddFAQView: View {
     // Sesión
     @EnvironmentObject var sessionManager: SessionManager
     
-    // Variables
-    @State var tema: String = ""
-    @State var pregunta: String = ""
-    @State var respuesta: String = ""
+    // View Model
+    @ObservedObject var viewModel = AddFAQViewModel()
     
     // Binding
     @Binding var path: [ConfigurationPaths]
@@ -34,7 +32,7 @@ struct AddFAQView: View {
             
             // NOTA: Es un TextField porque aún no se han definido las categorías de FAQs
             
-            TextField("Tema", text: $tema)
+            TextField("Tema", text: $viewModel.tema)
                 .padding()
                 .cornerRadius(10)
                 .overlay(
@@ -52,7 +50,7 @@ struct AddFAQView: View {
             
             // NOTA: Es un TextField porque aún no se han definido las categorías de FAQs
             
-            TextField("Pregunta", text: $pregunta)
+            TextField("Pregunta", text: $viewModel.pregunta)
                 .padding()
                 .cornerRadius(10)
                 .overlay(
@@ -70,7 +68,7 @@ struct AddFAQView: View {
             
             // NOTA: Es un TextField porque aún no se han definido las categorías de FAQs
             
-            TextField("Respuesta", text: $respuesta, axis: .vertical)
+            TextField("Respuesta", text: $viewModel.respuesta, axis: .vertical)
                 .padding()
                 .cornerRadius(10)
                 .overlay(
@@ -79,7 +77,13 @@ struct AddFAQView: View {
                 )
             
             Button(action: {
-                
+                Task {
+                    await viewModel.addFAQ(
+                        tema: viewModel.tema,
+                        pregunta: viewModel.pregunta,
+                        respuesta: viewModel.respuesta
+                    )
+                }
             }, label: {
                 Text("Registrar pregunta")
                     .font(.headline)

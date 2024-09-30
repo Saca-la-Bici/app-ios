@@ -72,6 +72,7 @@
 		7B9C5EDC2CAA219800441541 /* FAQCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5EDB2CAA219800441541 /* FAQCard.swift */; };
 		7B9C5EDE2CAA257E00441541 /* FAQDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5EDD2CAA257E00441541 /* FAQDetailView.swift */; };
 		7B9C5EE02CAA4FB400441541 /* AddFAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5EDF2CAA4FB400441541 /* AddFAQView.swift */; };
+		7B9C5EE42CAA571000441541 /* AddFAQViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5EE32CAA571000441541 /* AddFAQViewModel.swift */; };
 		AE41A6D92C9A613800921BDF /* AnuncioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6D82C9A612F00921BDF /* AnuncioViewModel.swift */; };
 		AE41A6DD2C9A62F400921BDF /* ConsultarAnuncioRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6DC2C9A62E400921BDF /* ConsultarAnuncioRequirement.swift */; };
 		AE41A6E12C9A633100921BDF /* AnuncioRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */; };
@@ -165,6 +166,7 @@
 		7B9C5EDB2CAA219800441541 /* FAQCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQCard.swift; sourceTree = "<group>"; };
 		7B9C5EDD2CAA257E00441541 /* FAQDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQDetailView.swift; sourceTree = "<group>"; };
 		7B9C5EDF2CAA4FB400441541 /* AddFAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFAQView.swift; sourceTree = "<group>"; };
+		7B9C5EE32CAA571000441541 /* AddFAQViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFAQViewModel.swift; sourceTree = "<group>"; };
 		AE41A6D82C9A612F00921BDF /* AnuncioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnuncioViewModel.swift; sourceTree = "<group>"; };
 		AE41A6DC2C9A62E400921BDF /* ConsultarAnuncioRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarAnuncioRequirement.swift; sourceTree = "<group>"; };
 		AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnuncioRepository.swift; sourceTree = "<group>"; };
@@ -454,6 +456,7 @@
 			isa = PBXGroup;
 			children = (
 				7B9C5ED32CA9E4D600441541 /* FAQViewModel.swift */,
+				7B9C5EE32CAA571000441541 /* AddFAQViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 				25F368212C9BAEA3003322CF /* LoadingView.swift in Sources */,
 				252B64EF2C99FE7200A362C5 /* SessionRepository.swift in Sources */,
 				252B64D52C99FE5900A362C5 /* SignUpStep3View.swift in Sources */,
+				7B9C5EE42CAA571000441541 /* AddFAQViewModel.swift in Sources */,
 				7B9C5ED62CA9E5C000441541 /* FAQModelo.swift in Sources */,
 				252B64D62C99FE5900A362C5 /* MenuTabs.swift in Sources */,
 				252B64D72C99FE5900A362C5 /* ResultView.swift in Sources */,

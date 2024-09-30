@@ -78,7 +78,7 @@ class FAQViewModel: ObservableObject {
             // Guardar en variables publicadas
             self.faqs = faqs
             self.temasFAQs = sortedTemasFAQs
-            self.userPermissions = response.permisos
+            self.userPermissions = response.permisos ?? [""]
             
         } catch {
             self.handleError(error)

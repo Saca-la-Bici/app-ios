@@ -24,5 +24,12 @@ class FAQRepository {
         return response
     }
     
+    // Add FAQ
+    func addFAQ(_ faq: FAQ) async throws -> String {
+        let responseMsg = try await apiService.addFAQ(url: URL(string: "\(Api.base)\(Api.Routes.faq)/registrar")!, faq: faq)
+        
+        return responseMsg
+    }
+    
     
 }
