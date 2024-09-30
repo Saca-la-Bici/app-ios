@@ -29,16 +29,14 @@ struct AddFAQView: View {
                 .fontWeight(.medium)
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
+
             
-            // NOTA: Es un TextField porque aún no se han definido las categorías de FAQs
-            
-            TextField("Tema", text: $viewModel.tema)
-                .padding()
-                .cornerRadius(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-                )
+            Picker("Tema", selection: $viewModel.temaSelected) {
+                ForEach(viewModel.temasList, id: \.self) {
+                    Text($0)
+                }
+            }.pickerStyle(.wheel)
+                .frame(height: 100)
             
             // Pregunta
             
@@ -79,7 +77,7 @@ struct AddFAQView: View {
             Button(action: {
                 Task {
                     await viewModel.addFAQ(
-                        tema: viewModel.tema,
+                        tema: viewModel.temaSelected,
                         pregunta: viewModel.pregunta,
                         respuesta: viewModel.respuesta
                     )

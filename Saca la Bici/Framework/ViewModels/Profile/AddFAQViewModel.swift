@@ -11,9 +11,11 @@ import Foundation
 @MainActor
 class AddFAQViewModel: ObservableObject {
     
+    // Temas
+    @Published var temasList: [String] = ["Rodadas", "Material", "Seguridad", "Otros"]
     
     // Variables
-    @Published var tema: String = ""
+    @Published var temaSelected: String = ""
     @Published var pregunta: String = ""
     @Published var respuesta: String = ""
     
