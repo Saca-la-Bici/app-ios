@@ -28,9 +28,21 @@ struct FAQView: View {
         VStack(alignment: .leading, spacing: 20.0) {
             
             // Nombre de usuario PENDIENTE
-            Text("¿Cómo te podemos ayudar hoy, Guadalupe?")
-                .font(.title2)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            HStack {
+                Text("¿Cómo te podemos ayudar hoy, Guadalupe?")
+                    .font(.title2)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                if viewModel.canCreateFAQ() {
+                    Spacer()
+                    Button(action: {
+                        path.append(.addFAQ)
+                    }) {
+                        Image(systemName: "plus")
+                            .padding()
+                            .foregroundColor(.black)
+                    }
+                }
+            }
             
             // Input de búsqueda
             TextField("¿Cuál es tu duda?", text: $viewModel.searchText)
@@ -57,7 +69,8 @@ struct FAQView: View {
                 }
             }
             
-        }.padding()
+        }.navigationTitle("Ayuda")
+        .padding()
             .onAppear {
                 Task {
                     await viewModel.getFAQs()

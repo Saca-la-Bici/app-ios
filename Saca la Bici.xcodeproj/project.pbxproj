@@ -71,6 +71,7 @@
 		7B9C5EDA2CA9F08900441541 /* FAQAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED92CA9F08900441541 /* FAQAPIService.swift */; };
 		7B9C5EDC2CAA219800441541 /* FAQCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5EDB2CAA219800441541 /* FAQCard.swift */; };
 		7B9C5EDE2CAA257E00441541 /* FAQDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5EDD2CAA257E00441541 /* FAQDetailView.swift */; };
+		7B9C5EE02CAA4FB400441541 /* AddFAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5EDF2CAA4FB400441541 /* AddFAQView.swift */; };
 		AE41A6D92C9A613800921BDF /* AnuncioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6D82C9A612F00921BDF /* AnuncioViewModel.swift */; };
 		AE41A6DD2C9A62F400921BDF /* ConsultarAnuncioRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6DC2C9A62E400921BDF /* ConsultarAnuncioRequirement.swift */; };
 		AE41A6E12C9A633100921BDF /* AnuncioRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */; };
@@ -163,6 +164,7 @@
 		7B9C5ED92CA9F08900441541 /* FAQAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQAPIService.swift; sourceTree = "<group>"; };
 		7B9C5EDB2CAA219800441541 /* FAQCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQCard.swift; sourceTree = "<group>"; };
 		7B9C5EDD2CAA257E00441541 /* FAQDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQDetailView.swift; sourceTree = "<group>"; };
+		7B9C5EDF2CAA4FB400441541 /* AddFAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFAQView.swift; sourceTree = "<group>"; };
 		AE41A6D82C9A612F00921BDF /* AnuncioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnuncioViewModel.swift; sourceTree = "<group>"; };
 		AE41A6DC2C9A62E400921BDF /* ConsultarAnuncioRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarAnuncioRequirement.swift; sourceTree = "<group>"; };
 		AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnuncioRepository.swift; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 				25A7BE502CA61C9500FCB8B6 /* ProfileView.swift */,
 				25A7BE4E2CA61C0600FCB8B6 /* ConfigurationView.swift */,
 				25A7BE572CA664A800FCB8B6 /* SeguridadAccesoView.swift */,
+				7B9C5EDF2CAA4FB400441541 /* AddFAQView.swift */,
 				7B9C5ED02CA9D94900441541 /* FAQView.swift */,
 				7B9C5EDD2CAA257E00441541 /* FAQDetailView.swift */,
 			);
@@ -660,6 +663,7 @@
 				252B64D22C99FE5900A362C5 /* UIApplicationExtensions.swift in Sources */,
 				252B64D32C99FE5900A362C5 /* SignUpStep1View.swift in Sources */,
 				252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */,
+				7B9C5EE02CAA4FB400441541 /* AddFAQView.swift in Sources */,
 				25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */,
 				25D0E5172CA3813600B431A9 /* RestablecerContraseñaViewModel.swift in Sources */,
 				25F3681D2C9B7B49003322CF /* TituloComponent.swift in Sources */,

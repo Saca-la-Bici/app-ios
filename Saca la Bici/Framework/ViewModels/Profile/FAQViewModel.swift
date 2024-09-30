@@ -26,6 +26,9 @@ class FAQViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var successMessage: String?
     
+    // Permisos del usuario
+    @Published var userPermissions: [String] = []
+    
     // Combine
     private var cancellables = Set<AnyCancellable>()
     
@@ -62,20 +65,29 @@ class FAQViewModel: ObservableObject {
             }
             
             // Agrupar por tema
-            let faqsByTema = Dictionary(grouping: faqs, by: { $0.Tema })
+            let faqsByTema = Dictionary(grouping: faqs, by: { $0.Tema.lowercased() })
             
             // Convertir diccionario en un array de TemaFAQ
             let temasFAQs: [TemaFAQ] = faqsByTema.map { (tema, faqs) in
                 return TemaFAQ(tema: tema, faqs: faqs)
             }
             
+            // Ordenar
+            let sortedTemasFAQs: [TemaFAQ] = temasFAQs.sorted { $0.tema < $1.tema }
+            
             // Guardar en variables publicadas
             self.faqs = faqs
-            self.temasFAQs = temasFAQs
+            self.temasFAQs = sortedTemasFAQs
+            self.userPermissions = response.permisos
             
         } catch {
             self.handleError(error)
         }
+    }
+    
+    // ¿Puede crear FAQ?
+    func canCreateFAQ() -> Bool {
+        return userPermissions.contains("Registrar pregunta frecuente")
     }
     
     // Filtrar FAQs
