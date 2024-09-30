@@ -15,10 +15,7 @@ class AnuncioViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var successMessage: String?
     
-    @Published var registrarAnuncio: Bool = false
-    @Published var modificarAnuncio: Bool = false
-    @Published var eliminarAnuncio: Bool = false
-    
+    private var userSessionManager = UserSessionManager.shared
     private let repository: AnuncioRepository
     
     init(repository: AnuncioRepository = AnuncioRepository()) {
@@ -40,17 +37,7 @@ class AnuncioViewModel: ObservableObject {
             }.reversed()
             self.anuncios = Array(anuncios)
             
-            if response.permisos.contains("Registrar anuncio") {
-                self.registrarAnuncio = true
-            }
-            
-            if response.permisos.contains("Modificar anuncio") {
-                self.modificarAnuncio = true
-            }
-            
-            if response.permisos.contains("Eliminar anuncio") {
-                self.eliminarAnuncio = true
-            }
+            userSessionManager.updatePermisos(newPermisos: response.permisos)
             
         } catch {
             self.handleError(error)

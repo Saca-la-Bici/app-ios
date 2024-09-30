@@ -14,6 +14,7 @@ struct RodadasView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
+                Spacer().frame(height: 5)
                 if viewModel.isLoading {
                     ProgressView()
                 } else if let errorMessage = viewModel.errorMessage {
@@ -34,6 +35,8 @@ struct RodadasView: View {
                         )
                     }
                 }
+                
+                Spacer().frame(height: 5)
             }
             .padding(.horizontal)
         }

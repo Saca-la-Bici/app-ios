@@ -31,4 +31,16 @@ class UserSessionManager: ObservableObject {
     func puedeIniciarRodada() -> Bool {
         return tienePermiso("Iniciar rodada")
     }
+    
+    func puedeRegistrarAnuncio() -> Bool {
+        return tienePermiso("Registrar anuncio")
+    }
+    
+    func puedeModificarAnuncio() -> Bool {
+        return tienePermiso("Modificar anuncio")
+    }
+    
+    func puedeEliminarAnuncio() -> Bool {
+        return tienePermiso("Eliminar anuncio")
+    }
 }

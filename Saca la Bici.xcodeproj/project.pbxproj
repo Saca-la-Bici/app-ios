@@ -318,6 +318,7 @@
 			children = (
 				252B64C42C99FE5900A362C5 /* ViewModels */,
 				252B64CD2C99FE5900A362C5 /* Views */,
+				AE8E78892CA9E4A2007F7365 /* Managers */,
 				252B64CF2C99FE5900A362C5 /* Extensions */,
 			);
 			path = Framework;
@@ -337,7 +338,6 @@
 			isa = PBXGroup;
 			children = (
 				AE8E788C2CA9E4CF007F7365 /* ActividadesAPIService.swift */,
-				AE8E78892CA9E4A2007F7365 /* Managers */,
 				252B64E42C99FE7200A362C5 /* SessionAPIService.swift */,
 				259EF8B62CA23899007CE3FE /* UserProfileSessionAPIService.swift */,
 				AE41A6E22C9A636B00921BDF /* AnuncioAPIService.swift */,

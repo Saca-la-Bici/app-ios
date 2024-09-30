@@ -14,7 +14,7 @@ class EventosViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private let getEventosUseCase: GetEventosUseCase
-    private var UsersessionManager = UserSessionManager.shared
+    private var userSessionManager = UserSessionManager.shared
     
     init(getEventosUseCase: GetEventosUseCase = GetEventosUseCase(repository: ActividadesRepository())) {
         self.getEventosUseCase = getEventosUseCase
@@ -28,7 +28,7 @@ class EventosViewModel: ObservableObject {
                 errorMessage = nil
                 let (eventos, permisos) = try await getEventosUseCase.execute()
                 self.eventos = eventos
-                UsersessionManager.updatePermisos(newPermisos: permisos)
+                userSessionManager.updatePermisos(newPermisos: permisos)
                 isLoading = false
             } catch {
                 isLoading = false
@@ -36,13 +36,5 @@ class EventosViewModel: ObservableObject {
                 print("Error al obtener eventos: \(error)")
             }
         }
-    }
-    
-    func puedeIniciarRodada() -> Bool {
-        return UsersessionManager.puedeIniciarRodada()
-    }
-    
-    func puedeConsultarActividades() -> Bool {
-        return UsersessionManager.puedeConsultarActividades()
     }
 }

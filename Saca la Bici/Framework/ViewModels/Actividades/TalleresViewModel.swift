@@ -14,7 +14,7 @@ class TalleresViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private let getTalleresUseCase: GetTalleresUseCase
-    private var UsersessionManager = UserSessionManager.shared
+    private var userSessionManager = UserSessionManager.shared
     
     init(getTalleresUseCase: GetTalleresUseCase = GetTalleresUseCase(repository: ActividadesRepository())) {
         self.getTalleresUseCase = getTalleresUseCase
@@ -28,7 +28,7 @@ class TalleresViewModel: ObservableObject {
                 errorMessage = nil
                 let (talleres, permisos) = try await getTalleresUseCase.execute()
                 self.talleres = talleres
-                UsersessionManager.updatePermisos(newPermisos: permisos)
+                userSessionManager.updatePermisos(newPermisos: permisos)
                 isLoading = false
             } catch {
                 isLoading = false
@@ -36,13 +36,5 @@ class TalleresViewModel: ObservableObject {
                 print("Error al obtener talleres: \(error)")
             }
         }
-    }
-    
-    func puedeIniciarRodada() -> Bool {
-        return UsersessionManager.puedeIniciarRodada()
-    }
-    
-    func puedeConsultarActividades() -> Bool {
-        return UsersessionManager.puedeConsultarActividades()
     }
 }

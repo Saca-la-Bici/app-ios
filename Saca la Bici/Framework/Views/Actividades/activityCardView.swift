@@ -35,7 +35,13 @@ struct ActivityCardView: View {
                     Text(level)
                         .font(.caption)
                         .padding(6)
-                        .background(level == "Nivel 1" ? Color.green : (level == "Nivel 2" ? Color.orange : Color.gray))
+                        .background(
+                            level == "Nivel 1" ? Color(red: 129.0 / 255.0, green: 199.0 / 255.0, blue: 132.0 / 255.0) :
+                            (level == "Nivel 2" ? Color(red: 56.0 / 255.0, green: 142.0 / 255.0, blue: 60.0 / 255.0) :
+                            (level == "Nivel 3" ? Color(red: 253.0 / 255.0, green: 216.0 / 255.0, blue: 53.0 / 255.0) :
+                            (level == "Nivel 4" ? Color(red: 255.0 / 255.0, green: 152.0 / 255.0, blue: 0.0 / 255.0) :
+                            (level == "Nivel 5" ? Color(red: 244.0 / 255.0, green: 67.0 / 255.0, blue: 54.0 / 255.0) :
+                            Color.gray)))))
                         .cornerRadius(8)
                 }
                 
@@ -122,6 +128,7 @@ struct ActivityCardView: View {
                         .background(isStarted ? Color.red : ColorManager.shared.colorFromHex("#88B598"))
                         .cornerRadius(8)
                     })
+                    .buttonStyle(PlainButtonStyle())
                     
                     // Botón de Asistencia
                     Button(action: {
@@ -140,6 +147,7 @@ struct ActivityCardView: View {
                         .background(Color.yellow)
                         .cornerRadius(8)
                     })
+                    .buttonStyle(PlainButtonStyle())
                 }
             } else {
                 // Botón de Unirse para otras actividades o si no tiene permiso para iniciar rodada
@@ -160,7 +168,7 @@ struct ActivityCardView: View {
                             ? Color.red
                             : (userSessionManager.puedeIniciarRodada() && activityType.lowercased() != "rodada"
                                 ? ColorManager.shared.colorFromHex("#88B598") // Verde si puede iniciar rodada y no es rodada
-                                : Color.yellow) // Amarillo para los demás casos
+                                : Color(red: 215.0 / 255.0, green: 205.0 / 255.0, blue: 25.0 / 255.0))
                     )
                     .cornerRadius(8)
                 })

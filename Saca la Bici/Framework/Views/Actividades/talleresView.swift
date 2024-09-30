@@ -13,6 +13,7 @@ struct TalleresView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
+                Spacer().frame(height: 5)
                 if viewModel.isLoading {
                     ProgressView()
                 } else if let errorMessage = viewModel.errorMessage {
@@ -32,6 +33,7 @@ struct TalleresView: View {
                     }
                     .padding(.horizontal)
                 }
+                Spacer().frame(height: 5)
             }
         }
     }
