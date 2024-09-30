@@ -13,7 +13,7 @@ class AddFAQViewModel: ObservableObject {
     
     
     // Variables
-    @Published var tema: [String = ""]
+    @Published var tema: String = ""
     @Published var pregunta: String = ""
     @Published var respuesta: String = ""
     
