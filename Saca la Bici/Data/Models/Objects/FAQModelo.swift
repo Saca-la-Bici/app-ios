@@ -10,6 +10,7 @@ import Foundation
 struct FAQResponse : Codable {
     var code: Int
     var msg: String
+    var permisos: [String]
     var data: [FAQ]
 }
 

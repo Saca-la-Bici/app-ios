@@ -9,6 +9,7 @@ import Alamofire
 import Foundation
 import Combine
 
+@MainActor
 class FAQViewModel: ObservableObject {
     
     // Arrays de preguntas frecuentes
@@ -78,20 +79,20 @@ class FAQViewModel: ObservableObject {
     }
     
     // Filtrar FAQs
-        private func filterFAQs(_ searchText: String) {
-            if searchText.isEmpty {
-                // Mostrar todos los FAQs si no hay texto en el campo de búsqueda
-                filteredFAQs = temasFAQs
-            } else {
-                // Filtrar según el texto ingresado
-                filteredFAQs = temasFAQs.map { temaFAQ in
-                    let faqsFiltrados = temaFAQ.faqs.filter { faq in
-                        faq.Pregunta.lowercased().contains(searchText.lowercased())
-                    }
-                    return TemaFAQ(tema: temaFAQ.tema, faqs: faqsFiltrados)
-                }.filter { !$0.faqs.isEmpty } // Remover temas sin FAQs filtrados
-            }
+    private func filterFAQs(_ searchText: String) {
+        if searchText.isEmpty {
+            // Mostrar todos los FAQs si no hay texto en el campo de búsqueda
+            filteredFAQs = temasFAQs
+        } else {
+            // Filtrar según el texto ingresado
+            filteredFAQs = temasFAQs.map { temaFAQ in
+                let faqsFiltrados = temaFAQ.faqs.filter { faq in
+                    faq.Pregunta.lowercased().contains(searchText.lowercased())
+                }
+                return TemaFAQ(tema: temaFAQ.tema, faqs: faqsFiltrados)
+            }.filter { !$0.faqs.isEmpty } // Remover temas sin FAQs filtrados
         }
+    }
     
     // Manejo de errores
     private func handleError(_ error: Error) {

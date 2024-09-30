@@ -11,10 +11,21 @@ import FirebaseAuth
 
 class FAQAPIService {
     
+    let firebaseTokenManager: FirebaseTokenManager
+    
+    init(firebaseTokenManager: FirebaseTokenManager = FirebaseTokenManager.shared) {
+            self.firebaseTokenManager = firebaseTokenManager
+        }
+    
     // Fetch FAQs
     func fetchFAQs(url: URL) async throws -> FAQResponse {
         
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
+        
         let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
             "Content-Type": "application/json"
         ]
         
