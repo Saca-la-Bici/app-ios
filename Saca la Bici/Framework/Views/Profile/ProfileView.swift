@@ -35,8 +35,8 @@ struct ProfileView: View {
             }
             .navigationDestination(for: ConfigurationPaths.self) { value in
                 switch value {
-                case .ayuda:
-                    AyudaView()
+                case .faqs:
+                    FAQView(path: $path)
                 case .configuration:
                     ConfigurationView(restablecerContraseñaViewModel: restablecerContraseñaViewModel, path: $path)
                 case .profile:

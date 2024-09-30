@@ -32,7 +32,7 @@ struct ConfigurationView: View {
                             BotonSection(icono: "questionmark.circle", titulo: "Ayuda",
                                 button: true,
                                          path: $path,
-                                         nextPath: .ayuda)
+                                         nextPath: .faqs)
                             BotonSection(icono: "info.circle", titulo: "Información",
                                          button: true,
                                          path: $path,

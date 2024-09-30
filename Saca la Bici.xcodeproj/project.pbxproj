@@ -64,11 +64,13 @@
 		25F3681D2C9B7B49003322CF /* TituloComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3681C2C9B7B49003322CF /* TituloComponent.swift */; };
 		25F3681F2C9B8032003322CF /* MainViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3681E2C9B8032003322CF /* MainViewButton.swift */; };
 		25F368212C9BAEA3003322CF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F368202C9BAEA3003322CF /* LoadingView.swift */; };
-		7B9C5ED12CA9D94900441541 /* AyudaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED02CA9D94900441541 /* AyudaView.swift */; };
-		7B9C5ED42CA9E4D600441541 /* AyudaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED32CA9E4D600441541 /* AyudaViewModel.swift */; };
+		7B9C5ED12CA9D94900441541 /* FAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED02CA9D94900441541 /* FAQView.swift */; };
+		7B9C5ED42CA9E4D600441541 /* FAQViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED32CA9E4D600441541 /* FAQViewModel.swift */; };
 		7B9C5ED62CA9E5C000441541 /* FAQModelo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED52CA9E5C000441541 /* FAQModelo.swift */; };
 		7B9C5ED82CA9EE7700441541 /* FAQRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED72CA9EE7700441541 /* FAQRepository.swift */; };
 		7B9C5EDA2CA9F08900441541 /* FAQAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED92CA9F08900441541 /* FAQAPIService.swift */; };
+		7B9C5EDC2CAA219800441541 /* FAQCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5EDB2CAA219800441541 /* FAQCard.swift */; };
+		7B9C5EDE2CAA257E00441541 /* FAQDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5EDD2CAA257E00441541 /* FAQDetailView.swift */; };
 		AE41A6D92C9A613800921BDF /* AnuncioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6D82C9A612F00921BDF /* AnuncioViewModel.swift */; };
 		AE41A6DD2C9A62F400921BDF /* ConsultarAnuncioRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6DC2C9A62E400921BDF /* ConsultarAnuncioRequirement.swift */; };
 		AE41A6E12C9A633100921BDF /* AnuncioRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */; };
@@ -154,11 +156,13 @@
 		25F3681C2C9B7B49003322CF /* TituloComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TituloComponent.swift; sourceTree = "<group>"; };
 		25F3681E2C9B8032003322CF /* MainViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewButton.swift; sourceTree = "<group>"; };
 		25F368202C9BAEA3003322CF /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		7B9C5ED02CA9D94900441541 /* AyudaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AyudaView.swift; sourceTree = "<group>"; };
-		7B9C5ED32CA9E4D600441541 /* AyudaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AyudaViewModel.swift; sourceTree = "<group>"; };
+		7B9C5ED02CA9D94900441541 /* FAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQView.swift; sourceTree = "<group>"; };
+		7B9C5ED32CA9E4D600441541 /* FAQViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewModel.swift; sourceTree = "<group>"; };
 		7B9C5ED52CA9E5C000441541 /* FAQModelo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQModelo.swift; sourceTree = "<group>"; };
 		7B9C5ED72CA9EE7700441541 /* FAQRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQRepository.swift; sourceTree = "<group>"; };
 		7B9C5ED92CA9F08900441541 /* FAQAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQAPIService.swift; sourceTree = "<group>"; };
+		7B9C5EDB2CAA219800441541 /* FAQCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQCard.swift; sourceTree = "<group>"; };
+		7B9C5EDD2CAA257E00441541 /* FAQDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQDetailView.swift; sourceTree = "<group>"; };
 		AE41A6D82C9A612F00921BDF /* AnuncioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnuncioViewModel.swift; sourceTree = "<group>"; };
 		AE41A6DC2C9A62E400921BDF /* ConsultarAnuncioRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarAnuncioRequirement.swift; sourceTree = "<group>"; };
 		AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnuncioRepository.swift; sourceTree = "<group>"; };
@@ -410,7 +414,8 @@
 				25A7BE502CA61C9500FCB8B6 /* ProfileView.swift */,
 				25A7BE4E2CA61C0600FCB8B6 /* ConfigurationView.swift */,
 				25A7BE572CA664A800FCB8B6 /* SeguridadAccesoView.swift */,
-				7B9C5ED02CA9D94900441541 /* AyudaView.swift */,
+				7B9C5ED02CA9D94900441541 /* FAQView.swift */,
+				7B9C5EDD2CAA257E00441541 /* FAQDetailView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -419,6 +424,7 @@
 			isa = PBXGroup;
 			children = (
 				25A7BE532CA649F600FCB8B6 /* BotonSection.swift */,
+				7B9C5EDB2CAA219800441541 /* FAQCard.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -444,7 +450,7 @@
 		7B9C5ED22CA9E4C700441541 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				7B9C5ED32CA9E4D600441541 /* AyudaViewModel.swift */,
+				7B9C5ED32CA9E4D600441541 /* FAQViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -677,7 +683,9 @@
 				252B64D92C99FE5900A362C5 /* SessionManager.swift in Sources */,
 				25C302C62C9A9780005AD742 /* EmailField.swift in Sources */,
 				25A7BE582CA664A800FCB8B6 /* SeguridadAccesoView.swift in Sources */,
-				7B9C5ED12CA9D94900441541 /* AyudaView.swift in Sources */,
+				7B9C5EDE2CAA257E00441541 /* FAQDetailView.swift in Sources */,
+				7B9C5EDC2CAA219800441541 /* FAQCard.swift in Sources */,
+				7B9C5ED12CA9D94900441541 /* FAQView.swift in Sources */,
 				259CBB9A2C9E29C00067B550 /* AppleCryptoHelpers.swift in Sources */,
 				25C302C42C9A9515005AD742 /* PasswordField.swift in Sources */,
 				252B64DA2C99FE5900A362C5 /* SignUpViewModel.swift in Sources */,
@@ -696,7 +704,7 @@
 				AEE34B8A2C9FA61800C2EECE /* modificarAnuncioView.swift in Sources */,
 				AE41A6E92C9A6AA200921BDF /* AnadirAnuncioView.swift in Sources */,
 				7B9C5ED82CA9EE7700441541 /* FAQRepository.swift in Sources */,
-				7B9C5ED42CA9E4D600441541 /* AyudaViewModel.swift in Sources */,
+				7B9C5ED42CA9E4D600441541 /* FAQViewModel.swift in Sources */,
 				AE41A6E52C9A648B00921BDF /* consultarAnuncioView.swift in Sources */,
 				AE41A6D92C9A613800921BDF /* AnuncioViewModel.swift in Sources */,
 				25A7BE542CA649F600FCB8B6 /* BotonSection.swift in Sources */,

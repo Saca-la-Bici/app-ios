@@ -1,5 +1,5 @@
 //
-//  AyudaView.swift
+//  FAQView.swift
 //  Saca la Bici
 //
 //  Created by Diego Antonio García Padilla on 29/09/24.
@@ -8,16 +8,19 @@
 import SwiftUI
 import Combine
 
-struct AyudaView: View {
+struct FAQView: View {
     
     // Sesión
     @EnvironmentObject var sessionManager: SessionManager
     
     // View Model
-    @StateObject var viewModel = AyudaViewModel()
+    @StateObject var viewModel = FAQViewModel()
     
     // Variables
     @State private var searchText: String = ""
+    
+    // Binding
+    @Binding var path: [ConfigurationPaths]
     
     var body: some View {
         
@@ -27,7 +30,7 @@ struct AyudaView: View {
             // Nombre de usuario PENDIENTE
             Text("¿Cómo te podemos ayudar hoy, Guadalupe?")
                 .font(.title2)
-                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
             // Input de búsqueda
             TextField("¿Cuál es tu duda?", text: $viewModel.searchText)
@@ -44,13 +47,10 @@ struct AyudaView: View {
                 ForEach(viewModel.filteredFAQs) { tema in
                     Section(header: Text(tema.tema)) {
                         ForEach(tema.faqs) { faq in
-                            HStack {
-                                Text(faq.Pregunta)
-                                Spacer()
-                                Image(systemName: "chevron.forward")
-                                    .foregroundColor(Color(.black))
-                                    .scaleEffect(1)
-                            }
+                            FAQCard(
+                                faq: faq,
+                                path: $path
+                            )
                         }
                     }
                 }
@@ -60,6 +60,7 @@ struct AyudaView: View {
             .onAppear {
                 Task {
                     await viewModel.getFAQs()
+                    viewModel.searchText.removeAll()
                 }
             }
         
@@ -67,6 +68,16 @@ struct AyudaView: View {
     }
 }
 
-#Preview {
-    AyudaView()
+struct FAQView_Previews: PreviewProvider {
+    static var previews: some View {
+        PreviewWrapper()
+    }
+
+    struct PreviewWrapper: View {
+        @State var path: [ConfigurationPaths] = []
+
+        var body: some View {
+            FAQView(path: $path)
+        }
+    }
 }
