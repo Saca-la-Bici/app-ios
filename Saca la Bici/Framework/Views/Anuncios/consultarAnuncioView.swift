@@ -75,7 +75,7 @@ struct ConsultarAnuncio: View {
                         }
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color(red: 242.0 / 255.0, green: 240.0 / 255.0, blue: 234.0 / 255.0))
+                        .background(Color(UIColor.systemGray5))
                         .cornerRadius(20)
                         .listRowInsets(EdgeInsets())
                         .padding(.horizontal, 16)
