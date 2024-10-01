@@ -169,20 +169,20 @@ struct ModificarAnuncioView: View {
                                 .frame(width: 200, height: 200)
                         }
                     }
-                    
+
                     HStack {
-                        Button(action: {
-                            // Permitir seleccionar una nueva imagen
-                            selectedItem = nil
-                            selectedImageData = nil
-                            existingImageURL = nil
-                            existingImageData = nil
-                        }, label: {
-                            Text("Cambiar Imagen")
-                                .foregroundColor(.blue)
-                                .padding(.top, 5)
-                        })
-                        
+                        PhotosPicker(
+                            selection: $selectedItem,
+                            matching: .images,
+                            photoLibrary: .shared(),
+                            label: {
+                                Text("Cambiar Imagen")
+                                    .foregroundColor(.blue)
+                                    .padding(.top, 5)
+                            }
+                        )
+                        .buttonStyle(PlainButtonStyle())
+
                         Button(action: {
                             // Eliminar la imagen existente
                             selectedImageData = nil
