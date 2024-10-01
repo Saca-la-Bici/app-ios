@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AnunciosResponse: Codable {
-    let anuncio: [Anuncio]
+    let announcements: [Anuncio]
     let permisos: [String]
 }
 
@@ -20,7 +20,6 @@ struct Anuncio: Identifiable, Codable {
     var createdAt: String
     var fechaCaducidad: String
     
-    var icon: String = "A"  // Valor por defecto por ahora (imagen del usuario)
     var backgroundColor: Color = Color(UIColor.systemGray6)
     
     enum CodingKeys: String, CodingKey {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ConsultarAnuncio: View {
-    @ObservedObject private var viewModel = AnuncioViewModel()
+    @StateObject private var viewModel = AnuncioViewModel()
     @ObservedObject private var userSessionManager = UserSessionManager.shared
     @State private var showAddAnuncioView = false
     @State private var alertMessage = ""
@@ -18,6 +18,7 @@ struct ConsultarAnuncio: View {
 
     var body: some View {
         VStack {
+            // Encabezado
             ZStack {
                 HStack {
                     Image("logoB&N")
@@ -29,7 +30,7 @@ struct ConsultarAnuncio: View {
 
                     Image(systemName: "bell")
                         .padding(.trailing)
-                    
+
                     if userSessionManager.puedeRegistrarAnuncio() {
                         Button(action: {
                             showAddAnuncioView = true
@@ -52,57 +53,83 @@ struct ConsultarAnuncio: View {
                     .foregroundColor(.red)
                     .padding()
             } else {
-                List {
-                    ForEach(viewModel.anuncios) { anuncio in
-                        HStack {
-                            Text(anuncio.icon)
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .frame(width: 44, height: 44)
-                                .background(Color.purple)
-                                .clipShape(Circle())
-
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text(anuncio.titulo)
-                                    .font(.headline)
-                                    .fontWeight(.bold)
-
-                                Text(anuncio.contenido)
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                            }
-                            .padding(.vertical, 8)
-                        }
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color(UIColor.systemGray5))
-                        .cornerRadius(20)
-                        .listRowInsets(EdgeInsets())
-                        .padding(.horizontal, 16)
-                        .swipeActions(edge: .trailing) {
-                            if userSessionManager.puedeEliminarAnuncio() {
-                                Button(role: .destructive) {
-                                    selectedAnuncio = anuncio
-                                    showDeleteConfirmation = true
-                                } label: {
-                                    Label("Eliminar", systemImage: "trash")
+                ScrollView {
+                    LazyVStack(spacing: 16) {
+                        ForEach(viewModel.anuncios) { anuncio in
+                            VStack(alignment: .leading, spacing: 0) {
+                                // Imagen o espacio reservado
+                                if let imageUrlString = anuncio.imagen, let imageUrl = URL(string: imageUrlString) {
+                                    AsyncImage(url: imageUrl) { phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .scaledToFill()
+                                                .frame(height: 150) // Altura fija para la imagen
+                                                .clipped()
+                                                .cornerRadius(10, corners: [.topLeft, .topRight])
+                                        } else if phase.error != nil {
+                                            Color.gray
+                                                .frame(height: 150)
+                                                .cornerRadius(10, corners: [.topLeft, .topRight])
+                                        } else {
+                                            ProgressView()
+                                                .frame(height: 150)
+                                        }
+                                    }
+                                } else {
+                                    // Espacio reservado para tarjetas sin imagen
+                                    Color.clear
+                                        .frame(height: 150) // Misma altura que la imagen
                                 }
-                            }
-                            
-                            if userSessionManager.puedeModificarAnuncio() {
-                                Button {
-                                    selectedAnuncio = anuncio
-                                    showModifyView = true
-                                } label: {
-                                    Label("Modificar", systemImage: "pencil")
+
+                                // Título y contenido
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(anuncio.titulo)
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.8)
+
+                                    Text(anuncio.contenido)
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                        .lineLimit(3)
+                                        .minimumScaleFactor(0.8)
                                 }
-                                .tint(.blue)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 12)
+
+                                Spacer() // Ocupa el espacio restante
+                            }
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 300) // Altura fija para todas las tarjetas
+                            .background(Color(UIColor.systemGray5))
+                            .cornerRadius(10)
+                            .padding(.horizontal, 16)
+                            // Acciones de contexto
+                            .contextMenu {
+                                if userSessionManager.puedeModificarAnuncio() {
+                                    Button(action: {
+                                        selectedAnuncio = anuncio
+                                        showModifyView = true
+                                    }, label: {
+                                        Label("Modificar", systemImage: "pencil")
+                                    })
+                                }
+                                if userSessionManager.puedeEliminarAnuncio() {
+                                    Button(role: .destructive, action: {
+                                        selectedAnuncio = anuncio
+                                        showDeleteConfirmation = true
+                                    }, label: {
+                                        Label("Eliminar", systemImage: "trash")
+                                    })
+                                }
                             }
                         }
                     }
-                    .padding(.bottom, 8)
+                    .padding(.vertical)
+                    .frame(maxWidth: .infinity)
                 }
-                .listStyle(PlainListStyle())
             }
         }
         .onTapGesture {
@@ -122,7 +149,9 @@ struct ConsultarAnuncio: View {
                 if !newValue { selectedAnuncio = nil }
                 showModifyView = newValue
             })) {
-                ModificarAnuncioView(viewModel: viewModel, anuncio: selectedAnuncio!)
+                if let anuncio = selectedAnuncio {
+                    ModificarAnuncioView(viewModel: viewModel, anuncio: anuncio)
+                }
         }
         .alert(isPresented: $showDeleteConfirmation) {
             Alert(
@@ -141,6 +170,22 @@ struct ConsultarAnuncio: View {
     }
 }
 
-#Preview {
-    ConsultarAnuncio()
+// Extensión para aplicar esquinas específicas en cornerRadius
+extension View {
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape( RoundedCorner(radius: radius, corners: corners) )
+    }
+}
+
+// Estructura auxiliar para esquinas específicas
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect,
+            byRoundingCorners: corners,
+            cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
+    }
 }

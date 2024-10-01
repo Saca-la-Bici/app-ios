@@ -43,29 +43,42 @@ class AnuncioAPIService {
     }
 
     // Función para registrar un nuevo anuncio
-    func registrarAnuncio(url: URL, _ anuncio: Anuncio) async throws -> String {
-        
+    func registrarAnuncio(url: URL, _ anuncio: Anuncio, imagenData: Data?) async throws -> String {
         guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
         
         let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(idToken)",
-            "Content-Type": "application/json"
+            "Authorization": "Bearer \(idToken)"
+            // "Content-Type" se establece automáticamente
         ]
         
-        let params: [String: Any] = [
+        let params: [String: String] = [
             "titulo": anuncio.titulo,
-            "contenido": anuncio.contenido,
-            "imagen": ""
+            "contenido": anuncio.contenido
         ]
         
-        let responseMessage = try await AF.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers)
+        return try await withCheckedThrowingContinuation { continuation in
+            AF.upload(multipartFormData: { multipartFormData in
+                // Añadir los parámetros de texto
+                for (key, value) in params {
+                    multipartFormData.append(Data(value.utf8), withName: key)
+                }
+                // Añadir la imagen si existe
+                if let data = imagenData {
+                    multipartFormData.append(data, withName: "file", fileName: "image.jpg", mimeType: "image/jpeg")
+                }
+            }, to: url, headers: headers)
             .validate()
-            .serializingDecodable(ResponseMessage.self)
-            .value
-        
-        return responseMessage.message
+            .responseDecodable(of: ResponseMessage.self) { response in
+                switch response.result {
+                case .success(let value):
+                    continuation.resume(returning: value.message)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
     }
     
     // Función para eliminar un anuncio
@@ -89,27 +102,41 @@ class AnuncioAPIService {
     }
     
     // Función para modificar un anuncio existente
-    func modificarAnuncio(url: URL, _ anuncio: Anuncio, anuncioID: String) async throws -> Anuncio {
+    func modificarAnuncio(url: URL, _ anuncio: Anuncio, anuncioID: String, imagenData: Data?) async throws -> Anuncio {
         guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
 
         let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(idToken)",
-            "Content-Type": "application/json"
+            "Authorization": "Bearer \(idToken)"
         ]
-        
-        let params: [String: Any] = [
+
+        let params: [String: String] = [
             "titulo": anuncio.titulo,
-            "contenido": anuncio.contenido,
-            "imagen": ""
+            "contenido": anuncio.contenido
         ]
-        
-        let responseData = try await AF.request(url, method: .patch, parameters: params, encoding: JSONEncoding.default, headers: headers)
+
+        return try await withCheckedThrowingContinuation { continuation in
+            AF.upload(multipartFormData: { multipartFormData in
+                // Añadir los parámetros de texto
+                for (key, value) in params {
+                    multipartFormData.append(Data(value.utf8), withName: key)
+                }
+                // Añadir la imagen (ya sea nueva o existente)
+                if let data = imagenData {
+                    multipartFormData.append(data, withName: "file", fileName: "image.jpg", mimeType: "image/jpeg")
+                }
+                // Si imagenData es nil, no se añade ninguna imagen, y el servidor debe eliminar la imagen existente
+            }, to: url, method: .patch, headers: headers)
             .validate()
-            .serializingDecodable(Anuncio.self)
-            .value
-        
-        return responseData
+            .responseDecodable(of: Anuncio.self) { response in
+                switch response.result {
+                case .success(let anuncio):
+                    continuation.resume(returning: anuncio)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
     }
 }
