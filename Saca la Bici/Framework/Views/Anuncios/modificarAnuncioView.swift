@@ -124,7 +124,7 @@ struct ModificarAnuncioView: View {
                 .onChange(of: selectedItem) { _, newItem in
                     Task {
                         if let data = try? await newItem?.loadTransferable(type: Data.self),
-                           let _ = UIImage(data: data) {
+                           UIImage(data: data) != nil {
                             selectedImageData = data
                         }
                     }
@@ -169,7 +169,7 @@ struct ModificarAnuncioView: View {
                                 .frame(width: 200, height: 200)
                         }
                     }
-
+                    
                     HStack {
                         Button(action: {
                             // Permitir seleccionar una nueva imagen
@@ -182,7 +182,7 @@ struct ModificarAnuncioView: View {
                                 .foregroundColor(.blue)
                                 .padding(.top, 5)
                         })
-
+                        
                         Button(action: {
                             // Eliminar la imagen existente
                             selectedImageData = nil
@@ -198,7 +198,7 @@ struct ModificarAnuncioView: View {
                 .onChange(of: selectedItem) { _, newItem in
                     Task {
                         if let data = try? await newItem?.loadTransferable(type: Data.self),
-                           let _ = UIImage(data: data) {
+                           UIImage(data: data) != nil {
                             selectedImageData = data
                             existingImageURL = nil
                             existingImageData = nil

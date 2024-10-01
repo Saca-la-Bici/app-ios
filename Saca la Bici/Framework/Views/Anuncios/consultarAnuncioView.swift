@@ -104,7 +104,6 @@ struct ConsultarAnuncio: View {
                                     Text(anuncio.contenido)
                                         .font(.subheadline)
                                         .foregroundColor(.secondary)
-                                        .lineLimit(3)
                                         .minimumScaleFactor(0.8)
                                         .multilineTextAlignment(.leading)
                                         .frame(maxWidth: .infinity, alignment: .leading)
