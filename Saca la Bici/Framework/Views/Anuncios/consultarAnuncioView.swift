@@ -57,52 +57,64 @@ struct ConsultarAnuncio: View {
                     LazyVStack(spacing: 16) {
                         ForEach(viewModel.anuncios) { anuncio in
                             VStack(alignment: .leading, spacing: 0) {
-                                // Imagen o espacio reservado
+                                // Imagen con dimensiones ajustadas
                                 if let imageUrlString = anuncio.imagen, let imageUrl = URL(string: imageUrlString) {
                                     AsyncImage(url: imageUrl) { phase in
-                                        if let image = phase.image {
+                                        switch phase {
+                                        case .empty:
+                                            ProgressView()
+                                                .frame(width: 350, height: 175)
+                                                .background(Color.gray.opacity(0.1))
+                                                .cornerRadius(10, corners: [.topLeft, .topRight])
+                                        case .success(let image):
                                             image
                                                 .resizable()
                                                 .scaledToFill()
-                                                .frame(height: 150) // Altura fija para la imagen
+                                                .frame(width: 350, height: 175)
                                                 .clipped()
                                                 .cornerRadius(10, corners: [.topLeft, .topRight])
-                                        } else if phase.error != nil {
-                                            Color.gray
-                                                .frame(height: 150)
-                                                .cornerRadius(10, corners: [.topLeft, .topRight])
-                                        } else {
-                                            ProgressView()
-                                                .frame(height: 150)
+                                        case .failure:
+                                            VStack {
+                                                Image(systemName: "exclamationmark.triangle")
+                                                    .foregroundColor(.red)
+                                                    .font(.largeTitle)
+                                                Text("Error cargando imagen")
+                                                    .foregroundColor(.red)
+                                                    .font(.caption)
+                                            }
+                                            .frame(width: 350, height: 175)
+                                            .background(Color.gray.opacity(0.1))
+                                            .cornerRadius(10, corners: [.topLeft, .topRight])
+                                        @unknown default:
+                                            EmptyView()
                                         }
                                     }
-                                } else {
-                                    // Espacio reservado para tarjetas sin imagen
-                                    Color.clear
-                                        .frame(height: 150) // Misma altura que la imagen
                                 }
 
-                                // Título y contenido
+                                // Título y contenido, alineados a la izquierda
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(anuncio.titulo)
                                         .font(.headline)
                                         .fontWeight(.bold)
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.8)
+                                        .multilineTextAlignment(.leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
 
                                     Text(anuncio.contenido)
                                         .font(.subheadline)
                                         .foregroundColor(.secondary)
                                         .lineLimit(3)
                                         .minimumScaleFactor(0.8)
+                                        .multilineTextAlignment(.leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 12)
 
-                                Spacer() // Ocupa el espacio restante
+                                Spacer()
                             }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 300) // Altura fija para todas las tarjetas
+                            .frame(width: 350) // ancho de la tarjeta
                             .background(Color(UIColor.systemGray5))
                             .cornerRadius(10)
                             .padding(.horizontal, 16)
@@ -173,7 +185,7 @@ struct ConsultarAnuncio: View {
 // Extensión para aplicar esquinas específicas en cornerRadius
 extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape( RoundedCorner(radius: radius, corners: corners) )
+        clipShape(RoundedCorner(radius: radius, corners: corners))
     }
 }
 
@@ -184,8 +196,8 @@ struct RoundedCorner: Shape {
 
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(roundedRect: rect,
-            byRoundingCorners: corners,
-            cornerRadii: CGSize(width: radius, height: radius))
+                                byRoundingCorners: corners,
+                                cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
     }
 }

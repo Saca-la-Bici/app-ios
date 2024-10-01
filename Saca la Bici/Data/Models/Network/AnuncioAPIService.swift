@@ -19,7 +19,7 @@ class AnuncioAPIService {
     
     // Función para obtener los anuncios existentes
     func fetchAnuncios(url: URL) async throws -> AnunciosResponse {
-
+        
         guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
@@ -49,8 +49,8 @@ class AnuncioAPIService {
         }
         
         let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(idToken)"
-            // "Content-Type" se establece automáticamente
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
         ]
         
         let params: [String: String] = [
@@ -108,7 +108,8 @@ class AnuncioAPIService {
         }
 
         let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(idToken)"
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
         ]
 
         let params: [String: String] = [
