@@ -54,7 +54,7 @@ class UpdateFAQViewModel: ObservableObject {
                 Imagen: "")
             
             _ = try await repository.updateFAQ(faqUpdated)
-            self.successMessage = "FAQ editada exitosamente."
+            self.successMessage = "Pregunta editada exitosamente."
             
         } catch {
             self.handleError(error)
