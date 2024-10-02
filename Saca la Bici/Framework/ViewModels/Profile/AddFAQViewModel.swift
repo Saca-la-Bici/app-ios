@@ -13,15 +13,15 @@ class AddFAQViewModel: ObservableObject {
     
     // Temas
     @Published var temasList: [String] = [
-        "Lugares y tiempos de las rodadas",
-        "Niveles",
+        "Condiciones de Participación y Asistencia",
         "Equipamiento",
+        "Lugares y tiempos de las rodadas",
         "Medidas de Seguridad",
-        "Condiciones de Participación y Asistencia"
+        "Niveles"
     ]
     
     // Variables
-    @Published var temaSelected: String = "Rodadas"
+    @Published var temaSelected: String = "Condiciones de Participación y Asistencia"
     @Published var pregunta: String = ""
     @Published var respuesta: String = ""
     

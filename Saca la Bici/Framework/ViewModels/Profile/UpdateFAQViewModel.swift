@@ -16,11 +16,11 @@ class UpdateFAQViewModel: ObservableObject {
     
     // Temas
     @Published var temasList: [String] = [
-        "Lugares y tiempos de las rodadas",
-        "Niveles",
+        "Condiciones de Participación y Asistencia",
         "Equipamiento",
+        "Lugares y tiempos de las rodadas",
         "Medidas de Seguridad",
-        "Condiciones de Participación y Asistencia"
+        "Niveles"
     ]
     
     
