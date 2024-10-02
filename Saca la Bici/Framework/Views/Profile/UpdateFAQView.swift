@@ -1,19 +1,22 @@
 //
-//  AddFAQView.swift
+//  UpdateFAQView.swift
 //  Saca la Bici
 //
-//  Created by Diego Antonio García Padilla on 29/09/24.
+//  Created by Diego Antonio García Padilla on 01/10/24.
 //
 
 import SwiftUI
 
-struct AddFAQView: View {
+struct UpdateFAQView: View {
+    
+    // FAQ
+    var faq: FAQ
 
     // Sesión
     @EnvironmentObject var sessionManager: SessionManager
     
     // View Model
-    @ObservedObject var viewModel = AddFAQViewModel()
+    @ObservedObject var viewModel = UpdateFAQViewModel()
     
     // Binding
     @Binding var path: [ConfigurationPaths]
@@ -95,10 +98,11 @@ struct AddFAQView: View {
                     activeAlert = .error
                 } else {
                     Task {
-                        await viewModel.addFAQ(
-                            tema: viewModel.temaSelected,
+                        await viewModel.updateFAQ(
+                            idPregunta: faq.IdPregunta,
                             pregunta: viewModel.pregunta,
-                            respuesta: viewModel.respuesta
+                            respuesta: viewModel.respuesta,
+                            tema: viewModel.temaSelected
                         )
                         
                         activeAlert = .success
@@ -118,8 +122,13 @@ struct AddFAQView: View {
             
             Spacer()
             
-        }.navigationTitle("Añadir pregunta")
+        }.navigationTitle("Editar pregunta")
         .padding()
+        .onAppear {
+            viewModel.temaSelected = faq.Tema
+            viewModel.pregunta = faq.Pregunta
+            viewModel.respuesta = faq.Respuesta
+        }
         .alert(item: $activeAlert) { alertType in
             switch alertType {
             case .error:
@@ -133,7 +142,7 @@ struct AddFAQView: View {
             case .success:
                 return Alert(
                     title: Text("Éxito"),
-                    message: Text(viewModel.successMessage ?? "Pregunta frecuente agregada correctamente."),
+                    message: Text(viewModel.successMessage ?? "Pregunta editada correctamente."),
                     dismissButton: .default(Text("OK")) {
                         viewModel.successMessage = nil
                         presentationMode.wrappedValue.dismiss()
@@ -146,7 +155,7 @@ struct AddFAQView: View {
     }
 }
 
-struct AddFAQView_Previews: PreviewProvider {
+struct UpdateFAQView_Previews: PreviewProvider {
     static var previews: some View {
         PreviewWrapper()
     }
@@ -155,7 +164,13 @@ struct AddFAQView_Previews: PreviewProvider {
         @State var path: [ConfigurationPaths] = []
 
         var body: some View {
-            AddFAQView(path: $path)
+            UpdateFAQView(faq: FAQ(
+                IdPregunta: 1234,
+                Pregunta: "Pregunta",
+                Respuesta: "Respuesta",
+                Tema: "Rodadas",
+                Imagen: ""),
+                          path: $path)
         }
     }
 }

@@ -85,5 +85,36 @@ class FAQAPIService {
         }
         
     }
+    
+    // Update FAQ
+    func updateFAQ(url: URL, faq: FAQ) async throws -> String {
+        
+        let idToken = try await getIDToken()
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken!)",
+            "Content-Type": "application/json"
+        ]
+        
+        let params: Parameters = [
+            "Pregunta": faq.Pregunta,
+            "Respuesta": faq.Respuesta,
+            "Tema": faq.Tema,
+            "Imagen": faq.Imagen
+        ]
+        
+        do {
+            let response = try await AF.request(url, method: .put, parameters: params, encoding: JSONEncoding.default, headers: headers)
+                .validate()
+                .serializingDecodable(UpdateFAQResponse.self)
+                .value
+            
+            return response.msg
+        } catch {
+            print("Error al modificar FAQ: \(error)")
+            throw error
+        }
+    }
+    
 }
 

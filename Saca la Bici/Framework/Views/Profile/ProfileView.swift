@@ -41,6 +41,8 @@ struct ProfileView: View {
                     FAQDetailView(faq: faq, permisos: permisos, path: $path)
                 case .addFAQ:
                     AddFAQView(path: $path)
+                case .updateFAQ (let faq):
+                    UpdateFAQView(faq: faq, path: $path)
                 case .configuration:
                     ConfigurationView(restablecerContraseñaViewModel: restablecerContraseñaViewModel, path: $path)
                 case .profile:

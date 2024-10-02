@@ -13,6 +13,9 @@ struct FAQDetailView: View {
     var faq: FAQ
     var permisos: [String]
     
+    // View model
+    @ObservedObject var viewModel = FAQDetailViewModel()
+    
     // Binding
     @Binding var path: [ConfigurationPaths]
     
@@ -44,7 +47,7 @@ struct FAQDetailView: View {
                 if permisos.contains("Modificar pregunta frecuente") {
                     
                     Button(action: {
-                        
+                        path.append(.updateFAQ(faq: faq))
                     }, label: {
                         Text("Editar pregunta")
                             .font(.callout)
@@ -80,6 +83,9 @@ struct FAQDetailView: View {
         }
         .padding()
         .frame(maxWidth: .infinity)
+        .onAppear() {
+            viewModel.faq = faq
+        }
         
         Spacer()
     }

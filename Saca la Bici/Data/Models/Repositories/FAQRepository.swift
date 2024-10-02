@@ -31,5 +31,12 @@ class FAQRepository {
         return responseMsg
     }
     
+    // Update FAQ
+    func updateFAQ(_ faq: FAQ) async throws -> String {
+        let responseMsg = try await apiService.updateFAQ(url: URL(string: "\(Api.base)\(Api.Routes.faq)/modificar/\(faq.IdPregunta)")!, faq: faq)
+        
+        return responseMsg
+    }
+    
     
 }

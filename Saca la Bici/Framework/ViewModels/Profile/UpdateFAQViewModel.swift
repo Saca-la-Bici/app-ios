@@ -1,15 +1,18 @@
 //
-//  AddFAQViewModel.swift
+//  UpdateFAQViewModel.swift
 //  Saca la Bici
 //
-//  Created by Diego Antonio García Padilla on 29/09/24.
+//  Created by Diego Antonio García Padilla on 01/10/24.
 //
 
 import Alamofire
 import Foundation
 
 @MainActor
-class AddFAQViewModel: ObservableObject {
+class UpdateFAQViewModel: ObservableObject {
+    
+    // FAQ
+    @Published var faq: FAQ?
     
     // Temas
     @Published var temasList: [String] = [
@@ -20,8 +23,9 @@ class AddFAQViewModel: ObservableObject {
         "Condiciones de Participación y Asistencia"
     ]
     
+    
     // Variables
-    @Published var temaSelected: String = "Rodadas"
+    @Published var temaSelected: String = ""
     @Published var pregunta: String = ""
     @Published var respuesta: String = ""
     
@@ -37,27 +41,26 @@ class AddFAQViewModel: ObservableObject {
         self.repository = repository
     }
     
-    func addFAQ(tema: String, pregunta: String, respuesta: String) async {
+    // Editar FAQ
+    func updateFAQ(idPregunta: Int, pregunta: String, respuesta: String, tema: String) async {
         
         do {
-            // Obtener ultimo ID
-            let lastID = try await repository.getFAQs().data.last?.IdPregunta ?? 0
             
             // Crear nuevo FAQ
-            let newFAQ = FAQ(
-                IdPregunta: lastID + 1,
+            let faqUpdated = FAQ(
+                IdPregunta: idPregunta,
                 Pregunta: pregunta,
                 Respuesta: respuesta,
                 Tema: tema,
                 Imagen: "")
             
-            // Crear FAQ en la base de datos
-            let _ = try await repository.addFAQ(newFAQ)
-            self.successMessage = "FAQ creada exitosamente."
+            let _ = try await repository.updateFAQ(faqUpdated)
+            self.successMessage = "FAQ editada exitosamente."
             
         } catch {
             self.handleError(error)
         }
+        
     }
     
     // Manejo de errores
@@ -73,4 +76,5 @@ class AddFAQViewModel: ObservableObject {
             self.errorMessage = "Error: \(error.localizedDescription)"
         }
     }
+    
 }
