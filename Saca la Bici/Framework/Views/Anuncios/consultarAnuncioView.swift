@@ -15,6 +15,7 @@ struct ConsultarAnuncio: View {
     @State private var showDeleteConfirmation = false
     @State private var selectedAnuncio: Anuncio?
     @State private var showModifyView = false
+    @State private var isLoading = true
 
     var body: some View {
         VStack {
@@ -52,25 +53,34 @@ struct ConsultarAnuncio: View {
                 Text(errorMessage)
                     .foregroundColor(.red)
                     .padding()
+            } else if isLoading {
+                ProgressView("Cargando anuncios...")
+                    .padding()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            } else if viewModel.anuncios.isEmpty {
+                Text("No hay anuncios")
+                    .font(.headline)
+                    .foregroundColor(.gray)
+                    .padding()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             } else {
                 ScrollView {
                     LazyVStack(spacing: 16) {
                         ForEach(viewModel.anuncios) { anuncio in
                             VStack(alignment: .leading, spacing: 0) {
-                                // Imagen con dimensiones ajustadas
                                 if let imageUrlString = anuncio.imagen, let imageUrl = URL(string: imageUrlString) {
                                     AsyncImage(url: imageUrl) { phase in
                                         switch phase {
                                         case .empty:
                                             ProgressView()
-                                                .frame(width: 350, height: 175)
+                                                .frame(maxWidth: .infinity)
                                                 .background(Color.gray.opacity(0.1))
                                                 .cornerRadius(10, corners: [.topLeft, .topRight])
                                         case .success(let image):
                                             image
                                                 .resizable()
-                                                .scaledToFill()
-                                                .frame(width: 350, height: 175)
+                                                .scaledToFit()
+                                                .frame(maxWidth: .infinity)
                                                 .clipped()
                                                 .cornerRadius(10, corners: [.topLeft, .topRight])
                                         case .failure:
@@ -82,7 +92,7 @@ struct ConsultarAnuncio: View {
                                                     .foregroundColor(.red)
                                                     .font(.caption)
                                             }
-                                            .frame(width: 350, height: 175)
+                                            .frame(maxWidth: .infinity)
                                             .background(Color.gray.opacity(0.1))
                                             .cornerRadius(10, corners: [.topLeft, .topRight])
                                         @unknown default:
@@ -90,8 +100,6 @@ struct ConsultarAnuncio: View {
                                         }
                                     }
                                 }
-
-                                // Título y contenido, alineados a la izquierda
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(anuncio.titulo)
                                         .font(.headline)
@@ -113,11 +121,9 @@ struct ConsultarAnuncio: View {
 
                                 Spacer()
                             }
-                            .frame(width: 350) // ancho de la tarjeta
                             .background(Color(UIColor.systemGray5))
                             .cornerRadius(10)
                             .padding(.horizontal, 16)
-                            // Acciones de contexto
                             .contextMenu {
                                 if userSessionManager.puedeModificarAnuncio() {
                                     Button(action: {
@@ -148,7 +154,9 @@ struct ConsultarAnuncio: View {
         }
         .onAppear {
             Task {
+                isLoading = true
                 await viewModel.fetchAnuncios()
+                isLoading = false
             }
         }
         .sheet(isPresented: $showAddAnuncioView) {
