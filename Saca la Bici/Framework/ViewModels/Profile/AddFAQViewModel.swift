@@ -52,7 +52,7 @@ class AddFAQViewModel: ObservableObject {
                 Imagen: "")
             
             // Crear FAQ en la base de datos
-            let _ = try await repository.addFAQ(newFAQ)
+            _ = try await repository.addFAQ(newFAQ)
             self.successMessage = "FAQ creada exitosamente."
             
         } catch {

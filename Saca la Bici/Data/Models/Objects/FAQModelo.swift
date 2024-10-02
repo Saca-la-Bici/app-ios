@@ -7,19 +7,19 @@
 
 import Foundation
 
-struct FAQResponse : Codable {
+struct FAQResponse: Codable {
     var code: Int
     var msg: String
     var permisos: [String]?
     var data: [FAQ]
 }
 
-struct UpdateDeleteFAQResponse : Codable {
+struct UpdateDeleteFAQResponse: Codable {
     var code: Int
     var msg: String
 }
 
-struct FAQ : Codable, Hashable, Identifiable {
+struct FAQ: Codable, Hashable, Identifiable {
     var id: Int { IdPregunta }
     var IdPregunta: Int
     var Pregunta: String
@@ -28,7 +28,7 @@ struct FAQ : Codable, Hashable, Identifiable {
     var Imagen: String
 }
 
-struct TemaFAQ : Identifiable {
+struct TemaFAQ: Identifiable {
     var id = UUID() // ID para el protocolo Identifiable
     var tema: String
     var faqs: [FAQ]

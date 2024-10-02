@@ -24,62 +24,67 @@ struct FAQView: View {
     
     var body: some View {
         
-        // Wrapper
-        VStack(alignment: .leading, spacing: 20.0) {
-            
-            // Nombre de usuario PENDIENTE
-            HStack {
-                Text("¿Cómo te podemos ayudar hoy, Guadalupe?")
-                    .font(.title2)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                if viewModel.canCreateFAQ() {
-                    Spacer()
-                    Button(action: {
-                        path.append(.addFAQ)
-                    }) {
-                        Image(systemName: "plus")
-                            .padding()
-                            .foregroundColor(.black)
+        ZStack {
+            // Wrapper
+            VStack(alignment: .leading, spacing: 20.0) {
+                
+                Spacer().frame(height: 10)
+                
+                // Nombre de usuario PENDIENTE
+                HStack {
+                    Text("¿Cómo te podemos ayudar hoy?")
+                        .font(.title2)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    if viewModel.canCreateFAQ() {
+                        Spacer()
+                        Button(action: {
+                            path.append(.addFAQ)
+                        }, label: {
+                            Image(systemName: "plus")
+                                .padding()
+                        })
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
-            }
-            
-            // Input de búsqueda
-            TextField("¿Cuál es tu duda?", text: $viewModel.searchText)
-                .textInputAutocapitalization(.never)
-                .padding()
-                .cornerRadius(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-                )
-            
-            // Preguntas frecuentes
-            List {
-                ForEach(viewModel.filteredFAQs) { tema in
-                    Section(header: Text(tema.tema)) {
-                        ForEach(tema.faqs) { faq in
-                            FAQCard(
-                                faq: faq,
-                                permisos: viewModel.userPermissions,
-                                path: $path,
-                                nextPath: .faqDetail (faq: faq, permisos: viewModel.userPermissions)
-                            )
+                .padding(.horizontal, 15)
+                
+                // Input de búsqueda
+                TextField("¿Cuál es tu duda?", text: $viewModel.searchText)
+                    .textInputAutocapitalization(.never)
+                    .padding()
+                    .cornerRadius(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                    )
+                    .padding(.horizontal, 15)
+                
+                // Preguntas frecuentes
+                List {
+                    ForEach(viewModel.filteredFAQs) { tema in
+                        Section(header: Text(tema.tema)) {
+                            ForEach(tema.faqs) { faq in
+                                FAQCard(
+                                    faq: faq,
+                                    permisos: viewModel.userPermissions,
+                                    path: $path,
+                                    nextPath: .faqDetail(faq: faq, permisos: viewModel.userPermissions)
+                                )
+                                .listRowBackground(Color(UIColor.systemGray5))
+                            }
                         }
                     }
                 }
+                .scrollContentBackground(.hidden)
             }
-            
-        }.navigationTitle("Ayuda")
-        .padding()
+            .navigationTitle("Ayuda")
             .onAppear {
                 Task {
                     await viewModel.getFAQs()
                     viewModel.searchText.removeAll()
                 }
             }
-        
-        Spacer()
+        }
     }
 }
 

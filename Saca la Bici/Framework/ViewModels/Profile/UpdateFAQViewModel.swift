@@ -23,7 +23,6 @@ class UpdateFAQViewModel: ObservableObject {
         "Niveles"
     ]
     
-    
     // Variables
     @Published var temaSelected: String = ""
     @Published var pregunta: String = ""
@@ -54,7 +53,7 @@ class UpdateFAQViewModel: ObservableObject {
                 Tema: tema,
                 Imagen: "")
             
-            let _ = try await repository.updateFAQ(faqUpdated)
+            _ = try await repository.updateFAQ(faqUpdated)
             self.successMessage = "FAQ editada exitosamente."
             
         } catch {

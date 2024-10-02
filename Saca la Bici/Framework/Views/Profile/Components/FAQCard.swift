@@ -24,10 +24,8 @@ struct FAQCard: View {
         } label: {
             HStack {
                 Text(faq.Pregunta)
-                    .foregroundColor(.black)
                 Spacer()
                 Image(systemName: "chevron.forward")
-                    .foregroundColor(Color(.black))
                     .scaleEffect(1)
             }
         }

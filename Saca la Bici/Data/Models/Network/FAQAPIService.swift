@@ -84,7 +84,6 @@ class FAQAPIService {
             "Content-Type": "application/json"
         ]
         
-        
         let params: Parameters = [
             "IdPregunta": faq.IdPregunta,
             "Pregunta": faq.Pregunta,
@@ -161,6 +160,4 @@ class FAQAPIService {
         
     }
     
-    
 }
-
