@@ -37,6 +37,16 @@ class FAQDetailViewModel: ObservableObject {
         
     }
     
+    // Delete FAQ
+    func deleteFAQ(_ id: Int) async {
+        do {
+            let _ = try await repository.deleteFAQ(id)
+            successMessage = "FAQ eliminada correctamente."
+        } catch {
+            self.handleError(error)
+        }
+    }
+    
     // Manejo de errores
     private func handleError(_ error: Error) {
         if let afError = error as? AFError {

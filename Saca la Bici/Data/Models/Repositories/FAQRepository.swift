@@ -26,9 +26,6 @@ class FAQRepository {
     
     // Get one FAQ
     func getFAQ(_ id: Int) async throws -> FAQResponse {
-        
-        print("URL: \(URL(string: "\(Api.base)\(Api.Routes.faq)/consultarIndividual/\(id)")!)")
-        
         let response = try await apiService.fetchFAQ(url: URL(string: "\(Api.base)\(Api.Routes.faq)/consultarIndividual/\(id)")!)
         
         return response
@@ -44,6 +41,13 @@ class FAQRepository {
     // Update FAQ
     func updateFAQ(_ faq: FAQ) async throws -> String {
         let responseMsg = try await apiService.updateFAQ(url: URL(string: "\(Api.base)\(Api.Routes.faq)/modificar/\(faq.IdPregunta)")!, faq: faq)
+        
+        return responseMsg
+    }
+    
+    // Delete FAQ
+    func deleteFAQ(_ id: Int) async throws -> String {
+        let responseMsg = try await apiService.deleteFAQ(url: URL(string: "\(Api.base)\(Api.Routes.faq)/eliminar/\(id)")!)
         
         return responseMsg
     }

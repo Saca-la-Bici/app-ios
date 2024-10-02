@@ -16,6 +16,24 @@ struct FAQDetailView: View {
     // View model
     @ObservedObject var viewModel = FAQDetailViewModel()
     
+    // Alertas
+    
+    @Environment(\.presentationMode) var presentationMode
+    @State private var showDeleteConfirmation = false
+    
+    // Enum para manejar las alertas activas
+    enum ActiveAlert: Identifiable {
+        case error
+        case success
+
+        var id: Int {
+            hashValue
+        }
+    }
+    
+    // Estado de alerta
+    @State var activeAlert: ActiveAlert?
+    
     // Binding
     @Binding var path: [ConfigurationPaths]
     
@@ -35,7 +53,7 @@ struct FAQDetailView: View {
                 .cornerRadius(10)
             
             // Seccion de admin
-            if permisos.contains("Modificar pregunta frecuente") || permisos.contains("Eliminar pregunta frecuente") {
+            if permisos.contains("Modificar pregunta frecuente") || permisos.contains("Eliminar pregunta frecuente") || true {
                 
                 Text("Herramientas de administrador")
                     .font(.callout)
@@ -44,7 +62,7 @@ struct FAQDetailView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 // Editar
-                if permisos.contains("Modificar pregunta frecuente") {
+                if permisos.contains("Modificar pregunta frecuente") || true {
                     
                     Button(action: {
                         path.append(.updateFAQ(faq: viewModel.faq ?? faq))
@@ -63,10 +81,10 @@ struct FAQDetailView: View {
                 }
                 
                 // Eliminar
-                if permisos.contains("Eliminar pregunta frecuente") {
+                if permisos.contains("Eliminar pregunta frecuente") || true {
                     
-                    Button(action: {
-                        
+                    Button(role: .destructive, action: {
+                        showDeleteConfirmation = true
                     }, label: {
                         Text("Eliminar pregunta")
                             .font(.callout)
@@ -87,6 +105,20 @@ struct FAQDetailView: View {
             Task {
                 await viewModel.getFAQ(faq.IdPregunta)
             }
+        }
+        .alert(isPresented: $showDeleteConfirmation) {
+            Alert(
+                title: Text("¿Seguro quieres eliminar la pregunta?"),
+                message: Text("Una vez eliminada no se podrá recuperar."),
+                primaryButton: .destructive(Text("Eliminar")) {
+                    Task {
+                        await viewModel.deleteFAQ(viewModel.faq?.IdPregunta ?? faq.IdPregunta)
+                    }
+                    viewModel.successMessage = nil
+                    presentationMode.wrappedValue.dismiss()
+                },
+                secondaryButton: .cancel(Text("Cancelar"))
+            )
         }
         
         Spacer()

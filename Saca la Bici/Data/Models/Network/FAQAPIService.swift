@@ -127,7 +127,7 @@ class FAQAPIService {
         do {
             let response = try await AF.request(url, method: .put, parameters: params, encoding: JSONEncoding.default, headers: headers)
                 .validate()
-                .serializingDecodable(UpdateFAQResponse.self)
+                .serializingDecodable(UpdateDeleteFAQResponse.self)
                 .value
             
             return response.msg
@@ -136,6 +136,31 @@ class FAQAPIService {
             throw error
         }
     }
+    
+    // Delete FAQ
+    func deleteFAQ(url: URL) async throws -> String {
+        
+        let idToken = try await getIDToken()
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken!)",
+            "Content-Type": "application/json"
+        ]
+        
+        do {
+            let response = try await AF.request(url, method: .delete, headers: headers)
+                .validate()
+                .serializingDecodable(UpdateDeleteFAQResponse.self)
+                .value
+            
+            return response.msg
+        } catch {
+            print("Error al eliminar FAQ: \(error)")
+            throw error
+        }
+        
+    }
+    
     
 }
 
