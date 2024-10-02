@@ -23,12 +23,12 @@ struct FAQDetailView: View {
         VStack(alignment: .leading, spacing: 20.0) {
             
             // Pregunta
-            Text(faq.Pregunta)
+            Text(viewModel.faq?.Pregunta ?? "")
                 .font(.title2)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             // Respuesta
-            Text(faq.Respuesta)
+            Text(viewModel.faq?.Respuesta ?? "")
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(20)
                 .background(Color(red: 0.937, green: 0.937, blue: 0.937))
@@ -84,7 +84,9 @@ struct FAQDetailView: View {
         .padding()
         .frame(maxWidth: .infinity)
         .onAppear() {
-            viewModel.faq = faq
+            Task {
+                await viewModel.getFAQ(faq.IdPregunta)
+            }
         }
         
         Spacer()

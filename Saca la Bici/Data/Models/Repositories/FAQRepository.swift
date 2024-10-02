@@ -24,6 +24,16 @@ class FAQRepository {
         return response
     }
     
+    // Get one FAQ
+    func getFAQ(_ id: Int) async throws -> FAQResponse {
+        
+        print("URL: \(URL(string: "\(Api.base)\(Api.Routes.faq)/consultarIndividual/\(id)")!)")
+        
+        let response = try await apiService.fetchFAQ(url: URL(string: "\(Api.base)\(Api.Routes.faq)/consultarIndividual/\(id)")!)
+        
+        return response
+    }
+    
     // Add FAQ
     func addFAQ(_ faq: FAQ) async throws -> String {
         let responseMsg = try await apiService.addFAQ(url: URL(string: "\(Api.base)\(Api.Routes.faq)/registrar")!, faq: faq)

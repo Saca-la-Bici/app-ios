@@ -53,6 +53,27 @@ class FAQAPIService {
         }
     }
     
+    // Fetch one FAQ
+    func fetchFAQ(url: URL) async throws -> FAQResponse {
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json"
+        ]
+        
+        do {
+            let response = try await AF.request(url, method: .get, headers: headers)
+                .validate()
+                .serializingDecodable(FAQResponse.self)
+                .value
+            
+            return response
+        } catch {
+            print("Error al obtener FAQ: \(error)")
+            throw error
+        }
+        
+    }
+    
     // Add FAQ
     func addFAQ(url: URL, faq: FAQ) async throws -> String {
         
