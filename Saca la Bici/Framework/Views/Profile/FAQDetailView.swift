@@ -21,19 +21,6 @@ struct FAQDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var showDeleteConfirmation = false
     
-    // Enum para manejar las alertas activas
-    enum ActiveAlert: Identifiable {
-        case error
-        case success
-
-        var id: Int {
-            hashValue
-        }
-    }
-    
-    // Estado de alerta
-    @State var activeAlert: ActiveAlert?
-    
     // Binding
     @Binding var path: [ConfigurationPaths]
     

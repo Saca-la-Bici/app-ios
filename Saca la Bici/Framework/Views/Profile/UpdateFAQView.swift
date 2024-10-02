@@ -20,19 +20,6 @@ struct UpdateFAQView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    // Enum para manejar las alertas activas
-    enum ActiveAlert: Identifiable {
-        case error
-        case success
-
-        var id: Int {
-            hashValue
-        }
-    }
-    
-    // Estado de alerta
-    @State var activeAlert: ActiveAlert?
-    
     var body: some View {
         ZStack {
             ScrollView {
@@ -90,7 +77,7 @@ struct UpdateFAQView: View {
                         action: {
                             if viewModel.pregunta.isEmpty || viewModel.respuesta.isEmpty {
                                 viewModel.errorMessage = "Debe ingresar una pregunta y una respuesta"
-                                activeAlert = .error
+                                viewModel.activeAlert = .error
                             } else {
                                 Task {
                                     await viewModel.updateFAQ(
@@ -99,9 +86,6 @@ struct UpdateFAQView: View {
                                         respuesta: viewModel.respuesta,
                                         tema: viewModel.temaSelected
                                     )
-                                    
-                                    activeAlert = .success
-                                    
                                 }
                             }
                         }
@@ -117,7 +101,7 @@ struct UpdateFAQView: View {
                     viewModel.pregunta = faq.Pregunta
                     viewModel.respuesta = faq.Respuesta
                 }
-                .alert(item: $activeAlert) { alertType in
+                .alert(item: $viewModel.activeAlert) { alertType in
                     switch alertType {
                     case .error:
                         return Alert(

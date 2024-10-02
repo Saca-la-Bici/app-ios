@@ -35,6 +35,19 @@ class UpdateFAQViewModel: ObservableObject {
     // Singleton del repositorio
     let repository: FAQRepository
     
+    // Enum para manejar las alertas activas
+    enum ActiveAlert: Identifiable {
+        case error
+        case success
+
+        var id: Int {
+            hashValue
+        }
+    }
+    
+    // Estado de alerta
+    @Published var activeAlert: ActiveAlert?
+    
     // Inicializar
     init(repository: FAQRepository = FAQRepository()) {
         self.repository = repository
@@ -55,7 +68,7 @@ class UpdateFAQViewModel: ObservableObject {
             
             _ = try await repository.updateFAQ(faqUpdated)
             self.successMessage = "Pregunta editada exitosamente."
-            
+            self.activeAlert = .success
         } catch {
             self.handleError(error)
         }
@@ -67,13 +80,14 @@ class UpdateFAQViewModel: ObservableObject {
         if let afError = error as? AFError {
             switch afError.responseCode {
             case 401:
-                self.errorMessage = "No autorizado. Por favor, inicia sesión nuevamente."
+                self.errorMessage = "No está autorizado para realizar esta acción. Por favor, inicia sesión nuevamente."
             default:
-                self.errorMessage = "Error: \(afError.errorDescription ?? "Desconocido")"
+                self.errorMessage = "Hubo un error al registrar la pregunta. Favor de intentarlo de nuevo."
             }
         } else {
-            self.errorMessage = "Error: \(error.localizedDescription)"
+            self.errorMessage = "Hubo un error al registrar la pregunta. Favor de intentarlo de nuevo."
         }
+        self.activeAlert = .error
     }
     
 }
