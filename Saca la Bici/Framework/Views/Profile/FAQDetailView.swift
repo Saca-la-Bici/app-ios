@@ -107,16 +107,16 @@ struct FAQDetailView: View {
                                     await viewModel.deleteFAQ(viewModel.faq?.IdPregunta ?? faq.IdPregunta)
                                 }
                                 viewModel.successMessage = nil
-                                if viewModel.activeAlert == .success {
-                                    presentationMode.wrappedValue.dismiss()
-                                }
                             },
                             secondaryButton: .cancel(Text("Cancelar"))
                         )
                     case .success:
                         return Alert(
                             title: Text("Éxito"),
-                            message: Text(viewModel.successMessage ?? "Pregunta editada correctamente.")
+                            message: Text(viewModel.successMessage ?? "Pregunta editada correctamente."),
+                            dismissButton: .default(Text("OK")) {
+                                presentationMode.wrappedValue.dismiss()
+                            }
                         )
                     }
                 }
