@@ -72,7 +72,7 @@ struct FAQDetailView: View {
                                 backgroundColor: Color(.red),
                                 foregroundColor: Color(.white),
                                 action: {
-                                    showDeleteConfirmation = true
+                                    viewModel.activeAlert = .deleteConfirmation
                                 }
                             )
                         }
@@ -88,19 +88,37 @@ struct FAQDetailView: View {
                         await viewModel.getFAQ(faq.IdPregunta)
                     }
                 }
-                .alert(isPresented: $showDeleteConfirmation) {
-                    Alert(
-                        title: Text("¿Seguro quieres eliminar la pregunta?"),
-                        message: Text("Una vez eliminada no se podrá recuperar."),
-                        primaryButton: .destructive(Text("Eliminar")) {
-                            Task {
-                                await viewModel.deleteFAQ(viewModel.faq?.IdPregunta ?? faq.IdPregunta)
+                .alert(item: $viewModel.activeAlert) { alertType in
+                    switch alertType {
+                    case .error:
+                        return Alert(
+                            title: Text("Oops!"),
+                            message: Text(viewModel.errorMessage ?? "Error desconocido."),
+                            dismissButton: .default(Text("OK")) {
+                                viewModel.errorMessage = nil
                             }
-                            viewModel.successMessage = nil
-                            presentationMode.wrappedValue.dismiss()
-                        },
-                        secondaryButton: .cancel(Text("Cancelar"))
-                    )
+                        )
+                    case .deleteConfirmation:
+                        return Alert(
+                            title: Text("¿Seguro quieres eliminar la pregunta?"),
+                            message: Text("Una vez eliminada no se podrá recuperar."),
+                            primaryButton: .destructive(Text("Eliminar")) {
+                                Task {
+                                    await viewModel.deleteFAQ(viewModel.faq?.IdPregunta ?? faq.IdPregunta)
+                                }
+                                viewModel.successMessage = nil
+                                if viewModel.activeAlert == .success {
+                                    presentationMode.wrappedValue.dismiss()
+                                }
+                            },
+                            secondaryButton: .cancel(Text("Cancelar"))
+                        )
+                    case .success:
+                        return Alert(
+                            title: Text("Éxito"),
+                            message: Text(viewModel.successMessage ?? "Pregunta editada correctamente.")
+                        )
+                    }
                 }
             }
         }
