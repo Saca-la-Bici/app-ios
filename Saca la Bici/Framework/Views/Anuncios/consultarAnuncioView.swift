@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ConsultarAnuncio: View {
     @ObservedObject private var viewModel = AnuncioViewModel()
+    @ObservedObject private var userSessionManager = UserSessionManager.shared
     @State private var showAddAnuncioView = false
     @State private var alertMessage = ""
     @State private var showDeleteConfirmation = false
@@ -29,7 +30,7 @@ struct ConsultarAnuncio: View {
                     Image(systemName: "bell")
                         .padding(.trailing)
                     
-                    if viewModel.isUserAdmin {
+                    if userSessionManager.puedeRegistrarAnuncio() {
                         Button(action: {
                             showAddAnuncioView = true
                         }, label: {
@@ -79,14 +80,16 @@ struct ConsultarAnuncio: View {
                         .listRowInsets(EdgeInsets())
                         .padding(.horizontal, 16)
                         .swipeActions(edge: .trailing) {
-                            if viewModel.isUserAdmin {
+                            if userSessionManager.puedeEliminarAnuncio() {
                                 Button(role: .destructive) {
                                     selectedAnuncio = anuncio
                                     showDeleteConfirmation = true
                                 } label: {
                                     Label("Eliminar", systemImage: "trash")
                                 }
-
+                            }
+                            
+                            if userSessionManager.puedeModificarAnuncio() {
                                 Button {
                                     selectedAnuncio = anuncio
                                     showModifyView = true

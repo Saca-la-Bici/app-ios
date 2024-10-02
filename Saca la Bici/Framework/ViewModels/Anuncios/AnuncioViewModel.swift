@@ -15,8 +15,7 @@ class AnuncioViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var successMessage: String?
     
-    @Published var isUserAdmin: Bool = false
-    
+    private var userSessionManager = UserSessionManager.shared
     private let repository: AnuncioRepository
     
     init(repository: AnuncioRepository = AnuncioRepository()) {
@@ -38,9 +37,8 @@ class AnuncioViewModel: ObservableObject {
             }.reversed()
             self.anuncios = Array(anuncios)
             
-            if response.rol == "Administrador" {
-                self.isUserAdmin = true
-            }
+            userSessionManager.updatePermisos(newPermisos: response.permisos)
+            
         } catch {
             self.handleError(error)
         }

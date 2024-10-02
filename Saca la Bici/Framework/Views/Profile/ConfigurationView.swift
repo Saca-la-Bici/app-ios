@@ -12,6 +12,7 @@ struct ConfigurationView: View {
     @EnvironmentObject var sessionManager: SessionManager
     
     @ObservedObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
+    @ObservedObject private var userSessionManager = UserSessionManager.shared
     
     @Binding var path: [ConfigurationPaths]
     
@@ -30,7 +31,7 @@ struct ConfigurationView: View {
                         
                         Group {
                             BotonSection(icono: "questionmark.circle", titulo: "Ayuda",
-                                button: true,
+                                         button: true,
                                          path: $path,
                                          nextPath: .faqs)
                             BotonSection(icono: "info.circle", titulo: "Información",
@@ -41,6 +42,22 @@ struct ConfigurationView: View {
                                          button: true,
                                          path: $path,
                                          nextPath: .faqs)
+                            
+                            if userSessionManager.puedeModificarRol() {
+                                BotonSection(icono: "person.badge.plus",
+                                    titulo: "Asignación de Roles y Permisos",
+                                             button: true,
+                                             path: $path,
+                                             nextPath: .asignacionRoles)
+                            }
+                            
+                            if userSessionManager.puedeDesactivarUsuario() {
+                                BotonSection(icono: "person.crop.circle.badge.minus",
+                                    titulo: "Desactivar Usuarios",
+                                             button: true,
+                                             path: $path,
+                                             nextPath: .desactivarUsuarios)
+                            }
                         }
                     }
                     .padding(.horizontal, 25)

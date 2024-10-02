@@ -2,7 +2,8 @@ import SwiftUI
 import SwiftData
 
 struct MenuView: View {
-    @State private var selectedTab = 2
+    @State private var selectedTab = 0
+    @ObservedObject var notificationManager = NotificationManager.shared
 
     var body: some View {
         NavigationView {
@@ -11,7 +12,7 @@ struct MenuView: View {
                 // Contenido del TabView personalizado
                 VStack {
                     if selectedTab == 0 {
-                        ResultView()
+                        ActividadesView()
                     } else if selectedTab == 1 {
                         ResultView()
                     } else if selectedTab == 2 {
@@ -51,6 +52,12 @@ struct MenuView: View {
             }
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard, edges: .bottom)
+            .onReceive(notificationManager.$selectedTab) { tab in
+                if let tab = tab {
+                    selectedTab = tab
+                    notificationManager.selectedTab = nil
+                }
+            }
         }
     }
 }
