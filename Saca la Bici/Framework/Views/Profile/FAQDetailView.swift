@@ -47,7 +47,7 @@ struct FAQDetailView: View {
                 if permisos.contains("Modificar pregunta frecuente") {
                     
                     Button(action: {
-                        path.append(.updateFAQ(faq: faq))
+                        path.append(.updateFAQ(faq: viewModel.faq ?? faq))
                     }, label: {
                         Text("Editar pregunta")
                             .font(.callout)
