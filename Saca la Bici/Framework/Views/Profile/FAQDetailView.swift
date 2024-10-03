@@ -103,6 +103,7 @@ struct FAQDetailView: View {
                             title: Text("Oops!"),
                             message: Text(viewModel.errorMessage ?? "No se encontró la pregunta frecuente."),
                             dismissButton: .default(Text("OK")) {
+                                presentationMode.wrappedValue.dismiss()
                                 viewModel.errorMessage = nil
                             }
                         )

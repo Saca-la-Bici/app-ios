@@ -55,6 +55,7 @@ class FAQDetailViewModel: ObservableObject {
             }
             
         } catch {
+            activeAlert = .notFound
             self.handleError(error)
         }
         
@@ -67,6 +68,7 @@ class FAQDetailViewModel: ObservableObject {
             self.successMessage = "Pregunta eliminada correctamente."
             self.activeAlert = .success
         } catch {
+            self.activeAlert = .error
             self.handleError(error)
         }
     }
@@ -83,7 +85,6 @@ class FAQDetailViewModel: ObservableObject {
         } else {
             self.errorMessage = "Hubo un error. Favor de intentarlo de nuevo."
         }
-        self.activeAlert = .error
     }
     
 }
