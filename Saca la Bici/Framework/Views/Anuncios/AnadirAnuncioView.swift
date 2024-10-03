@@ -63,7 +63,7 @@ struct AnadirAnuncioView: View {
                     
                     // Llamar al ViewModel para registrar el anuncio de forma asincrónica
                     Task {
-                        await viewModel.registrarAnuncio(titulo: titulo, contenido: descripcion)
+                        await viewModel.registrarAnuncio(titulo: titulo, contenido: descripcion, imagenData: selectedImageData)
                     }
                 }, label: {
                     Image(systemName: "checkmark")
@@ -101,7 +101,7 @@ struct AnadirAnuncioView: View {
                 .onChange(of: selectedItem) { _, newItem in
                     Task {
                         if let data = try? await newItem?.loadTransferable(type: Data.self),
-                           let uiImage = UIImage(data: data) {
+                           UIImage(data: data) != nil {
                             selectedImageData = data
                         }
                     }

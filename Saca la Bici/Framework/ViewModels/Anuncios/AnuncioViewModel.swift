@@ -28,10 +28,9 @@ class AnuncioViewModel: ObservableObject {
             let response = try await repository.getAnuncios()
             
             // Sacas los anuncios
-            var anuncios = response.anuncio
+            var anuncios = response.announcements
             anuncios = anuncios.map { anuncio in
                 var anuncioModificado = anuncio
-                anuncioModificado.icon = "A"
                 anuncioModificado.backgroundColor = Color(UIColor.systemGray6)
                 return anuncioModificado
             }.reversed()
@@ -44,7 +43,7 @@ class AnuncioViewModel: ObservableObject {
         }
     }
     
-    func registrarAnuncio(titulo: String, contenido: String) async {
+    func registrarAnuncio(titulo: String, contenido: String, imagenData: Data?) async {
         let nuevoAnuncio = Anuncio(
             id: UUID().uuidString,
             titulo: titulo,
@@ -55,7 +54,7 @@ class AnuncioViewModel: ObservableObject {
         )
         
         do {
-            let message = try await repository.postAnuncio(nuevoAnuncio)
+            let message = try await repository.postAnuncio(nuevoAnuncio, imagenData: imagenData)
             self.successMessage = message
             await fetchAnuncios()
         } catch {
@@ -73,20 +72,18 @@ class AnuncioViewModel: ObservableObject {
         }
     }
     
-    func modificarAnuncio(anuncio: Anuncio, nuevoTitulo: String, nuevoContenido: String) async {
+    func modificarAnuncio(anuncio: Anuncio, nuevoTitulo: String, nuevoContenido: String, imagenData: Data?) async {
         do {
             var anuncioModificado = anuncio
             anuncioModificado.titulo = nuevoTitulo
             anuncioModificado.contenido = nuevoContenido
-
-            // Asegúrate de pasar el ID del anuncio a modificar
-            let updatedAnuncio = try await repository.modificarAnuncio(anuncioModificado, idAnuncio: anuncio.id)
+            
+            _ = try await repository.modificarAnuncio(anuncioModificado, idAnuncio: anuncio.id, imagenData: imagenData)
             
             self.successMessage = "Anuncio modificado exitosamente."
-
-            if let index = self.anuncios.firstIndex(where: { $0.id == anuncio.id }) {
-                self.anuncios[index] = updatedAnuncio
-            }
+            
+            // Actualiza la lista de anuncios desde el servidor
+            await fetchAnuncios()
         } catch {
             self.handleError(error)
         }

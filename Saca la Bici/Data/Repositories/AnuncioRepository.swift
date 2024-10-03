@@ -17,17 +17,18 @@ class AnuncioRepository {
     func getAnuncios() async throws -> AnunciosResponse {
         let response = try await apiService.fetchAnuncios(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/consultar")!)
         
-        // Filtras los anuncios no validos
-        let anuncios = response.anuncio
+        // Filtras los anuncios no válidos
+        let anuncios = response.announcements
         let anunciosValidos = anuncios.filter { AnuncioRequirement.esValido(anuncio: $0) }
         
         // Vuelves a sacar el rol
-        let anuncioResponse = AnunciosResponse(anuncio: anunciosValidos, permisos: response.permisos)
+        let anuncioResponse = AnunciosResponse(announcements: anunciosValidos, permisos: response.permisos)
         return anuncioResponse
     }
     
-    func postAnuncio(_ anuncio: Anuncio) async throws -> String {
-        let message = try await apiService.registrarAnuncio(url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/registrar")!, anuncio)
+    func postAnuncio(_ anuncio: Anuncio, imagenData: Data?) async throws -> String {
+        let message = try await apiService.registrarAnuncio(url:
+                    URL(string: "\(Api.base)\(Api.Routes.anuncios)/registrar")!, anuncio, imagenData: imagenData)
         return message
     }
     
@@ -37,9 +38,9 @@ class AnuncioRepository {
         return message
     }
     
-    func modificarAnuncio(_ anuncio: Anuncio, idAnuncio: String) async throws -> Anuncio {
+    func modificarAnuncio(_ anuncio: Anuncio, idAnuncio: String, imagenData: Data?) async throws -> Anuncio {
         let updatedAnuncio = try await apiService.modificarAnuncio(
-            url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/modificar/\(idAnuncio)")!, anuncio, anuncioID: anuncio.id)
+            url: URL(string: "\(Api.base)\(Api.Routes.anuncios)/modificar/\(idAnuncio)")!, anuncio, anuncioID: anuncio.id, imagenData: imagenData)
         return updatedAnuncio
     }
 
