@@ -15,36 +15,55 @@ struct ProfileView: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            VStack(spacing: 10) {
-                        // Parte superior: Nombre de usuario y iconos
-                        HStack {
-                            Text(consultarPerfilPropioViewModel.profile?.username ?? "")
-                                .font(.subheadline)
-                                .fontWeight(.bold)
-                            Spacer()
-                            HStack(spacing: 15) {
-                                Button(action: {
-                                    Task {
-                                        path.append(.configuration)
-                                        restablecerContraseñaViewModel.esUsuarioConEmailPassword()
-                                    }
-                                }) {
-                                    Image("Campanita")
+            VStack {
+                ZStack {
+                    HStack {
+                        Image("logoB&N")
+                            .resizable()
+                            .frame(width: 44, height: 35)
+                            .padding(.leading)
+
+                        Spacer()
+
+                        Image(systemName: "bell")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                            .padding(.trailing)
+                            .onTapGesture {
+                                Task {
+                                    // Nada
                                 }
-                                Button(action: {
-                                    Task {
-                                        path.append(.configuration)
-                                        restablecerContraseñaViewModel.esUsuarioConEmailPassword()
-                                    }
-                                }) {
-                                    Image("Engranaje")
-                                }
-                                
                             }
-                            .font(.title3)
+
+                        Image(systemName: "gear")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                            .onTapGesture {
+                                Task {
+                                    path.append(.configuration)
+                                    restablecerContraseñaViewModel.esUsuarioConEmailPassword()
+                                }
+                            }
+                        
+                    }
+                    .padding()
+
+                    Text("Perfil")
+                        .font(.title3)
+                        .bold()
+                }
+                
+                HStack {
+                    Text(consultarPerfilPropioViewModel.profile?.username ?? "")
+                        .font(.subheadline)
+                        .fontWeight(.bold)
+                            Spacer()
+                            
                         }
                         .padding(.horizontal)
-                        .padding(.bottom, 30)
+                        .padding(.bottom, 10)
 
                         // Imagen de perfil con borde de color
                         VStack {
@@ -121,9 +140,9 @@ struct ProfileView: View {
                         .padding(.bottom, 10)
                         
                         HStack {
-                            Button(action: {
+                            Button {
                                 // Acción para Editar perfil
-                            }) {
+                            } label: {
                                 Text("Editar perfil")
                                     .font(.system(size: 14))
                                     .padding(.all, 7)
@@ -134,9 +153,9 @@ struct ProfileView: View {
                                     .shadow(radius: 5, y: 3)
                             }
                             
-                            Button(action: {
+                            Button {
                                 // Acción para Compartir perfil
-                            }) {
+                            }label: {
                                 Text("Compartir perfil")
                                     .font(.system(size: 14))
                                     .padding(.all, 7)
@@ -147,9 +166,9 @@ struct ProfileView: View {
                                     .shadow(radius: 5, y: 3)
                             }
 
-                            Button(action: {
+                            Button {
                                 // Acción para agregar amigo
-                            }) {
+                            }label: {
                                 Image("AgregarAmigo")
                                     .resizable()
                                     .scaledToFit()
@@ -160,12 +179,11 @@ struct ProfileView: View {
                                     .cornerRadius(10)
                                     .shadow(radius: 5, y: 3)
                             }
-                        }.padding(.bottom, 20)
+                        }.padding(.bottom, 10)
                         
                         IconSelectionView()
                        
-                    }
-                    .padding()
+            }
                     .onAppear {
                         Task {
                             try await consultarPerfilPropioViewModel.consultarPerfilPropio()
@@ -174,7 +192,8 @@ struct ProfileView: View {
                     .alert(isPresented: .constant(consultarPerfilPropioViewModel.errorMessage != nil)) {
                                 Alert(
                                     title: Text("Error"),
-                                    message: Text(consultarPerfilPropioViewModel.errorMessage ?? "Error desconocido"),
+                                    message: Text(consultarPerfilPropioViewModel.errorMessage ??
+                                                  "Hubo un error al ingresar a tu perfil, intente de nuevo más tarde"),
                                     dismissButton: .default(Text("Aceptar"), action: {
                                         consultarPerfilPropioViewModel.errorMessage = nil  
                                     })

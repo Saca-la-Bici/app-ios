@@ -16,46 +16,43 @@ struct IconSelectionView: View {
             // Íconos para seleccionar la vista
             HStack(spacing: 120) {
                 // Ícono de calendario
-                Button(action: {
+                Button {
                     withAnimation {
-                        selectedIcon = 0  // Calendario seleccionado
+                        selectedIcon = 0
                     }
-                }) {
-                    VStack {
-                        Image("Calendario")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 20, height: 20)
-                    }
+                } label: {
+                    Image(systemName: "calendar")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(selectedIcon == 0 ? .yellow : .primary)
                 }
 
                 // Ícono de palomita (checkmark)
-                Button(action: {
-                    withAnimation {
-                        selectedIcon = 1  // Palomita seleccionada
-                    }
-                }) {
-                    VStack {
-                        Image("Palomita")
+                Button {
+                        withAnimation {
+                            selectedIcon = 1
+                        }
+                    } label: {
+                        Image(systemName: "checkmark")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 20, height: 20)
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(selectedIcon == 1 ? .yellow : .primary)
                     }
-                }
 
                 // Ícono de mundo
-                Button(action: {
-                    withAnimation {
-                        selectedIcon = 2  // Mundo seleccionado
-                    }
-                }) {
-                    VStack {
-                        Image("Mundo")
+                Button {
+                        withAnimation {
+                            selectedIcon = 2
+                        }
+                    } label: {
+                        Image(systemName: "globe")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
+                            .foregroundColor(selectedIcon == 2 ? .yellow : .primary)
                     }
-                }
             }
             .padding(.bottom, 35)
             
@@ -77,25 +74,22 @@ struct IconSelectionView: View {
                         .transition(.slide)
                 }
             }
-            .offset(x: offset.width)  // Aplicar el desplazamiento
+            .offset(x: offset.width)
             .gesture(
                 DragGesture()
                     .onChanged { gesture in
-                        offset = gesture.translation  // Detectar el desplazamiento
+                        offset = gesture.translation
                     }
                     .onEnded { gesture in
                         if gesture.translation.width < -100 && selectedIcon < 2 {
-                            // Deslizar a la izquierda
                             withAnimation {
                                 selectedIcon += 1
                             }
                         } else if gesture.translation.width > 100 && selectedIcon > 0 {
-                            // Deslizar a la derecha
                             withAnimation {
                                 selectedIcon -= 1
                             }
                         }
-                        // Restablecer el offset después del gesto
                         withAnimation {
                             offset = .zero
                         }
