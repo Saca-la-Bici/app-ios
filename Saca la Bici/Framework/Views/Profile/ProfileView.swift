@@ -162,7 +162,7 @@ struct ProfileView: View {
                             }
                         }.padding(.bottom, 20)
                         
-                        // IconSelectionView()
+                        IconSelectionView()
                         
                        // Spacer()  // Esto empuja todo hacia arriba
                     }
