@@ -12,6 +12,7 @@ class ConsultarPerfilPropioViewModel: ObservableObject {
     @Published var profile: Profile?
     @Published var isLoading: Bool = false
     @Published var error: Error?
+    @Published var errorMessage: String?
     
     let consultarPerfilPropioRequirement = ConsultarPerfilPropioRequirement()
     
@@ -19,14 +20,12 @@ class ConsultarPerfilPropioViewModel: ObservableObject {
     func consultarPerfilPropio() async throws {
         
         do {
-            print("Entre a el do de VIewModel")
+
             self.profile = try await consultarPerfilPropioRequirement.consultarPerfilPropio()
             
-            // Accede a las propiedades del objeto `Profile`
-            print("Si paso de requirment a viewmodel")
-            
             } catch {
-            print("Entre al catch de viewModel")
+                
+                self.errorMessage = "Hubo un error al ingresar a tu perfil, intente de nuevo más tarde"
             // Manejo del error en caso de que algo falle
             print("Error: \(error.localizedDescription)")
             throw error

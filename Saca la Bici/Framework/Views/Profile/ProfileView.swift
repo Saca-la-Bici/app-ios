@@ -163,8 +163,7 @@ struct ProfileView: View {
                         }.padding(.bottom, 20)
                         
                         IconSelectionView()
-                        
-                       // Spacer()  // Esto empuja todo hacia arriba
+                       
                     }
                     .padding()
                     .onAppear {
@@ -172,6 +171,15 @@ struct ProfileView: View {
                             try await consultarPerfilPropioViewModel.consultarPerfilPropio()
                         }
                     }
+                    .alert(isPresented: .constant(consultarPerfilPropioViewModel.errorMessage != nil)) {
+                                Alert(
+                                    title: Text("Error"),
+                                    message: Text(consultarPerfilPropioViewModel.errorMessage ?? "Error desconocido"),
+                                    dismissButton: .default(Text("Aceptar"), action: {
+                                        consultarPerfilPropioViewModel.errorMessage = nil  
+                                    })
+                                )
+                            }
             .navigationDestination(for: ConfigurationPaths.self) { value in
                 switch value {
                 case .faqs:

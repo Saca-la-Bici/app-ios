@@ -14,12 +14,9 @@ class ConsultarPerfilPropioRequirement {
         var profile: Profile
         
         do {
-            print("Entre a el do de requi")
             profile = try await profileRepository.consultarPerfilPropio()
-            print("Paso de repo a requi")
             
         } catch {
-            print("Entre a el catch de requi")
             print("Error: \(error.localizedDescription)")
             throw error
         }
