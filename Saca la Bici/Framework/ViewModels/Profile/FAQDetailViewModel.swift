@@ -47,8 +47,6 @@ class FAQDetailViewModel: ObservableObject {
             let response = try await repository.getFAQ(id)
             faq = response.data[0]
             
-            faq = nil // For test
-            
             // Si FAQ está vacío
             if faq == nil {
                 errorMessage = "No se encontró la pregunta."
