@@ -32,6 +32,18 @@ class FAQViewModel: ObservableObject {
     // Combine
     private var cancellables = Set<AnyCancellable>()
     
+    // Enum para manejar las alertas activas
+    enum ActiveAlert: Identifiable {
+        case error
+
+        var id: Int {
+            hashValue
+        }
+    }
+    
+    // Estado de alerta
+    @Published var activeAlert: ActiveAlert?
+    
     // Singleton del repositorio
     let repository: FAQRepository
     
@@ -56,6 +68,13 @@ class FAQViewModel: ObservableObject {
             
             // Obtener FAQs desde el campo data
             faqs = response.data
+            
+            // Comprobar si la lista está vacía
+            if faqs.isEmpty {
+                errorMessage = "No se han encontrado preguntas frecuentes."
+                activeAlert = .error
+                return
+            }
             
             // Lista de temas únicos (FAQ.tema)
             var temas: Set<String> = []
@@ -111,13 +130,14 @@ class FAQViewModel: ObservableObject {
         if let afError = error as? AFError {
             switch afError.responseCode {
             case 401:
-                self.errorMessage = "No autorizado. Por favor, inicia sesión nuevamente."
+                self.errorMessage = "No está autorizado para realizar esta acción. Por favor, inicia sesión nuevamente."
             default:
-                self.errorMessage = "Error: \(afError.errorDescription ?? "Desconocido")"
+                self.errorMessage = "Hubo un error al registrar la pregunta. Favor de intentarlo de nuevo."
             }
         } else {
-            self.errorMessage = "Error: \(error.localizedDescription)"
+            self.errorMessage = "Hubo un error al registrar la pregunta. Favor de intentarlo de nuevo."
         }
+        self.activeAlert = .error
     }
     
 }

@@ -98,6 +98,14 @@ struct FAQDetailView: View {
                                 viewModel.errorMessage = nil
                             }
                         )
+                    case .notFound:
+                        return Alert(
+                            title: Text("Oops!"),
+                            message: Text(viewModel.errorMessage ?? "No se encontró la pregunta frecuente."),
+                            dismissButton: .default(Text("OK")) {
+                                viewModel.errorMessage = nil
+                            }
+                        )
                     case .deleteConfirmation:
                         return Alert(
                             title: Text("¿Seguro quieres eliminar la pregunta?"),

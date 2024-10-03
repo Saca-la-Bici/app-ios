@@ -84,6 +84,18 @@ struct FAQView: View {
                     viewModel.searchText.removeAll()
                 }
             }
+            .alert(item: $viewModel.activeAlert) { alertType in
+                switch alertType {
+                case .error:
+                    return Alert(
+                        title: Text("Oops!"),
+                        message: Text(viewModel.errorMessage ?? "Error desconocido."),
+                        dismissButton: .default(Text("OK")) {
+                            viewModel.errorMessage = nil
+                        }
+                    )
+                }
+            }
         }
     }
 }

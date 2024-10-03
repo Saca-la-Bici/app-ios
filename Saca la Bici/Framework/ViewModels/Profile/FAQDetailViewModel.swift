@@ -24,6 +24,7 @@ class FAQDetailViewModel: ObservableObject {
     // Enum para manejar las alertas activas
     enum ActiveAlert: Identifiable {
         case error
+        case notFound
         case success
         case deleteConfirmation
 
@@ -45,6 +46,16 @@ class FAQDetailViewModel: ObservableObject {
         do {
             let response = try await repository.getFAQ(id)
             faq = response.data[0]
+            
+            faq = nil // For test
+            
+            // Si FAQ está vacío
+            if faq == nil {
+                errorMessage = "No se encontró la pregunta."
+                activeAlert = .notFound
+                return
+            }
+            
         } catch {
             self.handleError(error)
         }
