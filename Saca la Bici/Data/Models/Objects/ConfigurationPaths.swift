@@ -17,4 +17,7 @@ enum ConfigurationPaths: Hashable {
     case faqs
     case asignacionRoles
     case desactivarUsuarios
+    case faqDetail (faq: FAQ, permisos: [String])
+    case addFAQ
+    case updateFAQ (faq: FAQ)
 }

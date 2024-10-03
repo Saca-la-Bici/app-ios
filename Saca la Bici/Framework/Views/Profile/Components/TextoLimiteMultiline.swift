@@ -1,22 +1,23 @@
 //
-//  TextoLimiteField.swift
+//  TextoLimiteMultiline.swift
 //  Saca la Bici
 //
-//  Created by Jesus Cedillo on 17/09/24.
+//  Created by Jesus Cedillo on 02/10/24.
 //
 
 import SwiftUI
 import Combine
 
-struct TextoLimiteField: View {
+struct TextoLimiteMultiline: View {
     var label: String?
-    var placeholder: String
+    var placeholder: String = ""
     @Binding var text: String
-    var maxLength: Int
+    var maxLength: Int = 150
     var title: Bool = false
+    var showCharacterCount: Bool = false
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 4) {
             if let label = label {
                 if title {
                     Text(label)
@@ -28,11 +29,12 @@ struct TextoLimiteField: View {
                 }
             }
             
-            TextField(placeholder, text: $text)
+            TextField(placeholder, text: $text, axis: .vertical)
+                .lineLimit(5, reservesSpace: true)
                 .textInputAutocapitalization(.never)
+                .disableAutocorrection(true)
                 .padding()
-                .cornerRadius(10)
-                .overlay(
+                .background(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.gray.opacity(0.4), lineWidth: 1)
                 )
@@ -41,6 +43,15 @@ struct TextoLimiteField: View {
                         text = String(text.prefix(maxLength))
                     }
                 }
+            
+            if showCharacterCount {
+                Text("\(text.count)/\(maxLength)")
+                    .font(.caption2)
+                    .foregroundColor(text.count >= maxLength ? .red : .gray)
+                    .padding(.top, 2)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+            }
         }
+        .padding(.vertical, 5)
     }
 }
