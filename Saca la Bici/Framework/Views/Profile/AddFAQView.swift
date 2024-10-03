@@ -60,7 +60,7 @@ struct AddFAQView: View {
                     
                     // NOTA: Es un TextField porque aún no se han definido las categorías de FAQs
                     
-                    TextoLimiteMultiline(
+                    TextoLimiteMultilineField(
                         placeholder: "Escribe la respuesta aquí ...",
                         text: $viewModel.respuesta,
                         maxLength: 275,

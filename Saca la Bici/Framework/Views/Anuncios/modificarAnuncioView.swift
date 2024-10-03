@@ -211,16 +211,14 @@ struct ModificarAnuncioView: View {
 
             // Campo de texto para el título
             VStack(alignment: .leading) {
-                Text("Título")
-                    .font(.subheadline)
-
-                TextField("Título del anuncio", text: $titulo)
-                    .padding(.horizontal, 11)
-                    .padding(.vertical, 4)
-                    .background(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                    )
+                TextoLimiteField(
+                    label: "Título",
+                    placeholder: "Escribe el título del anuncio ...",
+                    text: $titulo,
+                    maxLength: 80,
+                    title: false,
+                    subheadline: true
+                )
             }
             .padding(.horizontal)
             .padding(.bottom, 20)
@@ -229,25 +227,13 @@ struct ModificarAnuncioView: View {
             VStack(alignment: .leading) {
                 Text("Descripción")
                     .font(.subheadline)
-
-                ZStack(alignment: .topLeading) {
-                    TextEditor(text: $contenido)
-                        .padding(8)
-                        .frame(height: 150)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                        )
-                        .padding(.top, 5)
-
-                    // Mostrar placeholder cuando el contenido está vacío
-                    if contenido.isEmpty {
-                        Text("¿Qué quieres compartir?")
-                            .foregroundColor(Color(.placeholderText))
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 16)
-                    }
-                }
+                
+                TextoLimiteMultilineField(
+                    placeholder: "¿Qué quieres compartir?",
+                    text: $contenido,
+                    maxLength: 450,
+                    showCharacterCount: true
+                )
             }
             .padding(.horizontal)
             .padding(.bottom, 20)
