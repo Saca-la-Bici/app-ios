@@ -78,10 +78,10 @@ class FAQDetailViewModel: ObservableObject {
             case 401:
                 self.errorMessage = "No está autorizado para realizar esta acción. Por favor, inicia sesión nuevamente."
             default:
-                self.errorMessage = "Hubo un error al eliminar la pregunta. Favor de intentarlo de nuevo."
+                self.errorMessage = "Hubo un error. Favor de intentarlo de nuevo."
             }
         } else {
-            self.errorMessage = "Hubo un error al eliminar la pregunta. Favor de intentarlo de nuevo."
+            self.errorMessage = "Hubo un error. Favor de intentarlo de nuevo."
         }
         self.activeAlert = .error
     }
