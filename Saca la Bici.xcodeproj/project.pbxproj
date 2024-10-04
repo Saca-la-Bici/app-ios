@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2510D1FB2CB04C9C004C29CC /* RegistrarActividadRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D1FA2CB04C93004C29CC /* RegistrarActividadRequirement.swift */; };
 		2510D1FD2CB04CE4004C29CC /* ActividadesPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D1FC2CB04CDF004C29CC /* ActividadesPaths.swift */; };
-		2510D1FF2CB0d4DE0004C29CC /* ActividadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D1FE2CB04DDA004C29CC /* ActividadViewModel.swift */; };
 		2510D2012CB04E31004C29CC /* DescripcionActividadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D2002CB04E2B004C29CC /* DescripcionActividadView.swift */; };
 		2510D2032CB04E69004C29CC /* RegistrarActividadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D2022CB04E60004C29CC /* RegistrarActividadView.swift */; };
 		2510D2052CB04E8B004C29CC /* RodadaRutaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D2042CB04E87004C29CC /* RodadaRutaView.swift */; };
@@ -53,6 +52,7 @@
 		252B64FD2C99FFE200A362C5 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 252B64FC2C99FFE200A362C5 /* GoogleSignInSwift */; };
 		252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */; };
 		256EE2EF2CADB92400425181 /* TextoLimiteMultilineField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EE2EE2CADB92400425181 /* TextoLimiteMultilineField.swift */; };
+		25858A102CB0AF5400A7719C /* ActividadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */; };
 		259CBB9A2C9E29C00067B550 /* AppleCryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259CBB992C9E29C00067B550 /* AppleCryptoHelpers.swift */; };
 		259CBBA02CA0E44A0067B550 /* SessionPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259CBB9F2CA0E44A0067B550 /* SessionPaths.swift */; };
 		259EF8B72CA23899007CE3FE /* UserProfileSessionAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259EF8B62CA23899007CE3FE /* UserProfileSessionAPIService.swift */; };
@@ -144,7 +144,6 @@
 /* Begin PBXFileReference section */
 		2510D1FA2CB04C93004C29CC /* RegistrarActividadRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrarActividadRequirement.swift; sourceTree = "<group>"; };
 		2510D1FC2CB04CDF004C29CC /* ActividadesPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesPaths.swift; sourceTree = "<group>"; };
-		2510D1FE2CB04DDA004C29CC /* ActividadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadViewModel.swift; sourceTree = "<group>"; };
 		2510D2002CB04E2B004C29CC /* DescripcionActividadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescripcionActividadView.swift; sourceTree = "<group>"; };
 		2510D2022CB04E60004C29CC /* RegistrarActividadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrarActividadView.swift; sourceTree = "<group>"; };
 		2510D2042CB04E87004C29CC /* RodadaRutaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RodadaRutaView.swift; sourceTree = "<group>"; };
@@ -185,6 +184,7 @@
 		252B65042C9A297700A362C5 /* Saca-la-Bici-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Saca-la-Bici-Info.plist"; sourceTree = SOURCE_ROOT; };
 		252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletarDatosStep1View.swift; sourceTree = "<group>"; };
 		256EE2EE2CADB92400425181 /* TextoLimiteMultilineField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextoLimiteMultilineField.swift; sourceTree = "<group>"; };
+		25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadViewModel.swift; sourceTree = "<group>"; };
 		259CBB982C9E0E5A0067B550 /* Saca la Bici.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Saca la Bici.entitlements"; sourceTree = "<group>"; };
 		259CBB992C9E29C00067B550 /* AppleCryptoHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleCryptoHelpers.swift; sourceTree = "<group>"; };
 		259CBB9F2CA0E44A0067B550 /* SessionPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPaths.swift; sourceTree = "<group>"; };
@@ -657,7 +657,7 @@
 		AE8E78912CA9E558007F7365 /* Actividades */ = {
 			isa = PBXGroup;
 			children = (
-				2510D1FE2CB04DDA004C29CC /* ActividadViewModel.swift */,
+				25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */,
 				AE8E78962CA9E599007F7365 /* TalleresViewModel.swift */,
 				AE8E78942CA9E57A007F7365 /* RodadasViewModel.swift */,
 				AE8E78922CA9E562007F7365 /* EventosViewModel.swift */,
@@ -909,10 +909,10 @@
 				252B64D82C99FE5900A362C5 /* MainLoginView.swift in Sources */,
 				252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */,
 				252B64D92C99FE5900A362C5 /* SessionManager.swift in Sources */,
-				2510D1FF2CB04DE0004C29CC /* ActividadViewModel.swift in Sources */,
 				25C302C62C9A9780005AD742 /* EmailField.swift in Sources */,
 				2512D3A02CAFAB20003BCA6A /* IconSelection.swift in Sources */,
 				25A7BE582CA664A800FCB8B6 /* SeguridadAccesoView.swift in Sources */,
+				25858A102CB0AF5400A7719C /* ActividadViewModel.swift in Sources */,
 				7B9C5EDE2CAA257E00441541 /* FAQDetailView.swift in Sources */,
 				7B9C5EDC2CAA219800441541 /* FAQCard.swift in Sources */,
 				251C5FD42CAF360800CFAC87 /* ImagePicker.swift in Sources */,
