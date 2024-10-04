@@ -10,7 +10,7 @@
 		2510D1FB2CB04C9C004C29CC /* RegistrarActividadRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D1FA2CB04C93004C29CC /* RegistrarActividadRequirement.swift */; };
 		2510D1FD2CB04CE4004C29CC /* ActividadesPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D1FC2CB04CDF004C29CC /* ActividadesPaths.swift */; };
 		2510D1FF2CB04DE0004C29CC /* ActividadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D1FE2CB04DDA004C29CC /* ActividadViewModel.swift */; };
-		2510D2012CB04E31004C29CC /* DescripciónActividadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D2002CB04E2B004C29CC /* DescripciónActividadView.swift */; };
+		2510D2012CB04E31004C29CC /* DescripcionActividadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D2002CB04E2B004C29CC /* DescripcionActividadView.swift */; };
 		2510D2032CB04E69004C29CC /* RegistrarActividadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D2022CB04E60004C29CC /* RegistrarActividadView.swift */; };
 		2510D2052CB04E8B004C29CC /* RodadaRutaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D2042CB04E87004C29CC /* RodadaRutaView.swift */; };
 		2510D2072CB04F0B004C29CC /* DurationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D2062CB04F08004C29CC /* DurationPicker.swift */; };
@@ -145,7 +145,7 @@
 		2510D1FA2CB04C93004C29CC /* RegistrarActividadRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrarActividadRequirement.swift; sourceTree = "<group>"; };
 		2510D1FC2CB04CDF004C29CC /* ActividadesPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesPaths.swift; sourceTree = "<group>"; };
 		2510D1FE2CB04DDA004C29CC /* ActividadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadViewModel.swift; sourceTree = "<group>"; };
-		2510D2002CB04E2B004C29CC /* DescripciónActividadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DescripciónActividadView.swift"; sourceTree = "<group>"; };
+		2510D2002CB04E2B004C29CC /* DescripcionActividadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescripcionActividadView.swift; sourceTree = "<group>"; };
 		2510D2022CB04E60004C29CC /* RegistrarActividadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrarActividadView.swift; sourceTree = "<group>"; };
 		2510D2042CB04E87004C29CC /* RodadaRutaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RodadaRutaView.swift; sourceTree = "<group>"; };
 		2510D2062CB04F08004C29CC /* DurationPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationPicker.swift; sourceTree = "<group>"; };
@@ -671,7 +671,7 @@
 				AEF4467C2CA9F5D20004D5E8 /* ActividadesView.swift */,
 				2510D2022CB04E60004C29CC /* RegistrarActividadView.swift */,
 				2510D2042CB04E87004C29CC /* RodadaRutaView.swift */,
-				2510D2002CB04E2B004C29CC /* DescripciónActividadView.swift */,
+				2510D2002CB04E2B004C29CC /* DescripcionActividadView.swift */,
 				AE8E78AB2CA9E65C007F7365 /* talleresView.swift */,
 				AE8E78A92CA9E653007F7365 /* rodadasView.swift */,
 				AE8E78A72CA9E649007F7365 /* eventosView.swift */,
@@ -875,7 +875,7 @@
 				252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */,
 				7B9C5EE02CAA4FB400441541 /* AddFAQView.swift in Sources */,
 				25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */,
-				2510D2012CB04E31004C29CC /* DescripciónActividadView.swift in Sources */,
+				2510D2012CB04E31004C29CC /* DescripcionActividadView.swift in Sources */,
 				25D0E5172CA3813600B431A9 /* RestablecerContraseñaViewModel.swift in Sources */,
 				7B9C5EF22CACBFEA00441541 /* UpdateFAQViewModel.swift in Sources */,
 				2510D1FD2CB04CE4004C29CC /* ActividadesPaths.swift in Sources */,
