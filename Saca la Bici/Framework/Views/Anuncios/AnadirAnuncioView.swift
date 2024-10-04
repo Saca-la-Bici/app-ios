@@ -77,70 +77,21 @@ struct AnadirAnuncioView: View {
     
             Spacer().frame(height: 40)
 
-            // Icono para subir una imagen
-            if selectedImageData == nil {
-                PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 25)
-                            .fill(Color.gray.opacity(0.2))
-                            .frame(width: 100, height: 100)
-                        
-                        Image(systemName: "photo.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 60, height: 60)
-                            .foregroundColor(Color.gray.opacity(0.1))
-                        
-                        Image(systemName: "plus")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 35, height: 35)
-                            .foregroundColor(Color.white.opacity(0.7))
-                    }
-                }
-                .onChange(of: selectedItem) { _, newItem in
-                    Task {
-                        if let data = try? await newItem?.loadTransferable(type: Data.self),
-                           UIImage(data: data) != nil {
-                            selectedImageData = data
-                        }
-                    }
-                }
-            }
-
-            // Mostrar la imagen si existe
-            if let data = selectedImageData, let uiImage = UIImage(data: data) {
-                VStack {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 200, height: 200)
-                        .cornerRadius(10)
-                    
-                    Button(action: {
-                        selectedImageData = nil
-                    }, label: {
-                        Text("Eliminar Imagen")
-                            .foregroundColor(.red)
-                            .padding(.top, 5)
-                    })
-                }
-            }
+            // Componenete del picker
+            ImagePickerView(selectedItem: $selectedItem, selectedImageData: $selectedImageData)
 
             Spacer().frame(height: 20)
             
             // Título
             VStack(alignment: .leading) {
-                Text("Título")
-                    .font(.subheadline)
-
-                TextField("Título del anuncio", text: $titulo)
-                    .padding(.horizontal, 11)
-                    .padding(.vertical, 4)
-                    .background(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                    )
+                TextoLimiteField(
+                    label: "Título",
+                    placeholder: "Escribe el título del anuncio ...",
+                    text: $titulo,
+                    maxLength: 80,
+                    title: false,
+                    subheadline: true
+                )
             }
             .padding(.horizontal)
             .padding(.bottom, 20)
@@ -149,24 +100,13 @@ struct AnadirAnuncioView: View {
             VStack(alignment: .leading) {
                 Text("Descripción")
                     .font(.subheadline)
-
-                ZStack(alignment: .topLeading) {
-                    TextEditor(text: $descripcion)
-                        .padding(8)
-                        .frame(height: 150)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                        )
-                        .padding(.top, 5)
-
-                    if descripcion.isEmpty {
-                        Text("¿Qué quieres compartir?")
-                            .foregroundColor(Color(.placeholderText))
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 16)
-                    }
-                }
+                
+                TextoLimiteMultilineField(
+                    placeholder: "¿Qué quieres compartir?",
+                    text: $descripcion,
+                    maxLength: 450,
+                    showCharacterCount: true
+                )
             }
             .padding(.horizontal)
 

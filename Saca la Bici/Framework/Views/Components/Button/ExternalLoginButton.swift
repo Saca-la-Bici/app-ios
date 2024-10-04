@@ -32,7 +32,7 @@ struct ExternalLoginButton: View {
                 }
                 Text(buttonText)
                     .font(.subheadline)
-                    .foregroundColor(Color.primary)
+                    .foregroundColor(.black)
             }
             .frame(maxWidth: .infinity)
             .padding()
