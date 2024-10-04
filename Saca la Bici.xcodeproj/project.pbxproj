@@ -289,6 +289,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2510D2122CB075EC004C29CC /* Paths */ = {
+			isa = PBXGroup;
+			children = (
+				259CBB9F2CA0E44A0067B550 /* SessionPaths.swift */,
+				25A7BE552CA64AEA00FCB8B6 /* ConfigurationPaths.swift */,
+				2510D1FC2CB04CDF004C29CC /* ActividadesPaths.swift */,
+			);
+			path = Paths;
+			sourceTree = "<group>";
+		};
 		251C5FCE2CAF2F1100CFAC87 /* Fields */ = {
 			isa = PBXGroup;
 			children = (
@@ -541,13 +551,11 @@
 		252B650D2C9A427D00A362C5 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				2510D2122CB075EC004C29CC /* Paths */,
+				252B64E22C99FE7200A362C5 /* APIRoutes.swift */,
 				6DD1172D2CAE61CF0084314A /* Profile.swift */,
 				AE8E78852CA9E3B3007F7365 /* Actividades.swift */,
-				252B64E22C99FE7200A362C5 /* APIRoutes.swift */,
 				252B64E32C99FE7200A362C5 /* User.swift */,
-				259CBB9F2CA0E44A0067B550 /* SessionPaths.swift */,
-				25A7BE552CA64AEA00FCB8B6 /* ConfigurationPaths.swift */,
-				2510D1FC2CB04CDF004C29CC /* ActividadesPaths.swift */,
 				AE41A6E62C9A679000921BDF /* Anuncio.swift */,
 				7B9C5ED52CA9E5C000441541 /* FAQModelo.swift */,
 			);
