@@ -25,23 +25,19 @@ struct RegisterRouteView: View {
         VStack {
             Form {
                 Section(header: Text("Puntos de la Ruta")) {
-                    // Botón para seleccionar el punto de inicio
                     Button(action: { isSelectingStartPoint.toggle() }) {
                         Text(startPoint != nil ? "Punto de inicio: \(startPoint!.latitud), \(startPoint!.longitud)" : "Selecciona el punto de inicio en el mapa")
                     }
                     
-                    // Botón para seleccionar el punto de descanso
                     Button(action: { isSelectingStopoverPoint.toggle() }) {
                         Text(stopoverPoint != nil ? "Punto de descanso: \(stopoverPoint!.latitud), \(stopoverPoint!.longitud)" : "Selecciona el punto de descanso en el mapa")
                     }
                     
-                    // Botón para seleccionar el punto final
                     Button(action: { isSelectingEndPoint.toggle() }) {
                         Text(endPoint != nil ? "Punto final: \(endPoint!.latitud), \(endPoint!.longitud)" : "Selecciona el punto final en el mapa")
                     }
                 }
 
-                // Campos de texto y Picker para título, tiempo, nivel
                 TextField("Título", text: $titulo)
                 TextField("Tiempo estimado", text: $tiempo)
                 Picker("Nivel", selection: $nivel) {
@@ -51,7 +47,6 @@ struct RegisterRouteView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
 
-                // Botón para guardar la ruta
                 Button(action: {
                     guardarRuta()
                 }) {
@@ -81,7 +76,6 @@ struct RegisterRouteView: View {
         }
     }
 
-    // Función para guardar la ruta
     private func guardarRuta() {
         guard let startPoint = startPoint, let stopoverPoint = stopoverPoint, let endPoint = endPoint else {
             errorMessage = "Por favor selecciona todos los puntos de la ruta"
@@ -90,7 +84,7 @@ struct RegisterRouteView: View {
 
         RutasService.shared.sendRoute(
             titulo: titulo,
-            distancia: "Por calcular",  // Aquí puedes agregar lógica para calcular la distancia
+            distancia: "Por calcular",
             tiempo: tiempo,
             nivel: nivel,
             start: startPoint,

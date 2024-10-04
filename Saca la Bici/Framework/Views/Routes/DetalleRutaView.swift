@@ -16,7 +16,6 @@ struct DetalleRutaView: View {
             Text("Distancia: \(ruta.distancia)")
             Text("Tiempo: \(ruta.tiempo)")
             Text("Nivel: \(ruta.nivel)")
-            // Agregar más detalles aquí si es necesario
         }
         .navigationBarTitle("Detalle de la Ruta", displayMode: .inline)
     }

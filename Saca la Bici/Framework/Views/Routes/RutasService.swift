@@ -10,7 +10,6 @@ import Foundation
 struct RutasService {
     static let shared = RutasService()
     
-    // Función para obtener la lista de rutas
     func getRutasList(completion: @escaping ([RutasBase]?) -> Void) {
         guard let url = URL(string: "http://3.145.117.182:8080/mapa/consultarRutas") else {
             completion(nil)
@@ -36,7 +35,6 @@ struct RutasService {
         task.resume()
     }
     
-    // Función para enviar una nueva ruta
     func sendRoute(
         titulo: String,
         distancia: String,

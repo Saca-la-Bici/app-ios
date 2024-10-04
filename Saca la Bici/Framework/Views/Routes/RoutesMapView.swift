@@ -26,7 +26,6 @@ struct RoutesMapView: View {
                 HStack {
                     Spacer()
                     VStack(spacing: 15) {
-                        // Botón para agregar una nueva ruta
                         Button(action: {
                             showAddRouteView.toggle()
                         }) {
@@ -39,7 +38,6 @@ struct RoutesMapView: View {
                                 .clipShape(Circle())
                         }
 
-                        // Botón para ver la lista de rutas
                         Button(action: {
                             showRouteListView.toggle()
                         }) {

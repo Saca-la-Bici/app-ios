@@ -21,7 +21,7 @@ struct RegisterRouteMapView: UIViewRepresentable {
         )
         let mapView = MapView(frame: .zero, mapInitOptions: mapInitOptions)
         self.mapView = mapView
-        setupMap(mapView: mapView, context: context) // Pasamos el contexto aquí
+        setupMap(mapView: mapView, context: context)
         return mapView
     }
     
@@ -30,12 +30,10 @@ struct RegisterRouteMapView: UIViewRepresentable {
     private func setupMap(mapView: MapView, context: Context) {
         mapView.mapboxMap.setCamera(to: CameraOptions(zoom: 12.0))
         
-        // Añadir un gesto de clic largo para seleccionar los puntos
         let longPressGesture = UILongPressGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleLongPress(_:)))
         mapView.addGestureRecognizer(longPressGesture)
     }
     
-    // Coordinador para manejar los gestos
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
@@ -54,13 +52,13 @@ struct RegisterRouteMapView: UIViewRepresentable {
             let coordinate = mapView.mapboxMap.coordinate(for: point)
             
             if gesture.state == .began {
-                if parent.startPoint?.latitud == nil {  // Si aún no se ha seleccionado el punto de inicio
+                if parent.startPoint?.latitud == nil {
                     parent.startPoint = CoordenadasBase(id: UUID().uuidString, latitud: coordinate.latitude, longitud: coordinate.longitude, tipo: "inicio")
                     print("Punto de inicio establecido")
-                } else if parent.stopoverPoint?.latitud == nil {  // Si aún no se ha seleccionado el punto de descanso
+                } else if parent.stopoverPoint?.latitud == nil {
                     parent.stopoverPoint = CoordenadasBase(id: UUID().uuidString, latitud: coordinate.latitude, longitud: coordinate.longitude, tipo: "descanso")
                     print("Punto de descanso establecido")
-                } else if parent.endPoint?.latitud == nil {  // Si aún no se ha seleccionado el punto final
+                } else if parent.endPoint?.latitud == nil {
                     parent.endPoint = CoordenadasBase(id: UUID().uuidString, latitud: coordinate.latitude, longitud: coordinate.longitude, tipo: "final")
                     print("Punto final establecido")
                 } else {
