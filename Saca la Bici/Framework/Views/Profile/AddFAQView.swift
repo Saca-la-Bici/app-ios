@@ -61,7 +61,7 @@ struct AddFAQView: View {
                     TextoLimiteMultiline(
                         placeholder: "Escribe la respuesta aquí ...",
                         text: $viewModel.respuesta,
-                        maxLength: 275,
+                        maxLength: 400,
                         showCharacterCount: true
                     )
                     
