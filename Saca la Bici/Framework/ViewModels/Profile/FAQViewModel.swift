@@ -26,9 +26,6 @@ class FAQViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var successMessage: String?
     
-    // Permisos del usuario
-    @Published var userPermissions: [String] = []
-    
     // Combine
     private var cancellables = Set<AnyCancellable>()
     
@@ -43,6 +40,8 @@ class FAQViewModel: ObservableObject {
     
     // Estado de alerta
     @Published var activeAlert: ActiveAlert?
+    
+    private var userSessionManager = UserSessionManager.shared
     
     // Singleton del repositorio
     let repository: FAQRepository
@@ -90,16 +89,11 @@ class FAQViewModel: ObservableObject {
             // Guardar en variables publicadas
             self.faqs = faqs
             self.temasFAQs = sortedTemasFAQs
-            self.userPermissions = response.permisos ?? [""]
+            userSessionManager.updatePermisos(newPermisos: response.permisos!)
             
         } catch {
             self.handleError(error)
         }
-    }
-    
-    // ¿Puede crear FAQ?
-    func canCreateFAQ() -> Bool {
-        return userPermissions.contains("Registrar pregunta frecuente")
     }
     
     // Filtrar FAQs
