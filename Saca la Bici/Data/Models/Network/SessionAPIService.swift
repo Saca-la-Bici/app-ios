@@ -133,9 +133,6 @@ class SessionAPIService: NSObject {
                 "Content-Type": "application/json"
             ]
             
-            /* Para checar si el backend esta funcionando.
-             Despues esto se cambia por la función de consultar actividades */
-            
             let taskRequest = session.request(url, method: .get, headers: headers).validate()
             let response = await taskRequest.serializingData().response
             
