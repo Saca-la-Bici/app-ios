@@ -33,10 +33,10 @@ struct TalleresView: View {
                             attendees: taller.actividad.personasInscritas
                         )
                     }
-                    .padding(.horizontal)
                 }
                 Spacer().frame(height: 5)
             }
+            .padding(.horizontal)
         }
     }
 }

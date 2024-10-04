@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EventosView: View {
     @StateObject private var viewModel = EventosViewModel()
-    @ObservedObject private var userSessionManager = UserSessionManager.shared
     
     var body: some View {
         ScrollView {

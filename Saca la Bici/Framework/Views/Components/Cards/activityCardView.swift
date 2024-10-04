@@ -18,7 +18,8 @@ struct ActivityCardView: View {
     var imagen: String?
     var location: String?
     var attendees: Int?
-    @ObservedObject private var userSessionManager = UserSessionManager.shared
+    
+    let colorManager = ColorManager()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -35,12 +36,8 @@ struct ActivityCardView: View {
                         .font(.caption)
                         .padding(6)
                         .background(
-                            level == "Nivel 1" ? Color(red: 129.0 / 255.0, green: 199.0 / 255.0, blue: 132.0 / 255.0) :
-                            (level == "Nivel 2" ? Color(red: 56.0 / 255.0, green: 142.0 / 255.0, blue: 60.0 / 255.0) :
-                            (level == "Nivel 3" ? Color(red: 253.0 / 255.0, green: 216.0 / 255.0, blue: 53.0 / 255.0) :
-                            (level == "Nivel 4" ? Color(red: 255.0 / 255.0, green: 152.0 / 255.0, blue: 0.0 / 255.0) :
-                            (level == "Nivel 5" ? Color(red: 244.0 / 255.0, green: 67.0 / 255.0, blue: 54.0 / 255.0) :
-                            Color.gray)))))
+                            levelColor(for: level)
+                        )
                         .cornerRadius(8)
                 }
                 
@@ -53,66 +50,87 @@ struct ActivityCardView: View {
                 }
             }
             
-            // Fecha
             if let date = date {
-                HStack {
-                    Text("Fecha")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text(date)
-                        .font(.subheadline)
-                        .foregroundColor(.primary)
-                }
+                infoRow(title: "Fecha", value: date)
             }
             
-            // Hora
             if let time = time {
-                HStack {
-                    Text("Hora")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text(time)
-                        .font(.subheadline)
-                        .foregroundColor(.primary)
-                }
+                infoRow(title: "Hora", value: time)
             }
             
-            // Duración
             if let duration = duration {
-                HStack {
-                    Text("Duración")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text(duration)
-                        .font(.subheadline)
-                        .foregroundColor(.primary)
-                }
+                infoRow(title: "Duración", value: duration)
             }
             
             // Imagen Placeholder
             if let imagen = imagen {
                 WebImage(url: URL(string: imagen))
                     .resizable()
-                    .scaledToFit()
-                    .frame(width: 48, height: 48, alignment: .center)
+                    .scaledToFill()
+                    .frame(height: 200)
+                    .cornerRadius(8)
+                    .clipped()
             }
             
-            // Ubicación
             if let location = location {
-                HStack {
-                    Text("Ubicación")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text(location)
-                        .font(.subheadline)
-                        .foregroundColor(.primary)
-                }
+                infoRow(title: "Ubicación", value: location)
             }
+            
+            let verde = colorManager.colorFromHex("7DA68D")
+            
+            Button(action: {
+                
+            }, label: {
+                HStack {
+                    Text("Ver detalles")
+                        .font(.system(size: 18))
+                        .bold()
+                        .foregroundColor(verde)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                    
+                    Image(systemName: "arrow.forward.circle.fill")
+                        .font(.system(size: 18))
+                        .foregroundColor(verde)
+                }
+            })
+            .buttonStyle(PlainButtonStyle())
+            .padding(.top, 8)
+            
         }
         .padding()
         .background(Color(UIColor.systemBackground))
         .cornerRadius(12)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.primary.opacity(0.2), lineWidth: 1))
         .shadow(radius: 5)
-        .padding(.horizontal)
+    }
+    
+    private func infoRow(title: String, value: String) -> some View {
+        HStack {
+            Text(title)
+                .font(.subheadline)
+                .foregroundColor(.gray)
+            Text(value)
+                .font(.subheadline)
+                .foregroundColor(.primary)
+        }
+    }
+    
+    private func levelColor(for level: String) -> Color {
+        switch level {
+        case "Nivel 1":
+            return Color(red: 129.0 / 255.0, green: 199.0 / 255.0, blue: 132.0 / 255.0)
+        case "Nivel 2":
+            return Color(red: 56.0 / 255.0, green: 142.0 / 255.0, blue: 60.0 / 255.0)
+        case "Nivel 3":
+            return Color(red: 253.0 / 255.0, green: 216.0 / 255.0, blue: 53.0 / 255.0)
+        case "Nivel 4":
+            return Color(red: 255.0 / 255.0, green: 152.0 / 255.0, blue: 0.0 / 255.0)
+        case "Nivel 5":
+            return Color(red: 244.0 / 255.0, green: 67.0 / 255.0, blue: 54.0 / 255.0)
+        default:
+            return Color.gray
+        }
     }
 }
