@@ -62,6 +62,10 @@ struct ActivityCardView: View {
                 infoRow(title: "Duración", value: duration)
             }
             
+            if let location = location {
+                infoRow(title: "Ubicación", value: location)
+            }
+            
             // Imagen Placeholder
             if let imagen = imagen {
                 WebImage(url: URL(string: imagen))
@@ -70,10 +74,6 @@ struct ActivityCardView: View {
                     .frame(height: 200)
                     .cornerRadius(8)
                     .clipped()
-            }
-            
-            if let location = location {
-                infoRow(title: "Ubicación", value: location)
             }
             
             let verde = colorManager.colorFromHex("7DA68D")

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2510D1FB2CB04C9C004C29CC /* RegistrarActividadRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D1FA2CB04C93004C29CC /* RegistrarActividadRequirement.swift */; };
 		2510D1FD2CB04CE4004C29CC /* ActividadesPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D1FC2CB04CDF004C29CC /* ActividadesPaths.swift */; };
-		2510D1FF2CB04DE0004C29CC /* ActividadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D1FE2CB04DDA004C29CC /* ActividadViewModel.swift */; };
+		2510D1FF2CB0d4DE0004C29CC /* ActividadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D1FE2CB04DDA004C29CC /* ActividadViewModel.swift */; };
 		2510D2012CB04E31004C29CC /* DescripcionActividadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D2002CB04E2B004C29CC /* DescripcionActividadView.swift */; };
 		2510D2032CB04E69004C29CC /* RegistrarActividadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D2022CB04E60004C29CC /* RegistrarActividadView.swift */; };
 		2510D2052CB04E8B004C29CC /* RodadaRutaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D2042CB04E87004C29CC /* RodadaRutaView.swift */; };
