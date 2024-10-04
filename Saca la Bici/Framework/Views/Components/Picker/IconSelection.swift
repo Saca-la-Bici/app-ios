@@ -102,4 +102,3 @@ struct IconSelectionView: View {
         .padding()
     }
 }
-
