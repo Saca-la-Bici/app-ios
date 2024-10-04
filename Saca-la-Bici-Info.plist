@@ -15,5 +15,12 @@
 			</array>
 		</dict>
 	</array>
+	<key>MAPBOX_ACCESS_TOKEN</key>
+	<string>sk.eyJ1IjoiYXJzYW5teCIsImEiOiJjbTF1NTN2dzMwYTkyMnFvbHM0Y2RjYWFsIn0.ACcklmqhVUPOIuwWq4E1KQ</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

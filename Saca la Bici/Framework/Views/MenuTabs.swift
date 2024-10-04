@@ -13,7 +13,7 @@ struct MenuView: View {
                     if selectedTab == 0 {
                        ResultView()
                     } else if selectedTab == 1 {
-                        ResultView()
+                        RoutesMapView()
                     } else if selectedTab == 2 {
                         consultarAnuncio()
                     } else {

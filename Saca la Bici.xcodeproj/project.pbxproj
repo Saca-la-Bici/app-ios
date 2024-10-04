@@ -54,6 +54,19 @@
 		25F3681F2C9B8032003322CF /* MainViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3681E2C9B8032003322CF /* MainViewButton.swift */; };
 		25F368212C9BAEA3003322CF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F368202C9BAEA3003322CF /* LoadingView.swift */; };
 		25F368232C9BE6BE003322CF /* AnunciosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F368222C9BE6BE003322CF /* AnunciosView.swift */; };
+		691BC6052CAF74DF0033410B /* DetalleRutaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691BC6042CAF74DF0033410B /* DetalleRutaView.swift */; };
+		691BC6072CAF74E90033410B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691BC6062CAF74E90033410B /* ContentView.swift */; };
+		691BC6092CAF74F80033410B /* RutasService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691BC6082CAF74F80033410B /* RutasService.swift */; };
+		691BC60B2CAF75050033410B /* MapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691BC60A2CAF75050033410B /* MapViewRepresentable.swift */; };
+		691BC60D2CAF750F0033410B /* RegisterRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691BC60C2CAF750F0033410B /* RegisterRouteView.swift */; };
+		691BC60F2CAF751E0033410B /* RegisterRouteMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691BC60E2CAF751E0033410B /* RegisterRouteMapView.swift */; };
+		691BC6112CAF75310033410B /* RoutesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691BC6102CAF75310033410B /* RoutesListView.swift */; };
+		691BC6132CAF753F0033410B /* RoutesMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691BC6122CAF753F0033410B /* RoutesMapView.swift */; };
+		691BC6152CAF754F0033410B /* RutasObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691BC6142CAF754F0033410B /* RutasObject.swift */; };
+		691BC6172CAF75590033410B /* RutasBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691BC6162CAF75590033410B /* RutasBase.swift */; };
+		691BC6192CAF75600033410B /* CoordenadasBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691BC6182CAF75600033410B /* CoordenadasBase.swift */; };
+		691BC61D2CAF76000033410B /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 691BC61C2CAF76000033410B /* MapboxMaps */; };
+		691BC61E2CAF8E740033410B /* Saca-la-Bici-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 252B65042C9A297700A362C5 /* Saca-la-Bici-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +131,17 @@
 		25F3681E2C9B8032003322CF /* MainViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewButton.swift; sourceTree = "<group>"; };
 		25F368202C9BAEA3003322CF /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		25F368222C9BE6BE003322CF /* AnunciosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnunciosView.swift; sourceTree = "<group>"; };
+		691BC6042CAF74DF0033410B /* DetalleRutaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalleRutaView.swift; sourceTree = "<group>"; };
+		691BC6062CAF74E90033410B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		691BC6082CAF74F80033410B /* RutasService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RutasService.swift; sourceTree = "<group>"; };
+		691BC60A2CAF75050033410B /* MapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepresentable.swift; sourceTree = "<group>"; };
+		691BC60C2CAF750F0033410B /* RegisterRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouteView.swift; sourceTree = "<group>"; };
+		691BC60E2CAF751E0033410B /* RegisterRouteMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouteMapView.swift; sourceTree = "<group>"; };
+		691BC6102CAF75310033410B /* RoutesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesListView.swift; sourceTree = "<group>"; };
+		691BC6122CAF753F0033410B /* RoutesMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesMapView.swift; sourceTree = "<group>"; };
+		691BC6142CAF754F0033410B /* RutasObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RutasObject.swift; sourceTree = "<group>"; };
+		691BC6162CAF75590033410B /* RutasBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RutasBase.swift; sourceTree = "<group>"; };
+		691BC6182CAF75600033410B /* CoordenadasBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordenadasBase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +149,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				691BC61D2CAF76000033410B /* MapboxMaps in Frameworks */,
 				252B64FD2C99FFE200A362C5 /* GoogleSignInSwift in Frameworks */,
 				252B64F32C99FF1000A362C5 /* Alamofire in Frameworks */,
 				252B64FB2C99FFE200A362C5 /* GoogleSignIn in Frameworks */,
@@ -221,6 +246,7 @@
 		252B64CD2C99FE5900A362C5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				691BC6032CAF74AF0033410B /* Routes */,
 				252B65052C9A37D600A362C5 /* Session */,
 				252B64C62C99FE5900A362C5 /* ResultView.swift */,
 				25F368222C9BE6BE003322CF /* AnunciosView.swift */,
@@ -267,6 +293,9 @@
 		252B64E72C99FE7200A362C5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				691BC6182CAF75600033410B /* CoordenadasBase.swift */,
+				691BC6162CAF75590033410B /* RutasBase.swift */,
+				691BC6142CAF754F0033410B /* RutasObject.swift */,
 				252B650D2C9A427D00A362C5 /* Objects */,
 				252B64E62C99FE7200A362C5 /* Network */,
 				252B650C2C9A426200A362C5 /* Repositories */,
@@ -352,6 +381,21 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		691BC6032CAF74AF0033410B /* Routes */ = {
+			isa = PBXGroup;
+			children = (
+				691BC6122CAF753F0033410B /* RoutesMapView.swift */,
+				691BC6102CAF75310033410B /* RoutesListView.swift */,
+				691BC60E2CAF751E0033410B /* RegisterRouteMapView.swift */,
+				691BC60C2CAF750F0033410B /* RegisterRouteView.swift */,
+				691BC60A2CAF75050033410B /* MapViewRepresentable.swift */,
+				691BC6082CAF74F80033410B /* RutasService.swift */,
+				691BC6062CAF74E90033410B /* ContentView.swift */,
+				691BC6042CAF74DF0033410B /* DetalleRutaView.swift */,
+			);
+			path = Routes;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -374,6 +418,7 @@
 				252B64F72C99FFBD00A362C5 /* FirebaseAuthCombine-Community */,
 				252B64FA2C99FFE200A362C5 /* GoogleSignIn */,
 				252B64FC2C99FFE200A362C5 /* GoogleSignInSwift */,
+				691BC61C2CAF76000033410B /* MapboxMaps */,
 			);
 			productName = "Saca la Bici";
 			productReference = 252B639B2C99F16700A362C5 /* Saca la Bici.app */;
@@ -455,6 +500,7 @@
 				252B64F12C99FF1000A362C5 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				252B64F42C99FFBD00A362C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				252B64F92C99FFE200A362C5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				691BC61A2CAF759A0033410B /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 252B639C2C99F16700A362C5 /* Products */;
@@ -473,6 +519,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				691BC61E2CAF8E740033410B /* Saca-la-Bici-Info.plist in Resources */,
 				252B64902C99FCD800A362C5 /* Preview Assets.xcassets in Resources */,
 				252B64832C99FC5E00A362C5 /* Assets.xcassets in Resources */,
 				252B65032C9A280800A362C5 /* GoogleService-Info.plist in Resources */,
@@ -502,6 +549,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				691BC6172CAF75590033410B /* RutasBase.swift in Sources */,
 				252B64852C99FC5E00A362C5 /* Saca_la_BiciApp.swift in Sources */,
 				25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */,
 				252B64D12C99FE5900A362C5 /* SessionCoordinatorView.swift in Sources */,
@@ -512,13 +560,20 @@
 				25F3681D2C9B7B49003322CF /* TituloComponent.swift in Sources */,
 				25F368232C9BE6BE003322CF /* AnunciosView.swift in Sources */,
 				25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */,
+				691BC60B2CAF75050033410B /* MapViewRepresentable.swift in Sources */,
 				252B64EB2C99FE7200A362C5 /* User.swift in Sources */,
 				252B64ED2C99FE7200A362C5 /* APIRoutes.swift in Sources */,
 				25F3681F2C9B8032003322CF /* MainViewButton.swift in Sources */,
 				252B64EE2C99FE7200A362C5 /* SessionAPIService.swift in Sources */,
+				691BC6072CAF74E90033410B /* ContentView.swift in Sources */,
 				25C302CA2C9AAF9A005AD742 /* ExternalLoginButton.swift in Sources */,
 				25F368212C9BAEA3003322CF /* LoadingView.swift in Sources */,
+				691BC60F2CAF751E0033410B /* RegisterRouteMapView.swift in Sources */,
+				691BC6052CAF74DF0033410B /* DetalleRutaView.swift in Sources */,
 				252B64EF2C99FE7200A362C5 /* SessionRepository.swift in Sources */,
+				691BC60D2CAF750F0033410B /* RegisterRouteView.swift in Sources */,
+				691BC6092CAF74F80033410B /* RutasService.swift in Sources */,
+				691BC6192CAF75600033410B /* CoordenadasBase.swift in Sources */,
 				252B64D52C99FE5900A362C5 /* SignUpStep3View.swift in Sources */,
 				252B64D62C99FE5900A362C5 /* MenuTabs.swift in Sources */,
 				252B64D72C99FE5900A362C5 /* ResultView.swift in Sources */,
@@ -527,6 +582,7 @@
 				252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */,
 				252B64D92C99FE5900A362C5 /* SessionManager.swift in Sources */,
 				25C302C62C9A9780005AD742 /* EmailField.swift in Sources */,
+				691BC6132CAF753F0033410B /* RoutesMapView.swift in Sources */,
 				25C302C42C9A9515005AD742 /* PasswordField.swift in Sources */,
 				252B64DA2C99FE5900A362C5 /* SignUpViewModel.swift in Sources */,
 				252B64DB2C99FE5900A362C5 /* LoginView.swift in Sources */,
@@ -535,6 +591,8 @@
 				25F3681B2C9B62CD003322CF /* ImagenAmarillaFondo.swift in Sources */,
 				25C302C02C9A91A3005AD742 /* TextoLimiteField.swift in Sources */,
 				252B64E12C99FE6F00A362C5 /* SignUpRequirement.swift in Sources */,
+				691BC6152CAF754F0033410B /* RutasObject.swift in Sources */,
+				691BC6112CAF75310033410B /* RoutesListView.swift in Sources */,
 				252B64DC2C99FE5900A362C5 /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -913,6 +971,14 @@
 				minimumVersion = 8.0.0;
 			};
 		};
+		691BC61A2CAF759A0033410B /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mapbox/mapbox-maps-ios.git";
+			requirement = {
+				kind = exactVersion;
+				version = 11.7.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -940,6 +1006,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 252B64F92C99FFE200A362C5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		691BC61C2CAF76000033410B /* MapboxMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 691BC61A2CAF759A0033410B /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */;
+			productName = MapboxMaps;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
