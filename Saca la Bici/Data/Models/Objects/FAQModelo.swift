@@ -14,7 +14,11 @@ struct FAQResponse: Codable {
     var data: [FAQ]?
 }
 
-struct UpdateDeleteFAQResponse: Codable {
+struct UpdateFAQResponse: Codable {
+    var message: String
+}
+
+struct DeleteFAQResponse: Codable {
     var code: Int
     var msg: String
 }
