@@ -1,5 +1,5 @@
 {
-  "originHash" : "615d11d892f67e60440076a19a94bc1cf6af3d4d4f6e2f48ce8c2458ed0c8124",
+  "originHash" : "a302a36dc44bf9ceb92b242b1467d001bc93724990b6cd0e7b711ade06d13f36",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -35,6 +35,15 @@
       "state" : {
         "revision" : "c89ed571ae140f8eb1142735e6e23d7bb8c34cb2",
         "version" : "1.7.5"
+      }
+    },
+    {
+      "identity" : "durationpicker",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mac-gallagher/DurationPicker.git",
+      "state" : {
+        "revision" : "798a9f9b6c162eb6f00deb29d10175c00d1caa25",
+        "version" : "1.0.2"
       }
     },
     {

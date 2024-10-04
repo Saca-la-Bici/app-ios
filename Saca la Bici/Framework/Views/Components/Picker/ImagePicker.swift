@@ -57,6 +57,7 @@ struct ImagePickerView: View {
                             .foregroundColor(.red)
                             .padding(.top, 5)
                     })
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
 

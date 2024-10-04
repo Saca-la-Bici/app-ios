@@ -40,8 +40,5 @@ struct RodadasView: View {
             }
             .padding(.horizontal)
         }
-        .onAppear {
-            viewModel.fetchRodadas()
-        }
     }
 }

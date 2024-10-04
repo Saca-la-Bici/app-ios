@@ -20,17 +20,15 @@ class ConsultarPerfilPropioViewModel: ObservableObject {
     func consultarPerfilPropio() async throws {
         
         do {
-
-            self.profile = try await consultarPerfilPropioRequirement.consultarPerfilPropio()
             
-            } catch {
-                
-                self.errorMessage = "Hubo un error al ingresar a tu perfil, intente de nuevo más tarde"
+            self.profile = try await consultarPerfilPropioRequirement.consultarPerfilPropio()
+        } catch {
+            self.errorMessage = "Hubo un error al ingresar a tu perfil, intente de nuevo más tarde"
+            
             // Manejo del error en caso de que algo falle
             print("Error: \(error.localizedDescription)")
             throw error
         }
-        
     }
     
 }
