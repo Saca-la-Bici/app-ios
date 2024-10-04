@@ -101,86 +101,86 @@ struct ModificarAnuncioView: View {
 
             // Manejo de la imagen
             if selectedImageData == nil && existingImageURL == nil {
-                            // Usar el componente ImagePickerView para seleccionar una nueva imagen
-                            ImagePickerView(selectedItem: $selectedItem, selectedImageData: $selectedImageData)
-                        } else if let data = selectedImageData, let uiImage = UIImage(data: data) {
-                            // Mostrar la imagen seleccionada
-                            VStack {
-                                Image(uiImage: uiImage)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 200, height: 200)
-                                    .cornerRadius(10)
+                // Usar el componente ImagePickerView para seleccionar una nueva imagen
+                ImagePickerView(selectedItem: $selectedItem, selectedImageData: $selectedImageData)
+            } else if let data = selectedImageData, let uiImage = UIImage(data: data) {
+                // Mostrar la imagen seleccionada
+                VStack {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200, height: 200)
+                        .cornerRadius(10)
 
-                                Button(action: {
-                                    selectedImageData = nil
-                                }, label: {
-                                    Text("Eliminar Imagen")
-                                        .foregroundColor(.red)
-                                        .padding(.top, 5)
-                                })
-                            }
-                        } else if let imageURL = existingImageURL {
-                            // Mostrar la imagen existente
-                            VStack {
-                                AsyncImage(url: imageURL) { phase in
-                                    if let image = phase.image {
-                                        image
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 200, height: 200)
-                                            .cornerRadius(10)
-                                    } else if phase.error != nil {
-                                        // Error al cargar la imagen
-                                        Image(systemName: "photo")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 200, height: 200)
-                                            .cornerRadius(10)
-                                    } else {
-                                        // Placeholder mientras se carga la imagen
-                                        ProgressView()
-                                            .frame(width: 200, height: 200)
-                                    }
-                                }
-
-                                HStack {
-                                    // Usar el componente ImagePickerView para cambiar la imagen existente
-                                    PhotosPicker(
-                                        selection: $selectedItem,
-                                        matching: .images,
-                                        photoLibrary: .shared(),
-                                        label: {
-                                            Text("Cambiar Imagen")
-                                                .foregroundColor(.blue)
-                                                .padding(.top, 5)
-                                        }
-                                    )
-                                    .buttonStyle(PlainButtonStyle())
-
-                                    Button(action: {
-                                        // Eliminar la imagen existente
-                                        selectedImageData = nil
-                                        existingImageURL = nil
-                                        existingImageData = nil
-                                    }, label: {
-                                        Text("Eliminar Imagen")
-                                            .foregroundColor(.red)
-                                            .padding(.top, 5)
-                                    })
-                                }
-                            }
-                            .onChange(of: selectedItem) { _, newItem in
-                                Task {
-                                    if let data = try? await newItem?.loadTransferable(type: Data.self),
-                                       UIImage(data: data) != nil {
-                                        selectedImageData = data
-                                        existingImageURL = nil
-                                        existingImageData = nil
-                                    }
-                                }
-                            }
+                    Button(action: {
+                        selectedImageData = nil
+                    }, label: {
+                        Text("Eliminar Imagen")
+                            .foregroundColor(.red)
+                            .padding(.top, 5)
+                    })
+                }
+            } else if let imageURL = existingImageURL {
+                // Mostrar la imagen existente
+                VStack {
+                    AsyncImage(url: imageURL) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200, height: 200)
+                                .cornerRadius(10)
+                        } else if phase.error != nil {
+                            // Error al cargar la imagen
+                            Image(systemName: "photo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200, height: 200)
+                                .cornerRadius(10)
+                        } else {
+                            // Placeholder mientras se carga la imagen
+                            ProgressView()
+                                .frame(width: 200, height: 200)
                         }
+                    }
+                    
+                    HStack {
+                        // Usar el componente ImagePickerView para cambiar la imagen existente
+                        PhotosPicker(
+                            selection: $selectedItem,
+                            matching: .images,
+                            photoLibrary: .shared(),
+                            label: {
+                                Text("Cambiar Imagen")
+                                    .foregroundColor(.blue)
+                                    .padding(.top, 5)
+                            }
+                        )
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        Button(action: {
+                            // Eliminar la imagen existente
+                            selectedImageData = nil
+                            existingImageURL = nil
+                            existingImageData = nil
+                        }, label: {
+                            Text("Eliminar Imagen")
+                                .foregroundColor(.red)
+                                .padding(.top, 5)
+                        })
+                    }
+                }
+                .onChange(of: selectedItem) { _, newItem in
+                    Task {
+                        if let data = try? await newItem?.loadTransferable(type: Data.self),
+                           UIImage(data: data) != nil {
+                            selectedImageData = data
+                            existingImageURL = nil
+                            existingImageData = nil
+                        }
+                    }
+                }
+            }
 
             Spacer().frame(height: 20)
 
