@@ -54,7 +54,7 @@ class AddFAQViewModel: ObservableObject {
         
         do {
             // Obtener ultimo ID
-            let lastID = try await repository.getFAQs().data.last?.IdPregunta ?? 0
+            let lastID = try await repository.getFAQs().data?.last?.IdPregunta ?? 0
             
             // Crear nuevo FAQ
             let newFAQ = FAQ(

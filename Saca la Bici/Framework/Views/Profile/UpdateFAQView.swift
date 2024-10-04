@@ -46,8 +46,6 @@ struct UpdateFAQView: View {
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    // NOTA: Es un TextField porque aún no se han definido las categorías de FAQs
-                    
                     TextoLimiteField(
                         placeholder: "Escribe el título de la pregunta ...",
                         text: $viewModel.pregunta,
@@ -67,34 +65,39 @@ struct UpdateFAQView: View {
                     TextoLimiteMultilineField(
                         placeholder: "Escribe la respuesta aquí ...",
                         text: $viewModel.respuesta,
-                        maxLength: 275,
+                        maxLength: 400,
                         showCharacterCount: true
-                    )
-                    
-                    CustomButton(
-                        text: "Editar Pregunta",
-                        backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
-                        action: {
-                            if viewModel.pregunta.isEmpty || viewModel.respuesta.isEmpty {
-                                viewModel.errorMessage = "Debe ingresar una pregunta y una respuesta"
-                                viewModel.activeAlert = .error
-                            } else {
-                                Task {
-                                    await viewModel.updateFAQ(
-                                        idPregunta: faq.IdPregunta,
-                                        pregunta: viewModel.pregunta,
-                                        respuesta: viewModel.respuesta,
-                                        tema: viewModel.temaSelected
-                                    )
-                                }
-                            }
-                        }
                     )
                     
                     Spacer()
                     
                 }
                 .navigationTitle("Editar pregunta")
+                .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                if viewModel.pregunta.isEmpty || viewModel.respuesta.isEmpty {
+                                    viewModel.errorMessage = "Debe ingresar una pregunta y una respuesta"
+                                    viewModel.activeAlert = .error
+                                } else {
+                                    Task {
+                                        await viewModel.updateFAQ(
+                                            idPregunta: faq.IdPregunta,
+                                            pregunta: viewModel.pregunta,
+                                            respuesta: viewModel.respuesta,
+                                            tema: viewModel.temaSelected
+                                        )
+                                    }
+                                }
+
+                            }, label: {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.yellow)
+                            })
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                    }
+
                 .padding()
                 .onAppear {
                     viewModel.temaSelected = faq.Tema

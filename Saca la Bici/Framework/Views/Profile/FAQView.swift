@@ -9,9 +9,8 @@ import SwiftUI
 import Combine
 
 struct FAQView: View {
-    
-    // Sesión
-    @EnvironmentObject var sessionManager: SessionManager
+
+    @ObservedObject private var userSessionManager = UserSessionManager.shared
     
     // View Model
     @StateObject var viewModel = FAQViewModel()
@@ -35,7 +34,7 @@ struct FAQView: View {
                     Text("¿Cómo te podemos ayudar hoy?")
                         .font(.title2)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    if viewModel.canCreateFAQ() {
+                    if userSessionManager.canCreateFAQ() {
                         Spacer()
                         Button(action: {
                             path.append(.addFAQ)
@@ -60,15 +59,28 @@ struct FAQView: View {
                     .padding(.horizontal, 15)
                 
                 // Preguntas frecuentes
+                
+                // Si hay preguntas frecuentes
+                if viewModel.filteredFAQs.isEmpty {
+                    VStack(alignment: .center) {
+                        Spacer()
+                        Text("No hay preguntas frecuentes disponibles.")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                        Spacer()
+                    }
+                }
+                
                 List {
                     ForEach(viewModel.filteredFAQs) { tema in
                         Section(header: Text(tema.tema)) {
                             ForEach(tema.faqs) { faq in
                                 FAQCard(
                                     faq: faq,
-                                    permisos: viewModel.userPermissions,
+                                    permisos: userSessionManager.permisos,
                                     path: $path,
-                                    nextPath: .faqDetail(faq: faq, permisos: viewModel.userPermissions)
+                                    nextPath: .faqDetail(faq: faq, permisos: userSessionManager.permisos)
                                 )
                                 .listRowBackground(Color(UIColor.systemGray5))
                             }
