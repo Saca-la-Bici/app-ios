@@ -67,14 +67,7 @@ class FAQViewModel: ObservableObject {
             let response = try await repository.getFAQs()
             
             // Obtener FAQs desde el campo data
-            faqs = response.data
-            
-            // Comprobar si la lista está vacía
-            if faqs.isEmpty {
-                errorMessage = "No se han encontrado preguntas frecuentes."
-                activeAlert = .error
-                return
-            }
+            faqs = response.data ?? []
             
             // Lista de temas únicos (FAQ.tema)
             var temas: Set<String> = []

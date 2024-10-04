@@ -60,6 +60,20 @@ struct FAQView: View {
                     .padding(.horizontal, 15)
                 
                 // Preguntas frecuentes
+                
+                // Si hay preguntas frecuentes
+                if viewModel.filteredFAQs.isEmpty {
+                    VStack(alignment: .center) {
+                        Spacer()
+                        Text("No hay preguntas frecuentes disponibles.")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                        Spacer()
+                    }
+                    .frame(width: .infinity, height: .infinity)
+                }
+                
                 List {
                     ForEach(viewModel.filteredFAQs) { tema in
                         Section(header: Text(tema.tema)) {

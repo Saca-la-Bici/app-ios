@@ -45,7 +45,8 @@ class FAQDetailViewModel: ObservableObject {
     func getFAQ(_ id: Int) async {
         do {
             let response = try await repository.getFAQ(id)
-            faq = response.data[0]
+            
+            faq = response.data?[0] ?? nil
             
             // Si FAQ está vacío
             if faq == nil {
