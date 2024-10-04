@@ -18,21 +18,17 @@ struct ImagePickerView: View {
             if selectedImageData == nil {
                 PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
                     ZStack {
-                        RoundedRectangle(cornerRadius: 25)
-                            .fill(Color.gray.opacity(0.2))
-                            .frame(width: 100, height: 100)
-                        
                         Image(systemName: "photo.fill")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 60, height: 60)
+                            .frame(width: 80, height: 80)
                             .foregroundColor(Color.gray.opacity(0.1))
                         
                         Image(systemName: "plus")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 35, height: 35)
-                            .foregroundColor(Color.white.opacity(0.7))
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.white)
                     }
                 }
                 .onChange(of: selectedItem) { _, newItem in

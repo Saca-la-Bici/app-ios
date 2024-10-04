@@ -119,6 +119,7 @@ struct ModificarAnuncioView: View {
                             .foregroundColor(.red)
                             .padding(.top, 5)
                     })
+                    .buttonStyle(PlainButtonStyle())
                 }
             } else if let imageURL = existingImageURL {
                 // Mostrar la imagen existente
