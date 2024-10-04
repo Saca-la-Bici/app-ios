@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct EmailField: View {
     @Binding var email: String
@@ -26,6 +27,11 @@ struct EmailField: View {
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.gray.opacity(0.4), lineWidth: 1)
                 )
+                .onReceive(Just(email)) { _ in
+                    if email.count > 100 {
+                        email = String(email.prefix(100))
+                    }
+                }
         }
     }
 }

@@ -126,10 +126,10 @@ class FAQAPIService {
         do {
             let response = try await AF.request(url, method: .put, parameters: params, encoding: JSONEncoding.default, headers: headers)
                 .validate()
-                .serializingDecodable(UpdateDeleteFAQResponse.self)
+                .serializingDecodable(UpdateFAQResponse.self)
                 .value
             
-            return response.msg
+            return response.message
         } catch {
             print("Error al modificar FAQ: \(error)")
             throw error
@@ -149,7 +149,7 @@ class FAQAPIService {
         do {
             let response = try await AF.request(url, method: .delete, headers: headers)
                 .validate()
-                .serializingDecodable(UpdateDeleteFAQResponse.self)
+                .serializingDecodable(DeleteFAQResponse.self)
                 .value
             
             return response.msg

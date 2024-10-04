@@ -60,36 +60,39 @@ struct AddFAQView: View {
                     
                     // NOTA: Es un TextField porque aún no se han definido las categorías de FAQs
                     
-                    TextoLimiteMultiline(
+                    TextoLimiteMultilineField(
                         placeholder: "Escribe la respuesta aquí ...",
                         text: $viewModel.respuesta,
-                        maxLength: 275,
+                        maxLength: 400,
                         showCharacterCount: true
-                    )
-                    
-                    CustomButton(
-                        text: "Registrar Pregunta",
-                        backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
-                        action: {
-                            if viewModel.pregunta.isEmpty || viewModel.respuesta.isEmpty {
-                                viewModel.errorMessage = "Debe ingresar una pregunta y una respuesta"
-                                viewModel.activeAlert = .error
-                            } else {
-                                Task {
-                                    await viewModel.addFAQ(
-                                        tema: viewModel.temaSelected,
-                                        pregunta: viewModel.pregunta,
-                                        respuesta: viewModel.respuesta
-                                    )
-                                }
-                            }
-                        }
                     )
                     
                     Spacer()
                     
                 }
                 .navigationTitle("Añadir pregunta")
+                .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                if viewModel.pregunta.isEmpty || viewModel.respuesta.isEmpty {
+                                    viewModel.errorMessage = "Debe ingresar una pregunta y una respuesta"
+                                    viewModel.activeAlert = .error
+                                } else {
+                                    Task {
+                                        await viewModel.addFAQ(
+                                            tema: viewModel.temaSelected,
+                                            pregunta: viewModel.pregunta,
+                                            respuesta: viewModel.respuesta
+                                        )
+                                    }
+                                }
+                            }, label: {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.yellow)
+                            })
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                    }
                 .padding()
                 .alert(item: $viewModel.activeAlert) { alertType in
                     switch alertType {

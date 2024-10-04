@@ -11,10 +11,14 @@ struct FAQResponse: Codable {
     var code: Int
     var msg: String
     var permisos: [String]?
-    var data: [FAQ]
+    var data: [FAQ]?
 }
 
-struct UpdateDeleteFAQResponse: Codable {
+struct UpdateFAQResponse: Codable {
+    var message: String
+}
+
+struct DeleteFAQResponse: Codable {
     var code: Int
     var msg: String
 }

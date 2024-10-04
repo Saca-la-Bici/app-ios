@@ -51,4 +51,8 @@ class UserSessionManager: ObservableObject {
     func puedeDesactivarUsuario() -> Bool {
         return tienePermiso("Desactivar usuario")
     }
+    
+    func canCreateFAQ() -> Bool {
+        return tienePermiso("Registrar pregunta frecuente")
+    }
 }
