@@ -71,7 +71,6 @@ struct FAQView: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                         Spacer()
                     }
-                    .frame(width: .infinity, height: .infinity)
                 }
                 
                 List {
