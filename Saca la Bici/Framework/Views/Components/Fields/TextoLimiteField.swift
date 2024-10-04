@@ -14,6 +14,7 @@ struct TextoLimiteField: View {
     @Binding var text: String
     var maxLength: Int
     var title: Bool = false
+    var subheadline: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -22,6 +23,9 @@ struct TextoLimiteField: View {
                     Text(label)
                         .font(.title3)
                         .bold()
+                } else if subheadline == true {
+                    Text(label)
+                        .font(.subheadline)
                 } else {
                     Text(label)
                         .font(.caption)

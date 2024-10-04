@@ -64,6 +64,12 @@ class SignUpViewModel: ObservableObject {
         return predicate.evaluate(with: password)
     }
     
+    func isValidEmail(_ email: String) -> Bool {
+        let regex = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
+        return predicate.evaluate(with: email)
+    }
+    
     @MainActor
     func validarDatosStep1() async {
         if self.email.isEmpty || self.username.isEmpty {
@@ -72,7 +78,7 @@ class SignUpViewModel: ObservableObject {
             return
         }
         
-        if !self.email.contains("@") || !self.email.contains(".") {
+        if !isValidEmail(self.email) {
             self.messageAlert = "El correo electrónico proporcionado no es válido."
             self.showAlert = true
             return

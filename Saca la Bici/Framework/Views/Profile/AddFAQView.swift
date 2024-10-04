@@ -58,7 +58,9 @@ struct AddFAQView: View {
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    TextoLimiteMultiline(
+                    // NOTA: Es un TextField porque aún no se han definido las categorías de FAQs
+                    
+                    TextoLimiteMultilineField(
                         placeholder: "Escribe la respuesta aquí ...",
                         text: $viewModel.respuesta,
                         maxLength: 400,

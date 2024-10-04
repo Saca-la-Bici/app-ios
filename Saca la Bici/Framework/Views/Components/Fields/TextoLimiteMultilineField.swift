@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct TextoLimiteMultiline: View {
+struct TextoLimiteMultilineField: View {
     var label: String?
     var placeholder: String = ""
     @Binding var text: String
