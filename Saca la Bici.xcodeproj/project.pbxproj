@@ -17,6 +17,7 @@
 		2510D2092CB04F2E004C29CC /* FechaPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D2082CB04F2A004C29CC /* FechaPicker.swift */; };
 		2510D20B2CB04F3E004C29CC /* HoraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D20A2CB04F3C004C29CC /* HoraPicker.swift */; };
 		2510D20E2CB050F6004C29CC /* DurationPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 2510D20D2CB050F6004C29CC /* DurationPicker */; };
+		2510D2112CB060E7004C29CC /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2510D2102CB060E7004C29CC /* SDWebImageSwiftUI */; };
 		2512D3A02CAFAB20003BCA6A /* IconSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2512D39F2CAFAB18003BCA6A /* IconSelection.swift */; };
 		2512D3A22CAFAB6B003BCA6A /* MedalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2512D3A12CAFAB65003BCA6A /* MedalsView.swift */; };
 		2512D3A42CAFAB90003BCA6A /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2512D3A32CAFAB88003BCA6A /* EventView.swift */; };
@@ -264,6 +265,7 @@
 				2510D20E2CB050F6004C29CC /* DurationPicker in Frameworks */,
 				252B64FD2C99FFE200A362C5 /* GoogleSignInSwift in Frameworks */,
 				252B64F32C99FF1000A362C5 /* Alamofire in Frameworks */,
+				2510D2112CB060E7004C29CC /* SDWebImageSwiftUI in Frameworks */,
 				252B64FB2C99FFE200A362C5 /* GoogleSignIn in Frameworks */,
 				252B64F82C99FFBD00A362C5 /* FirebaseAuthCombine-Community in Frameworks */,
 				252B64F62C99FFBD00A362C5 /* FirebaseAuth in Frameworks */,
@@ -694,6 +696,7 @@
 				252B64FC2C99FFE200A362C5 /* GoogleSignInSwift */,
 				25A7BE5F2CA775CF00FCB8B6 /* FirebaseMessaging */,
 				2510D20D2CB050F6004C29CC /* DurationPicker */,
+				2510D2102CB060E7004C29CC /* SDWebImageSwiftUI */,
 			);
 			productName = "Saca la Bici";
 			productReference = 252B639B2C99F16700A362C5 /* Saca la Bici.app */;
@@ -777,6 +780,7 @@
 				252B64F42C99FFBD00A362C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				252B64F92C99FFE200A362C5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				2510D20C2CB050F6004C29CC /* XCRemoteSwiftPackageReference "DurationPicker" */,
+				2510D20F2CB060E7004C29CC /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 252B639C2C99F16700A362C5 /* Products */;
@@ -1314,6 +1318,14 @@
 				minimumVersion = 1.0.2;
 			};
 		};
+		2510D20F2CB060E7004C29CC /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.2;
+			};
+		};
 		252B64F12C99FF1000A362C5 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -1345,6 +1357,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2510D20C2CB050F6004C29CC /* XCRemoteSwiftPackageReference "DurationPicker" */;
 			productName = DurationPicker;
+		};
+		2510D2102CB060E7004C29CC /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2510D20F2CB060E7004C29CC /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
 		};
 		252B64F22C99FF1000A362C5 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

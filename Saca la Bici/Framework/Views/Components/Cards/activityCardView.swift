@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ActivityCardView: View {
     var activityTitle: String
@@ -14,12 +15,10 @@ struct ActivityCardView: View {
     var date: String?
     var time: String?
     var duration: String?
+    var imagen: String?
     var location: String?
     var attendees: Int?
     @ObservedObject private var userSessionManager = UserSessionManager.shared
-    
-    @State private var isJoined: Bool = false
-    @State private var isStarted: Bool = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -91,10 +90,12 @@ struct ActivityCardView: View {
             }
             
             // Imagen Placeholder
-            Rectangle()
-                .fill(Color.gray.opacity(0.3))
-                .frame(height: 100)
-                .cornerRadius(8)
+            if let imagen = imagen {
+                WebImage(url: URL(string: imagen))
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 48, height: 48, alignment: .center)
+            }
             
             // Ubicación
             if let location = location {
@@ -106,73 +107,6 @@ struct ActivityCardView: View {
                         .font(.subheadline)
                         .foregroundColor(.primary)
                 }
-            }
-            
-            // Botones según tipo de actividad y permisos
-            if activityType.lowercased() == "rodada" && userSessionManager.puedeIniciarRodada() {
-                // Botones para Rodada
-                VStack(spacing: 8) {
-                    // Botón de Iniciar/Parar Rodada
-                    Button(action: {
-                        isStarted.toggle()
-                        // Aquí puedes agregar lógica adicional para iniciar o parar la rodada
-                    }, label: {
-                        HStack {
-                            Image(systemName: isStarted ? "pause.circle" : "play.circle")
-                            Text(isStarted ? "Parar" : "Iniciar")
-                                .font(.headline)
-                        }
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(isStarted ? Color.red : ColorManager.shared.colorFromHex("#88B598"))
-                        .cornerRadius(8)
-                    })
-                    .buttonStyle(PlainButtonStyle())
-                    
-                    // Botón de Asistencia
-                    Button(action: {
-                        // Lógica de asistencia
-                        // Implementa aquí la funcionalidad de asistencia
-                    }, label: {
-                        HStack {
-                            Image(systemName: "person.circle")
-                                .font(.headline)
-                            Text("Asistencia")
-                                .font(.headline)
-                        }
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.yellow)
-                        .cornerRadius(8)
-                    })
-                    .buttonStyle(PlainButtonStyle())
-                }
-            } else {
-                // Botón de Unirse para otras actividades o si no tiene permiso para iniciar rodada
-                Button(action: {
-                    isJoined.toggle()
-                    // Aquí puedes agregar lógica adicional para unirse o cancelar asistencia
-                }, label: {
-                    HStack {
-                        Image(systemName: isJoined ? "xmark.circle" : "plus.circle")
-                        Text(isJoined ? "Cancelar asistencia" : "Unirse")
-                            .font(.headline)
-                    }
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        isJoined
-                            ? Color.red
-                            : (userSessionManager.puedeIniciarRodada() && activityType.lowercased() != "rodada"
-                                ? ColorManager.shared.colorFromHex("#88B598") // Verde si puede iniciar rodada y no es rodada
-                                : Color(red: 215.0 / 255.0, green: 205.0 / 255.0, blue: 25.0 / 255.0))
-                    )
-                    .cornerRadius(8)
-                })
-                .buttonStyle(PlainButtonStyle())
             }
         }
         .padding()

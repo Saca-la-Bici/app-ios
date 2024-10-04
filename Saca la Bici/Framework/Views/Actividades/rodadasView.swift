@@ -30,6 +30,7 @@ struct RodadasView: View {
                             date: FechaManager.shared.formatDate(rodada.actividad.fecha),
                             time: rodada.actividad.hora,
                             duration: rodada.actividad.duracion,
+                            imagen: rodada.actividad.imagen,
                             location: rodada.actividad.ubicacion,
                             attendees: rodada.actividad.personasInscritas
                         )
