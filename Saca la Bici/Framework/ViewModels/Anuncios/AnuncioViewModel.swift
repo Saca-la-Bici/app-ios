@@ -7,88 +7,98 @@
 
 import SwiftUI
 import Foundation
+import Alamofire
 
+@MainActor
 class AnuncioViewModel: ObservableObject {
     @Published var anuncios: [Anuncio] = []
     @Published var errorMessage: String?
     @Published var successMessage: String?
     
+    private var userSessionManager = UserSessionManager.shared
     private let repository: AnuncioRepository
     
     init(repository: AnuncioRepository = AnuncioRepository()) {
         self.repository = repository
     }
     
-    // Función para obtener los anuncios
-    func fetchAnuncios() {
-        repository.getAnuncios { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let anuncios):
-                    print("Anuncios obtenidos: \(anuncios.count)")
-                    self.anuncios = anuncios.map { anuncio in
-                        var anuncioModificado = anuncio
-                        anuncioModificado.icon = "A"
-                        anuncioModificado.backgroundColor = Color(UIColor.systemGray6)
-                        return anuncioModificado
-                    }.reversed()
-                case .failure(let error):
-                    self.errorMessage = error.localizedDescription
-                }
-            }
+    func fetchAnuncios() async {
+        do {
+            // Llamas la función con el Rol y anuncios
+            let response = try await repository.getAnuncios()
+            
+            // Sacas los anuncios
+            var anuncios = response.announcements
+            anuncios = anuncios.map { anuncio in
+                var anuncioModificado = anuncio
+                anuncioModificado.backgroundColor = Color(UIColor.systemGray6)
+                return anuncioModificado
+            }.reversed()
+            self.anuncios = Array(anuncios)
+            
+            userSessionManager.updatePermisos(newPermisos: response.permisos)
+            
+        } catch {
+            self.handleError(error)
         }
     }
-
-    // Función para registrar un anuncio
-    func registrarAnuncio(titulo: String, contenido: String) {
-        let nuevoAnuncio = Anuncio(id: UUID().uuidString, IDUsuario: 1,
-                                   titulo: titulo, contenido: contenido, imagen: "", createdAt: "", fechaCaducidad: "")
-
-        repository.postAnuncio(nuevoAnuncio) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let message):
-                    self.successMessage = message
-                    print("Registro exitoso. Llamando a fetchAnuncios()")
-                    self.fetchAnuncios()
-                case .failure(let error):
-                    self.errorMessage = "Error al registrar el anuncio: \(error.localizedDescription)"
-                }
-            }
-        }
-    }
-
-    // Función para eliminar un anuncio
-       func eliminarAnuncio(idAnuncio: String) {
-           repository.eliminarAnuncio(idAnuncio: idAnuncio) { result in
-               DispatchQueue.main.async {
-                   switch result {
-                   case .success(let message):
-                       self.successMessage = message
-                       self.fetchAnuncios()
-                   case .failure(let error):
-                       self.errorMessage = error.localizedDescription
-                   }
-               }
-           }
-       }
     
-    // Función para modificar un anuncio
-       func modificarAnuncio(anuncio: Anuncio, nuevoTitulo: String, nuevoContenido: String) {
-           repository.modificarAnuncio(idAnuncio: anuncio.id, titulo: nuevoTitulo, contenido: nuevoContenido) { [weak self] result in
-               DispatchQueue.main.async {
-                   switch result {
-                   case .success(let message):
-                       self?.successMessage = message
-                       // Actualiza la lista de anuncios localmente
-                       if let index = self?.anuncios.firstIndex(where: { $0.id == anuncio.id }) {
-                           self?.anuncios[index].titulo = nuevoTitulo
-                           self?.anuncios[index].contenido = nuevoContenido
-                       }
-                   case .failure(let error):
-                       self?.errorMessage = "Error al modificar el anuncio: \(error.localizedDescription)"
-                   }
-               }
-           }
-       }
+    func registrarAnuncio(titulo: String, contenido: String, imagenData: Data?) async {
+        let nuevoAnuncio = Anuncio(
+            id: UUID().uuidString,
+            titulo: titulo,
+            contenido: contenido,
+            imagen: "",
+            createdAt: "",
+            fechaCaducidad: ""
+        )
+        
+        do {
+            let message = try await repository.postAnuncio(nuevoAnuncio, imagenData: imagenData)
+            self.successMessage = message
+            await fetchAnuncios()
+        } catch {
+            self.handleError(error)
+        }
+    }
+    
+    func eliminarAnuncio(idAnuncio: String) async {
+        do {
+            let message = try await repository.eliminarAnuncio(idAnuncio: idAnuncio)
+            self.successMessage = message
+            await fetchAnuncios()
+        } catch {
+            self.handleError(error)
+        }
+    }
+    
+    func modificarAnuncio(anuncio: Anuncio, nuevoTitulo: String, nuevoContenido: String, imagenData: Data?) async {
+        do {
+            var anuncioModificado = anuncio
+            anuncioModificado.titulo = nuevoTitulo
+            anuncioModificado.contenido = nuevoContenido
+            
+            _ = try await repository.modificarAnuncio(anuncioModificado, idAnuncio: anuncio.id, imagenData: imagenData)
+            
+            self.successMessage = "Anuncio modificado exitosamente."
+            
+            // Actualiza la lista de anuncios desde el servidor
+            await fetchAnuncios()
+        } catch {
+            self.handleError(error)
+        }
+    }
+    
+    private func handleError(_ error: Error) {
+        if let afError = error as? AFError {
+            switch afError.responseCode {
+            case 401:
+                self.errorMessage = "No autorizado. Por favor, inicia sesión nuevamente."
+            default:
+                self.errorMessage = "Error: \(afError.errorDescription ?? "Desconocido")"
+            }
+        } else {
+            self.errorMessage = "Error: \(error.localizedDescription)"
+        }
+    }
 }

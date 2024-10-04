@@ -12,12 +12,14 @@ struct ModificarAnuncioView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: AnuncioViewModel
     var anuncio: Anuncio
-    
+
     @State private var titulo: String
     @State private var contenido: String
     @State private var selectedItem: PhotosPickerItem?
     @State private var selectedImageData: Data?
-    
+    @State private var existingImageURL: URL?
+    @State private var existingImageData: Data?
+
     // Enum para manejar las alertas activas
     enum ActiveAlert: Identifiable {
         case validationError
@@ -28,18 +30,21 @@ struct ModificarAnuncioView: View {
             hashValue
         }
     }
-    
+
     // Variable de estado para la alerta activa
     @State private var activeAlert: ActiveAlert?
-    
+
     // Inicializador personalizado
     init(viewModel: AnuncioViewModel, anuncio: Anuncio) {
         self.viewModel = viewModel
         self.anuncio = anuncio
         _titulo = State(initialValue: anuncio.titulo)
         _contenido = State(initialValue: anuncio.contenido)
+        if let imageUrlString = anuncio.imagen, let url = URL(string: imageUrlString) {
+            _existingImageURL = State(initialValue: url)
+        }
     }
-    
+
     var body: some View {
         VStack {
             // Encabezado
@@ -50,17 +55,14 @@ struct ModificarAnuncioView: View {
                 }, label: {
                     Image(systemName: "xmark")
                         .font(.title2)
-                        .foregroundColor(.black)
                 })
                 .buttonStyle(PlainButtonStyle())
-                
+
                 Spacer()
                 Text("Modificar anuncio")
                     .font(.headline)
-                    .foregroundColor(.black)
                 Spacer()
                 Button(action: {
-                    // Acción para confirmar el anuncio
                     // Validaciones
                     if titulo.trimmingCharacters(in: .whitespaces).isEmpty {
                         viewModel.errorMessage = "El título no puede estar vacío."
@@ -68,17 +70,23 @@ struct ModificarAnuncioView: View {
                         return
                     }
                     if contenido.trimmingCharacters(in: .whitespaces).isEmpty {
-                        viewModel.errorMessage = "El contenido no puede estar vacío."
+                        viewModel.errorMessage = "La descripción no puede estar vacía."
                         activeAlert = .validationError
                         return
                     }
-                    
+
+                    // Determinar qué imagen enviar
+                    let imagenAEnviar = selectedImageData ?? existingImageData
+
                     // Llamar al ViewModel para modificar el anuncio
-                    viewModel.modificarAnuncio(
-                        anuncio: anuncio,
-                        nuevoTitulo: titulo,
-                        nuevoContenido: contenido
-                    )
+                    Task {
+                        await viewModel.modificarAnuncio(
+                            anuncio: anuncio,
+                            nuevoTitulo: titulo,
+                            nuevoContenido: contenido,
+                            imagenData: imagenAEnviar
+                        )
+                    }
                 }, label: {
                     Image(systemName: "checkmark")
                         .font(.title2)
@@ -88,49 +96,22 @@ struct ModificarAnuncioView: View {
             }
             .padding(.horizontal)
             .padding(.top, 10)
-            
-            Spacer().frame(height: 40)
-            
-            // Icono para subir una imagen
-            if selectedImageData == nil {
-                PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 25)
-                            .fill(Color.gray.opacity(0.2))
-                            .frame(width: 100, height: 100)
-                        
-                        Image(systemName: "photo.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 60, height: 60)
-                            .foregroundColor(Color.gray.opacity(0.1))
-                        
-                        Image(systemName: "plus")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 35, height: 35)
-                            .foregroundColor(Color.white.opacity(0.7))
-                    }
-                }
-                .onChange(of: selectedItem) { _, newItem in
-                    Task {
-                        if let data = try? await newItem?.loadTransferable(type: Data.self),
-                           let uiImage = UIImage(data: data) {
-                            selectedImageData = data
-                        }
-                    }
-                }
-            }
 
-            // Mostrar la imagen si existe
-            if let data = selectedImageData, let uiImage = UIImage(data: data) {
+            Spacer().frame(height: 40)
+
+            // Manejo de la imagen
+            if selectedImageData == nil && existingImageURL == nil {
+                // Usar el componente ImagePickerView para seleccionar una nueva imagen
+                ImagePickerView(selectedItem: $selectedItem, selectedImageData: $selectedImageData)
+            } else if let data = selectedImageData, let uiImage = UIImage(data: data) {
+                // Mostrar la imagen seleccionada
                 VStack {
                     Image(uiImage: uiImage)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 200, height: 200)
                         .cornerRadius(10)
-                    
+
                     Button(action: {
                         selectedImageData = nil
                     }, label: {
@@ -138,56 +119,101 @@ struct ModificarAnuncioView: View {
                             .foregroundColor(.red)
                             .padding(.top, 5)
                     })
+                    .buttonStyle(PlainButtonStyle())
+                }
+            } else if let imageURL = existingImageURL {
+                // Mostrar la imagen existente
+                VStack {
+                    AsyncImage(url: imageURL) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200, height: 200)
+                                .cornerRadius(10)
+                        } else if phase.error != nil {
+                            // Error al cargar la imagen
+                            Image(systemName: "photo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200, height: 200)
+                                .cornerRadius(10)
+                        } else {
+                            // Placeholder mientras se carga la imagen
+                            ProgressView()
+                                .frame(width: 200, height: 200)
+                        }
+                    }
+                    
+                    HStack {
+                        // Usar el componente ImagePickerView para cambiar la imagen existente
+                        PhotosPicker(
+                            selection: $selectedItem,
+                            matching: .images,
+                            photoLibrary: .shared(),
+                            label: {
+                                Text("Cambiar Imagen")
+                                    .foregroundColor(.blue)
+                                    .padding(.top, 5)
+                            }
+                        )
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        Button(action: {
+                            // Eliminar la imagen existente
+                            selectedImageData = nil
+                            existingImageURL = nil
+                            existingImageData = nil
+                        }, label: {
+                            Text("Eliminar Imagen")
+                                .foregroundColor(.red)
+                                .padding(.top, 5)
+                        })
+                    }
+                }
+                .onChange(of: selectedItem) { _, newItem in
+                    Task {
+                        if let data = try? await newItem?.loadTransferable(type: Data.self),
+                           UIImage(data: data) != nil {
+                            selectedImageData = data
+                            existingImageURL = nil
+                            existingImageData = nil
+                        }
+                    }
                 }
             }
 
             Spacer().frame(height: 20)
-            
+
             // Campo de texto para el título
             VStack(alignment: .leading) {
-                Text("Título")
-                    .font(.subheadline)
-                    .foregroundColor(.black)
-                
-                TextField("Título del anuncio", text: $titulo)
-                    .padding(.horizontal, 11)
-                    .padding(.vertical, 4)
-                    .background(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                    )
+                TextoLimiteField(
+                    label: "Título",
+                    placeholder: "Escribe el título del anuncio ...",
+                    text: $titulo,
+                    maxLength: 80,
+                    title: false,
+                    subheadline: true
+                )
             }
             .padding(.horizontal)
             .padding(.bottom, 20)
-            
+
             // Campo de texto para el contenido
             VStack(alignment: .leading) {
                 Text("Descripción")
                     .font(.subheadline)
-                    .foregroundColor(.black)
                 
-                ZStack(alignment: .topLeading) {
-                    TextEditor(text: $contenido)
-                        .padding(8)
-                        .frame(height: 150)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                        )
-                        .padding(.top, 5)
-                    
-                    // Mostrar placeholder cuando el contenido está vacío
-                    if contenido.isEmpty {
-                        Text("¿Qué quieres compartir?")
-                            .foregroundColor(Color(.placeholderText))
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 16)
-                    }
-                }
+                TextoLimiteMultilineField(
+                    placeholder: "¿Qué quieres compartir?",
+                    text: $contenido,
+                    maxLength: 450,
+                    showCharacterCount: true
+                )
             }
             .padding(.horizontal)
             .padding(.bottom, 20)
-    
+
             Spacer()
         }
         .onTapGesture {
@@ -237,6 +263,18 @@ struct ModificarAnuncioView: View {
         .onChange(of: viewModel.successMessage) { _, newValue in
             if newValue != nil {
                 activeAlert = .success
+            }
+        }
+        .onAppear {
+            if let url = existingImageURL, existingImageData == nil {
+                Task {
+                    do {
+                        let (data, _) = try await URLSession.shared.data(from: url)
+                        existingImageData = data
+                    } catch {
+                        print("Error al descargar la imagen existente: \(error)")
+                    }
+                }
             }
         }
     }

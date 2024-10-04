@@ -15,6 +15,12 @@ class SessionAPIService: NSObject {
     // Se usa la libería de Alamofire y se usa static let para que sea inmutable y si se crean varias instancias que sea igual para todas dichas instancias.
     static let shared = SessionAPIService()
     
+    let firebaseTokenManager: FirebaseTokenManager
+    
+    init(firebaseTokenManager: FirebaseTokenManager = FirebaseTokenManager.shared) {
+            self.firebaseTokenManager = firebaseTokenManager
+        }
+    
     // Crear una sesión personalizada con tiempos de espera ajustados
     let session = Session(configuration: {
         let configuration = URLSessionConfiguration.default
@@ -99,7 +105,7 @@ class SessionAPIService: NSObject {
         }
     }
     
-    func iniciarSesion(UserDatos: User, URLUsername: URL) async -> Int? {
+    func iniciarSesion(UserDatos: User, URLUsername: URL, url: URL) async -> Int? {
         do {
             var usuarioOEmail = UserDatos.emailorUsername
             
@@ -127,20 +133,37 @@ class SessionAPIService: NSObject {
                 "Content-Type": "application/json"
             ]
             
-            print(headers)
-            // Falta hacer la llamada al back para mostrar info despues de iniciar sesion.
+            let taskRequest = session.request(url, method: .get, headers: headers).validate()
+            let response = await taskRequest.serializingData().response
             
-            return 200 // Código de éxito, o el código que desees manejar
+            let statusCode = response.response?.statusCode
+            
+            switch response.result {
+            case .success:
+                    return statusCode
+            case let .failure(error):
+                // Ya que dio error, sacas al usuario de la sesion de Firebase
+                try Auth.auth().signOut()
+                debugPrint(error.localizedDescription)
+                
+                // Imprimir el cuerpo de la respuesta en caso de error
+                if let data = response.data {
+                    let errorResponse = String(decoding: data, as: UTF8.self)
+                    print("\(errorResponse)")
+                }
+                
+                return statusCode
+            }
         } catch {
             // Manejo de errores de inicio de sesión
             print("Error al iniciar sesión: \(error.localizedDescription)")
-            return nil // Error, devuelve nil o el código de error correspondiente
+            return 1 // Error, devuelve nil o el código de error correspondiente
         }
     }
     
     func probarToken(url: URL) async -> Response? {
         // Obtener el ID Token usando async/await
-        guard let idToken = await obtenerIDToken() else {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             print("No se pudo obtener el ID Token")
             return nil
         }
@@ -250,21 +273,79 @@ class SessionAPIService: NSObject {
             return 500
         }
     }
+    // Función para reautenticar al usuario
+    func reauthenticateUser(currentPassword: String) async -> Bool {
+        // Obtener el usuario actual
+        guard let user = Auth.auth().currentUser, let email = user.email else {
+            print("Usuario no encontrado")
+            return false
+        }
+
+        // Crear las credenciales usando el proveedor de correo electrónico y contraseña
+        let credential = EmailAuthProvider.credential(withEmail: email, password: currentPassword)
+        
+        do {
+            try await user.reauthenticate(with: credential)
+            return true
+        } catch {
+            print("Reauthentication failed: \(error.localizedDescription)")
+            return false
+        }
+    }
     
-    // Función para obtener el ID Token de Firebase usando async/await
-    private func obtenerIDToken() async -> String? {
-        return await withCheckedContinuation { continuation in
-            // Obtener el ID Token del usuario actual
-            Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-                if let error = error {
-                    print("Error al obtener el ID Token: \(error.localizedDescription)")
-                    continuation.resume(returning: nil)
-                } else if let idToken = idToken {
-                    continuation.resume(returning: idToken)
+    func restablecerContraseña(newPassword: String) async -> Bool {
+        // Obtener el usuario actual
+        guard let user = Auth.auth().currentUser else {
+            print("Usuario no encontrado")
+            return false
+        }
+        
+        do {
+            try await user.updatePassword(to: newPassword)
+            return true
+        } catch {
+            print("Restablecer contraseña fallida: \(error.localizedDescription)")
+            return false
+        }
+    }
+    
+    func emailRestablecerContraseña(URLUsername: URL, emailOrUsername: String) async -> Bool {
+        
+        var email = emailOrUsername
+        
+        do {
+            // Verificar si el input es un nombre de usuario (no contiene '@')
+            if !emailOrUsername.contains("@") {
+                // Obtener el correo electrónico desde tu backend
+                if let userEmail = try await UserProfileSessionAPIService().obtenerEmailDesdeBackend(
+                    username: emailOrUsername, URLUsername: URLUsername) {
+                    email = userEmail
                 } else {
-                    continuation.resume(returning: nil)
+                    print("Nombre de usuario no encontrado")
+                    return false
                 }
             }
+            
+            try await Auth.auth().sendPasswordReset(withEmail: email)
+            return true
+        } catch {
+            print("Restablecer contraseña fallida: \(error.localizedDescription)")
+            return false
         }
+    }
+    
+    func esUsuarioConEmailPassword () -> Bool {
+        // Obtener el usuario actual
+        guard let user = Auth.auth().currentUser else {
+            print("No hay un usuario autenticado actualmente.")
+            return false
+        }
+        
+        // Iterar sobre los proveedores vinculados al usuario
+        for proveedor in user.providerData where proveedor.providerID == "password" {
+            return true
+        }
+        
+        return false
     }
 }

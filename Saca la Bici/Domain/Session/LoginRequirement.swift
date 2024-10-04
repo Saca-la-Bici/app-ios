@@ -14,7 +14,8 @@ protocol LoginRequirementProtocol {
     func probarToken() async -> Response?
     func iniciarSesion(UserDatos: User) async -> Int?
     func GoogleLogin() async -> Int?
-    func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int}
+    func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int
+}
 
 class LoginRequirement: LoginRequirementProtocol {
     

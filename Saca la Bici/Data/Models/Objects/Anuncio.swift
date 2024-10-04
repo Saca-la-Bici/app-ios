@@ -7,21 +7,23 @@
 
 import SwiftUI
 
+struct AnunciosResponse: Codable {
+    let announcements: [Anuncio]
+    let permisos: [String]
+}
+
 struct Anuncio: Identifiable, Codable {
     var id: String
-    var IDUsuario: Int?
     var titulo: String
     var contenido: String
     var imagen: String?
     var createdAt: String
     var fechaCaducidad: String
     
-    var icon: String = "A"  // Valor por defecto por ahora (imagen del usuario)
     var backgroundColor: Color = Color(UIColor.systemGray6)
     
     enum CodingKeys: String, CodingKey {
         case id = "_id"
-        case IDUsuario
         case titulo
         case contenido
         case imagen
