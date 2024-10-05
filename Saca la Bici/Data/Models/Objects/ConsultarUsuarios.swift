@@ -16,14 +16,18 @@ struct ConsultarUsuariosResponse: Codable {
 }
 
 // Modelo que representa a un usuario
-struct ConsultarUsuario: Codable, Identifiable {
-    let id = UUID()
+struct ConsultarUsuario: Codable, Identifiable, Equatable {
+    var id: String { usuario.id }
     let usuario: ConsultarUsuarioDatos
     let rol: ConsultarUsuarioRol
+
+    static func == (lhs: ConsultarUsuario, rhs: ConsultarUsuario) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 // Detalles del usuario
-struct ConsultarUsuarioDatos: Codable {
+struct ConsultarUsuarioDatos: Codable, Equatable {
     let id: String
     let username: String
     let nombre: String
@@ -32,7 +36,7 @@ struct ConsultarUsuarioDatos: Codable {
 }
 
 // Rol del usuario
-struct ConsultarUsuarioRol: Codable {
+struct ConsultarUsuarioRol: Codable, Equatable {
     let id: String
     let nombreRol: String
 }

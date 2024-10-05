@@ -9,12 +9,13 @@ import Foundation
 
 class ConsultarUsuariosRepository {
     private let apiService: ConsultarUsuariosApiService
+    private let url: String = "\(Api.base)\(Api.Routes.profile)/consultarUsuarios"
 
     init(apiService: ConsultarUsuariosApiService = ConsultarUsuariosApiService()) {
         self.apiService = apiService
     }
 
-    func obtenerUsuarios(page: Int, limit: Int, roles: [String], url: String) async throws -> [ConsultarUsuario] {
-        return try await apiService.consultarUsuarios(page: page, limit: limit, roles: roles, url: url).usuarios
+    func obtenerUsuarios(page: Int, limit: Int, roles: [String]) async throws -> ConsultarUsuariosResponse {
+        return try await apiService.consultarUsuarios(page: page, limit: limit, roles: roles, url: url)
     }
 }

@@ -24,7 +24,7 @@ struct ConsultarUsuariosView: View {
 
     var body: some View {
         VStack {
-            // Picker para seleccionar rol
+            // Picker
             Picker("Seleccione un rol", selection: $selectedTab) {
                 ForEach(Tab.allCases) { tab in
                     Text(tab.rawValue).tag(tab)
@@ -32,12 +32,12 @@ struct ConsultarUsuariosView: View {
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding()
-            .onChange(of: selectedTab) { _ in
+            .onChange(of: selectedTab) {
                 viewModel.resetPagination()
                 viewModel.cargarUsuarios(roles: selectedRoles)
             }
 
-            // Barra para buscar
+            // Search Bar
             HStack {
                 Image(systemName: "magnifyingglass")
                 TextField("Buscar", text: $searchText)
@@ -48,61 +48,86 @@ struct ConsultarUsuariosView: View {
             .cornerRadius(10)
             .padding([.leading, .trailing])
 
-            // Lista de usuarios
-            List {
-                ForEach(filteredUsers) { usuario in
-                    HStack {
-                        if let imagenPerfil = usuario.usuario.imagenPerfil, let url = URL(string: imagenPerfil) {
-                            AsyncImage(url: url) { image in
-                                image.resizable()
+            // Condicion por si no hay usuarios
+            if filteredUsers.isEmpty && !viewModel.isLoading {
+                Spacer()
+                Text("No encontré ningún usuario.")
+                    .font(.title3)
+                    .foregroundColor(.gray)
+                    .padding()
+                Spacer()
+            } else {
+                // User List
+                List {
+                    ForEach(filteredUsers) { usuario in
+                        HStack {
+                            if let imagenPerfil = usuario.usuario.imagenPerfil, let url = URL(string: imagenPerfil) {
+                                AsyncImage(url: url) { image in
+                                    image.resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 50, height: 50)
+                                        .clipShape(Circle())
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                            } else {
+                                Image(systemName: "person.crop.circle.fill")
+                                    .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 50, height: 50)
                                     .clipShape(Circle())
-                            } placeholder: {
-                                ProgressView()
                             }
-                        } else {
-                            Image(systemName: "person.crop.circle.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
+                            VStack(alignment: .leading) {
+                                Text(usuario.usuario.username)
+                                    .font(.headline)
+                                Text(usuario.usuario.correoElectronico)
+                                    .font(.subheadline)
+                            }
+                            Spacer()
+                            Button(action: {
+                            }, label: {
+                                Text((usuario.rol.nombreRol == "Administrador" || usuario.rol.nombreRol == "Staff")
+                                     ? "Eliminar"
+                                     : "Agregar")
+                                    .font(.body)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(
+                                        (usuario.rol.nombreRol == "Administrador" || usuario.rol.nombreRol == "Staff")
+                                        ? Color.gray
+                                        : Color.yellow
+                                    )
+                                    .cornerRadius(10)
+                            })
                         }
-                        VStack(alignment: .leading) {
-                            Text(usuario.usuario.username)
-                                .font(.headline)
-                            Text(usuario.usuario.correoElectronico)
-                                .font(.subheadline)
-                        }
-                        Spacer()
-                        Button(action: {
-                            // Botones
-                        }) {
-                            Text((usuario.rol.nombreRol == "Administrador" || usuario.rol.nombreRol == "Staff") ? "Eliminar" : "Agregar")
-                                .font(.body)
-                                .foregroundColor(.white)
-                                .padding()
-                                .background((usuario.rol.nombreRol == "Administrador" || usuario.rol.nombreRol == "Staff") ? Color.gray : Color.yellow)
-                                .cornerRadius(10)
+                        .padding(.vertical, 8)
+                        // Detecta el ultimo elemento para la paginacion
+                        .onAppear {
+                            if usuario == filteredUsers.last {
+                                viewModel.cargarUsuarios(roles: selectedRoles)
+                            }
                         }
                     }
-                    .padding(.vertical, 8)
                 }
-                if viewModel.isLoading {
-                    ProgressView()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                } else {
-                    Button("Cargar más") {
-                        viewModel.cargarUsuarios(roles: selectedRoles)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .center)
-                }
+                .listStyle(PlainListStyle())
             }
-            .listStyle(PlainListStyle())
+
+            // Progress View
+            if viewModel.isLoading {
+                ProgressView("Cargando usuarios")
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .padding()
+            }
         }
-        .navigationTitle("Usuarios")
+        .navigationTitle("Asignación de roles y permisos")
         .onAppear {
             viewModel.cargarUsuarios(roles: selectedRoles)
+        }
+        .onAppear {
+            UIScrollView.appearance().bounces = false
+        }
+        .onDisappear {
+            UIScrollView.appearance().bounces = true
         }
     }
 

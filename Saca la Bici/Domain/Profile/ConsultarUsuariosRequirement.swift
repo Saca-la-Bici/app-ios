@@ -14,7 +14,7 @@ class GetUsuariosUseCase {
         self.repository = repository
     }
 
-    func execute(page: Int, limit: Int, roles: [String]) async throws -> [ConsultarUsuario] {
-        return try await repository.obtenerUsuarios(page: page, limit: limit, roles: roles, url: "\(Api.base)/perfil/consultarUsuarios")
+    func execute(page: Int, limit: Int, roles: [String]) async throws -> ConsultarUsuariosResponse {
+        return try await repository.obtenerUsuarios(page: page, limit: limit, roles: roles)
     }
 }

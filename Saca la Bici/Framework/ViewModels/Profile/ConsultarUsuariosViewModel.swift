@@ -14,7 +14,7 @@ class ConsultarUsuariosViewModel: ObservableObject {
     @Published var usuarios: [ConsultarUsuario] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
-    @Published var hasMoreUsers: Bool = true
+    @Published var totalUsuarios: Int = 0
 
     private let getUsuariosUseCase: GetUsuariosUseCase
     private var currentPage: Int = 1
@@ -25,17 +25,14 @@ class ConsultarUsuariosViewModel: ObservableObject {
     }
 
     func cargarUsuarios(roles: [String]) {
-        guard !isLoading && hasMoreUsers else { return }
+        guard !isLoading else { return }
         isLoading = true
         Task {
             do {
-                let nuevosUsuarios = try await getUsuariosUseCase.execute(page: currentPage, limit: limit, roles: roles)
-                if nuevosUsuarios.isEmpty {
-                    hasMoreUsers = false
-                } else {
-                    usuarios.append(contentsOf: nuevosUsuarios)
-                    currentPage += 1
-                }
+                let response = try await getUsuariosUseCase.execute(page: currentPage, limit: limit, roles: roles)
+                usuarios.append(contentsOf: response.usuarios)
+                totalUsuarios = response.totalUsuarios
+                currentPage += 1
             } catch {
                 errorMessage = error.localizedDescription
             }
@@ -46,6 +43,5 @@ class ConsultarUsuariosViewModel: ObservableObject {
     func resetPagination() {
         currentPage = 1
         usuarios = []
-        hasMoreUsers = true
     }
 }
