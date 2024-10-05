@@ -51,7 +51,7 @@ struct ConsultarUsuariosView: View {
             // Condicion por si no hay usuarios
             if filteredUsers.isEmpty && !viewModel.isLoading {
                 Spacer()
-                Text("No encontré ningún usuario.")
+                Text("No se encontro a ningún usuario.")
                     .font(.title3)
                     .foregroundColor(.gray)
                     .padding()

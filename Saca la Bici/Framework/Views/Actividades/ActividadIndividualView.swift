@@ -28,7 +28,7 @@ struct ActividadIndividualView: View {
                             WebImage(url: URL(string: actividadIndividualViewModel.imagen))
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: min(geometry.size.width, 350), height: 300)
+                                .frame(width: min(geometry.size.width, 370), height: 300)
                                 .cornerRadius(8)
                                 .clipped()
                             }
