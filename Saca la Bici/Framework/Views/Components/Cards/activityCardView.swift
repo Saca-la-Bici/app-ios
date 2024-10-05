@@ -9,6 +9,9 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct ActivityCardView: View {
+    @Binding var path: [ActivitiesPaths]
+    
+    var id: String
     var activityTitle: String
     var activityType: String
     var level: String?
@@ -82,7 +85,7 @@ struct ActivityCardView: View {
             let verde = colorManager.colorFromHex("7DA68D")
             
             Button(action: {
-                
+                path.append(.detalle(id: id))
             }, label: {
                 HStack {
                     Text("Ver detalles")

@@ -168,4 +168,46 @@ class ActividadesAPIService {
             }
         }
     }
+    
+    func consultarActividadIndividual(url: URL, actividadID: String) async -> ActividadIndividualResponse? {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
+            print("No se pudo obtener el ID Token")
+            return nil
+        }
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "multipart/form-data"
+        ]
+        
+        let parameters: Parameters = [
+            "id": actividadID
+        ]
+        
+        let taskRequest = session.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: headers).validate()
+        let response = await taskRequest.serializingData().response
+        
+        switch response.result {
+        case .success(let data):
+            do {
+                // Intentar decodificar la respuesta JSON en un objeto ActividadIndividualResponse
+                let response = try JSONDecoder().decode(ActividadIndividualResponse.self, from: data)
+                
+                return response
+                
+            } catch {
+                debugPrint("Error de decodificación: \(error.localizedDescription)")
+                return nil
+            }
+        case let .failure(error):
+            debugPrint("Error en la solicitud: \(error.localizedDescription)")
+            
+            // Imprimir el cuerpo de la respuesta en caso de error
+            if let data = response.data {
+                let errorResponse = String(decoding: data, as: UTF8.self)
+                print("\(errorResponse)")
+            }
+            return nil
+        }
+    }
 }

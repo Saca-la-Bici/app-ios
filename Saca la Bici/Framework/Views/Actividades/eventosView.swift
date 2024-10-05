@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EventosView: View {
+    @Binding var path: [ActivitiesPaths]
     @StateObject private var viewModel = EventosViewModel()
     
     var body: some View {
@@ -23,6 +24,8 @@ struct EventosView: View {
                 } else {
                     ForEach(viewModel.eventos) { evento in
                         ActivityCardView(
+                            path: $path,
+                            id: evento.id,
                             activityTitle: evento.actividad.titulo,
                             activityType: "Evento",
                             date: FechaManager.shared.formatDate(evento.actividad.fecha),

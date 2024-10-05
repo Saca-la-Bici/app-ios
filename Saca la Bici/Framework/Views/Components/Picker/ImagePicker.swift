@@ -52,6 +52,7 @@ struct ImagePickerView: View {
                     
                     Button(action: {
                         selectedImageData = nil
+                        selectedItem = nil
                     }, label: {
                         Text("Eliminar Imagen")
                             .foregroundColor(.red)

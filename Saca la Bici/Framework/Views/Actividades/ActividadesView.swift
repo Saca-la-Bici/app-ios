@@ -64,11 +64,11 @@ struct ActividadesView: View {
                 // Mostrar las actividades según la pestaña seleccionada
                 Group {
                     if selectedTab == "Rodadas" {
-                        RodadasView()
+                        RodadasView(path: $path)
                     } else if selectedTab == "Eventos" {
-                        EventosView()
+                        EventosView(path: $path)
                     } else if selectedTab == "Talleres" {
-                        TalleresView()
+                        TalleresView(path: $path)
                     }
                 }
                 .transition(.opacity)
@@ -103,6 +103,8 @@ struct ActividadesView: View {
                     DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel)
                 case .descripcionTaller:
                     DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel)
+                case .detalle(let id):
+                    ActividadIndividualView(path: $path, id: id)
                 }
             }
         }

@@ -12,6 +12,7 @@ protocol ActividadesAPIProtocol {
     func getEventos() async throws -> (eventos: [Evento], permisos: [String])
     func getTalleres() async throws -> (talleres: [Taller], permisos: [String])
     func registrarActividad(actividad: DatosActividad) async throws -> Int?
+    func consultarActividadIndividual(actividadID: String) async -> ActividadIndividualResponse?
 }
 
 class ActividadesRepository: ActividadesAPIProtocol {
@@ -34,7 +35,7 @@ class ActividadesRepository: ActividadesAPIProtocol {
             
             let rodadas = response.rodadas.flatMap { response in
                 response.informacion.map { actividad in
-                    Rodada(id: actividad._id, actividad: actividad, ruta: response.ruta)
+                    Rodada(id: response._id, actividad: actividad, ruta: response.ruta)
                 }
             }
             
@@ -55,7 +56,7 @@ class ActividadesRepository: ActividadesAPIProtocol {
             
             let eventos = response.eventos.flatMap { response in
                 response.informacion.map { actividad in
-                    Evento(id: actividad._id, actividad: actividad)
+                    Evento(id: response._id, actividad: actividad)
                 }
             }
             
@@ -76,7 +77,7 @@ class ActividadesRepository: ActividadesAPIProtocol {
             
             let talleres = response.talleres.flatMap { response in
                 response.informacion.map { actividad in
-                    Taller(id: actividad._id, actividad: actividad)
+                    Taller(id: response._id, actividad: actividad)
                 }
             }
             
@@ -101,5 +102,10 @@ class ActividadesRepository: ActividadesAPIProtocol {
         }
         return try await actividadesAPIService.registrarActividad(
             url: URL(string: "\(Api.base)\(Api.Routes.actividades)/registrar\(terminacionURL)")!, actividad: actividad)
+    }
+    
+    func consultarActividadIndividual(actividadID: String) async -> ActividadIndividualResponse? {
+        return await actividadesAPIService.consultarActividadIndividual(
+            url: URL(string: "\(Api.base)\(Api.Routes.actividades)/consultar")!, actividadID: actividadID)
     }
 }
