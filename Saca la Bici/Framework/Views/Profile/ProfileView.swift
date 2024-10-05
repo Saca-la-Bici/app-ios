@@ -64,7 +64,7 @@ struct ProfileView: View {
                                     .opacity(0)
                             }
                             // Imagen centrada
-                            Image("")
+                            Image("BloodDrop")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 80, height: 80)
@@ -202,6 +202,8 @@ struct ProfileView: View {
                     RestablecerContrasenaView(path: $path)
                 case .olvidar:
                     PasswordRecoveryView<ConfigurationPaths>(path: $path, showIniciarSesion: false )
+                case .asignacionRoles:
+                    ConsultarUsuariosView(path: $path)
                 default:
                     EmptyView()
                 }

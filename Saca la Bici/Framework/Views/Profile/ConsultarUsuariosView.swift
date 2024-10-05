@@ -1,0 +1,151 @@
+//
+//  ConsultarUsuariosView.swift
+//  Saca la Bici
+//
+//  Created by Maria Jose Gaytan Gil on 05/10/24.
+//
+
+import SwiftUI
+
+struct ConsultarUsuariosView: View {
+    @StateObject private var viewModel = ConsultarUsuariosViewModel()
+    @State private var searchText: String = ""
+    @State private var selectedTab: Tab = .administradores
+
+    // Binding
+    @Binding var path: [ConfigurationPaths]
+
+    enum Tab: String, CaseIterable, Identifiable {
+        case administradores = "Administradores"
+        case staff = "Staff"
+
+        var id: String { self.rawValue }
+    }
+
+    var body: some View {
+        VStack {
+            // Picker
+            Picker("Seleccione un rol", selection: $selectedTab) {
+                ForEach(Tab.allCases) { tab in
+                    Text(tab.rawValue).tag(tab)
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+            .onChange(of: selectedTab) {
+                viewModel.resetPagination()
+                viewModel.cargarUsuarios(roles: selectedRoles)
+            }
+
+            // Search Bar
+            HStack {
+                Image(systemName: "magnifyingglass")
+                TextField("Buscar", text: $searchText)
+                    .padding(.leading, 10)
+            }
+            .padding()
+            .background(Color(UIColor.systemGray6))
+            .cornerRadius(10)
+            .padding([.leading, .trailing])
+
+            // Condicion por si no hay usuarios
+            if filteredUsers.isEmpty && !viewModel.isLoading {
+                Spacer()
+                Text("No encontré ningún usuario.")
+                    .font(.title3)
+                    .foregroundColor(.gray)
+                    .padding()
+                Spacer()
+            } else {
+                // User List
+                List {
+                    ForEach(filteredUsers) { usuario in
+                        HStack {
+                            if let imagenPerfil = usuario.usuario.imagenPerfil, let url = URL(string: imagenPerfil) {
+                                AsyncImage(url: url) { image in
+                                    image.resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 50, height: 50)
+                                        .clipShape(Circle())
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                            } else {
+                                Image(systemName: "person.crop.circle.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(Circle())
+                            }
+                            VStack(alignment: .leading) {
+                                Text(usuario.usuario.username)
+                                    .font(.headline)
+                                Text(usuario.usuario.correoElectronico)
+                                    .font(.subheadline)
+                            }
+                            Spacer()
+                            Button(action: {
+                            }, label: {
+                                Text((usuario.rol.nombreRol == "Administrador" || usuario.rol.nombreRol == "Staff")
+                                     ? "Eliminar"
+                                     : "Agregar")
+                                    .font(.body)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(
+                                        (usuario.rol.nombreRol == "Administrador" || usuario.rol.nombreRol == "Staff")
+                                        ? Color.gray
+                                        : Color.yellow
+                                    )
+                                    .cornerRadius(10)
+                            })
+                        }
+                        .padding(.vertical, 8)
+                        // Detecta el ultimo elemento para la paginacion
+                        .onAppear {
+                            if usuario == filteredUsers.last {
+                                viewModel.cargarUsuarios(roles: selectedRoles)
+                            }
+                        }
+                    }
+                }
+                .listStyle(PlainListStyle())
+            }
+
+            // Progress View
+            if viewModel.isLoading {
+                ProgressView("Cargando usuarios")
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .padding()
+            }
+        }
+        .navigationTitle("Asignación de roles y permisos")
+        .onAppear {
+            viewModel.cargarUsuarios(roles: selectedRoles)
+        }
+        .onAppear {
+            UIScrollView.appearance().bounces = false
+        }
+        .onDisappear {
+            UIScrollView.appearance().bounces = true
+        }
+    }
+
+    private var selectedRoles: [String] {
+        switch selectedTab {
+        case .administradores:
+            return ["Administrador", "Usuario"]
+        case .staff:
+            return ["Staff", "Usuario"]
+        }
+    }
+
+    // Filtro para buscar
+    var filteredUsers: [ConsultarUsuario] {
+        if searchText.isEmpty {
+            return viewModel.usuarios
+        } else {
+            return viewModel.usuarios.filter { $0.usuario.nombre.contains(searchText) }
+        }
+    }
+}
