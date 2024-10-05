@@ -28,7 +28,7 @@ class AnuncioAPIService {
             "Authorization": "Bearer \(idToken)",
             "Content-Type": "application/json"
         ]
-        
+        print(idToken)
         do {
             let response = try await AF.request(url, method: .get, headers: headers)
                 .validate()
