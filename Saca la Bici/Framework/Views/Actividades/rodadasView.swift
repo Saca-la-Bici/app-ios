@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RodadasView: View {
+    @Binding var path: [ActivitiesPaths]
     @StateObject private var viewModel = RodadasViewModel()
     
     var body: some View {
@@ -23,6 +24,8 @@ struct RodadasView: View {
                 } else {
                     ForEach(viewModel.rodadas) { rodada in
                         ActivityCardView(
+                            path: $path,
+                            id: rodada.id,
                             activityTitle: rodada.actividad.titulo,
                             activityType: "Rodada", 
                             level: rodada.ruta.nivel,

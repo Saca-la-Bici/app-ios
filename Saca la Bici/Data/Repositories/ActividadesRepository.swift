@@ -34,7 +34,7 @@ class ActividadesRepository: ActividadesAPIProtocol {
             
             let rodadas = response.rodadas.flatMap { response in
                 response.informacion.map { actividad in
-                    Rodada(id: actividad._id, actividad: actividad, ruta: response.ruta)
+                    Rodada(id: response._id, actividad: actividad, ruta: response.ruta)
                 }
             }
             
@@ -55,7 +55,7 @@ class ActividadesRepository: ActividadesAPIProtocol {
             
             let eventos = response.eventos.flatMap { response in
                 response.informacion.map { actividad in
-                    Evento(id: actividad._id, actividad: actividad)
+                    Evento(id: response._id, actividad: actividad)
                 }
             }
             
@@ -76,7 +76,7 @@ class ActividadesRepository: ActividadesAPIProtocol {
             
             let talleres = response.talleres.flatMap { response in
                 response.informacion.map { actividad in
-                    Taller(id: actividad._id, actividad: actividad)
+                    Taller(id: response._id, actividad: actividad)
                 }
             }
             
