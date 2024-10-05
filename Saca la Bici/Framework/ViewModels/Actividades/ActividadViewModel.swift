@@ -33,6 +33,18 @@ class ActividadViewModel: ObservableObject {
     @Published var tipoActividad: String = ""
     @Published var navTitulo: String = ""
     @Published var guardarBoton: String = ""
+    
+    enum ActiveAlert: Identifiable {
+        case error
+        case success
+
+        var id: Int {
+            hashValue
+        }
+    }
+    
+    // Estado de alerta
+    @Published var activeAlert: ActiveAlert?
 
     var registrarActividadRequirement: RegistrarActividadRequirementProtocol
 
@@ -105,7 +117,7 @@ class ActividadViewModel: ObservableObject {
     @MainActor
     func registrarActividad() async {
         if self.descripcionActividad.isEmpty {
-            self.showAlertDescripcion = true
+            self.activeAlert = .error
             self.messageAlert = "La descripción de la actividad se encuentra vacía. Por favor, rellene el campo."
             return
         }
@@ -130,23 +142,26 @@ class ActividadViewModel: ObservableObject {
 
             if responseStatus == 500 {
                 self.messageAlert = "Hubo un error al registrar la actividad. Inténtelo de nuevo más tarde."
-                self.showAlertDescripcion = true
+                self.activeAlert = .error
+            } else {
+                self.messageAlert = "La actividad fue registrada correctamente."
+                self.activeAlert = .success
             }
         } catch let urlError as URLError {
             switch urlError.code {
             case .notConnectedToInternet:
                 self.messageAlert = "No tienes conexión a Internet. Verifica tu conexión e intenta nuevamente."
-                self.showAlertDescripcion = true
+                self.activeAlert = .error
             case .timedOut:
                 self.messageAlert = "La solicitud ha excedido el tiempo de espera. Inténtalo de nuevo más tarde."
-                self.showAlertDescripcion = true
+                self.activeAlert = .error
             default:
                 self.messageAlert = "Hubo un error al registrar la actividad. Inténtelo de nuevo más tarde."
-                self.showAlertDescripcion = true
+                self.activeAlert = .error
             }
         } catch {
                 self.messageAlert = "Hubo un error al registrar la actividad. Inténtelo de nuevo más tarde."
-                self.showAlertDescripcion = true
+                self.activeAlert = .error
         }
     }
 
