@@ -41,11 +41,6 @@ struct DescripcionActividadView: View {
                     Button(action: {
                         Task {
                             await actividadViewModel.registrarActividad()
-                            
-                            if actividadViewModel.showAlertDescripcion != true {
-                                actividadViewModel.reset()
-                                path = []
-                            }
                         }
                     }, label: {
                         Image(systemName: "checkmark")
@@ -58,11 +53,23 @@ struct DescripcionActividadView: View {
         .onTapGesture {
             UIApplication.shared.hideKeyboard()
         }
-        .alert(isPresented: $actividadViewModel.showAlertDescripcion) {
-            Alert(
-                title: Text("Oops!"),
-                message: Text(actividadViewModel.messageAlert)
-            )
+        .alert(item: $actividadViewModel.activeAlert) { alertType in
+            switch alertType {
+            case .error:
+                return Alert(
+                    title: Text("Oops!"),
+                    message: Text(actividadViewModel.messageAlert)
+                )
+            case .success:
+                return Alert(
+                    title: Text("¡Éxito!"),
+                    message: Text(actividadViewModel.messageAlert),
+                    dismissButton: .default(Text("OK")) {
+                        actividadViewModel.reset()
+                        path.removeAll()
+                    }
+                )
+            }
         }
         .onAppear {
             actividadViewModel.setGuardarBoton()

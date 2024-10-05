@@ -71,12 +71,15 @@ struct ActivityCardView: View {
             
             // Imagen Placeholder
             if let imagen = imagen {
-                WebImage(url: URL(string: imagen))
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: 200)
-                    .cornerRadius(8)
-                    .clipped()
+                GeometryReader { geometry in
+                    WebImage(url: URL(string: imagen))
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: min(geometry.size.width, 350), height: 200)
+                        .cornerRadius(8)
+                        .clipped()
+                    }
+                .frame(height: 200)
             }
             
             let verde = colorManager.colorFromHex("7DA68D")
