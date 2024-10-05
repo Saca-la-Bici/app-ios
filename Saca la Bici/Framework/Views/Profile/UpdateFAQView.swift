@@ -92,7 +92,7 @@ struct UpdateFAQView: View {
 
                             }, label: {
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(.yellow)
+                                    .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
                             })
                             .buttonStyle(PlainButtonStyle())
                         }

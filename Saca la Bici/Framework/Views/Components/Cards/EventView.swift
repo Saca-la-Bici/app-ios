@@ -15,13 +15,16 @@ struct EventView: View {
                 Text("Foro nacional de la bicicleta")
                     .font(.system(size: 14))
                     .fontWeight(.bold)
+                    .foregroundColor(.black)
                 Spacer()
                 HStack {
                     Image("Participantes")
                         .resizable()
                         .frame(width: 20, height: 10)
+                        .foregroundColor(.black)
                     Text("245")
                         .font(.system(size: 14))
+                        .foregroundColor(.black)
                 }
             }
 
@@ -42,12 +45,14 @@ struct EventView: View {
                         .foregroundColor(.gray)
                     Text("Miércoles 26 junio 2024")
                         .font(.system(size: 11))
+                        .foregroundColor(.black)
                     HStack {
                         Text("Hora")
                             .font(.system(size: 11))
                             .foregroundColor(.gray)
                         Text("13:00")
                             .font(.system(size: 11))
+                            .foregroundColor(.black)
                     }
                     
                 }

@@ -10,7 +10,7 @@ import SwiftUI
 class ColorManager {
     static let shared = ColorManager()
     
-    private init() {}
+    init() {}
     
     func colorFromHex(_ hex: String) -> Color {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

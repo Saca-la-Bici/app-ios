@@ -27,14 +27,16 @@ struct TalleresView: View {
                             activityType: "Taller",
                             date: FechaManager.shared.formatDate(taller.actividad.fecha),
                             time: taller.actividad.hora,
+                            duration: taller.actividad.duracion,
+                            imagen: taller.actividad.imagen,
                             location: taller.actividad.ubicacion,
                             attendees: taller.actividad.personasInscritas
                         )
                     }
-                    .padding(.horizontal)
                 }
                 Spacer().frame(height: 5)
             }
+            .padding(.horizontal)
         }
     }
 }

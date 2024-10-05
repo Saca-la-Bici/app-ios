@@ -9,7 +9,6 @@ import SwiftUI
 
 struct RodadasView: View {
     @StateObject private var viewModel = RodadasViewModel()
-    @ObservedObject private var userSessionManager = UserSessionManager.shared
     
     var body: some View {
         ScrollView {
@@ -25,11 +24,12 @@ struct RodadasView: View {
                     ForEach(viewModel.rodadas) { rodada in
                         ActivityCardView(
                             activityTitle: rodada.actividad.titulo,
-                            activityType: "Rodada", // Tipo de actividad
+                            activityType: "Rodada", 
                             level: rodada.ruta.nivel,
                             date: FechaManager.shared.formatDate(rodada.actividad.fecha),
                             time: rodada.actividad.hora,
                             duration: rodada.actividad.duracion,
+                            imagen: rodada.actividad.imagen,
                             location: rodada.actividad.ubicacion,
                             attendees: rodada.actividad.personasInscritas
                         )
@@ -39,9 +39,6 @@ struct RodadasView: View {
                 Spacer().frame(height: 5)
             }
             .padding(.horizontal)
-        }
-        .onAppear {
-            viewModel.fetchRodadas()
         }
     }
 }

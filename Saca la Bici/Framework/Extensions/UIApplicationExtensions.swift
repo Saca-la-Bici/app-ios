@@ -8,6 +8,7 @@
 import UIKit
 import SwiftUI
 import Foundation
+import DurationPicker
 
 // https://medium.com/@kennjthn12/authentication-using-google-sign-in-with-swift-31039941dabf
 final class GetViewController {
@@ -39,5 +40,48 @@ final class GetViewController {
 extension UIApplication {
     func hideKeyboard() {
         self.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
+struct DurationPickerView: UIViewRepresentable {
+    @Binding var selectedDuration: TimeInterval
+
+    func makeUIView(context: Context) -> DurationPicker {
+        let picker = DurationPicker()
+        picker.pickerMode = .hourMinute
+        picker.minuteInterval = 5
+        picker.addTarget(context.coordinator, action: #selector(context.coordinator.durationChanged(_:)), for: .valueChanged)
+        return picker
+    }
+
+    func updateUIView(_ uiView: DurationPicker, context: Context) {
+        // Solo actualiza si la duración seleccionada ha cambiado para evitar demasiadas actualizaciones
+        if uiView.duration != selectedDuration {
+            uiView.setDuration(selectedDuration, animated: true)
+        }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    // Coordinador para manejar eventos del DurationPicker
+    class Coordinator: NSObject {
+        var parent: DurationPickerView
+
+        init(_ parent: DurationPickerView) {
+            self.parent = parent
+        }
+
+        // Método que se llama cuando la duración cambia
+        @objc func durationChanged(_ sender: DurationPicker) {
+            // Evitar cambios innecesarios para mejorar el rendimiento
+            let newDuration = sender.duration
+            if parent.selectedDuration != newDuration {
+                DispatchQueue.main.async {
+                    self.parent.selectedDuration = newDuration
+                }
+            }
+        }
     }
 }

@@ -7,28 +7,21 @@
 
 import Foundation
 
-struct Rodada: Identifiable {
-    let id: String
-    let actividad: Actividad
-    let ruta: Ruta
+protocol ActividadesAPIProtocol {
+    func getRodadas() async throws -> (rodadas: [Rodada], permisos: [String])
+    func getEventos() async throws -> (eventos: [Evento], permisos: [String])
+    func getTalleres() async throws -> (talleres: [Taller], permisos: [String])
+    func registrarActividad(actividad: DatosActividad) async throws -> Int?
 }
 
-struct Evento: Identifiable {
-    let id: String
-    let actividad: Actividad
-}
+class ActividadesRepository: ActividadesAPIProtocol {
 
-struct Taller: Identifiable {
-    let id: String
-    let actividad: Actividad
-}
+    static let shared = ActividadesRepository()
+    
+    let actividadesAPIService: ActividadesAPIService
 
-class ActividadesRepository {
-
-    private let apiService: APIService
-
-    init(apiService: APIService = APIService()) {
-        self.apiService = apiService
+    init(actividadesAPIService: ActividadesAPIService = ActividadesAPIService.shared) {
+        self.actividadesAPIService = actividadesAPIService
     }
 
     func getRodadas() async throws -> (rodadas: [Rodada], permisos: [String]) {
@@ -37,7 +30,7 @@ class ActividadesRepository {
         }
 
         do {
-            let response = try await apiService.fetchRodadas(url: url)
+            let response = try await actividadesAPIService.fetchRodadas(url: url)
             
             let rodadas = response.rodadas.flatMap { response in
                 response.informacion.map { actividad in
@@ -58,7 +51,7 @@ class ActividadesRepository {
         }
 
         do {
-            let response = try await apiService.fetchEventos(url: url)
+            let response = try await actividadesAPIService.fetchEventos(url: url)
             
             let eventos = response.eventos.flatMap { response in
                 response.informacion.map { actividad in
@@ -79,7 +72,7 @@ class ActividadesRepository {
         }
         
         do {
-            let response = try await apiService.fetchTalleres(url: url)
+            let response = try await actividadesAPIService.fetchTalleres(url: url)
             
             let talleres = response.talleres.flatMap { response in
                 response.informacion.map { actividad in
@@ -92,5 +85,21 @@ class ActividadesRepository {
             print("Error en ActividadesRepository.getTalleres: \(error)")
             throw error
         }
+    }
+    
+    func registrarActividad(actividad: DatosActividad) async throws -> Int? {
+        let tipo = actividad.tipo
+
+        var terminacionURL: String = ""
+
+        if tipo == "Taller" {
+            terminacionURL = "/taller"
+        } else if tipo == "Rodada" {
+            terminacionURL = "/rodada"
+        } else if tipo == "Evento" {
+            terminacionURL = "/evento"
+        }
+        return try await actividadesAPIService.registrarActividad(
+            url: URL(string: "\(Api.base)\(Api.Routes.actividades)/registrar\(terminacionURL)")!, actividad: actividad)
     }
 }

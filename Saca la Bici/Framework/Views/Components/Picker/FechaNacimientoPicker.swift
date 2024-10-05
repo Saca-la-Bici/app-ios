@@ -30,6 +30,7 @@ struct FechaNacimientoPicker: View {
                      displayedComponents: [.date]
                 )
             .datePickerStyle(.wheel)
+            .labelsHidden()
             .frame(maxHeight: 80)
             .clipped()
             .background(Color.clear)

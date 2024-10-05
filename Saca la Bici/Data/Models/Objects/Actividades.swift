@@ -38,6 +38,22 @@ struct TalleresResponse: Codable {
     let informacion: [Actividad]
 }
 
+struct Rodada: Identifiable {
+    let id: String
+    let actividad: Actividad
+    let ruta: Ruta
+}
+
+struct Evento: Identifiable {
+    let id: String
+    let actividad: Actividad
+}
+
+struct Taller: Identifiable {
+    let id: String
+    let actividad: Actividad
+}
+
 struct Actividad: Codable, Identifiable {
     let _id: String
     let titulo: String
@@ -72,4 +88,15 @@ struct Coordenada: Codable, Identifiable {
     let _id: String
     
     var id: String { _id }
+}
+
+struct DatosActividad: Codable {
+    let titulo: String
+    let fecha: String
+    let hora: String
+    let duracion: String
+    let descripcion: String
+    let imagen: Data?
+    let tipo: String
+    let ubicacion: String
 }

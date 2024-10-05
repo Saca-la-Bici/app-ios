@@ -10,62 +10,101 @@ import SwiftUI
 struct ActividadesView: View {
     @State private var selectedTab: String = "Rodadas"
     @ObservedObject private var userSessionManager = UserSessionManager.shared
+    @StateObject var actividadViewModel = ActividadViewModel()
+    
+    @State private var path: [ActivitiesPaths] = []
 
     var body: some View {
-        VStack {
-            // Encabezado
-            ZStack {
-                HStack {
-                    Image("logoB&N")
-                        .resizable()
-                        .frame(width: 44, height: 35)
-                        .padding(.leading)
-
-                    Spacer()
-
-                    Image(systemName: "questionmark.circle")
-                        .padding(.trailing, 8)
-
-                    Image(systemName: "bell")
-                        .padding(.trailing, 8)
-                    
-                    if userSessionManager.puedeIniciarRodada() {
-                        Image(systemName: "plus") // Solo para admin
+        NavigationStack(path: $path) {
+            VStack {
+                // Encabezado
+                ZStack {
+                    HStack {
+                        Image("logoB&N")
+                            .resizable()
+                            .frame(width: 44, height: 35)
+                            .padding(.leading)
+                        
+                        Spacer()
+                        
+                        Image(systemName: "questionmark.circle")
                             .padding(.trailing, 8)
+                        
+                        if userSessionManager.puedeIniciarRodada() {
+                            Button(action: {
+                                actividadViewModel.showRegistrarActividadSheet = true
+                            }, label: {
+                                Image(systemName: "plus") // Solo para admin
+                                    .padding(.trailing, 8)
+                            })
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                        
                     }
+                    .padding()
                     
+                    Text("Actividades")
+                        .font(.title3)
+                        .bold()
                 }
-                .padding()
-
-                Text("Actividades")
-                    .font(.title3)
-                    .bold()
+                
+                // Picker para seleccionar la vista
+                Picker("Select View", selection: $selectedTab) {
+                    Text("Rodadas")
+                        .tag("Rodadas")
+                    Text("Eventos")
+                        .tag("Eventos")
+                    Text("Talleres")
+                        .tag("Talleres")
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal)
+                .padding(.bottom)
+                
+                // Mostrar las actividades según la pestaña seleccionada
+                Group {
+                    if selectedTab == "Rodadas" {
+                        RodadasView()
+                    } else if selectedTab == "Eventos" {
+                        EventosView()
+                    } else if selectedTab == "Talleres" {
+                        TalleresView()
+                    }
+                }
+                .transition(.opacity)
             }
-
-            // Picker para seleccionar la vista
-            Picker("Select View", selection: $selectedTab) {
-                Text("Rodadas")
-                    .tag("Rodadas")
-                Text("Eventos")
-                    .tag("Eventos")
-                Text("Talleres")
-                    .tag("Talleres")
+            .actionSheet(isPresented: $actividadViewModel.showRegistrarActividadSheet) {
+                ActionSheet(title: Text("Elige el tipo de actividad:"), buttons: [
+                    .default(Text("Registrar rodada")) {
+                        path.append(.rodada)
+                    },
+                    .default(Text("Registrar evento")) {
+                        path.append(.evento)
+                    },
+                    .default(Text("Registrar taller")) {
+                        path.append(.taller)
+                    },
+                    .cancel()
+                ])
             }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding(.horizontal)
-            .padding(.bottom)
-            
-            // Mostrar las actividades según la pestaña seleccionada
-            Group {
-                if selectedTab == "Rodadas" {
-                    RodadasView()
-                } else if selectedTab == "Eventos" {
-                    EventosView()
-                } else if selectedTab == "Talleres" {
-                    TalleresView()
+            .navigationDestination(for: ActivitiesPaths.self) { value in
+                switch value {
+                case .evento:
+                    RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Evento")
+                case .rodada:
+                    RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Rodada")
+                case .taller:
+                    RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Taller")
+                case .rutas:
+                    RodadaRutaView(path: $path, actividadViewModel: actividadViewModel)
+                case .descripcionRodada:
+                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel)
+                case .descripcionEvento:
+                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel)
+                case .descripcionTaller:
+                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel)
                 }
             }
-            .transition(.opacity)
         }
     }
 }

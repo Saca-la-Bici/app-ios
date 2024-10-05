@@ -12,18 +12,27 @@ struct CustomButton: View {
     var backgroundColor: Color
     var foregroundColor: Color = .black
     var action: () -> Void
-    
+    var tieneIcono: Bool?
+    var icono: String?
+
     var body: some View {
         Button(action: action) {
-            Text(text)
-                .font(.subheadline)
-                .bold()
-                .frame(maxWidth: .infinity)
-                .padding()
-                .foregroundColor(foregroundColor)
-                .background(backgroundColor)
-                .cornerRadius(10)
+            HStack {
+                Text(text)
+                    .font(.subheadline)
+                    .bold()
+
+                if tieneIcono ?? false {
+                    Image(systemName: icono ?? "chevron.right")
+                }
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .foregroundColor(foregroundColor)
+            .background(backgroundColor)
+            .cornerRadius(10)
         }
         .buttonStyle(PlainButtonStyle())
+        .contentShape(Rectangle())
     }
 }
