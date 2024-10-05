@@ -100,3 +100,25 @@ struct DatosActividad: Codable {
     let tipo: String
     let ubicacion: String
 }
+
+struct ActividadIndividualResponse: Codable {
+    let actividad: ActividadResponse
+    let permisos: [String]
+    
+    init(actividad: ActividadResponse = ActividadResponse(), permisos: [String] = []) {
+        self.actividad = actividad
+        self.permisos = permisos
+    }
+}
+
+struct ActividadResponse: Codable {
+    let _id: String
+    let informacion: [Actividad]
+    let ruta: Ruta?
+    
+    init(_id: String = "", informacion: [Actividad] = [], ruta: Ruta? = nil) {
+        self._id = _id
+        self.informacion = informacion
+        self.ruta = ruta
+    }
+}

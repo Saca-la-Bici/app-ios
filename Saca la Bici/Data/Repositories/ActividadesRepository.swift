@@ -12,6 +12,7 @@ protocol ActividadesAPIProtocol {
     func getEventos() async throws -> (eventos: [Evento], permisos: [String])
     func getTalleres() async throws -> (talleres: [Taller], permisos: [String])
     func registrarActividad(actividad: DatosActividad) async throws -> Int?
+    func consultarActividadIndividual(actividadID: String) async -> ActividadIndividualResponse?
 }
 
 class ActividadesRepository: ActividadesAPIProtocol {
@@ -101,5 +102,10 @@ class ActividadesRepository: ActividadesAPIProtocol {
         }
         return try await actividadesAPIService.registrarActividad(
             url: URL(string: "\(Api.base)\(Api.Routes.actividades)/registrar\(terminacionURL)")!, actividad: actividad)
+    }
+    
+    func consultarActividadIndividual(actividadID: String) async -> ActividadIndividualResponse? {
+        return await actividadesAPIService.consultarActividadIndividual(
+            url: URL(string: "\(Api.base)\(Api.Routes.actividades)/consultar")!, actividadID: actividadID)
     }
 }
