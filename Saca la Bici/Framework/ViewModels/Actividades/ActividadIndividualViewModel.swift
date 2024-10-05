@@ -54,17 +54,22 @@ class ActividadIndividualViewModel: ObservableObject {
         
         self.datosActividad = await consultarActividadIndividualRequirement.consultarActividadIndividual(actividadID: actividadID) ?? empty
         
-        userSessionManager.updatePermisos(newPermisos: datosActividad.permisos)
-        
-        if let actividad = datosActividad.actividad.informacion.first {
-            updateProperties(from: actividad)
+        if datosActividad.permisos != [] {
+            userSessionManager.updatePermisos(newPermisos: datosActividad.permisos)
+            
+            if let actividad = datosActividad.actividad.informacion.first {
+                updateProperties(from: actividad)
+            }
+            
+            if self.tipo == "Rodada" {
+                self.distancia = datosActividad.actividad.ruta?.distancia ?? ""
+                self.nivel = datosActividad.actividad.ruta?.nivel ?? ""
+            }
+            self.isLoading = false
+            
+        } else {
+            self.messageAlert = "Hubo un error al consultar la actividad. Por favor intente más tarde..."
+            self.showAlert = true
         }
-        
-        if self.tipo == "Rodada" {
-            self.distancia = datosActividad.actividad.ruta?.distancia ?? ""
-            self.nivel = datosActividad.actividad.ruta?.nivel ?? ""
-        }
-        
-        self.isLoading = false
     }
 }
