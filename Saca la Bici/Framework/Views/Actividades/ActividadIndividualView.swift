@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ActividadIndividualView: View {
     @Binding var path: [ActivitiesPaths]
@@ -22,11 +23,18 @@ struct ActividadIndividualView: View {
                     
                     Spacer().frame(height: 10)
                     
-                    Rectangle()
-                        .fill(Color.gray)
-                        .frame(height: 150)
-                        .cornerRadius(8)
+                    if !actividadIndividualViewModel.imagen.isEmpty {
+                        GeometryReader { geometry in
+                            WebImage(url: URL(string: actividadIndividualViewModel.imagen))
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: min(geometry.size.width, 350), height: 300)
+                                .cornerRadius(8)
+                                .clipped()
+                            }
+                        .frame(height: 300)
                         .padding(.horizontal)
+                    }
                     
                     HStack {
                         Button(action: {
@@ -53,12 +61,25 @@ struct ActividadIndividualView: View {
                         ubicacion: actividadIndividualViewModel.ubicacion,
                         tipo: actividadIndividualViewModel.tipo,
                         distancia: actividadIndividualViewModel.distancia,
-                        rentaBicicletas: "Click aquí"
+                        rentaBicicletas: "Click aquí",
+                        nivel: actividadIndividualViewModel.nivel,
+                        descripcion: actividadIndividualViewModel.descripcion
                     )
+                    
+                    Spacer().frame(height: 20)
                 }
                 .navigationTitle(actividadIndividualViewModel.titulo)
             }
         }
+        .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    HStack {
+                        Image(systemName: "person.2")
+                        Text("\(actividadIndividualViewModel.personasInscritas)")
+                            .foregroundColor(.primary)
+                    }
+                }
+            }
         .alert(isPresented: $actividadIndividualViewModel.showAlert) {
             Alert(
                 title: Text("Oops!"),
@@ -72,24 +93,6 @@ struct ActividadIndividualView: View {
             Task {
                 await actividadIndividualViewModel.consultarActividadIndividual(actividadID: id)
             }
-        }
-    }
-}
-
-struct ActividadIndividualHeader: View {
-    var level: String
-    var attendees: Int
-    var body: some View {
-        Text(level)
-            .font(.caption)
-            .foregroundColor(.white)
-            .padding(6)
-            .background(level == "Nivel 1" ? Color.green : (level == "Nivel 2" ? Color.orange : Color.gray))
-            .cornerRadius(8)
-    
-        HStack(spacing: 4) {
-            Image(systemName: "person.2")
-            Text("\(attendees)")
         }
     }
 }

@@ -24,7 +24,7 @@ class ActividadIndividualViewModel: ObservableObject {
     @Published var tipo: String = ""
     @Published var distancia: String = ""
     @Published var nivel: String = ""
-    @Published var imagen: String?
+    @Published var imagen: String = ""
     
     let empty = ActividadIndividualResponse()
     
@@ -45,7 +45,7 @@ class ActividadIndividualViewModel: ObservableObject {
         self.estado = actividad.estado
         self.duracion = actividad.duracion
         self.tipo = actividad.tipo
-        self.imagen = actividad.imagen
+        self.imagen = actividad.imagen ?? ""
     }
     
     @MainActor
