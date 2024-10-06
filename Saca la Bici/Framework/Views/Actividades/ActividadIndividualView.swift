@@ -115,6 +115,14 @@ struct ActividadIndividualView: View {
                     message: Text(actividadIndividualViewModel.messageAlert),
                     dismissButton: .default(Text("OK"))
                 )
+            case .errorIndividual:
+                return Alert(
+                    title: Text("Oops!"),
+                    message: Text(actividadIndividualViewModel.messageAlert),
+                    dismissButton: .default(Text("OK")) {
+                        path.removeLast()
+                    }
+                )
             case .none:
                 return Alert(
                     title: Text("Información"),

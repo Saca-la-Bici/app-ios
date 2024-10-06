@@ -32,6 +32,7 @@ class ActividadIndividualViewModel: ObservableObject {
     enum AlertType {
         case success
         case error
+        case errorIndividual
     }
     
     @Published var alertType: AlertType?
@@ -93,9 +94,8 @@ class ActividadIndividualViewModel: ObservableObject {
             
         } else {
             self.messageAlert = "Hubo un error al consultar la actividad. Por favor intente más tarde..."
-            self.alertType = .error
+            self.alertType = .errorIndividual
             self.showAlert = true
-            self.isLoading = false
         }
     }
     
