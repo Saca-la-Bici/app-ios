@@ -37,7 +37,7 @@ struct ActividadIndividualView: View {
                     
                     HStack {
                         Button(action: {
-                            
+                            // Acción para Materiales
                         }, label: {
                             Text("Materiales")
                                 .padding(.leading, 15)
@@ -67,19 +67,22 @@ struct ActividadIndividualView: View {
                     
                     Spacer().frame(height: 20)
                     
-                    // Reutilizando el componente CustomButton
+                    // Reutilizando el componente CustomButton con texto actualizado
                     CustomButton(
-                        text: isJoined ? "Cancelar asistencia" : "Unirse",
-                        backgroundColor: isJoined ? .red : .yellow,
+                        text: actividadIndividualViewModel.isJoined ? "Cancelar inscripción" : "Unirse",
+                        backgroundColor: actividadIndividualViewModel.isJoined ? .red : .yellow,
                         foregroundColor: .white,
                         action: {
-                            isJoined.toggle()
-                            if isJoined {
-                            } else {
+                            Task {
+                                if actividadIndividualViewModel.isJoined {
+                                    await actividadIndividualViewModel.cancelarAsistencia(actividadID: id)
+                                } else {
+                                    await actividadIndividualViewModel.inscribirActividad(actividadID: id)
+                                }
                             }
                         },
                         tieneIcono: true,
-                        icono: isJoined ? "xmark" : "plus"
+                        icono: actividadIndividualViewModel.isJoined ? "xmark" : "plus"
                     )
                     .padding()
                 }
@@ -96,13 +99,26 @@ struct ActividadIndividualView: View {
             }
         }
         .alert(isPresented: $actividadIndividualViewModel.showAlert) {
-            Alert(
-                title: Text("Oops!"),
-                message: Text(actividadIndividualViewModel.messageAlert),
-                dismissButton: .default(Text("OK")) {
-                    path.removeLast()
-                }
-            )
+            switch actividadIndividualViewModel.alertType {
+            case .success:
+                return Alert(
+                    title: Text("Éxito"),
+                    message: Text(actividadIndividualViewModel.messageAlert),
+                    dismissButton: .default(Text("OK"))
+                )
+            case .error:
+                return Alert(
+                    title: Text("Oops!"),
+                    message: Text(actividadIndividualViewModel.messageAlert),
+                    dismissButton: .default(Text("OK"))
+                )
+            case .none:
+                return Alert(
+                    title: Text("Información"),
+                    message: Text(actividadIndividualViewModel.messageAlert),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
         .onAppear {
             Task {

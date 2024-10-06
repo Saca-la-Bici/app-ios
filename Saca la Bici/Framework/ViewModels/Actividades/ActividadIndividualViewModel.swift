@@ -25,6 +25,15 @@ class ActividadIndividualViewModel: ObservableObject {
     @Published var distancia: String = ""
     @Published var nivel: String = ""
     @Published var imagen: String = ""
+    @Published var isJoined: Bool = false
+    
+    // Definir los tipos de alerta
+    enum AlertType {
+        case success
+        case error
+    }
+   
+    @Published var alertType: AlertType?
     
     let empty = ActividadIndividualResponse()
     
@@ -72,4 +81,58 @@ class ActividadIndividualViewModel: ObservableObject {
             self.showAlert = true
         }
     }
+    
+    @MainActor
+        func inscribirActividad(actividadID: String) async {
+            guard !isJoined else { return }
+            isLoading = true
+            do {
+                // Actualizar localmente
+                self.personasInscritas += 1
+                self.isJoined = true
+
+                let response = try await consultarActividadIndividualRequirement.inscribirActividad(actividadId: actividadID, tipo: self.tipo)
+                self.messageAlert = response.message
+                self.alertType = .success  // Establecer el tipo de alerta como éxito
+                self.showAlert = true
+
+                // Refetch para asegurar la consistencia
+                await consultarActividadIndividual(actividadID: actividadID)
+            } catch let error as NSError {
+                // Revertir cambios locales si hay un error
+                self.personasInscritas = max(self.personasInscritas - 1, 0)
+                self.isJoined = false
+                self.messageAlert = error.localizedDescription
+                self.alertType = .error  // Establecer el tipo de alerta como error
+                self.showAlert = true
+            }
+            isLoading = false
+        }
+
+        @MainActor
+        func cancelarAsistencia(actividadID: String) async {
+            guard isJoined else { return }
+            isLoading = true
+            do {
+                // Actualizar localmente
+                self.personasInscritas = max(self.personasInscritas - 1, 0)
+                self.isJoined = false
+
+                let response = try await consultarActividadIndividualRequirement.cancelarAsistencia(actividadId: actividadID, tipo: self.tipo)
+                self.messageAlert = response.message
+                self.alertType = .success  // Establecer el tipo de alerta como éxito
+                self.showAlert = true
+
+                // Refetch para asegurar la consistencia
+                await consultarActividadIndividual(actividadID: actividadID)
+            } catch let error as NSError {
+                // Revertir cambios locales si hay un error
+                self.personasInscritas += 1
+                self.isJoined = true
+                self.messageAlert = error.localizedDescription
+                self.alertType = .error  // Establecer el tipo de alerta como error
+                self.showAlert = true
+            }
+            isLoading = false
+        }
 }

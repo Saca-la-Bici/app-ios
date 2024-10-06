@@ -122,3 +122,7 @@ struct ActividadResponse: Codable {
         self.ruta = ruta
     }
 }
+
+struct ActionResponse: Codable {
+    let message: String
+}
