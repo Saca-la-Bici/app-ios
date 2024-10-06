@@ -32,7 +32,7 @@ class ActividadIndividualViewModel: ObservableObject {
         case success
         case error
     }
-   
+    
     @Published var alertType: AlertType?
     
     let empty = ActividadIndividualResponse()
@@ -63,11 +63,20 @@ class ActividadIndividualViewModel: ObservableObject {
         
         self.datosActividad = await consultarActividadIndividualRequirement.consultarActividadIndividual(actividadID: actividadID) ?? empty
         
-        if datosActividad.permisos != [] {
+        if !datosActividad.permisos.isEmpty {
             userSessionManager.updatePermisos(newPermisos: datosActividad.permisos)
             
             if let actividad = datosActividad.actividad.informacion.first {
                 updateProperties(from: actividad)
+                
+                // Verificar si el usuario actual está inscrito
+                if let currentUserID = userSessionManager.currentUserID {
+                    self.isJoined = actividad.usuariosInscritos.contains(currentUserID)
+                } else {
+                    self.isJoined = false
+                }
+            } else {
+                self.isJoined = false
             }
             
             if self.tipo == "Rodada" {
@@ -78,61 +87,63 @@ class ActividadIndividualViewModel: ObservableObject {
             
         } else {
             self.messageAlert = "Hubo un error al consultar la actividad. Por favor intente más tarde..."
+            self.alertType = .error
             self.showAlert = true
+            self.isLoading = false
         }
     }
     
     @MainActor
-        func inscribirActividad(actividadID: String) async {
-            guard !isJoined else { return }
-            isLoading = true
-            do {
-                // Actualizar localmente
-                self.personasInscritas += 1
-                self.isJoined = true
+    func inscribirActividad(actividadID: String) async {
+        guard !isJoined else { return }
+        isLoading = true
+        do {
+            // Actualizar localmente
+            self.personasInscritas += 1
+            self.isJoined = true
 
-                let response = try await consultarActividadIndividualRequirement.inscribirActividad(actividadId: actividadID, tipo: self.tipo)
-                self.messageAlert = response.message
-                self.alertType = .success  // Establecer el tipo de alerta como éxito
-                self.showAlert = true
+            let response = try await consultarActividadIndividualRequirement.inscribirActividad(actividadId: actividadID, tipo: self.tipo)
+            self.messageAlert = response.message
+            self.alertType = .success
+            self.showAlert = true
 
-                // Refetch para asegurar la consistencia
-                await consultarActividadIndividual(actividadID: actividadID)
-            } catch let error as NSError {
-                // Revertir cambios locales si hay un error
-                self.personasInscritas = max(self.personasInscritas - 1, 0)
-                self.isJoined = false
-                self.messageAlert = error.localizedDescription
-                self.alertType = .error  // Establecer el tipo de alerta como error
-                self.showAlert = true
-            }
-            isLoading = false
+            // Refetch para asegurar la consistencia
+            await consultarActividadIndividual(actividadID: actividadID)
+        } catch let error as NSError {
+            // Revertir cambios locales si hay un error
+            self.personasInscritas = max(self.personasInscritas - 1, 0)
+            self.isJoined = false
+            self.messageAlert = error.localizedDescription
+            self.alertType = .error
+            self.showAlert = true
         }
+        isLoading = false
+    }
 
-        @MainActor
-        func cancelarAsistencia(actividadID: String) async {
-            guard isJoined else { return }
-            isLoading = true
-            do {
-                // Actualizar localmente
-                self.personasInscritas = max(self.personasInscritas - 1, 0)
-                self.isJoined = false
+    @MainActor
+    func cancelarAsistencia(actividadID: String) async {
+        guard isJoined else { return }
+        isLoading = true
+        do {
+            // Actualizar localmente
+            self.personasInscritas = max(self.personasInscritas - 1, 0)
+            self.isJoined = false
 
-                let response = try await consultarActividadIndividualRequirement.cancelarAsistencia(actividadId: actividadID, tipo: self.tipo)
-                self.messageAlert = response.message
-                self.alertType = .success  // Establecer el tipo de alerta como éxito
-                self.showAlert = true
+            let response = try await consultarActividadIndividualRequirement.cancelarAsistencia(actividadId: actividadID, tipo: self.tipo)
+            self.messageAlert = response.message
+            self.alertType = .success
+            self.showAlert = true
 
-                // Refetch para asegurar la consistencia
-                await consultarActividadIndividual(actividadID: actividadID)
-            } catch let error as NSError {
-                // Revertir cambios locales si hay un error
-                self.personasInscritas += 1
-                self.isJoined = true
-                self.messageAlert = error.localizedDescription
-                self.alertType = .error  // Establecer el tipo de alerta como error
-                self.showAlert = true
-            }
-            isLoading = false
+            // Refetch para asegurar la consistencia
+            await consultarActividadIndividual(actividadID: actividadID)
+        } catch let error as NSError {
+            // Revertir cambios locales si hay un error
+            self.personasInscritas += 1
+            self.isJoined = true
+            self.messageAlert = error.localizedDescription
+            self.alertType = .error
+            self.showAlert = true
         }
+        isLoading = false
+    }
 }

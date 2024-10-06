@@ -5,14 +5,34 @@
 //  Created by Maria Jose Gaytan Gil on 27/09/24.
 //
 
-import SwiftUI
+import Foundation
+import FirebaseAuth
+import Combine
 
 class UserSessionManager: ObservableObject {
     static let shared = UserSessionManager()
     
     @Published var permisos: [String] = []
+    @Published var currentUserID: String?
     
-    private init() {}
+    private var authListenerHandle: AuthStateDidChangeListenerHandle?
+    
+    private init() {
+        setupAuthListener()
+    }
+    
+    private func setupAuthListener() {
+        authListenerHandle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
+            guard let self = self else { return }
+            self.currentUserID = user?.uid
+        }
+    }
+    
+    deinit {
+        if let handle = authListenerHandle {
+            Auth.auth().removeStateDidChangeListener(handle)
+        }
+    }
     
     func updatePermisos(newPermisos: [String]) {
         DispatchQueue.main.async {

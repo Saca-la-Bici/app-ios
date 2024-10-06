@@ -12,7 +12,6 @@ struct ActividadIndividualView: View {
     @Binding var path: [ActivitiesPaths]
     @StateObject var actividadIndividualViewModel = ActividadIndividualViewModel()
     var id: String
-    @State private var isJoined = false
     
     var body: some View {
         ZStack {
@@ -67,7 +66,7 @@ struct ActividadIndividualView: View {
                     
                     Spacer().frame(height: 20)
                     
-                    // Reutilizando el componente CustomButton con texto actualizado
+                    // CustomButton
                     CustomButton(
                         text: actividadIndividualViewModel.isJoined ? "Cancelar inscripción" : "Unirse",
                         backgroundColor: actividadIndividualViewModel.isJoined ? .red : .yellow,

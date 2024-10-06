@@ -67,7 +67,8 @@ struct Actividad: Codable, Identifiable {
     let imagen: String?
     let tipo: String
     let comentarios: String?
-    
+    let usuariosInscritos: [String]
+
     var id: String { _id }
 }
 
