@@ -20,7 +20,6 @@ struct ActividadIndividualView: View {
                 ProgressView("Cargando actividad...")
             } else {
                 ScrollView {
-                    
                     Spacer().frame(height: 10)
                     
                     if !actividadIndividualViewModel.imagen.isEmpty {
@@ -31,7 +30,7 @@ struct ActividadIndividualView: View {
                                 .frame(width: min(geometry.size.width, 370), height: 300)
                                 .cornerRadius(8)
                                 .clipped()
-                            }
+                        }
                         .frame(height: 300)
                         .padding(.horizontal)
                     }
@@ -67,19 +66,35 @@ struct ActividadIndividualView: View {
                     )
                     
                     Spacer().frame(height: 20)
+                    
+                    // Reutilizando el componente CustomButton
+                    CustomButton(
+                        text: isJoined ? "Cancelar asistencia" : "Unirse",
+                        backgroundColor: isJoined ? .red : .yellow,
+                        foregroundColor: .white,
+                        action: {
+                            isJoined.toggle()
+                            if isJoined {
+                            } else {
+                            }
+                        },
+                        tieneIcono: true,
+                        icono: isJoined ? "xmark" : "plus"
+                    )
+                    .padding()
                 }
                 .navigationTitle(actividadIndividualViewModel.titulo)
             }
         }
         .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    HStack {
-                        Image(systemName: "person.2")
-                        Text("\(actividadIndividualViewModel.personasInscritas)")
-                            .foregroundColor(.primary)
-                    }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                HStack {
+                    Image(systemName: "person.2")
+                    Text("\(actividadIndividualViewModel.personasInscritas)")
+                        .foregroundColor(.primary)
                 }
             }
+        }
         .alert(isPresented: $actividadIndividualViewModel.showAlert) {
             Alert(
                 title: Text("Oops!"),
