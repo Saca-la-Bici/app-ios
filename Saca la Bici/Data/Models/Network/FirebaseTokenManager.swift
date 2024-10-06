@@ -16,8 +16,15 @@ final class FirebaseTokenManager {
     
     func obtenerIDToken() async -> String? {
         return await withCheckedContinuation { continuation in
+            // Verificar si currentUser es nil antes de solicitar el ID Token
+            guard let currentUser = Auth.auth().currentUser else {
+                print("Error: No hay un usuario autenticado.")
+                continuation.resume(returning: nil)
+                return
+            }
+
             // Obtener el ID Token del usuario actual
-            Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+            currentUser.getIDTokenForcingRefresh(true) { idToken, error in
                 if let error = error {
                     print("Error al obtener el ID Token: \(error.localizedDescription)")
                     continuation.resume(returning: nil)
