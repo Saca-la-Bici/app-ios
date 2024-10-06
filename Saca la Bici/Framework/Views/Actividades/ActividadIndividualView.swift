@@ -12,7 +12,9 @@ struct ActividadIndividualView: View {
     @Binding var path: [ActivitiesPaths]
     @StateObject var actividadIndividualViewModel = ActividadIndividualViewModel()
     var id: String
-    
+
+    @ObservedObject private var userSessionManager = UserSessionManager.shared
+
     var body: some View {
         ZStack {
             if actividadIndividualViewModel.isLoading {
@@ -20,7 +22,7 @@ struct ActividadIndividualView: View {
             } else {
                 ScrollView {
                     Spacer().frame(height: 10)
-                    
+
                     if !actividadIndividualViewModel.imagen.isEmpty {
                         GeometryReader { geometry in
                             WebImage(url: URL(string: actividadIndividualViewModel.imagen))
@@ -33,7 +35,7 @@ struct ActividadIndividualView: View {
                         .frame(height: 300)
                         .padding(.horizontal)
                     }
-                    
+
                     HStack {
                         Button(action: {
                             // Acción para Materiales
@@ -51,7 +53,7 @@ struct ActividadIndividualView: View {
                         .buttonStyle(PlainButtonStyle())
                     }
                     .padding()
-                    
+
                     ActividadInfoView(
                         fecha: actividadIndividualViewModel.fecha,
                         hora: actividadIndividualViewModel.hora,
@@ -63,27 +65,29 @@ struct ActividadIndividualView: View {
                         nivel: actividadIndividualViewModel.nivel,
                         descripcion: actividadIndividualViewModel.descripcion
                     )
-                    
+
                     Spacer().frame(height: 20)
-                    
-                    // CustomButton
-                    CustomButton(
-                        text: actividadIndividualViewModel.isJoined ? "Cancelar inscripción" : "Unirse",
-                        backgroundColor: actividadIndividualViewModel.isJoined ? .red : .yellow,
-                        foregroundColor: .white,
-                        action: {
-                            Task {
-                                if actividadIndividualViewModel.isJoined {
-                                    await actividadIndividualViewModel.cancelarAsistencia(actividadID: id)
-                                } else {
-                                    await actividadIndividualViewModel.inscribirActividad(actividadID: id)
+
+                    // Condición para mostrar el CustomButton
+                    if !(actividadIndividualViewModel.tipo == "Rodada" && userSessionManager.puedeIniciarRodada()) {
+                        CustomButton(
+                            text: actividadIndividualViewModel.isJoined ? "Cancelar inscripción" : "Unirse",
+                            backgroundColor: actividadIndividualViewModel.isJoined ? .red : .yellow,
+                            foregroundColor: .white,
+                            action: {
+                                Task {
+                                    if actividadIndividualViewModel.isJoined {
+                                        await actividadIndividualViewModel.cancelarAsistencia(actividadID: id)
+                                    } else {
+                                        await actividadIndividualViewModel.inscribirActividad(actividadID: id)
+                                    }
                                 }
-                            }
-                        },
-                        tieneIcono: true,
-                        icono: actividadIndividualViewModel.isJoined ? "xmark" : "plus"
-                    )
-                    .padding()
+                            },
+                            tieneIcono: true,
+                            icono: actividadIndividualViewModel.isJoined ? "xmark" : "plus"
+                        )
+                        .padding()
+                    }
                 }
                 .navigationTitle(actividadIndividualViewModel.titulo)
             }
@@ -123,21 +127,6 @@ struct ActividadIndividualView: View {
             Task {
                 await actividadIndividualViewModel.consultarActividadIndividual(actividadID: id)
             }
-        }
-    }
-}
-
-struct ActividadIndividualView_Previews: PreviewProvider {
-    static var previews: some View {
-        PreviewWrapper()
-    }
-
-    struct PreviewWrapper: View {
-        @State var path: [ActivitiesPaths] = []
-        var id = "662fr3"
-
-        var body: some View {
-            ActividadIndividualView(path: $path, id: id)
         }
     }
 }
