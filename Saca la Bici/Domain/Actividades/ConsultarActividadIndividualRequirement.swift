@@ -10,8 +10,6 @@ import Foundation
 // Creas el protocolo de la historia de usuario
 protocol ConsultarActividadIndRequirementProtocol {
     func consultarActividadIndividual(actividadID: String) async -> ActividadIndividualResponse?
-    func inscribirActividad(actividadId: String, tipo: String) async throws -> ActionResponse
-    func cancelarAsistencia(actividadId: String, tipo: String) async throws -> ActionResponse
 }
 
 class ConsultarActividadIndividualRequirement: ConsultarActividadIndRequirementProtocol {
@@ -28,13 +26,5 @@ class ConsultarActividadIndividualRequirement: ConsultarActividadIndRequirementP
 
     func consultarActividadIndividual(actividadID: String) async -> ActividadIndividualResponse? {
         return await actividadesRepository.consultarActividadIndividual(actividadID: actividadID)
-    }
-    
-    func inscribirActividad(actividadId: String, tipo: String) async throws -> ActionResponse {
-        return try await actividadesRepository.inscribirActividad(actividadId: actividadId, tipo: tipo)
-    }
-
-    func cancelarAsistencia(actividadId: String, tipo: String) async throws -> ActionResponse {
-        return try await actividadesRepository.cancelarAsistencia(actividadId: actividadId, tipo: tipo)
     }
 }

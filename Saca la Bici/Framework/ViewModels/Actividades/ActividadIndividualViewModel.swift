@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import Combine
 
+@MainActor
 class ActividadIndividualViewModel: ObservableObject {
     @Published var datosActividad = ActividadIndividualResponse()
     @Published var messageAlert = ""
@@ -27,7 +29,6 @@ class ActividadIndividualViewModel: ObservableObject {
     @Published var imagen: String = ""
     @Published var isJoined: Bool = false
     
-    // Definir los tipos de alerta
     enum AlertType {
         case success
         case error
@@ -35,13 +36,18 @@ class ActividadIndividualViewModel: ObservableObject {
     
     @Published var alertType: AlertType?
     
-    let empty = ActividadIndividualResponse()
-    
+    private let empty = ActividadIndividualResponse()
     private var userSessionManager = UserSessionManager.shared
-    let consultarActividadIndividualRequirement: ConsultarActividadIndRequirementProtocol
     
-    init(consultarActividadIndividualRequirement: ConsultarActividadIndRequirementProtocol = ConsultarActividadIndividualRequirement.shared) {
-        self.consultarActividadIndividualRequirement = consultarActividadIndividualRequirement
+    private let consultarRequirement: ConsultarActividadIndRequirementProtocol
+    private let gestionarAsistenciaRequirement: GestionarAsistenciaRequirementProtocol
+    
+    init(
+        consultarActividadIndividualRequirement: ConsultarActividadIndRequirementProtocol = ConsultarActividadIndividualRequirement.shared,
+        gestionarAsistenciaRequirement: GestionarAsistenciaRequirementProtocol = GestionarAsistenciaRequirement.shared
+    ) {
+        self.consultarRequirement = consultarActividadIndividualRequirement
+        self.gestionarAsistenciaRequirement = gestionarAsistenciaRequirement
     }
     
     func updateProperties(from actividad: Actividad) {
@@ -61,7 +67,7 @@ class ActividadIndividualViewModel: ObservableObject {
     func consultarActividadIndividual(actividadID: String) async {
         self.isLoading = true
         
-        self.datosActividad = await consultarActividadIndividualRequirement.consultarActividadIndividual(actividadID: actividadID) ?? empty
+        self.datosActividad = await consultarRequirement.consultarActividadIndividual(actividadID: actividadID) ?? empty
         
         if !datosActividad.permisos.isEmpty {
             userSessionManager.updatePermisos(newPermisos: datosActividad.permisos)
@@ -102,7 +108,7 @@ class ActividadIndividualViewModel: ObservableObject {
             self.personasInscritas += 1
             self.isJoined = true
 
-            let response = try await consultarActividadIndividualRequirement.inscribirActividad(actividadId: actividadID, tipo: self.tipo)
+            let response = try await gestionarAsistenciaRequirement.inscribirActividad(actividadId: actividadID, tipo: self.tipo)
             self.messageAlert = response.message
             self.alertType = .success
             self.showAlert = true
@@ -129,7 +135,7 @@ class ActividadIndividualViewModel: ObservableObject {
             self.personasInscritas = max(self.personasInscritas - 1, 0)
             self.isJoined = false
 
-            let response = try await consultarActividadIndividualRequirement.cancelarAsistencia(actividadId: actividadID, tipo: self.tipo)
+            let response = try await gestionarAsistenciaRequirement.cancelarAsistencia(actividadId: actividadID, tipo: self.tipo)
             self.messageAlert = response.message
             self.alertType = .success
             self.showAlert = true
