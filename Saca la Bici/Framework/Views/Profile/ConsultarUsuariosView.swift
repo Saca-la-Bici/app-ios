@@ -103,7 +103,7 @@ struct ConsultarUsuariosView: View {
                         .padding(.vertical, 8)
                         // Detecta el ultimo elemento para la paginacion
                         .onAppear {
-                            if usuario == filteredUsers.last {
+                            if searchText.isEmpty && usuario == filteredUsers.last {
                                 viewModel.cargarUsuarios(roles: selectedRoles)
                             }
                         }
@@ -145,7 +145,12 @@ struct ConsultarUsuariosView: View {
         if searchText.isEmpty {
             return viewModel.usuarios
         } else {
-            return viewModel.usuarios.filter { $0.usuario.nombre.contains(searchText) }
+            let lowercasedSearchText = searchText.lowercased()
+            return viewModel.usuarios.filter { usuario in
+                usuario.usuario.nombre.lowercased().contains(lowercasedSearchText) ||
+                usuario.usuario.correoElectronico.lowercased().contains(lowercasedSearchText) ||
+                usuario.usuario.username.lowercased().contains(lowercasedSearchText)
+            }
         }
     }
 }
