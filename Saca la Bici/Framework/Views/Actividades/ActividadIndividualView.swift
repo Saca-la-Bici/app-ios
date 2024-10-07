@@ -71,8 +71,8 @@ struct ActividadIndividualView: View {
                     // Condición para mostrar el CustomButton
                     if !(actividadIndividualViewModel.tipo == "Rodada" && userSessionManager.puedeIniciarRodada()) {
                         CustomButton(
-                            text: actividadIndividualViewModel.isJoined ? "Cancelar inscripción" : "Unirse",
-                            backgroundColor: actividadIndividualViewModel.isJoined ? .red : .yellow,
+                            text: actividadIndividualViewModel.isJoined ? "Cancelar asistencia" : "Unirse",
+                            backgroundColor: actividadIndividualViewModel.isJoined ? .red : Color(red: 0.961, green: 0.802, blue: 0.048),
                             foregroundColor: .white,
                             action: {
                                 Task {
