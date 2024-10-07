@@ -67,7 +67,8 @@ struct Actividad: Codable, Identifiable {
     let imagen: String?
     let tipo: String
     let comentarios: String?
-    
+    let usuariosInscritos: [String]
+
     var id: String { _id }
 }
 
@@ -121,4 +122,8 @@ struct ActividadResponse: Codable {
         self.informacion = informacion
         self.ruta = ruta
     }
+}
+
+struct ActionResponse: Codable {
+    let message: String
 }

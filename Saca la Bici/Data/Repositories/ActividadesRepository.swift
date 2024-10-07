@@ -108,4 +108,20 @@ class ActividadesRepository: ActividadesAPIProtocol {
         return await actividadesAPIService.consultarActividadIndividual(
             url: URL(string: "\(Api.base)\(Api.Routes.actividades)/consultar")!, actividadID: actividadID)
     }
+    
+    func inscribirActividad(actividadId: String, tipo: String) async throws -> ActionResponse {
+        guard let url = URL(string: "\(Api.base)\(Api.Routes.actividades)/inscripcion/inscribir") else {
+            throw URLError(.badURL)
+        }
+
+        return try await actividadesAPIService.inscribirActividad(url: url, actividadId: actividadId, tipo: tipo)
+    }
+
+    func cancelarAsistencia(actividadId: String, tipo: String) async throws -> ActionResponse {
+        guard let url = URL(string: "\(Api.base)\(Api.Routes.actividades)/cancelarAsistencia/cancelar") else {
+            throw URLError(.badURL)
+        }
+
+        return try await actividadesAPIService.cancelarAsistencia(url: url, actividadId: actividadId, tipo: tipo)
+    }
 }

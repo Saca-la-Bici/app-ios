@@ -27,5 +27,4 @@ class ConsultarActividadIndividualRequirement: ConsultarActividadIndRequirementP
     func consultarActividadIndividual(actividadID: String) async -> ActividadIndividualResponse? {
         return await actividadesRepository.consultarActividadIndividual(actividadID: actividadID)
     }
-
 }

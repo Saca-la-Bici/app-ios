@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import Combine
 
+@MainActor
 class ActividadIndividualViewModel: ObservableObject {
     @Published var datosActividad = ActividadIndividualResponse()
     @Published var messageAlert = ""
@@ -25,14 +27,28 @@ class ActividadIndividualViewModel: ObservableObject {
     @Published var distancia: String = ""
     @Published var nivel: String = ""
     @Published var imagen: String = ""
+    @Published var isJoined: Bool = false
     
-    let empty = ActividadIndividualResponse()
+    enum AlertType {
+        case success
+        case error
+        case errorIndividual
+    }
     
+    @Published var alertType: AlertType?
+    
+    private let empty = ActividadIndividualResponse()
     private var userSessionManager = UserSessionManager.shared
-    let consultarActividadIndividualRequirement: ConsultarActividadIndRequirementProtocol
     
-    init(consultarActividadIndividualRequirement: ConsultarActividadIndRequirementProtocol = ConsultarActividadIndividualRequirement.shared) {
-        self.consultarActividadIndividualRequirement = consultarActividadIndividualRequirement
+    private let consultarRequirement: ConsultarActividadIndRequirementProtocol
+    private let gestionarAsistenciaRequirement: GestionarAsistenciaRequirementProtocol
+    
+    init(
+        consultarActividadIndividualRequirement: ConsultarActividadIndRequirementProtocol = ConsultarActividadIndividualRequirement.shared,
+        gestionarAsistenciaRequirement: GestionarAsistenciaRequirementProtocol = GestionarAsistenciaRequirement.shared
+    ) {
+        self.consultarRequirement = consultarActividadIndividualRequirement
+        self.gestionarAsistenciaRequirement = gestionarAsistenciaRequirement
     }
     
     func updateProperties(from actividad: Actividad) {
@@ -52,13 +68,22 @@ class ActividadIndividualViewModel: ObservableObject {
     func consultarActividadIndividual(actividadID: String) async {
         self.isLoading = true
         
-        self.datosActividad = await consultarActividadIndividualRequirement.consultarActividadIndividual(actividadID: actividadID) ?? empty
+        self.datosActividad = await consultarRequirement.consultarActividadIndividual(actividadID: actividadID) ?? empty
         
-        if datosActividad.permisos != [] {
+        if !datosActividad.permisos.isEmpty {
             userSessionManager.updatePermisos(newPermisos: datosActividad.permisos)
             
             if let actividad = datosActividad.actividad.informacion.first {
                 updateProperties(from: actividad)
+                
+                // Verificar si el usuario actual está inscrito
+                if let currentUserID = userSessionManager.currentUserID {
+                    self.isJoined = actividad.usuariosInscritos.contains(currentUserID)
+                } else {
+                    self.isJoined = false
+                }
+            } else {
+                self.isJoined = false
             }
             
             if self.tipo == "Rodada" {
@@ -69,7 +94,62 @@ class ActividadIndividualViewModel: ObservableObject {
             
         } else {
             self.messageAlert = "Hubo un error al consultar la actividad. Por favor intente más tarde..."
+            self.alertType = .errorIndividual
             self.showAlert = true
         }
+    }
+    
+    @MainActor
+    func inscribirActividad(actividadID: String) async {
+        guard !isJoined else { return }
+        isLoading = true
+        do {
+            // Actualizar localmente
+            self.personasInscritas += 1
+            self.isJoined = true
+
+            let response = try await gestionarAsistenciaRequirement.inscribirActividad(actividadId: actividadID, tipo: self.tipo)
+            self.messageAlert = response.message
+            self.alertType = .success
+            self.showAlert = true
+
+            // Refetch para asegurar la consistencia
+            await consultarActividadIndividual(actividadID: actividadID)
+        } catch let error as NSError {
+            // Revertir cambios locales si hay un error
+            self.personasInscritas = max(self.personasInscritas - 1, 0)
+            self.isJoined = false
+            self.messageAlert = error.localizedDescription
+            self.alertType = .error
+            self.showAlert = true
+        }
+        isLoading = false
+    }
+
+    @MainActor
+    func cancelarAsistencia(actividadID: String) async {
+        guard isJoined else { return }
+        isLoading = true
+        do {
+            // Actualizar localmente
+            self.personasInscritas = max(self.personasInscritas - 1, 0)
+            self.isJoined = false
+
+            let response = try await gestionarAsistenciaRequirement.cancelarAsistencia(actividadId: actividadID, tipo: self.tipo)
+            self.messageAlert = response.message
+            self.alertType = .success
+            self.showAlert = true
+
+            // Refetch para asegurar la consistencia
+            await consultarActividadIndividual(actividadID: actividadID)
+        } catch let error as NSError {
+            // Revertir cambios locales si hay un error
+            self.personasInscritas += 1
+            self.isJoined = true
+            self.messageAlert = error.localizedDescription
+            self.alertType = .error
+            self.showAlert = true
+        }
+        isLoading = false
     }
 }

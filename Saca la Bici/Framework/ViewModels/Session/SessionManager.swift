@@ -115,11 +115,11 @@ class SessionManager: ObservableObject {
 
     func signOut() {
         do {
+            UserDefaults.standard.set(false, forKey: "isRegistrationComplete")
             try Auth.auth().signOut()
             isProfileComplete = false
             isAuthenticated = false
             isFireBaseAuthenticated = false
-            UserDefaults.standard.set(false, forKey: "isRegistrationComplete")
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }

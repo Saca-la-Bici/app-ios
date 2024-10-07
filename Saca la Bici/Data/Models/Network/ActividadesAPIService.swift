@@ -210,4 +210,84 @@ class ActividadesAPIService {
             return nil
         }
     }
+    
+    func inscribirActividad(url: URL, actividadId: String, tipo: String) async throws -> ActionResponse {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+        
+        let parameters: [String: Any] = [
+            "actividadId": actividadId,
+            "tipo": tipo
+        ]
+        
+        let taskRequest = session.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate()
+        
+        let response = await taskRequest.serializingDecodable(ActionResponse.self).response
+        
+        switch response.result {
+        case .success(let actionResponse):
+            return actionResponse
+        case .failure(let error):
+            debugPrint("Error en inscribirActividad: \(error.localizedDescription)")
+            if let data = response.data {
+                let errorResponse = try? JSONDecoder().decode(ActionResponse.self, from: data)
+                if let errorResponse = errorResponse {
+                    throw NSError(
+                        domain: "",
+                        code: response.response?.statusCode ?? 500,
+                        userInfo: [
+                            NSLocalizedDescriptionKey: errorResponse.message
+                        ]
+                    )
+                }
+            }
+            throw error
+        }
+    }
+
+    func cancelarAsistencia(url: URL, actividadId: String, tipo: String) async throws -> ActionResponse {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
+
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+
+        let parameters: [String: Any] = [
+            "actividadId": actividadId,
+            "tipo": tipo
+        ]
+
+        let taskRequest = session.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate()
+
+        let response = await taskRequest.serializingDecodable(ActionResponse.self).response
+
+        switch response.result {
+        case .success(let actionResponse):
+            return actionResponse
+        case .failure(let error):
+            debugPrint("Error en cancelarAsistencia: \(error.localizedDescription)")
+            if let data = response.data {
+                let errorResponse = try? JSONDecoder().decode(ActionResponse.self, from: data)
+                if let errorResponse = errorResponse {
+                    throw NSError(
+                        domain: "",
+                        code: response.response?.statusCode ?? 500,
+                        userInfo: [
+                            NSLocalizedDescriptionKey: errorResponse.message
+                        ]
+                    )
+                }
+            }
+            throw error
+        }
+    }
 }
