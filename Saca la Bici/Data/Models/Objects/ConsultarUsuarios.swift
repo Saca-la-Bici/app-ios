@@ -9,10 +9,11 @@ import Foundation
 
 // Modelo que representa la respuesta del API
 struct ConsultarUsuariosResponse: Codable {
-    let usuarios: [ConsultarUsuario]
-    let currentPage: Int
-    let totalUsuarios: Int
-    let totalPages: Int
+    let usuarios: [ConsultarUsuario]?
+    let currentPage: Int?
+    let totalUsuarios: Int?
+    let totalPages: Int?
+    let message: String?
 }
 
 // Modelo que representa a un usuario
