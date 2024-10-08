@@ -108,14 +108,6 @@ struct ProfileView: View {
                                 .font(.system(size: 14))
                                 .fontWeight(.bold)
                         }
-                        Spacer()
-                        VStack(spacing: 10) {
-                            Text("1234")
-                                .font(.system(size: 12))
-                            Text("Amigos")
-                                .font(.system(size: 14))
-                                .fontWeight(.bold)
-                        }
                     }
                     .padding(.horizontal, 72)
                     .padding(.bottom, 10)
@@ -135,34 +127,6 @@ struct ProfileView: View {
                         }
                         .buttonStyle(PlainButtonStyle())
                         
-                        Button {
-                            // Acción para Compartir perfil
-                        } label: {
-                            Text("Compartir perfil")
-                                .font(.system(size: 14))
-                                .padding(.all, 7)
-                                .frame(width: 140)
-                                .background(Color(red: 243/255, green: 240/255, blue: 235/255))
-                                .foregroundColor(.black)
-                                .cornerRadius(10)
-                                .shadow(radius: 5, y: 3)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-
-                        Button {
-                            // Acción para agregar amigo
-                        } label: {
-                            Image("AgregarAmigo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
-                                .padding(.all, 7)
-                                .background(Color(red: 243/255, green: 240/255, blue: 235/255))
-                                .foregroundColor(.black)
-                                .cornerRadius(10)
-                                .shadow(radius: 5, y: 3)
-                        }
-                        .buttonStyle(PlainButtonStyle())
                     }
                     .padding(.bottom, 10)
                     
