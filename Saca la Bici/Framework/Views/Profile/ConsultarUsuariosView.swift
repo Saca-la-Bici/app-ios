@@ -165,6 +165,24 @@ struct ConsultarUsuariosView: View {
             .onDisappear {
                 UIScrollView.appearance().bounces = true
             }
+            .alert(item: $viewModel.activeAlert) { alertType in
+                switch alertType {
+                case .error:
+                    return Alert(
+                        title: Text("Oops!"),
+                        message: Text(viewModel.alertMessage ?? "Error desconocido.")
+                    )
+                case .success:
+                    return Alert(
+                        title: Text("Éxito"),
+                        message: Text(viewModel.alertMessage ?? "El rol del usuario ha sido modificado correctamente."),
+                        dismissButton: .default(Text("OK")) {
+                            viewModel.resetPagination()
+                            viewModel.cargarUsuarios(roles: selectedRoles)
+                        }
+                    )
+                }
+            }
         }
     }
 

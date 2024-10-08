@@ -20,6 +20,18 @@ class ConsultarUsuariosViewModel: ObservableObject {
     private let modificarRolRequirement: ModificarRolRequirement
     private var currentPage: Int = 1
     private let limit: Int = 10
+    
+    enum ActiveAlert: Identifiable {
+        case error
+        case success
+
+        var id: Int {
+            hashValue
+        }
+    }
+    
+    @Published var activeAlert: ActiveAlert?
+    @Published var alertMessage: String?
 
     init(getUsuariosUseCase: GetUsuariosUseCase = GetUsuariosUseCase(), modificarRolRequirement: ModificarRolRequirement = ModificarRolRequirement.shared) {
         self.getUsuariosUseCase = getUsuariosUseCase
@@ -61,6 +73,14 @@ class ConsultarUsuariosViewModel: ObservableObject {
     @MainActor
     func modifyRole(idRol: String, idUsuario: String) async {
         let response = await modificarRolRequirement.modifyRole(idRol: idRol, idUsuario: idUsuario)
+        
+        if response == 200 {
+            self.activeAlert = .success
+            self.alertMessage = "¡El rol ha sido modificado con éxito!"
+        } else {
+            self.activeAlert = .error
+            self.alertMessage = "Hubo un error al actualizar el rol del usuario. Favor de intentar de nuevo."
+        }
     }
     
 }

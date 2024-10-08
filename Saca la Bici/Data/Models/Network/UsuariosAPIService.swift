@@ -82,7 +82,6 @@ class UsuariosApiService {
         
         switch response.result {
         case .success:
-            print(statusCode ?? "0")
             return statusCode
             
         case let .failure(error):
