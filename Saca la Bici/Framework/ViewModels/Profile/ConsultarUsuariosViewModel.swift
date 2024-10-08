@@ -14,6 +14,7 @@ class ConsultarUsuariosViewModel: ObservableObject {
     @Published var roles: [Rol] = []
     @Published var isLoading: Bool = false
     @Published var isLoadingMore: Bool = false
+    @Published var hasMoreData: Bool = true
     @Published var totalUsuarios: Int = 0
 
     private let getUsuariosUseCase: GetUsuariosUseCase
@@ -46,9 +47,16 @@ class ConsultarUsuariosViewModel: ObservableObject {
         Task {
             do {
                 let response = try await getUsuariosUseCase.execute(page: currentPage, limit: limit, roles: roles)
-                usuarios.append(contentsOf: response.usuarios)
-                totalUsuarios = response.totalUsuarios
-                currentPage += 1
+                
+                if response.message == "No se encontraron usuarios." {
+                    isLoading = false
+                    isLoadingMore = false
+                    return
+                } else {
+                    usuarios.append(contentsOf: response.usuarios ?? [])
+                    totalUsuarios = response.totalUsuarios ?? 0
+                    currentPage += 1
+                }
             } catch {
                 activeAlert = .errorConsultar
                 alertMessage = "Hubo un error al cargar los usuarios. Por favor intenta de nuevo."
@@ -60,19 +68,24 @@ class ConsultarUsuariosViewModel: ObservableObject {
     
     @MainActor
     func buscadorUsuarios(roles: [String], search: String) {
-        self.currentPage = 1
         Task {
             do {
-                let response = try await getUsuariosUseCase.buscadorUsuarios(
-                    page: currentPage, limit: limit, roles: roles, search: search)
+                if usuarios.count < totalUsuarios {
+                    let response = try await getUsuariosUseCase.buscadorUsuarios(
+                        page: currentPage, limit: limit, roles: roles, search: search)
 
-                if response.usuarios.isEmpty {
-                    // Si está vacío, se regresa ya que no hay nada
-                    return
+                    if response.usuarios == [] {
+                        // Si está vacío, se regresa ya que no hay nada
+                        isLoading = false
+                        return
+                    }
+                    
+                    usuarios.append(contentsOf: response.usuarios ?? [])
+                    totalUsuarios = response.totalUsuarios ?? 0
+                    currentPage += 1
+                } else {
+                    hasMoreData = false
                 }
-                
-                usuarios = response.usuarios
-                totalUsuarios = response.totalUsuarios
             } catch {
                 activeAlert = .errorConsultar
                 alertMessage = "Hubo un error al cargar los usuarios. Por favor intenta de nuevo."
@@ -86,6 +99,7 @@ class ConsultarUsuariosViewModel: ObservableObject {
     func resetPagination() {
         currentPage = 1
         usuarios = []
+        hasMoreData = true
     }
     
     @MainActor
@@ -103,7 +117,7 @@ class ConsultarUsuariosViewModel: ObservableObject {
         
         if response == 200 {
             self.activeAlert = .success
-            self.alertMessage = "¡El rol del usuario ha sido modificado"
+            self.alertMessage = "¡El rol del usuario ha sido modificado!"
         } else {
             self.activeAlert = .error
             self.alertMessage = "Hubo un error al actualizar el rol del usuario. Favor de intentar de nuevo."

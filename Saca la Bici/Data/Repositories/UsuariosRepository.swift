@@ -19,12 +19,12 @@ class UsuariosRepository {
 
     func obtenerUsuarios(page: Int, limit: Int, roles: [String]) async throws -> ConsultarUsuariosResponse {
         return try await usuariosAPIService.consultarUsuarios(
-            page: page, limit: limit, roles: roles, url: "\(Api.baseURL)\(Api.Routes.profile)/consultarUsuarios")
+            page: page, limit: limit, roles: roles, url: "\(Api.base)\(Api.Routes.profile)/consultarUsuarios")
     }
     
     func buscadorUsuarios(page: Int, limit: Int, roles: [String], search: String) async throws -> ConsultarUsuariosResponse {
         return try await usuariosAPIService.buscadorUsuarios(
-            page: page, limit: limit, roles: roles, url: "\(Api.base)\(Api.Routes.profile)/consultarUsuariosBuscador", search: search)
+            page: page, limit: limit, roles: roles, url: "\(Api.baseURL)\(Api.Routes.profile)/consultarUsuariosBuscador", search: search)
     }
     
     func modifyRole(idRol: String, idUsuario: String) async -> Int? {

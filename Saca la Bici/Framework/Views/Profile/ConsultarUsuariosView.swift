@@ -161,6 +161,9 @@ struct ConsultarUsuariosView: View {
                                 if searchText.isEmpty && usuario == viewModel.usuarios.last {
                                     viewModel.isLoading = true
                                     viewModel.cargarUsuarios(roles: selectedRoles)
+                                } else if !searchText.isEmpty && usuario == viewModel.usuarios.last {
+                                    viewModel.isLoading = true
+                                    viewModel.buscadorUsuarios(roles: selectedRoles, search: searchText)
                                 }
                             }
                         }
@@ -209,8 +212,14 @@ struct ConsultarUsuariosView: View {
                         title: Text("Éxito"),
                         message: Text(viewModel.alertMessage ?? "El rol del usuario ha sido modificado correctamente."),
                         dismissButton: .default(Text("OK")) {
+                            viewModel.isLoading = true
                             viewModel.resetPagination()
-                            viewModel.cargarUsuarios(roles: selectedRoles)
+                            
+                            if searchText.isEmpty {
+                                viewModel.cargarUsuarios(roles: selectedRoles)
+                            } else {
+                                viewModel.buscadorUsuarios(roles: selectedRoles, search: searchText)
+                            }
                         }
                     )
                 }
@@ -225,10 +234,5 @@ struct ConsultarUsuariosView: View {
         case .staff:
             return ["Staff", "Usuario"]
         }
-    }
-
-    // Filtro para buscar
-    var filteredUsers: [ConsultarUsuario] {
-        return viewModel.usuarios
     }
 }

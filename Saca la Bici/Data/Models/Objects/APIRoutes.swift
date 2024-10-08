@@ -12,7 +12,7 @@ struct Api {
     static let base = "http://18.220.205.53:8080"
     
     // Local
-    static let baseURL = "http://192.168.68.118:8080"
+    static let baseURL = "http://10.25.86.139:8080"
     
     // Es las rutas del API, donde /pokemon es como un modulo. Puede haber más
     struct Routes {

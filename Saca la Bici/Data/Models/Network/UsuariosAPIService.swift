@@ -29,6 +29,8 @@ class UsuariosApiService {
         guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
+        
+        print(idToken)
 
         let headers: [String: String] = [
             "Authorization": "Bearer \(idToken)",
@@ -51,7 +53,7 @@ class UsuariosApiService {
         headers.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
 
         let (data, response) = try await URLSession.shared.data(for: request)
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 || httpResponse.statusCode == 404 else {
             throw NSError(domain: "API", code: 500, userInfo: [NSLocalizedDescriptionKey: "Error en la respuesta del servidor"])
         }
 
