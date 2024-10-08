@@ -64,17 +64,17 @@ struct IconSelectionView: View {
                 if selectedIcon == 0 {
                     Text("Vista de Calendario")
                         .font(.title)
-                        .transition(.slide)
+                        .transition(.scale)
                 } else if selectedIcon == 1 {
                     VStack {
                         MedalsView()
                         EventView()
                     }
-                    .transition(.slide)
+                    .transition(.scale)
                 } else if selectedIcon == 2 {
                     Text("Vista de mundo")
                         .font(.title)
-                        .transition(.slide)
+                        .transition(.scale)
                 }
             }
             .offset(x: offset.width)
