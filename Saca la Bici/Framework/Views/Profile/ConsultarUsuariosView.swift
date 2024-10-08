@@ -172,6 +172,14 @@ struct ConsultarUsuariosView: View {
                         title: Text("Oops!"),
                         message: Text(viewModel.alertMessage ?? "Error desconocido.")
                     )
+                case .errorConsultar:
+                    return Alert(
+                        title: Text("Oops!"),
+                        message: Text(viewModel.alertMessage ?? "Error desconocido."),
+                        dismissButton: .default(Text("OK")) {
+                            path.removeLast()
+                        }
+                    )
                 case .success:
                     return Alert(
                         title: Text("Éxito"),

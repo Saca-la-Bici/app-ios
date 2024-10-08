@@ -13,7 +13,6 @@ class ConsultarUsuariosViewModel: ObservableObject {
     @Published var usuarios: [ConsultarUsuario] = []
     @Published var roles: [Rol] = []
     @Published var isLoading: Bool = false
-    @Published var errorMessage: String?
     @Published var totalUsuarios: Int = 0
 
     private let getUsuariosUseCase: GetUsuariosUseCase
@@ -24,6 +23,7 @@ class ConsultarUsuariosViewModel: ObservableObject {
     enum ActiveAlert: Identifiable {
         case error
         case success
+        case errorConsultar
 
         var id: Int {
             hashValue
@@ -49,7 +49,8 @@ class ConsultarUsuariosViewModel: ObservableObject {
                 totalUsuarios = response.totalUsuarios
                 currentPage += 1
             } catch {
-                errorMessage = error.localizedDescription
+                activeAlert = .errorConsultar
+                alertMessage = "Hubo un error al cargar los usuarios. Por favor intenta de nuevo."
             }
             isLoading = false
         }
@@ -76,7 +77,7 @@ class ConsultarUsuariosViewModel: ObservableObject {
         
         if response == 200 {
             self.activeAlert = .success
-            self.alertMessage = "¡El rol ha sido modificado con éxito!"
+            self.alertMessage = "¡El rol del usuario ha sido modificado"
         } else {
             self.activeAlert = .error
             self.alertMessage = "Hubo un error al actualizar el rol del usuario. Favor de intentar de nuevo."
