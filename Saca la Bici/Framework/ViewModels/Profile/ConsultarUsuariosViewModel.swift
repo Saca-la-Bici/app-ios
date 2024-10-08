@@ -13,6 +13,7 @@ class ConsultarUsuariosViewModel: ObservableObject {
     @Published var usuarios: [ConsultarUsuario] = []
     @Published var roles: [Rol] = []
     @Published var isLoading: Bool = false
+    @Published var isLoadingMore: Bool = false
     @Published var totalUsuarios: Int = 0
 
     private let getUsuariosUseCase: GetUsuariosUseCase
@@ -40,6 +41,8 @@ class ConsultarUsuariosViewModel: ObservableObject {
     
     @MainActor
     func cargarUsuarios(roles: [String]) {
+        guard !isLoadingMore else { return }
+        isLoadingMore = true
         Task {
             do {
                 let response = try await getUsuariosUseCase.execute(page: currentPage, limit: limit, roles: roles)
@@ -51,6 +54,7 @@ class ConsultarUsuariosViewModel: ObservableObject {
                 alertMessage = "Hubo un error al cargar los usuarios. Por favor intenta de nuevo."
             }
             isLoading = false
+            isLoadingMore = false
         }
     }
     
