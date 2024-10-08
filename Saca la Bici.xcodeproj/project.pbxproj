@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2509D74D2CB489F2008DF692 /* ModificarRolRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2509D74C2CB489F2008DF692 /* ModificarRolRequirement.swift */; };
 		2510D1FB2CB04C9C004C29CC /* RegistrarActividadRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D1FA2CB04C93004C29CC /* RegistrarActividadRequirement.swift */; };
 		2510D1FD2CB04CE4004C29CC /* ActividadesPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D1FC2CB04CDF004C29CC /* ActividadesPaths.swift */; };
 		2510D2012CB04E31004C29CC /* DescripcionActividadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510D2002CB04E2B004C29CC /* DescripcionActividadView.swift */; };
@@ -113,9 +114,9 @@
 		AE5BA0472CB1B19900AE8C0E /* ConsultarUsuariosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BA0462CB1B18D00AE8C0E /* ConsultarUsuariosViewModel.swift */; };
 		AE5BA04B2CB1B1BC00AE8C0E /* ConsultarUsuariosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BA04A2CB1B1B400AE8C0E /* ConsultarUsuariosView.swift */; };
 		AE5BA04D2CB1B1E300AE8C0E /* ConsultarUsuariosRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BA04C2CB1B1D800AE8C0E /* ConsultarUsuariosRequirement.swift */; };
-		AE5BA04F2CB1B1FD00AE8C0E /* ConsultarUsuariosRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BA04E2CB1B1F200AE8C0E /* ConsultarUsuariosRepository.swift */; };
+		AE5BA04F2CB1B1FD00AE8C0E /* UsuariosRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BA04E2CB1B1F200AE8C0E /* UsuariosRepository.swift */; };
 		AE5BA0512CB1B23A00AE8C0E /* ConsultarUsuarios.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BA0502CB1B23300AE8C0E /* ConsultarUsuarios.swift */; };
-		AE5BA0532CB1B27100AE8C0E /* ConsultarUsuariosAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BA0522CB1B26800AE8C0E /* ConsultarUsuariosAPIService.swift */; };
+		AE5BA0532CB1B27100AE8C0E /* UsuariosAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BA0522CB1B26800AE8C0E /* UsuariosAPIService.swift */; };
 		AE8E78862CA9E3B7007F7365 /* Actividades.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78852CA9E3B3007F7365 /* Actividades.swift */; };
 		AE8E78882CA9E457007F7365 /* ActividadesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78872CA9E450007F7365 /* ActividadesRepository.swift */; };
 		AE8E788B2CA9E4B7007F7365 /* UserSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E788A2CA9E4B4007F7365 /* UserSessionManager.swift */; };
@@ -153,6 +154,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2509D74C2CB489F2008DF692 /* ModificarRolRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModificarRolRequirement.swift; sourceTree = "<group>"; };
 		2510D1FA2CB04C93004C29CC /* RegistrarActividadRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrarActividadRequirement.swift; sourceTree = "<group>"; };
 		2510D1FC2CB04CDF004C29CC /* ActividadesPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesPaths.swift; sourceTree = "<group>"; };
 		2510D2002CB04E2B004C29CC /* DescripcionActividadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescripcionActividadView.swift; sourceTree = "<group>"; };
@@ -256,9 +258,9 @@
 		AE5BA0462CB1B18D00AE8C0E /* ConsultarUsuariosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarUsuariosViewModel.swift; sourceTree = "<group>"; };
 		AE5BA04A2CB1B1B400AE8C0E /* ConsultarUsuariosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarUsuariosView.swift; sourceTree = "<group>"; };
 		AE5BA04C2CB1B1D800AE8C0E /* ConsultarUsuariosRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarUsuariosRequirement.swift; sourceTree = "<group>"; };
-		AE5BA04E2CB1B1F200AE8C0E /* ConsultarUsuariosRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarUsuariosRepository.swift; sourceTree = "<group>"; };
+		AE5BA04E2CB1B1F200AE8C0E /* UsuariosRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsuariosRepository.swift; sourceTree = "<group>"; };
 		AE5BA0502CB1B23300AE8C0E /* ConsultarUsuarios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarUsuarios.swift; sourceTree = "<group>"; };
-		AE5BA0522CB1B26800AE8C0E /* ConsultarUsuariosAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarUsuariosAPIService.swift; sourceTree = "<group>"; };
+		AE5BA0522CB1B26800AE8C0E /* UsuariosAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsuariosAPIService.swift; sourceTree = "<group>"; };
 		AE8E78852CA9E3B3007F7365 /* Actividades.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actividades.swift; sourceTree = "<group>"; };
 		AE8E78872CA9E450007F7365 /* ActividadesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesRepository.swift; sourceTree = "<group>"; };
 		AE8E788A2CA9E4B4007F7365 /* UserSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionManager.swift; sourceTree = "<group>"; };
@@ -491,7 +493,7 @@
 		252B64E62C99FE7200A362C5 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				AE5BA0522CB1B26800AE8C0E /* ConsultarUsuariosAPIService.swift */,
+				AE5BA0522CB1B26800AE8C0E /* UsuariosAPIService.swift */,
 				6DD117312CAE62850084314A /* ProfileAPIService.swift */,
 				AE8E788C2CA9E4CF007F7365 /* ActividadesAPIService.swift */,
 				252B64E42C99FE7200A362C5 /* SessionAPIService.swift */,
@@ -563,7 +565,7 @@
 		252B650C2C9A426200A362C5 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				AE5BA04E2CB1B1F200AE8C0E /* ConsultarUsuariosRepository.swift */,
+				AE5BA04E2CB1B1F200AE8C0E /* UsuariosRepository.swift */,
 				6DD1172F2CAE620F0084314A /* ProfileRepository.swift */,
 				AE8E78872CA9E450007F7365 /* ActividadesRepository.swift */,
 				252B64E82C99FE7200A362C5 /* SessionRepository.swift */,
@@ -621,6 +623,7 @@
 			children = (
 				AE5BA04C2CB1B1D800AE8C0E /* ConsultarUsuariosRequirement.swift */,
 				6DD1172A2CAE60000084314A /* ConsultarPerfilPropioRequirement.swift */,
+				2509D74C2CB489F2008DF692 /* ModificarRolRequirement.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -893,7 +896,7 @@
 				252B64852C99FC5E00A362C5 /* Saca_la_BiciApp.swift in Sources */,
 				AE8E78932CA9E567007F7365 /* EventosViewModel.swift in Sources */,
 				25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */,
-				AE5BA0532CB1B27100AE8C0E /* ConsultarUsuariosAPIService.swift in Sources */,
+				AE5BA0532CB1B27100AE8C0E /* UsuariosAPIService.swift in Sources */,
 				2512D3A42CAFAB90003BCA6A /* EventView.swift in Sources */,
 				252B64D12C99FE5900A362C5 /* SessionCoordinatorView.swift in Sources */,
 				25A7BE4F2CA61C0600FCB8B6 /* ConfigurationView.swift in Sources */,
@@ -964,6 +967,7 @@
 				25C302C42C9A9515005AD742 /* PasswordField.swift in Sources */,
 				AE5BA04B2CB1B1BC00AE8C0E /* ConsultarUsuariosView.swift in Sources */,
 				252B64DA2C99FE5900A362C5 /* SignUpViewModel.swift in Sources */,
+				2509D74D2CB489F2008DF692 /* ModificarRolRequirement.swift in Sources */,
 				252B64DB2C99FE5900A362C5 /* LoginView.swift in Sources */,
 				25C302C82C9A9E7C005AD742 /* CompletarDatosStep2View.swift in Sources */,
 				25A7BE512CA61C9500FCB8B6 /* ProfileView.swift in Sources */,
@@ -990,7 +994,7 @@
 				7B9C5ED42CA9E4D600441541 /* FAQViewModel.swift in Sources */,
 				AE41A6E52C9A648B00921BDF /* consultarAnuncioView.swift in Sources */,
 				AEF446822CA9FE7E0004D5E8 /* ColorManager.swift in Sources */,
-				AE5BA04F2CB1B1FD00AE8C0E /* ConsultarUsuariosRepository.swift in Sources */,
+				AE5BA04F2CB1B1FD00AE8C0E /* UsuariosRepository.swift in Sources */,
 				AE41A6D92C9A613800921BDF /* AnuncioViewModel.swift in Sources */,
 				25A7BE542CA649F600FCB8B6 /* BotonSection.swift in Sources */,
 				25A7BE562CA64AEA00FCB8B6 /* ConfigurationPaths.swift in Sources */,

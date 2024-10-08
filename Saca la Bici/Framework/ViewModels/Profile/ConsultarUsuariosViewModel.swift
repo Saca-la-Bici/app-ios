@@ -9,21 +9,24 @@ import SwiftUI
 import Foundation
 import Alamofire
 
-@MainActor
 class ConsultarUsuariosViewModel: ObservableObject {
     @Published var usuarios: [ConsultarUsuario] = []
+    @Published var roles: [Rol] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var totalUsuarios: Int = 0
 
     private let getUsuariosUseCase: GetUsuariosUseCase
+    private let modificarRolRequirement: ModificarRolRequirement
     private var currentPage: Int = 1
     private let limit: Int = 10
 
-    init(getUsuariosUseCase: GetUsuariosUseCase = GetUsuariosUseCase()) {
+    init(getUsuariosUseCase: GetUsuariosUseCase = GetUsuariosUseCase(), modificarRolRequirement: ModificarRolRequirement = ModificarRolRequirement.shared) {
         self.getUsuariosUseCase = getUsuariosUseCase
+        self.modificarRolRequirement = modificarRolRequirement
     }
-
+    
+    @MainActor
     func cargarUsuarios(roles: [String]) {
         guard !isLoading else { return }
         isLoading = true
@@ -40,8 +43,24 @@ class ConsultarUsuariosViewModel: ObservableObject {
         }
     }
 
+    @MainActor
     func resetPagination() {
         currentPage = 1
         usuarios = []
     }
+    
+    @MainActor
+    func getRoles() async {
+        let roles = await getUsuariosUseCase.getUserRoles()
+        
+        if roles != nil {
+            self.roles = roles!
+        }
+    }
+    
+    @MainActor
+    func modifyRole(idRol: String, idUsuario: String) async {
+        let response = await modificarRolRequirement.modifyRole(idRol: idRol, idUsuario: idUsuario)
+    }
+    
 }
