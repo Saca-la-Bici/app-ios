@@ -22,6 +22,11 @@ class UsuariosRepository {
             page: page, limit: limit, roles: roles, url: "\(Api.base)\(Api.Routes.profile)/consultarUsuarios")
     }
     
+    func buscadorUsuarios(page: Int, limit: Int, roles: [String], search: String) async throws -> ConsultarUsuariosResponse {
+        return try await usuariosAPIService.buscadorUsuarios(
+            page: page, limit: limit, roles: roles, url: "\(Api.base)\(Api.Routes.profile)/consultarUsuariosBuscador", search: search)
+    }
+    
     func modifyRole(idRol: String, idUsuario: String) async -> Int? {
         return await usuariosAPIService.modifyRole(
             url: URL(string: "\(Api.base)\(Api.Routes.profile)/modificarRol/\(idUsuario)")!, idRol: idRol)

@@ -40,8 +40,6 @@ class ConsultarUsuariosViewModel: ObservableObject {
     
     @MainActor
     func cargarUsuarios(roles: [String]) {
-        guard !isLoading else { return }
-        isLoading = true
         Task {
             do {
                 let response = try await getUsuariosUseCase.execute(page: currentPage, limit: limit, roles: roles)
@@ -54,6 +52,30 @@ class ConsultarUsuariosViewModel: ObservableObject {
             }
             isLoading = false
         }
+    }
+    
+    @MainActor
+    func buscadorUsuarios(roles: [String], search: String) {
+        self.currentPage = 1
+        Task {
+            do {
+                let response = try await getUsuariosUseCase.buscadorUsuarios(
+                    page: currentPage, limit: limit, roles: roles, search: search)
+
+                if response.usuarios.isEmpty {
+                    // Si está vacío, se regresa ya que no hay nada
+                    return
+                }
+                
+                usuarios = response.usuarios
+                totalUsuarios = response.totalUsuarios
+            } catch {
+                activeAlert = .errorConsultar
+                alertMessage = "Hubo un error al cargar los usuarios. Por favor intenta de nuevo."
+            }
+            isLoading = false
+        }
+
     }
 
     @MainActor

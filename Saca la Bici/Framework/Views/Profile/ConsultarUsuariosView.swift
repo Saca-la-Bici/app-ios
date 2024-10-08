@@ -11,6 +11,7 @@ struct ConsultarUsuariosView: View {
     @StateObject private var viewModel = ConsultarUsuariosViewModel()
     @State private var searchText: String = ""
     @State private var selectedTab: Tab = .administradores
+    @State private var searchTimer: Timer?
 
     // Binding
     @Binding var path: [ConfigurationPaths]
@@ -34,8 +35,14 @@ struct ConsultarUsuariosView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
                 .onChange(of: selectedTab) {
-                    viewModel.resetPagination()
-                    viewModel.cargarUsuarios(roles: selectedRoles)
+                    viewModel.isLoading = true
+                    if searchText.isEmpty {
+                        viewModel.resetPagination()
+                        viewModel.cargarUsuarios(roles: selectedRoles)
+                    } else {
+                        viewModel.resetPagination()
+                        viewModel.buscadorUsuarios(roles: selectedRoles, search: searchText)
+                    }
                 }
                 
                 // Search Bar
@@ -48,9 +55,24 @@ struct ConsultarUsuariosView: View {
                 .background(Color(UIColor.systemGray6))
                 .cornerRadius(10)
                 .padding([.leading, .trailing])
-                
+                .onChange(of: searchText) { _, newValue in
+                    viewModel.isLoading = true
+                    searchTimer?.invalidate()
+                    searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+                        Task {
+                            if newValue.isEmpty {
+                                await viewModel.resetPagination()
+                                await viewModel.cargarUsuarios(roles: selectedRoles)
+                            } else {
+                                await viewModel.resetPagination()
+                                await viewModel.buscadorUsuarios(roles: selectedRoles, search: newValue)
+                            }
+                        }
+                    }
+                    
+                }
                 // Condicion por si no hay usuarios
-                if filteredUsers.isEmpty && !viewModel.isLoading {
+                if viewModel.usuarios.isEmpty && !viewModel.isLoading {
                     Spacer()
                     Text("No se encontro a ningún usuario.")
                         .font(.title3)
@@ -60,7 +82,7 @@ struct ConsultarUsuariosView: View {
                 } else {
                     // User List
                     List {
-                        ForEach(filteredUsers) { usuario in
+                        ForEach(viewModel.usuarios) { usuario in
                             HStack {
                                 // Imagen de perfil
                                 if let imagenPerfil = usuario.usuario.imagenPerfil, let url = URL(string: imagenPerfil) {
@@ -136,7 +158,8 @@ struct ConsultarUsuariosView: View {
                             .padding(.vertical, 8)
                             .contentShape(Rectangle())
                             .onAppear {
-                                if searchText.isEmpty && usuario == filteredUsers.last {
+                                if searchText.isEmpty && usuario == viewModel.usuarios.last {
+                                    viewModel.isLoading = true
                                     viewModel.cargarUsuarios(roles: selectedRoles)
                                 }
                             }
@@ -154,6 +177,7 @@ struct ConsultarUsuariosView: View {
             }
             .navigationTitle("Asignación de roles y permisos")
             .onAppear {
+                viewModel.isLoading = true
                 viewModel.cargarUsuarios(roles: selectedRoles)
                 Task {
                     await viewModel.getRoles()
@@ -205,15 +229,6 @@ struct ConsultarUsuariosView: View {
 
     // Filtro para buscar
     var filteredUsers: [ConsultarUsuario] {
-        if searchText.isEmpty {
-            return viewModel.usuarios
-        } else {
-            let lowercasedSearchText = searchText.lowercased()
-            return viewModel.usuarios.filter { usuario in
-                usuario.usuario.nombre.lowercased().contains(lowercasedSearchText) ||
-                usuario.usuario.correoElectronico.lowercased().contains(lowercasedSearchText) ||
-                usuario.usuario.username.lowercased().contains(lowercasedSearchText)
-            }
-        }
+        return viewModel.usuarios
     }
 }
