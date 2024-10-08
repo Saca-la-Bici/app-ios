@@ -122,9 +122,9 @@ struct ProfileView: View {
                     }
                     .padding(.bottom, 10)
                     
-                    // Estadísticas de usuario: Rodadas, Kilómetros, Amigos
+                    // Estadísticas de usuario: Rodadas, Kilómetros
                     HStack {
-                        VStack(spacing: 10) {
+                        VStack(spacing: 5) {  // Reducimos el espacio entre los elementos dentro del VStack
                             Text("\(consultarPerfilPropioViewModel.profile?.rodadasCompletadas ?? 1)")
                                 .font(.system(size: 12))
                             Text("Rodadas")
@@ -132,7 +132,7 @@ struct ProfileView: View {
                                 .fontWeight(.bold)
                         }
                         Spacer()
-                        VStack(spacing: 10) {
+                        VStack(spacing: 5) {  // Reducimos el espacio entre los elementos dentro del VStack
                             Text("\(String(format: "%.1f", consultarPerfilPropioViewModel.profile?.kilometrosRecorridos ?? 5))km")
                                 .font(.system(size: 12))
                             Text("Kilómetros")
@@ -140,9 +140,9 @@ struct ProfileView: View {
                                 .fontWeight(.bold)
                         }
                     }
-                    .padding(.horizontal, 72)
+                    .padding(.horizontal, 100)  // Ajustamos el padding para que se vea más compacto
                     .padding(.bottom, 10)
-                    
+
                     HStack {
                         Button {
                             // Acción para Editar perfil
@@ -150,17 +150,18 @@ struct ProfileView: View {
                             Text("Editar perfil")
                                 .font(.system(size: 14))
                                 .padding(.all, 7)
-                                .frame(width: 120)
+                                .frame(maxWidth: .infinity)  // Ajustamos el ancho para que ocupe todo el espacio disponible
                                 .background(Color(red: 243/255, green: 240/255, blue: 235/255))
                                 .foregroundColor(.black)
                                 .cornerRadius(10)
                                 .shadow(radius: 5, y: 3)
                         }
                         .buttonStyle(PlainButtonStyle())
-                        
+                        .frame(maxWidth: .infinity)  // Hacemos que el botón se extienda a lo ancho del HStack
                     }
+                    .padding(.horizontal, 100)  // Ajustamos el padding para que el botón esté alineado con los textos de "Rodadas" y "Kilómetros"
                     .padding(.bottom, 10)
-                    
+
                     IconSelectionView()
                 }
             }
