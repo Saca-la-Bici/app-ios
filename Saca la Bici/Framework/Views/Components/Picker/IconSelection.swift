@@ -49,7 +49,7 @@ struct IconSelectionView: View {
                             selectedIcon = 2
                         }
                     } label: {
-                        Image(systemName: "globe")
+                        Image(systemName: "globe.americas")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
