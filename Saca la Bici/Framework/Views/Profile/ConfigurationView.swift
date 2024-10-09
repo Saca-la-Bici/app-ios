@@ -16,6 +16,9 @@ struct ConfigurationView: View {
     
     @Binding var path: [ConfigurationPaths]
     
+    @State private var showingSafari = false
+    @State private var safariURL: URL?
+    
     var body: some View {
         VStack(spacing: 0) {
             ScrollView {
@@ -87,12 +90,27 @@ struct ConfigurationView: View {
                             .bold()
                             .padding(.leading, 20)
                         
-                        BotonSection(icono: "globe", titulo: "Saca la Bici",
-                                     button: false,
-                                     path: $path)
-                        BotonSection(icono: "globe", titulo: "Rentabici",
-                                     button: false,
-                                     path: $path)
+                        Button(action: {
+                            safariURL = URL(string: "http://sacalabici.org/")
+                            showingSafari = true
+                        }, label: {
+                            HStack {
+                                Image(systemName: "globe")
+                                Text("Saca la Bici")
+                            }
+                        })
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        Button(action: {
+                            safariURL = URL(string: "https://rentabici.sacalabici.org/")
+                            showingSafari = true
+                        }, label: {
+                            HStack {
+                                Image(systemName: "globe")
+                                Text("Rentabici")
+                            }
+                        })
+                        .buttonStyle(PlainButtonStyle())
                     }
                     .padding(.horizontal, 25)
                     
@@ -115,6 +133,11 @@ struct ConfigurationView: View {
         }
         .navigationTitle("Configuración y Privacidad")
         .padding(.top, 4)
+        .sheet(isPresented: $showingSafari) {
+            if let safariURL = safariURL {
+                SafariView(url: safariURL)
+            }
+        }
     }
 }
 

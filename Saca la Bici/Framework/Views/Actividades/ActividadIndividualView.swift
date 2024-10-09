@@ -15,6 +15,9 @@ struct ActividadIndividualView: View {
 
     @ObservedObject private var userSessionManager = UserSessionManager.shared
 
+    @State private var showingSafari = false
+    @State private var safariURL: URL?
+
     var body: some View {
         ZStack {
             if actividadIndividualViewModel.isLoading {
@@ -61,35 +64,45 @@ struct ActividadIndividualView: View {
                         ubicacion: actividadIndividualViewModel.ubicacion,
                         tipo: actividadIndividualViewModel.tipo,
                         distancia: actividadIndividualViewModel.distancia,
-                        rentaBicicletas: "Click aquí",
+                        rentaBicicletas: Button(action: {
+                            safariURL = URL(string: "https://rentabici.sacalabici.org/")
+                            showingSafari = true
+                        }, label: {
+                            Text("Click aquí")
+                                .underline()
+                                .foregroundColor(.blue)
+                        }),
                         nivel: actividadIndividualViewModel.nivel,
                         descripcion: actividadIndividualViewModel.descripcion
                     )
+                    .padding()
 
                     Spacer().frame(height: 20)
 
-                    // Condición para mostrar el CustomButton
-                    if !(actividadIndividualViewModel.tipo == "Rodada" && userSessionManager.puedeIniciarRodada()) {
-                        CustomButton(
-                            text: actividadIndividualViewModel.isJoined ? "Cancelar asistencia" : "Unirse",
-                            backgroundColor: actividadIndividualViewModel.isJoined ? .red : Color(red: 0.961, green: 0.802, blue: 0.048),
-                            foregroundColor: .white,
-                            action: {
-                                Task {
-                                    if actividadIndividualViewModel.isJoined {
-                                        await actividadIndividualViewModel.cancelarAsistencia(actividadID: id)
-                                    } else {
-                                        await actividadIndividualViewModel.inscribirActividad(actividadID: id)
-                                    }
+                    CustomButton(
+                        text: actividadIndividualViewModel.isJoined ? "Cancelar asistencia" : "Unirse",
+                        backgroundColor: actividadIndividualViewModel.isJoined ? .red : Color(red: 0.961, green: 0.802, blue: 0.048),
+                        foregroundColor: .white,
+                        action: {
+                            Task {
+                                if actividadIndividualViewModel.isJoined {
+                                    await actividadIndividualViewModel.cancelarAsistencia(actividadID: id)
+                                } else {
+                                    await actividadIndividualViewModel.inscribirActividad(actividadID: id)
                                 }
-                            },
-                            tieneIcono: true,
-                            icono: actividadIndividualViewModel.isJoined ? "xmark" : "plus"
-                        )
-                        .padding()
-                    }
+                            }
+                        },
+                        tieneIcono: true,
+                        icono: actividadIndividualViewModel.isJoined ? "xmark" : "plus"
+                    )
+                    .padding()
                 }
                 .navigationTitle(actividadIndividualViewModel.titulo)
+                .sheet(isPresented: $showingSafari) {
+                    if let safariURL = safariURL {
+                        SafariView(url: safariURL)
+                    }
+                }
             }
         }
         .toolbar {

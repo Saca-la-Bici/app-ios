@@ -7,20 +7,21 @@
 
 import SwiftUI
 
-struct ActividadInfoView: View {
+struct ActividadInfoView<Content: View>: View {
     var fecha: String
     var hora: String
     var duracion: String
     var ubicacion: String
     var tipo: String
     var distancia: String = ""
-    var rentaBicicletas: String = ""
+    var rentaBicicletas: Content  
     var nivel: String = ""
     var descripcion: String
 
     var body: some View {
         VStack(alignment: .leading) {
             detailRow(title: "Fecha", value: FechaManager.shared.formatDate(fecha))
+            
             if !nivel.isEmpty {
                 HStack {
                     Text("Hora")
@@ -42,11 +43,18 @@ struct ActividadInfoView: View {
             } else {
                 detailRow(title: "Hora", value: hora)
             }
+            
             detailRow(title: "Duración", value: duracion)
             detailRow(title: "Ubicación", value: ubicacion)
+            
             if tipo == "Rodada" {
                 detailRow(title: "Distancia", value: distancia)
-                detailRow(title: "Renta Bicicletas", value: rentaBicicletas)
+                HStack {
+                    Text("Renta Bicicletas")
+                        .bold()
+                        .foregroundColor(.gray)
+                    rentaBicicletas
+                }
             }
             
             VStack(alignment: .leading) {
