@@ -37,3 +37,12 @@ struct User: Codable {
     var emailorUsername: String
     var password: String
 }
+
+struct Rol: Codable {
+    let _id: String
+    let nombre: String
+}
+
+struct RolesResponse: Codable {
+    let roles: [Rol]
+}
