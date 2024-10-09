@@ -9,6 +9,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct ActivityCardView: View {
+    
     @Binding var path: [ActivitiesPaths]
     
     var id: String
@@ -51,6 +52,30 @@ struct ActivityCardView: View {
                             .foregroundColor(.primary)
                     }
                 }
+                
+                // Modificar / Eliminar actividad
+                Menu {
+                    Button(action: {
+                        // Acción para modificar la actividad
+                        print("Modificar actividad")
+                    }, label: {
+                        Label("Modificar actividad", systemImage: "pencil")
+                    })
+
+                    Button(action: {
+                        // Acción para eliminar la actividad
+                        print("Eliminar actividad")
+                    }, label: {
+                        Label("Eliminar actividad", systemImage: "trash")
+                            .foregroundColor(.red)
+                    })
+                } label: {
+                    Image(systemName: "ellipsis")
+                        .foregroundColor(.black)
+                        .rotationEffect(.degrees(90))
+                        .padding()
+                }
+
             }
             
             if let date = date {
@@ -137,6 +162,30 @@ struct ActivityCardView: View {
             return Color(red: 244.0 / 255.0, green: 67.0 / 255.0, blue: 54.0 / 255.0)
         default:
             return Color.gray
+        }
+    }
+}
+
+struct ActivityCard_Previews: PreviewProvider {
+    static var previews: some View {
+        PreviewWrapper()
+    }
+
+    struct PreviewWrapper: View {
+        @State var path: [ActivitiesPaths] = []
+
+        var body: some View {
+            ActivityCardView(
+                path: $path,
+                id: "1",
+                activityTitle: "Lorem ipsum dolor sit amet ms",
+                activityType: "Rodada",
+                level: "Nivel 1",
+                date: "12/0/2",
+                time: "12:00",
+                duration: "2 horas",
+                attendees: 100
+            )
         }
     }
 }
