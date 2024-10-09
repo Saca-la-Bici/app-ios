@@ -49,7 +49,7 @@ struct IconSelectionView: View {
                             selectedIcon = 2
                         }
                     } label: {
-                        Image(systemName: "globe")
+                        Image(systemName: "globe.americas")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
@@ -62,19 +62,22 @@ struct IconSelectionView: View {
             // ZStack para las vistas con animación de transición
             ZStack {
                 if selectedIcon == 0 {
-                    Text("Vista de Calendario")
-                        .font(.title)
-                        .transition(.slide)
+                    VStack {
+                        EventView()
+                        Spacer()
+                    }
+                    .transition(.scale)
                 } else if selectedIcon == 1 {
                     VStack {
                         MedalsView()
-                        EventView()
+                        Spacer()
                     }
-                    .transition(.slide)
+                    .transition(.scale)
                 } else if selectedIcon == 2 {
                     Text("Vista de mundo")
                         .font(.title)
-                        .transition(.slide)
+                        .transition(.scale)
+                    Spacer()
                 }
             }
             .offset(x: offset.width)
