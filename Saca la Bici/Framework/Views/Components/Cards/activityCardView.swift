@@ -24,6 +24,8 @@ struct ActivityCardView: View {
     var attendees: Int?
     
     let colorManager = ColorManager()
+    
+    @StateObject var actividadViewModel = ActividadViewModel()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -64,7 +66,7 @@ struct ActivityCardView: View {
 
                     Button(action: {
                         // Acción para eliminar la actividad
-                        print("Eliminar actividad")
+                        actividadViewModel.deleteActivity(id: id)
                     }, label: {
                         Label("Eliminar actividad", systemImage: "trash")
                             .foregroundColor(.red)
@@ -135,6 +137,31 @@ struct ActivityCardView: View {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(Color.primary.opacity(0.2), lineWidth: 1))
         .shadow(radius: 5)
+        .alert(item: $actividadViewModel.activeAlert) { alert in
+            switch alert {
+            case .success:
+                return Alert(
+                    title: Text("Éxito"),
+                    message: Text("Éxito"),
+                    dismissButton: .default(Text("OK"))
+                )
+            case .error:
+                return Alert(
+                    title: Text("Error"),
+                    message: Text("Error"),
+                    dismissButton: .default(Text("OK"))
+                )
+            case .delete:
+                return Alert(
+                    title: Text("¿Seguro quieres eliminar la actividad?"),
+                    message: Text("Una vez eliminada no se podrá recuperar."),
+                    primaryButton: .destructive(Text("Eliminar")) {
+                        print("Eliminar actividad")
+                    },
+                    secondaryButton: .cancel(Text("Cancelar"))
+                )
+            }
+        }
     }
     
     private func infoRow(title: String, value: String) -> some View {

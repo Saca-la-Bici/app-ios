@@ -69,6 +69,8 @@ struct DescripcionActividadView: View {
                         path.removeAll()
                     }
                 )
+            case .delete:
+                return Alert(title: Text("XD"))
             }
         }
         .onAppear {

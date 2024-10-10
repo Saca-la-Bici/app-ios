@@ -37,6 +37,7 @@ class ActividadViewModel: ObservableObject {
     enum ActiveAlert: Identifiable {
         case error
         case success
+        case delete
 
         var id: Int {
             hashValue
@@ -163,6 +164,17 @@ class ActividadViewModel: ObservableObject {
                 self.messageAlert = "Hubo un error al registrar la actividad. Inténtelo de nuevo más tarde."
                 self.activeAlert = .error
         }
+    }
+    
+    @MainActor
+    func deleteActivity(id: String) {
+        
+        // Mostrar alerta esperando confirmación
+        self.showAlert = true
+        self.activeAlert = .delete
+        
+        print("Eliminar")
+        
     }
 
 }
