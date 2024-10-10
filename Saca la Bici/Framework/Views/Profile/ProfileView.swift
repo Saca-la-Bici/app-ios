@@ -147,24 +147,22 @@ struct ProfileView: View {
                         .padding(.horizontal, 100)  // Ajustamos el padding para que se vea más compacto
                         .padding(.bottom, 10)
 
-                        HStack {
-                            Button {
-                                // Acción para Editar perfil
-                            } label: {
-                                Text("Editar perfil")
-                                    .font(.system(size: 14))
-                                    .padding(.all, 7)
-                                    .frame(maxWidth: .infinity)  // Ajustamos el ancho para que ocupe todo el espacio disponible
-                                    .background(Color(red: 243/255, green: 240/255, blue: 235/255))
-                                    .foregroundColor(.black)
-                                    .cornerRadius(10)
-                                    .shadow(radius: 5, y: 3)
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .frame(maxWidth: .infinity)  // Hacemos que el botón se extienda a lo ancho del HStack
+                       /* NavigationLink(destination: ModificarPerfilView()) {
+                            Text("Editar perfil")
+                                .font(.system(size: 14))
+                                .padding(.all, 7)
+                                .frame(maxWidth: .infinity)
+                                .background(Color(red: 243/255, green: 240/255, blue: 235/255))
+                                .foregroundColor(.black)
+                                .cornerRadius(10)
+                                .shadow(radius: 5, y: 3)
                         }
-                        .padding(.horizontal, 100)  // Ajustamos el padding para que el botón esté alineado con los textos de "Rodadas" y "Kilómetros"
+                        .buttonStyle(PlainButtonStyle())
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, 100)
                         .padding(.bottom, 10)
+                        
+                        */
 
                         IconSelectionView()
                     }
