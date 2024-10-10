@@ -89,8 +89,8 @@
 		25F368212C9BAEA3003322CF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F368202C9BAEA3003322CF /* LoadingView.swift */; };
 		698D173B2CB7AE050083D202 /* MapViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698D173A2CB7ADFE0083D202 /* MapViewContainer.swift */; };
 		698D173D2CB7B1DE0083D202 /* RegisterRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698D173C2CB7B1DE0083D202 /* RegisterRouteView.swift */; };
-		6993203C2CB750C4000CA32F /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 6993203B2CB750C4000CA32F /* MapboxMaps */; };
 		6993203F2CB750F7000CA32F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6993203E2CB750F7000CA32F /* ContentView.swift */; };
+		69A8045F2CB82D9900692D40 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 69A8045E2CB82D9900692D40 /* MapboxMaps */; };
 		6DD117262CAE5C790084314A /* ConsultarPerfilPropioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD117252CAE5C6A0084314A /* ConsultarPerfilPropioViewModel.swift */; };
 		6DD1172B2CAE61190084314A /* ConsultarPerfilPropioRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD1172A2CAE60000084314A /* ConsultarPerfilPropioRequirement.swift */; };
 		6DD1172E2CAE61D40084314A /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD1172D2CAE61CF0084314A /* Profile.swift */; };
@@ -298,7 +298,7 @@
 				252B64F32C99FF1000A362C5 /* Alamofire in Frameworks */,
 				2510D2112CB060E7004C29CC /* SDWebImageSwiftUI in Frameworks */,
 				252B64FB2C99FFE200A362C5 /* GoogleSignIn in Frameworks */,
-				6993203C2CB750C4000CA32F /* MapboxMaps in Frameworks */,
+				69A8045F2CB82D9900692D40 /* MapboxMaps in Frameworks */,
 				252B64F82C99FFBD00A362C5 /* FirebaseAuthCombine-Community in Frameworks */,
 				252B64F62C99FFBD00A362C5 /* FirebaseAuth in Frameworks */,
 			);
@@ -768,7 +768,7 @@
 				25A7BE5F2CA775CF00FCB8B6 /* FirebaseMessaging */,
 				2510D20D2CB050F6004C29CC /* DurationPicker */,
 				2510D2102CB060E7004C29CC /* SDWebImageSwiftUI */,
-				6993203B2CB750C4000CA32F /* MapboxMaps */,
+				69A8045E2CB82D9900692D40 /* MapboxMaps */,
 			);
 			productName = "Saca la Bici";
 			productReference = 252B639B2C99F16700A362C5 /* Saca la Bici.app */;
@@ -853,7 +853,7 @@
 				252B64F92C99FFE200A362C5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				2510D20C2CB050F6004C29CC /* XCRemoteSwiftPackageReference "DurationPicker" */,
 				2510D20F2CB060E7004C29CC /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
-				699320392CB750A9000CA32F /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */,
+				69A8045D2CB82D8B00692D40 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 252B639C2C99F16700A362C5 /* Products */;
@@ -1440,7 +1440,7 @@
 				minimumVersion = 8.0.0;
 			};
 		};
-		699320392CB750A9000CA32F /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */ = {
+		69A8045D2CB82D8B00692D40 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mapbox/mapbox-maps-ios.git";
 			requirement = {
@@ -1491,9 +1491,9 @@
 			package = 252B64F42C99FFBD00A362C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
 		};
-		6993203B2CB750C4000CA32F /* MapboxMaps */ = {
+		69A8045E2CB82D9900692D40 /* MapboxMaps */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 699320392CB750A9000CA32F /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */;
+			package = 69A8045D2CB82D8B00692D40 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */;
 			productName = MapboxMaps;
 		};
 /* End XCSwiftPackageProductDependency section */
