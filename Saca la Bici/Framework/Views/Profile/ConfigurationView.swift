@@ -16,7 +16,6 @@ struct ConfigurationView: View {
     
     @Binding var path: [ConfigurationPaths]
     
-    @State private var showingSafari = false
     @State private var safariURL: URL?
     
     var body: some View {
@@ -48,7 +47,7 @@ struct ConfigurationView: View {
                             
                             if userSessionManager.puedeModificarRol() {
                                 BotonSection(icono: "person.badge.plus",
-                                    titulo: "Asignación de Roles y Permisos",
+                                             titulo: "Asignación de Roles y Permisos",
                                              button: true,
                                              path: $path,
                                              nextPath: .asignacionRoles)
@@ -56,7 +55,7 @@ struct ConfigurationView: View {
                             
                             if userSessionManager.puedeDesactivarUsuario() {
                                 BotonSection(icono: "person.crop.circle.badge.minus",
-                                    titulo: "Desactivar Usuarios",
+                                             titulo: "Desactivar Usuarios",
                                              button: true,
                                              path: $path,
                                              nextPath: .desactivarUsuarios)
@@ -91,8 +90,7 @@ struct ConfigurationView: View {
                             .padding(.leading, 20)
                         
                         Button(action: {
-                            safariURL = URL(string: "http://sacalabici.org/")
-                            showingSafari = true
+                            safariURL = URL(string: "http://sacalabici.org")
                         }, label: {
                             HStack {
                                 Image(systemName: "globe")
@@ -102,8 +100,7 @@ struct ConfigurationView: View {
                         .buttonStyle(PlainButtonStyle())
                         
                         Button(action: {
-                            safariURL = URL(string: "https://rentabici.sacalabici.org/")
-                            showingSafari = true
+                            safariURL = URL(string: "http://rentabici.sacalabici.org")
                         }, label: {
                             HStack {
                                 Image(systemName: "globe")
@@ -133,10 +130,8 @@ struct ConfigurationView: View {
         }
         .navigationTitle("Configuración y Privacidad")
         .padding(.top, 4)
-        .sheet(isPresented: $showingSafari) {
-            if let safariURL = safariURL {
-                SafariView(url: safariURL)
-            }
+        .sheet(item: $safariURL) { url in
+            SafariView(url: url)
         }
     }
 }

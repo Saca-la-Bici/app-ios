@@ -8,6 +8,10 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
+extension URL: @retroactive Identifiable {
+    public var id: String { absoluteString }
+}
+
 struct ActividadIndividualView: View {
     @Binding var path: [ActivitiesPaths]
     @StateObject var actividadIndividualViewModel = ActividadIndividualViewModel()
@@ -15,7 +19,6 @@ struct ActividadIndividualView: View {
 
     @ObservedObject private var userSessionManager = UserSessionManager.shared
 
-    @State private var showingSafari = false
     @State private var safariURL: URL?
 
     var body: some View {
@@ -26,6 +29,7 @@ struct ActividadIndividualView: View {
                 ScrollView {
                     Spacer().frame(height: 10)
 
+                    // Mostrar imagen si está disponible
                     if !actividadIndividualViewModel.imagen.isEmpty {
                         GeometryReader { geometry in
                             WebImage(url: URL(string: actividadIndividualViewModel.imagen))
@@ -64,14 +68,9 @@ struct ActividadIndividualView: View {
                         ubicacion: actividadIndividualViewModel.ubicacion,
                         tipo: actividadIndividualViewModel.tipo,
                         distancia: actividadIndividualViewModel.distancia,
-                        rentaBicicletas: Button(action: {
-                            safariURL = URL(string: "https://rentabici.sacalabici.org/")
-                            showingSafari = true
-                        }, label: {
-                            Text("Click aquí")
-                                .underline()
-                                .foregroundColor(.blue)
-                        }),
+                        rentaBicicletasAction: {
+                            safariURL = URL(string: "http://rentabici.sacalabici.org")
+                        },
                         nivel: actividadIndividualViewModel.nivel,
                         descripcion: actividadIndividualViewModel.descripcion
                     )
@@ -98,10 +97,8 @@ struct ActividadIndividualView: View {
                     .padding()
                 }
                 .navigationTitle(actividadIndividualViewModel.titulo)
-                .sheet(isPresented: $showingSafari) {
-                    if let safariURL = safariURL {
-                        SafariView(url: safariURL)
-                    }
+                .sheet(item: $safariURL) { url in
+                    SafariView(url: url)
                 }
             }
         }
