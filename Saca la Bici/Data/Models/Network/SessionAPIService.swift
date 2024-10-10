@@ -385,7 +385,7 @@ class SessionAPIService: NSObject {
     }
     
     func borrarTokenServidor(_ token: String) async -> Bool {
-        let url = URL(string: "\(Api.baseURL)\(Api.Routes.session)/borrarTokenNotificacion")!
+        let url = URL(string: "\(Api.base)\(Api.Routes.session)/borrarTokenNotificacion")!
         
         guard let currentUser = Auth.auth().currentUser else {
             print("No hay un usuario autenticado para borrar el token.")
