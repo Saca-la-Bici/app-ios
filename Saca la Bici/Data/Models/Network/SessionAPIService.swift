@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import FirebaseMessaging
 import AuthenticationServices
 import Alamofire
 import GoogleSignIn
@@ -59,6 +60,14 @@ class SessionAPIService: NSObject {
                 "Authorization": "Bearer \(idToken)",
                 "Content-Type": "application/json"
             ]
+            
+            do {
+                let token = try await Messaging.messaging().token()
+                print("FCM registration token: \(token)")
+                enviarTokenAlServidor(token)
+            } catch {
+                print("Error fetching FCM registration token: \(error.localizedDescription)")
+            }
             
             let taskRequest = session.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate()
             let response = await taskRequest.serializingData().response
@@ -133,6 +142,14 @@ class SessionAPIService: NSObject {
                 "Content-Type": "application/json"
             ]
             
+            do {
+                let token = try await Messaging.messaging().token()
+                print("FCM registration token: \(token)")
+                enviarTokenAlServidor(token)
+            } catch {
+                print("Error fetching FCM registration token: \(error.localizedDescription)")
+            }
+            
             let taskRequest = session.request(url, method: .get, headers: headers).validate()
             let response = await taskRequest.serializingData().response
             
@@ -158,42 +175,6 @@ class SessionAPIService: NSObject {
             // Manejo de errores de inicio de sesión
             print("Error al iniciar sesión: \(error.localizedDescription)")
             return 1 // Error, devuelve nil o el código de error correspondiente
-        }
-    }
-    
-    func probarToken(url: URL) async -> Response? {
-        // Obtener el ID Token usando async/await
-        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
-            print("No se pudo obtener el ID Token")
-            return nil
-        }
-        
-        // Prepara los headers con el token para enviar al backend
-        let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(idToken)", // Incluye el token en el header de autorización
-            "Content-Type": "application/json"
-        ]
-        
-        let taskRequest = session.request(url, method: .get, headers: headers).validate()
-        let response = await taskRequest.serializingData().response
-        
-        switch response.result {
-        case .success(let data):
-            do {
-                // Intentar decodificar la respuesta JSON en un objeto Response
-                return try JSONDecoder().decode(Response.self, from: data)
-            } catch {
-                return nil
-            }
-        case let .failure(error):
-            debugPrint(error.localizedDescription)
-            
-            // Imprimir el cuerpo de la respuesta en caso de error
-            if let data = response.data {
-                let errorResponse = String(decoding: data, as: UTF8.self)
-                print("\(errorResponse)")
-            }
-            return nil
         }
     }
     
@@ -227,6 +208,14 @@ class SessionAPIService: NSObject {
             
             // Iniciar sesión en Firebase con las credenciales
             _ = try await Auth.auth().signIn(with: credential)
+            
+            do {
+                let token = try await Messaging.messaging().token()
+                print("FCM registration token: \(token)")
+                enviarTokenAlServidor(token)
+            } catch {
+                print("Error fetching FCM registration token: \(error.localizedDescription)")
+            }
             
             return(200)
             
@@ -267,6 +256,15 @@ class SessionAPIService: NSObject {
         do {
             // Iniciar sesión en Firebase con las credenciales
             _ = try await Auth.auth().signIn(with: credential)
+            
+            do {
+                let token = try await Messaging.messaging().token()
+                print("FCM registration token: \(token)")
+                enviarTokenAlServidor(token)
+            } catch {
+                print("Error fetching FCM registration token: \(error.localizedDescription)")
+            }
+            
             return 200
         } catch {
             print("Error al autenticar con Firebase: \(error.localizedDescription)")
@@ -347,5 +345,49 @@ class SessionAPIService: NSObject {
         }
         
         return false
+    }
+    
+    func enviarTokenAlServidor(_ token: String) {
+        let url = URL(string: "\(Api.base)\(Api.Routes.session)/actualizarTokenNotificacion")!
+        
+        // Obtener el ID Token de Firebase para autenticar la solicitud
+        if let currentUser = Auth.auth().currentUser {
+            currentUser.getIDToken { idToken, error in
+                if let error = error {
+                    print("Error al obtener el ID Token: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let idToken = idToken else {
+                    print("No se pudo obtener el ID Token")
+                    return
+                }
+                
+                // Define los headers necesarios
+                let headers: HTTPHeaders = [
+                    "Authorization": "Bearer \(idToken)",
+                    "Content-Type": "application/json"
+                ]
+                
+                // Define los parámetros que deseas enviar
+                let parameters: Parameters = [
+                    "fcmToken": token
+                ]
+                
+                // Realiza la solicitud POST al backend
+                AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+                    .validate()
+                    .response { response in
+                        switch response.result {
+                        case .success:
+                            print("Token de FCM enviado exitosamente al servidor.")
+                        case .failure(let error):
+                            print("Error al enviar el token de FCM al servidor: \(error.localizedDescription)")
+                        }
+                    }
+            }
+        } else {
+            print("No hay un usuario autenticado para enviar el token.")
+        }
     }
 }
