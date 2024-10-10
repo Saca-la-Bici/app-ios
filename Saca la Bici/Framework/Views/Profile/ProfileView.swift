@@ -11,7 +11,8 @@ struct ProfileView: View {
     @State private var path: [ConfigurationPaths] = []
     
     @StateObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
-    @StateObject private var consultarPerfilPropioViewModel = ConsultarPerfilPropioViewModel()
+    
+    @StateObject private var consultarPerfilPropioViewModel = ConsultarPerfilPropioViewModel.shared
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -147,7 +148,11 @@ struct ProfileView: View {
                         .padding(.horizontal, 100)  // Ajustamos el padding para que se vea más compacto
                         .padding(.bottom, 10)
 
-                       /* NavigationLink(destination: ModificarPerfilView()) {
+                        Button {
+                            Task {
+                                path.append(.editProfile)
+                            }
+                        } label: {
                             Text("Editar perfil")
                                 .font(.system(size: 14))
                                 .padding(.all, 7)
@@ -161,8 +166,6 @@ struct ProfileView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 100)
                         .padding(.bottom, 10)
-                        
-                        */
 
                         IconSelectionView()
                     }
@@ -204,6 +207,8 @@ struct ProfileView: View {
                     PasswordRecoveryView<ConfigurationPaths>(path: $path, showIniciarSesion: false )
                 case .asignacionRoles:
                     ConsultarUsuariosView(path: $path)
+                case .editProfile:
+                    ModificarPerfilView()
                 default:
                     EmptyView()
                 }

@@ -21,9 +21,9 @@ struct DropdownField: View {
                 ForEach(options, id: \.self) { option in
                     Button(action: {
                         selectedOption = option
-                    }) {
+                    }, label: {
                         Text(option)
-                    }
+                    })
                 }
             } label: {
                 HStack {

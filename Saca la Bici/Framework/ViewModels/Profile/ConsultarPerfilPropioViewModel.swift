@@ -9,6 +9,7 @@ import Foundation
 import FirebaseAuth
 
 class ConsultarPerfilPropioViewModel: ObservableObject {
+    static let shared = ConsultarPerfilPropioViewModel()
     @Published var profile: Profile?
     @Published var isLoading: Bool = true
     @Published var error: Error?
