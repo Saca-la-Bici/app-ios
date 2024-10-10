@@ -2,7 +2,7 @@ import SwiftUI
 import MapboxMaps
 import CoreLocation
 
-struct ContentView: View {
+struct MapaView: View {
     var body: some View {
         MapViewContainer()
             .ignoresSafeArea()
