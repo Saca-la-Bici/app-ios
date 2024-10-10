@@ -127,7 +127,6 @@ class ActividadesRepository: ActividadesAPIProtocol {
     
     func eliminarActividad(id: String, tipo: String) async throws -> EliminarActividadResponse {
         let url = URL(string: "\(Api.base)\(Api.Routes.actividades)/eliminar")!
-        print("url: \(url)")
         return try await actividadesAPIService.eliminarActividad(url: url, id: id, tipo: tipo)
     }
 }

@@ -142,13 +142,13 @@ struct ActivityCardView: View {
             case .success:
                 return Alert(
                     title: Text("Éxito"),
-                    message: Text("Éxito"),
+                    message: Text(actividadViewModel.messageAlert),
                     dismissButton: .default(Text("OK"))
                 )
             case .error:
                 return Alert(
                     title: Text("Error"),
-                    message: Text("Error"),
+                    message: Text(actividadViewModel.messageAlert),
                     dismissButton: .default(Text("OK"))
                 )
             case .delete:
