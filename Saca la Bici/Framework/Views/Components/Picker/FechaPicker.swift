@@ -19,6 +19,8 @@ struct FechaPicker: View {
         formatter.dateStyle = .long
         return formatter
     }
+    
+    let endDate = Calendar.current.date(byAdding: .year, value: +100, to: Date())!
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -57,7 +59,7 @@ struct FechaPicker: View {
                     DatePicker(
                         "",
                         selection: $selectedDate,
-                        in: Date()...,
+                        in: Date()...endDate,
                         displayedComponents: .date
                     )
                     .datePickerStyle(WheelDatePickerStyle())
