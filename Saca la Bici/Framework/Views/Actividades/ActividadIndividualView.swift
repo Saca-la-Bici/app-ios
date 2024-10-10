@@ -8,12 +8,18 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
+extension URL: @retroactive Identifiable {
+    public var id: String { absoluteString }
+}
+
 struct ActividadIndividualView: View {
     @Binding var path: [ActivitiesPaths]
     @StateObject var actividadIndividualViewModel = ActividadIndividualViewModel()
     var id: String
 
     @ObservedObject private var userSessionManager = UserSessionManager.shared
+
+    @State private var safariURL: URL?
 
     var body: some View {
         ZStack {
@@ -23,6 +29,7 @@ struct ActividadIndividualView: View {
                 ScrollView {
                     Spacer().frame(height: 10)
 
+                    // Mostrar imagen si está disponible
                     if !actividadIndividualViewModel.imagen.isEmpty {
                         GeometryReader { geometry in
                             WebImage(url: URL(string: actividadIndividualViewModel.imagen))
@@ -61,35 +68,38 @@ struct ActividadIndividualView: View {
                         ubicacion: actividadIndividualViewModel.ubicacion,
                         tipo: actividadIndividualViewModel.tipo,
                         distancia: actividadIndividualViewModel.distancia,
-                        rentaBicicletas: "Click aquí",
+                        rentaBicicletasAction: {
+                            safariURL = URL(string: "http://rentabici.sacalabici.org")
+                        },
                         nivel: actividadIndividualViewModel.nivel,
                         descripcion: actividadIndividualViewModel.descripcion
                     )
+                    .padding()
 
                     Spacer().frame(height: 20)
 
-                    // Condición para mostrar el CustomButton
-                    if !(actividadIndividualViewModel.tipo == "Rodada" && userSessionManager.puedeIniciarRodada()) {
-                        CustomButton(
-                            text: actividadIndividualViewModel.isJoined ? "Cancelar asistencia" : "Unirse",
-                            backgroundColor: actividadIndividualViewModel.isJoined ? .red : Color(red: 0.961, green: 0.802, blue: 0.048),
-                            foregroundColor: .white,
-                            action: {
-                                Task {
-                                    if actividadIndividualViewModel.isJoined {
-                                        await actividadIndividualViewModel.cancelarAsistencia(actividadID: id)
-                                    } else {
-                                        await actividadIndividualViewModel.inscribirActividad(actividadID: id)
-                                    }
+                    CustomButton(
+                        text: actividadIndividualViewModel.isJoined ? "Cancelar asistencia" : "Unirse",
+                        backgroundColor: actividadIndividualViewModel.isJoined ? .red : Color(red: 0.961, green: 0.802, blue: 0.048),
+                        foregroundColor: .white,
+                        action: {
+                            Task {
+                                if actividadIndividualViewModel.isJoined {
+                                    await actividadIndividualViewModel.cancelarAsistencia(actividadID: id)
+                                } else {
+                                    await actividadIndividualViewModel.inscribirActividad(actividadID: id)
                                 }
-                            },
-                            tieneIcono: true,
-                            icono: actividadIndividualViewModel.isJoined ? "xmark" : "plus"
-                        )
-                        .padding()
-                    }
+                            }
+                        },
+                        tieneIcono: true,
+                        icono: actividadIndividualViewModel.isJoined ? "xmark" : "plus"
+                    )
+                    .padding()
                 }
                 .navigationTitle(actividadIndividualViewModel.titulo)
+                .sheet(item: $safariURL) { url in
+                    SafariView(url: url)
+                }
             }
         }
         .toolbar {
