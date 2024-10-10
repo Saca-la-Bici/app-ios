@@ -135,6 +135,12 @@ struct ConfigurationView: View {
         .sheet(item: $safariURL) { url in
             SafariView(url: url)
         }
+        .alert(isPresented: $sessionManager.showAlert) {
+            Alert(
+                title: Text("Oops!"),
+                message: Text(sessionManager.messageAlert)
+            )
+        }
     }
 }
 

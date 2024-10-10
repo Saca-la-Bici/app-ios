@@ -16,6 +16,9 @@ class SessionManager: ObservableObject {
     @Published var isErrorLogin: Bool = false
     @Published var isLoading: Bool = true
     @Published var errorMessage: String?
+    
+    @Published var messageAlert = ""
+    @Published var showAlert = false
 
     private var authStateListenerHandle: AuthStateDidChangeListenerHandle?
     
@@ -118,7 +121,15 @@ class SessionManager: ObservableObject {
     func signOut() async {
         do {
             UserDefaults.standard.set(false, forKey: "isRegistrationComplete")
-            await borrarFCMToken()
+            
+            let tokenBorradoExitosamente = await borrarFCMToken()
+            
+            if !tokenBorradoExitosamente {
+                self.messageAlert = "Hubo un error al intentar cerrar sesión. Favor de intentarlo nuevamente."
+                self.showAlert = true
+                return
+            }
+            
             try Auth.auth().signOut()
             isProfileComplete = false
             isAuthenticated = false
@@ -129,12 +140,13 @@ class SessionManager: ObservableObject {
     }
     
     @MainActor
-    func borrarFCMToken() async {
+    func borrarFCMToken() async -> Bool {
         do {
             let token = try await Messaging.messaging().token()
-            SessionAPIService.shared.borrarTokenServidor(token)
+            return await SessionAPIService.shared.borrarTokenServidor(token)
         } catch {
             print("Error borrar FCM registration token: \(error.localizedDescription)")
+            return false
         }
     }
 }

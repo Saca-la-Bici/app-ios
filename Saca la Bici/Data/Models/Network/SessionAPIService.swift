@@ -271,7 +271,6 @@ class SessionAPIService: NSObject {
     func reauthenticateUser(currentPassword: String) async -> Bool {
         // Obtener el usuario actual
         guard let user = Auth.auth().currentUser, let email = user.email else {
-            print("Usuario no encontrado")
             return false
         }
 
@@ -290,7 +289,6 @@ class SessionAPIService: NSObject {
     func restablecerContraseña(newPassword: String) async -> Bool {
         // Obtener el usuario actual
         guard let user = Auth.auth().currentUser else {
-            print("Usuario no encontrado")
             return false
         }
         
@@ -315,7 +313,6 @@ class SessionAPIService: NSObject {
                     username: emailOrUsername, URLUsername: URLUsername) {
                     email = userEmail
                 } else {
-                    print("Nombre de usuario no encontrado")
                     return false
                 }
             }
@@ -387,47 +384,39 @@ class SessionAPIService: NSObject {
         }
     }
     
-    func borrarTokenServidor(_ token: String) {
+    func borrarTokenServidor(_ token: String) async -> Bool {
         let url = URL(string: "\(Api.baseURL)\(Api.Routes.session)/borrarTokenNotificacion")!
         
-        // Obtener el ID Token de Firebase para autenticar la solicitud
-        if let currentUser = Auth.auth().currentUser {
-            currentUser.getIDToken { idToken, error in
-                if let error = error {
-                    print("Error al obtener el ID Token: \(error.localizedDescription)")
-                    return
-                }
-                
-                guard let idToken = idToken else {
-                    print("No se pudo obtener el ID Token")
-                    return
-                }
-                
-                // Define los headers necesarios
-                let headers: HTTPHeaders = [
-                    "Authorization": "Bearer \(idToken)",
-                    "Content-Type": "application/json"
-                ]
-                
-                // Define los parámetros que deseas enviar
-                let parameters: Parameters = [
-                    "fcmToken": token
-                ]
-                
-                // Realiza la solicitud POST al backend
-                AF.request(url, method: .delete, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
-                    .validate()
-                    .response { response in
-                        switch response.result {
-                        case .success:
-                            print("Token de FCM borrado exitosamente del servidor.")
-                        case .failure(let error):
-                            print("Error al borrar el token de FCM del servidor: \(error.localizedDescription)")
-                        }
-                    }
-            }
-        } else {
+        guard let currentUser = Auth.auth().currentUser else {
             print("No hay un usuario autenticado para borrar el token.")
+            return false
+        }
+
+        do {
+            // Obtener el ID Token de Firebase para autenticar la solicitud
+            let idToken = try await currentUser.getIDTokenResult().token
+            
+            // Define los headers necesarios
+            let headers: HTTPHeaders = [
+                "Authorization": "Bearer \(idToken)",
+                "Content-Type": "application/json"
+            ]
+            
+            // Define los parámetros que deseas enviar
+            let parameters: Parameters = [
+                "fcmToken": token
+            ]
+            
+            // Realiza la solicitud DELETE al backend
+            _ = try await session.request(url, method: .delete, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+                .validate()
+                .serializingDecodable(Empty.self)
+                .value
+
+            return true
+        } catch {
+            print("Error al borrar el token de FCM del servidor: \(error.localizedDescription)")
+            return false
         }
     }
 }
