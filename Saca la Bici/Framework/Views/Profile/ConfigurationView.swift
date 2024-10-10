@@ -115,7 +115,9 @@ struct ConfigurationView: View {
                     
                     HStack {
                         Button {
-                            sessionManager.signOut()
+                            Task {
+                                await sessionManager.signOut()
+                            }
                         } label: {
                             Text("Cerrar Sesión")
                                 .foregroundColor(.red)
@@ -132,6 +134,12 @@ struct ConfigurationView: View {
         .padding(.top, 4)
         .sheet(item: $safariURL) { url in
             SafariView(url: url)
+        }
+        .alert(isPresented: $sessionManager.showAlert) {
+            Alert(
+                title: Text("Oops!"),
+                message: Text(sessionManager.messageAlert)
+            )
         }
     }
 }

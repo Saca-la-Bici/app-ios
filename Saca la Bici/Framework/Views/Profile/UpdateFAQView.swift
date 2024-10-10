@@ -76,7 +76,8 @@ struct UpdateFAQView: View {
                 .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button(action: {
-                                if viewModel.pregunta.isEmpty || viewModel.respuesta.isEmpty {
+                                if viewModel.pregunta.trimmingCharacters(in: .whitespaces).isEmpty ||
+                                    viewModel.respuesta.trimmingCharacters(in: .whitespaces).isEmpty {
                                     viewModel.errorMessage = "Debe ingresar una pregunta y una respuesta"
                                     viewModel.activeAlert = .error
                                 } else {

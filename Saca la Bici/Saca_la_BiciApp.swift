@@ -71,15 +71,15 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
             print("No se pudo obtener el token de FCM")
             return
         }
-        enviarTokenAlServidor(fcmToken)
+        SessionAPIService.shared.enviarTokenAlServidor(fcmToken)
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?, error: Error?) {
         if let error = error {
             print("Error al obtener el token de FCM: \(error.localizedDescription)")
         } else if let fcmToken = fcmToken {
-            // Enviar el token al servidor 
-            enviarTokenAlServidor(fcmToken)
+            // Enviar el token al servidor
+            SessionAPIService.shared.enviarTokenAlServidor(fcmToken)
         }
     }
 
@@ -97,50 +97,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         }
 
         completionHandler()
-    }
-    
-    func enviarTokenAlServidor(_ token: String) {
-        let url = URL(string: "\(Api.base)\(Api.Routes.session)/actualizarTokenNotificacion")!
-        
-        // Obtener el ID Token de Firebase para autenticar la solicitud
-        if let currentUser = Auth.auth().currentUser {
-            currentUser.getIDToken { idToken, error in
-                if let error = error {
-                    print("Error al obtener el ID Token: \(error.localizedDescription)")
-                    return
-                }
-                
-                guard let idToken = idToken else {
-                    print("No se pudo obtener el ID Token")
-                    return
-                }
-                
-                // Define los headers necesarios
-                let headers: HTTPHeaders = [
-                    "Authorization": "Bearer \(idToken)",
-                    "Content-Type": "application/json"
-                ]
-                
-                // Define los parámetros que deseas enviar
-                let parameters: Parameters = [
-                    "fcmToken": token
-                ]
-                
-                // Realiza la solicitud POST al backend
-                AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
-                    .validate()
-                    .response { response in
-                        switch response.result {
-                        case .success:
-                            print("Token de FCM enviado exitosamente al servidor.")
-                        case .failure(let error):
-                            print("Error al enviar el token de FCM al servidor: \(error.localizedDescription)")
-                        }
-                    }
-            }
-        } else {
-            print("No hay un usuario autenticado para enviar el token.")
-        }
     }
 }
 

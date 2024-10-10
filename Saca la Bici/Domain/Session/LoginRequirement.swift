@@ -10,8 +10,6 @@ import AuthenticationServices
 
 // Creas el protocolo de la historia de usuario
 protocol LoginRequirementProtocol {
-    // El protocolo con las 2 funciones a llamar
-    func probarToken() async -> Response?
     func iniciarSesion(UserDatos: User) async -> Int?
     func GoogleLogin() async -> Int?
     func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int
@@ -28,10 +26,6 @@ class LoginRequirement: LoginRequirementProtocol {
     // Inicializas la instancia con el repositorio que acaba se crearse
     init(sessionRepository: SessionRepository = SessionRepository.shared) {
         self.sessionRepository = sessionRepository
-    }
-    
-    func probarToken() async -> Response? {
-        return await sessionRepository.probarToken()
     }
     
     func iniciarSesion(UserDatos: User) async -> Int? {

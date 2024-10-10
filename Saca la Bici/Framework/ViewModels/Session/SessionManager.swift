@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseMessaging
 
 class SessionManager: ObservableObject {
     @Published var isAuthenticated: Bool = false
@@ -15,6 +16,9 @@ class SessionManager: ObservableObject {
     @Published var isErrorLogin: Bool = false
     @Published var isLoading: Bool = true
     @Published var errorMessage: String?
+    
+    @Published var messageAlert = ""
+    @Published var showAlert = false
 
     private var authStateListenerHandle: AuthStateDidChangeListenerHandle?
     
@@ -113,15 +117,36 @@ class SessionManager: ObservableObject {
         }
     }
 
-    func signOut() {
+    @MainActor
+    func signOut() async {
         do {
             UserDefaults.standard.set(false, forKey: "isRegistrationComplete")
+            
+            let tokenBorradoExitosamente = await borrarFCMToken()
+            
+            if !tokenBorradoExitosamente {
+                self.messageAlert = "Hubo un error al intentar cerrar sesión. Favor de intentarlo nuevamente."
+                self.showAlert = true
+                return
+            }
+            
             try Auth.auth().signOut()
             isProfileComplete = false
             isAuthenticated = false
             isFireBaseAuthenticated = false
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
+        }
+    }
+    
+    @MainActor
+    func borrarFCMToken() async -> Bool {
+        do {
+            let token = try await Messaging.messaging().token()
+            return await SessionAPIService.shared.borrarTokenServidor(token)
+        } catch {
+            print("Error borrar FCM registration token: \(error.localizedDescription)")
+            return false
         }
     }
 }

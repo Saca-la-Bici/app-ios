@@ -12,7 +12,6 @@ import AuthenticationServices
 protocol SessionAPIProtocol {
     
     func registrarUsuario(UserDatos: UserNuevo) async -> Int?
-    func probarToken() async -> Response?
     func iniciarSesion(UserDatos: User) async -> Int?
     func checarPerfilBackend() async throws -> Response
     func completarPerfil(UserDatos: UserExterno) async -> Int?
@@ -45,11 +44,6 @@ class SessionRepository: SessionAPIProtocol {
     
     func registrarUsuario(UserDatos: UserNuevo) async -> Int? {
         return await sessionService.registrarUsuario(url: URL(string: "\(Api.base)\(Api.Routes.session)/registrarUsuario")!, UserDatos: UserDatos)
-    }
-    
-    func probarToken() async -> Response? {
-        // Llamas la función usando el URL base, el modulo y limite que fue pasado usando await porque es asincronico
-        return await sessionService.probarToken(url: URL(string: "\(Api.base)")!)
     }
     
     // Tomar en cuenta la llamada al back para mostrar info

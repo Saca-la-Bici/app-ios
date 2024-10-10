@@ -55,19 +55,6 @@ class LoginViewModel: ObservableObject {
     }
     
     @MainActor
-    func probarToken() async {
-        let responseAPI = await self.loginRequirement.probarToken()
-        // Verificar si responseAPI tiene un valor (unwrap opcional)
-        if let response = responseAPI {
-            // Asignar el mensaje al textTest
-            self.textTest = response.message ?? ""
-        } else {
-            // Si no hay respuesta, manejar el caso de error
-            self.textTest = "Error: No se recibió una respuesta válida"
-        }
-    }
-    
-    @MainActor
     func GoogleLogin() async {
         let responseStatus = await self.loginRequirement.GoogleLogin()
         

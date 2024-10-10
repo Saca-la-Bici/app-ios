@@ -61,7 +61,15 @@ struct FAQView: View {
                 // Preguntas frecuentes
                 
                 // Si hay preguntas frecuentes
-                if viewModel.filteredFAQs.isEmpty {
+                if viewModel.isLoading == true {
+                    VStack {
+                        Spacer()
+                        ProgressView("Cargando Preguntas Frecuentes...")
+                            .padding()
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                } else if viewModel.filteredFAQs.isEmpty {
                     VStack(alignment: .center) {
                         Spacer()
                         Text("No hay preguntas frecuentes disponibles.")
@@ -70,24 +78,24 @@ struct FAQView: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                         Spacer()
                     }
-                }
-                
-                List {
-                    ForEach(viewModel.filteredFAQs) { tema in
-                        Section(header: Text(tema.tema)) {
-                            ForEach(tema.faqs) { faq in
-                                FAQCard(
-                                    faq: faq,
-                                    permisos: userSessionManager.permisos,
-                                    path: $path,
-                                    nextPath: .faqDetail(faq: faq, permisos: userSessionManager.permisos)
-                                )
-                                .listRowBackground(Color(UIColor.systemGray5))
+                } else {
+                    List {
+                        ForEach(viewModel.filteredFAQs) { tema in
+                            Section(header: Text(tema.tema)) {
+                                ForEach(tema.faqs) { faq in
+                                    FAQCard(
+                                        faq: faq,
+                                        permisos: userSessionManager.permisos,
+                                        path: $path,
+                                        nextPath: .faqDetail(faq: faq, permisos: userSessionManager.permisos)
+                                    )
+                                    .listRowBackground(Color(UIColor.systemGray5))
+                                }
                             }
                         }
                     }
+                    .scrollContentBackground(.hidden)
                 }
-                .scrollContentBackground(.hidden)
             }
             .navigationTitle("Ayuda")
             .onAppear {

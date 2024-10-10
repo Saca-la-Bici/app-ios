@@ -37,11 +37,14 @@ struct CompletarDatosStep1View: View {
                         // Botón para continuar con otra cuenta en la esquina derecha superior
                         HStack {
                             Button(action: {
-                                sessionManager.signOut()
+                                Task {
+                                    await sessionManager.signOut()
+                                }
                             }, label: {
                                 Image(systemName: "xmark")
                                     .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
                             })
+                            .buttonStyle(PlainButtonStyle())
                         }
                         .padding(.top, -10)
                         
@@ -92,11 +95,25 @@ struct CompletarDatosStep1View: View {
                 .onTapGesture {
                     UIApplication.shared.hideKeyboard()
                 }
-                .alert(isPresented: $signUpViewModel.showAlert) {
-                    Alert(
-                        title: Text("Oops!"),
-                        message: Text(signUpViewModel.messageAlert)
-                    )
+                .alert(isPresented: Binding<Bool>(
+                    get: { signUpViewModel.showAlert || sessionManager.showAlert },
+                    set: { _ in
+                        signUpViewModel.showAlert = false
+                        sessionManager.showAlert = false
+                    })) {
+                    if signUpViewModel.showAlert {
+                        return Alert(
+                            title: Text("Oops!"),
+                            message: Text(signUpViewModel.messageAlert)
+                        )
+                    } else if sessionManager.showAlert {
+                        return Alert(
+                            title: Text("Oops!"),
+                            message: Text(sessionManager.messageAlert)
+                        )
+                    } else {
+                        return Alert(title: Text("Oops!")) 
+                    }
                 }
                 .navigationDestination(for: SessionPaths.self) { value in
                     switch value {
