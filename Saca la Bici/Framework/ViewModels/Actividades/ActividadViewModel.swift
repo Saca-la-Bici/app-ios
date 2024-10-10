@@ -48,9 +48,14 @@ class ActividadViewModel: ObservableObject {
     @Published var activeAlert: ActiveAlert?
 
     var registrarActividadRequirement: RegistrarActividadRequirementProtocol
+    var eliminarActividadRequirement: EliminarActividadRequirementProtocol
 
-    init(registrarActividadRequirement: RegistrarActividadRequirementProtocol = RegistrarActividadRequirement.shared) {
+    init(
+        registrarActividadRequirement: RegistrarActividadRequirementProtocol = RegistrarActividadRequirement.shared,
+        eliminarActividadRequirement: EliminarActividadRequirementProtocol = EliminarActividadRequirement.shared
+    ) {
         self.registrarActividadRequirement = registrarActividadRequirement
+        self.eliminarActividadRequirement = eliminarActividadRequirement
     }
 
     @MainActor
@@ -167,14 +172,16 @@ class ActividadViewModel: ObservableObject {
     }
     
     @MainActor
-    func deleteActivity(id: String) {
-        
-        // Mostrar alerta esperando confirmación
-        self.showAlert = true
-        self.activeAlert = .delete
-        
-        print("Eliminar")
-        
+    func eliminarActividad(id: String, tipo: String) async {
+        do {
+            _ = try await eliminarActividadRequirement.eliminarActividad(id: id, tipo: tipo)
+            
+            self.messageAlert = "Actividad eliminada correctamente."
+            self.activeAlert = .success
+        } catch {
+            self.messageAlert = "Hubo un error al eliminar la actividad. Inténtelo de nuevo más tarde."
+            self.activeAlert = .error
+        }
     }
 
 }

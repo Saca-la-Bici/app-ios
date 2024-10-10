@@ -66,7 +66,7 @@ struct ActivityCardView: View {
 
                     Button(action: {
                         // Acción para eliminar la actividad
-                        actividadViewModel.deleteActivity(id: id)
+                        actividadViewModel.activeAlert = .delete
                     }, label: {
                         Label("Eliminar actividad", systemImage: "trash")
                             .foregroundColor(.red)
@@ -156,7 +156,9 @@ struct ActivityCardView: View {
                     title: Text("¿Seguro quieres eliminar la actividad?"),
                     message: Text("Una vez eliminada no se podrá recuperar."),
                     primaryButton: .destructive(Text("Eliminar")) {
-                        print("Eliminar actividad")
+                        Task {
+                            await actividadViewModel.eliminarActividad(id: id, tipo: activityType)
+                        }
                     },
                     secondaryButton: .cancel(Text("Cancelar"))
                 )

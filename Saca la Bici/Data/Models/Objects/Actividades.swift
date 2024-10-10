@@ -127,3 +127,8 @@ struct ActividadResponse: Codable {
 struct ActionResponse: Codable {
     let message: String
 }
+
+struct EliminarActividadResponse: Codable {
+    var code: Int
+    var msg: String
+}

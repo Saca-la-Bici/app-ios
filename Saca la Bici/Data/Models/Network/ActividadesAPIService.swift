@@ -290,4 +290,39 @@ class ActividadesAPIService {
             throw error
         }
     }
+    
+    func eliminarActividad(url: URL, id: String, tipo: String ) async throws -> EliminarActividadResponse {
+        
+        // Obtener token de Firebase
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+
+        let parameters: Parameters = [
+            "id": id,
+            "tipo": tipo
+        ]
+        
+        print(parameters)
+        
+        do {
+            
+            let response = try await AF.request(url, method: .patch, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+                .validate()
+                .serializingDecodable(EliminarActividadResponse.self)
+                .value
+            
+            return response
+            
+        } catch {
+            print("Error al eliminar actividad: \(error)")
+            throw error
+        }
+        
+    }
 }
