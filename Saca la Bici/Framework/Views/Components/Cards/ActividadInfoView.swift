@@ -14,22 +14,23 @@ struct ActividadInfoView: View {
     var ubicacion: String
     var tipo: String
     var distancia: String = ""
-    var rentaBicicletas: String = ""
+    var rentaBicicletasAction: () -> Void  
     var nivel: String = ""
     var descripcion: String
 
     var body: some View {
         VStack(alignment: .leading) {
             detailRow(title: "Fecha", value: FechaManager.shared.formatDate(fecha))
+
             if !nivel.isEmpty {
                 HStack {
                     Text("Hora")
                         .bold()
                         .foregroundColor(.gray)
                     Text(hora)
-                    
+
                     Spacer().frame(width: 40)
-                    
+
                     Text(nivel)
                         .font(.caption)
                         .padding(6)
@@ -42,27 +43,38 @@ struct ActividadInfoView: View {
             } else {
                 detailRow(title: "Hora", value: hora)
             }
+
             detailRow(title: "Duración", value: duracion)
             detailRow(title: "Ubicación", value: ubicacion)
+
             if tipo == "Rodada" {
                 detailRow(title: "Distancia", value: distancia)
-                detailRow(title: "Renta Bicicletas", value: rentaBicicletas)
+                HStack {
+                    Text("Renta Bicicletas")
+                        .bold()
+                        .foregroundColor(.gray)
+                    Button(action: rentaBicicletasAction) {
+                        Text("Click aquí")
+                            .underline()
+                            .foregroundColor(.blue)
+                    }
+                }
             }
-            
+
             VStack(alignment: .leading) {
                 Text("Descripción")
                     .bold()
                     .foregroundColor(.gray)
-                
+
                 Spacer().frame(height: 10)
-                
+
                 Text(descripcion)
             }
             .padding(.vertical, 3)
         }
         .padding(.horizontal)
     }
-    
+
     private func detailRow(title: String, value: String) -> some View {
         HStack {
             Text(title)
@@ -72,7 +84,7 @@ struct ActividadInfoView: View {
         }
         .padding(.vertical, 3)
     }
-    
+
     private func levelColor(for level: String) -> Color {
         switch level {
         case "Nivel 1":

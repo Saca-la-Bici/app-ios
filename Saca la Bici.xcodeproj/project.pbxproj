@@ -131,6 +131,7 @@
 		AE8E78A82CA9E650007F7365 /* eventosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78A72CA9E649007F7365 /* eventosView.swift */; };
 		AE8E78AA2CA9E659007F7365 /* rodadasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78A92CA9E653007F7365 /* rodadasView.swift */; };
 		AE8E78AC2CA9E662007F7365 /* talleresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78AB2CA9E65C007F7365 /* talleresView.swift */; };
+		AE9D1EE02CB73EDB00750DC4 /* LinksComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9D1EDF2CB73ECE00750DC4 /* LinksComponent.swift */; };
 		AEE34B8A2C9FA61800C2EECE /* modificarAnuncioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */; };
 		AEF4467D2CA9F5D70004D5E8 /* ActividadesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF4467C2CA9F5D20004D5E8 /* ActividadesView.swift */; };
 		AEF4467F2CA9F7B20004D5E8 /* FechaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF4467E2CA9F7AD0004D5E8 /* FechaManager.swift */; };
@@ -276,6 +277,7 @@
 		AE8E78A72CA9E649007F7365 /* eventosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eventosView.swift; sourceTree = "<group>"; };
 		AE8E78A92CA9E653007F7365 /* rodadasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rodadasView.swift; sourceTree = "<group>"; };
 		AE8E78AB2CA9E65C007F7365 /* talleresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talleresView.swift; sourceTree = "<group>"; };
+		AE9D1EDF2CB73ECE00750DC4 /* LinksComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksComponent.swift; sourceTree = "<group>"; };
 		AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modificarAnuncioView.swift; sourceTree = "<group>"; };
 		AEF4467C2CA9F5D20004D5E8 /* ActividadesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesView.swift; sourceTree = "<group>"; };
 		AEF4467E2CA9F7AD0004D5E8 /* FechaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FechaManager.swift; sourceTree = "<group>"; };
@@ -614,6 +616,7 @@
 		25C302B82C9A8B95005AD742 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				AE9D1EDF2CB73ECE00750DC4 /* LinksComponent.swift */,
 				251C5FCF2CAF2F2B00CFAC87 /* Picker */,
 				251C5FCE2CAF2F1100CFAC87 /* Fields */,
 				251C5FD02CAF2F4F00CFAC87 /* Button */,
@@ -959,6 +962,7 @@
 				AE5BA04D2CB1B1E300AE8C0E /* ConsultarUsuariosRequirement.swift in Sources */,
 				25F368212C9BAEA3003322CF /* LoadingView.swift in Sources */,
 				252B64EF2C99FE7200A362C5 /* SessionRepository.swift in Sources */,
+				AE9D1EE02CB73EDB00750DC4 /* LinksComponent.swift in Sources */,
 				252B64D52C99FE5900A362C5 /* SignUpStep3View.swift in Sources */,
 				AE8E78A82CA9E650007F7365 /* eventosView.swift in Sources */,
 				256EE2EF2CADB92400425181 /* TextoLimiteMultilineField.swift in Sources */,
@@ -1194,7 +1198,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Saca la Bici/Saca la Bici.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Saca la Bici/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = G236Y8PA2F;
@@ -1209,12 +1213,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sacalabici.sacalabici;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1233,7 +1237,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Saca la Bici/Saca la Bici.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Saca la Bici/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = G236Y8PA2F;
@@ -1248,12 +1252,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sacalabici.sacalabici;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
