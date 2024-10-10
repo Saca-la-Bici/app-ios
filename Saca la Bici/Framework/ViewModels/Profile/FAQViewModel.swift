@@ -15,6 +15,7 @@ class FAQViewModel: ObservableObject {
     // Arrays de preguntas frecuentes
     @Published var faqs: [FAQ] = []
     @Published var temasFAQs: [TemaFAQ] = []
+    @Published var isLoading: Bool = false
     
     // Para el filtrado
     @Published var searchText: String = ""
@@ -61,6 +62,7 @@ class FAQViewModel: ObservableObject {
     
     // Obtener preguntas frecuentes
     func getFAQs() async {
+        self.isLoading = true
         do {
             // Obtener objeto FAQResponse
             let response = try await repository.getFAQs()
@@ -94,6 +96,7 @@ class FAQViewModel: ObservableObject {
         } catch {
             self.handleError(error)
         }
+        self.isLoading = false
     }
     
     // Filtrar FAQs

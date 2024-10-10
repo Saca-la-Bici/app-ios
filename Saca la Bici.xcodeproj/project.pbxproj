@@ -52,6 +52,7 @@
 		252B64FB2C99FFE200A362C5 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 252B64FA2C99FFE200A362C5 /* GoogleSignIn */; };
 		252B64FD2C99FFE200A362C5 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 252B64FC2C99FFE200A362C5 /* GoogleSignInSwift */; };
 		252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */; };
+		2552B8F22CB799F8007FDC82 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2552B8F12CB799F8007FDC82 /* ProfileImageView.swift */; };
 		256EE2EF2CADB92400425181 /* TextoLimiteMultilineField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EE2EE2CADB92400425181 /* TextoLimiteMultilineField.swift */; };
 		25858A102CB0AF5400A7719C /* ActividadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */; };
 		25858A122CB0AFE300A7719C /* ActividadIndividualView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A112CB0AFE300A7719C /* ActividadIndividualView.swift */; };
@@ -197,6 +198,7 @@
 		252B64E82C99FE7200A362C5 /* SessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRepository.swift; sourceTree = "<group>"; };
 		252B65042C9A297700A362C5 /* Saca-la-Bici-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Saca-la-Bici-Info.plist"; sourceTree = SOURCE_ROOT; };
 		252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletarDatosStep1View.swift; sourceTree = "<group>"; };
+		2552B8F12CB799F8007FDC82 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		256EE2EE2CADB92400425181 /* TextoLimiteMultilineField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextoLimiteMultilineField.swift; sourceTree = "<group>"; };
 		25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadViewModel.swift; sourceTree = "<group>"; };
 		25858A112CB0AFE300A7719C /* ActividadIndividualView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadIndividualView.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 				7B9C5EDB2CAA219800441541 /* FAQCard.swift */,
 				AE8E78A52CA9E63C007F7365 /* activityCardView.swift */,
 				25858A172CB0DBC700A7719C /* ActividadInfoView.swift */,
+				2552B8F12CB799F8007FDC82 /* ProfileImageView.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -957,6 +960,7 @@
 				252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */,
 				252B64D92C99FE5900A362C5 /* SessionManager.swift in Sources */,
 				25C302C62C9A9780005AD742 /* EmailField.swift in Sources */,
+				2552B8F22CB799F8007FDC82 /* ProfileImageView.swift in Sources */,
 				2512D3A02CAFAB20003BCA6A /* IconSelection.swift in Sources */,
 				25A7BE582CA664A800FCB8B6 /* SeguridadAccesoView.swift in Sources */,
 				25858A102CB0AF5400A7719C /* ActividadViewModel.swift in Sources */,
