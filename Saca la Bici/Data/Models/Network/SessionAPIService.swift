@@ -63,7 +63,6 @@ class SessionAPIService: NSObject {
             
             do {
                 let token = try await Messaging.messaging().token()
-                print("FCM registration token: \(token)")
                 enviarTokenAlServidor(token)
             } catch {
                 print("Error fetching FCM registration token: \(error.localizedDescription)")
@@ -144,7 +143,6 @@ class SessionAPIService: NSObject {
             
             do {
                 let token = try await Messaging.messaging().token()
-                print("FCM registration token: \(token)")
                 enviarTokenAlServidor(token)
             } catch {
                 print("Error fetching FCM registration token: \(error.localizedDescription)")
@@ -211,7 +209,6 @@ class SessionAPIService: NSObject {
             
             do {
                 let token = try await Messaging.messaging().token()
-                print("FCM registration token: \(token)")
                 enviarTokenAlServidor(token)
             } catch {
                 print("Error fetching FCM registration token: \(error.localizedDescription)")
@@ -259,7 +256,6 @@ class SessionAPIService: NSObject {
             
             do {
                 let token = try await Messaging.messaging().token()
-                print("FCM registration token: \(token)")
                 enviarTokenAlServidor(token)
             } catch {
                 print("Error fetching FCM registration token: \(error.localizedDescription)")
@@ -388,6 +384,50 @@ class SessionAPIService: NSObject {
             }
         } else {
             print("No hay un usuario autenticado para enviar el token.")
+        }
+    }
+    
+    func borrarTokenServidor(_ token: String) {
+        let url = URL(string: "\(Api.baseURL)\(Api.Routes.session)/borrarTokenNotificacion")!
+        
+        // Obtener el ID Token de Firebase para autenticar la solicitud
+        if let currentUser = Auth.auth().currentUser {
+            currentUser.getIDToken { idToken, error in
+                if let error = error {
+                    print("Error al obtener el ID Token: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let idToken = idToken else {
+                    print("No se pudo obtener el ID Token")
+                    return
+                }
+                
+                // Define los headers necesarios
+                let headers: HTTPHeaders = [
+                    "Authorization": "Bearer \(idToken)",
+                    "Content-Type": "application/json"
+                ]
+                
+                // Define los parámetros que deseas enviar
+                let parameters: Parameters = [
+                    "fcmToken": token
+                ]
+                
+                // Realiza la solicitud POST al backend
+                AF.request(url, method: .delete, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+                    .validate()
+                    .response { response in
+                        switch response.result {
+                        case .success:
+                            print("Token de FCM borrado exitosamente del servidor.")
+                        case .failure(let error):
+                            print("Error al borrar el token de FCM del servidor: \(error.localizedDescription)")
+                        }
+                    }
+            }
+        } else {
+            print("No hay un usuario autenticado para borrar el token.")
         }
     }
 }

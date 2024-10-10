@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject var sessionManager: SessionManager
     @State private var path: [ConfigurationPaths] = []
     
     @StateObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
@@ -136,8 +137,9 @@ struct ProfileView: View {
             }
             .onAppear {
                 Task {
-                    try await
-                    consultarPerfilPropioViewModel.consultarPerfilPropio()
+                    if sessionManager.isAuthenticated {  
+                        try await consultarPerfilPropioViewModel.consultarPerfilPropio()
+                    }
                 }
             }
             .alert(isPresented: .constant(consultarPerfilPropioViewModel.errorMessage != nil)) {

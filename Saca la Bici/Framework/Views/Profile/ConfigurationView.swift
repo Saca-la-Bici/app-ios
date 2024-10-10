@@ -115,7 +115,9 @@ struct ConfigurationView: View {
                     
                     HStack {
                         Button {
-                            sessionManager.signOut()
+                            Task {
+                                await sessionManager.signOut()
+                            }
                         } label: {
                             Text("Cerrar Sesión")
                                 .foregroundColor(.red)

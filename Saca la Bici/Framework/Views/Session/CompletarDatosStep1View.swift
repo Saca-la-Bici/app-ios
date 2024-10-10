@@ -37,7 +37,9 @@ struct CompletarDatosStep1View: View {
                         // Botón para continuar con otra cuenta en la esquina derecha superior
                         HStack {
                             Button(action: {
-                                sessionManager.signOut()
+                                Task {
+                                    await sessionManager.signOut()
+                                }
                             }, label: {
                                 Image(systemName: "xmark")
                                     .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
