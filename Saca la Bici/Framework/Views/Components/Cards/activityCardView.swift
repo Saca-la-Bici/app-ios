@@ -167,20 +167,6 @@ struct ActivityCardView: View {
                                 await actividadViewModel.eliminarActividad(id: id, tipo: activityType)
                                 
                                 self.seeCard = false
-                                
-                                switch activityType {
-                                case "Rodada":
-                                    rodadasViewModel.fetchRodadas()
-                                    print("fetchRodadas")
-                                case "Evento":
-                                    eventosViewModel.fetchEventos()
-                                    print("fetchEventos")
-                                case "Taller":
-                                    talleresViewModel.fetchTalleres()
-                                    print("fetchTalleres")
-                                default:
-                                    break
-                                }
                             }
                         },
                         secondaryButton: .cancel(Text("Cancelar"))
