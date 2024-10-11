@@ -18,8 +18,10 @@ struct ActividadIndividualView: View {
     var id: String
 
     @ObservedObject private var userSessionManager = UserSessionManager.shared
+    let colorManager = ColorManager()
 
     @State private var safariURL: URL?
+    @State private var rodadaIniciada = false
 
     var body: some View {
         ZStack {
@@ -94,7 +96,22 @@ struct ActividadIndividualView: View {
                         tieneIcono: true,
                         icono: actividadIndividualViewModel.isJoined ? "xmark" : "plus"
                     )
-                    .padding()
+                    .padding(.horizontal)
+                    
+                    if actividadIndividualViewModel.isJoined && actividadIndividualViewModel.tipo == "Rodada" &&
+                        userSessionManager.puedeIniciarRodada() {
+                        CustomButton(
+                            text: rodadaIniciada ? "Parar" : "Iniciar rodada",
+                            backgroundColor: rodadaIniciada ? .red : colorManager.colorFromHex("88B598"),
+                            foregroundColor: .white,
+                            action: {
+                                rodadaIniciada.toggle()
+                            },
+                            tieneIcono: true,
+                            icono: rodadaIniciada ? "stop.circle" : "play.circle"
+                        )
+                        .padding(.horizontal)
+                    }
                 }
                 .navigationTitle(actividadIndividualViewModel.titulo)
                 .sheet(item: $safariURL) { url in
