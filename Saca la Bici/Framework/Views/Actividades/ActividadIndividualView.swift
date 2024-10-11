@@ -38,6 +38,7 @@ struct ActividadIndividualView: View {
                                 .frame(width: min(geometry.size.width, 370), height: 300)
                                 .cornerRadius(8)
                                 .clipped()
+                                .frame(maxWidth: .infinity)
                         }
                         .frame(height: 300)
                         .padding(.horizontal)
