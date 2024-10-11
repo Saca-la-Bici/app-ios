@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your precise location is used to calculate turn-by-turn directions, show your location on the map, and help improve the map.</string>
+	<key>LocationAccuracyAuthorizationDescription</key>
+	<string>Please enable precise location. Turn-by-turn directions only work when precise location data is available.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -17,6 +21,8 @@
 	</array>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
+	<key>MBXAccessToken</key>
+	<string>pk.eyJ1IjoiYXJzYW5teCIsImEiOiJjbTFvYTdiZHkwd2Z6MmtxNzJiZWhsOWg0In0._dFa3U7KqNZVCccqR5Kk-Q</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
