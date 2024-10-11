@@ -23,145 +23,169 @@ struct ActivityCardView: View {
     var location: String?
     var attendees: Int?
     
+    @State var seeCard: Bool = true
+    
     let colorManager = ColorManager()
     
+    // ViewModels
     @StateObject var actividadViewModel = ActividadViewModel()
+    @StateObject var rodadasViewModel = RodadasViewModel()
+    @StateObject var talleresViewModel = TalleresViewModel()
+    @StateObject var eventosViewModel = EventosViewModel()
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            // Título y Nivel
-            HStack {
-                Text(activityTitle)
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                
-                Spacer()
-                
-                if let level = level {
-                    Text(level)
-                        .font(.caption)
-                        .padding(6)
-                        .background(
-                            levelColor(for: level)
-                        )
-                        .cornerRadius(8)
-                }
-                
-                if let attendees = attendees {
-                    HStack(spacing: 4) {
-                        Image(systemName: "person.2")
-                        Text("\(attendees)")
-                            .foregroundColor(.primary)
-                    }
-                }
-                
-                // Modificar / Eliminar actividad
-                Menu {
-                    Button(action: {
-                        // Acción para modificar la actividad
-                        print("Modificar actividad")
-                    }, label: {
-                        Label("Modificar actividad", systemImage: "pencil")
-                    })
-
-                    Button(action: {
-                        // Acción para eliminar la actividad
-                        actividadViewModel.activeAlert = .delete
-                    }, label: {
-                        Label("Eliminar actividad", systemImage: "trash")
-                            .foregroundColor(.red)
-                    })
-                } label: {
-                    Image(systemName: "ellipsis")
-                        .foregroundColor(.black)
-                        .rotationEffect(.degrees(90))
-                        .padding()
-                }
-
-            }
-            
-            if let date = date {
-                infoRow(title: "Fecha", value: date)
-            }
-            
-            if let time = time {
-                infoRow(title: "Hora", value: time)
-            }
-            
-            if let duration = duration {
-                infoRow(title: "Duración", value: duration)
-            }
-            
-            if let location = location {
-                infoRow(title: "Ubicación", value: location)
-            }
-            
-            // Imagen Placeholder
-            if let imagen = imagen {
-                GeometryReader { geometry in
-                    WebImage(url: URL(string: imagen))
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: min(geometry.size.width, 350), height: 200)
-                        .cornerRadius(8)
-                        .clipped()
-                    }
-                .frame(height: 200)
-            }
-            
-            let verde = colorManager.colorFromHex("7DA68D")
-            
-            Button(action: {
-                path.append(.detalle(id: id))
-            }, label: {
+        if seeCard {
+            VStack(alignment: .leading, spacing: 8) {
+                // Título y Nivel
                 HStack {
-                    Text("Ver detalles")
-                        .font(.system(size: 18))
-                        .bold()
-                        .foregroundColor(verde)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
+                    Text(activityTitle)
+                        .font(.headline)
+                        .foregroundColor(.primary)
                     
-                    Image(systemName: "arrow.forward.circle.fill")
-                        .font(.system(size: 18))
-                        .foregroundColor(verde)
-                }
-            })
-            .buttonStyle(PlainButtonStyle())
-            .padding(.top, 8)
-            
-        }
-        .padding()
-        .background(Color(UIColor.systemBackground))
-        .cornerRadius(12)
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.primary.opacity(0.2), lineWidth: 1))
-        .shadow(radius: 5)
-        .alert(item: $actividadViewModel.activeAlert) { alert in
-            switch alert {
-            case .success:
-                return Alert(
-                    title: Text("Éxito"),
-                    message: Text(actividadViewModel.messageAlert),
-                    dismissButton: .default(Text("OK"))
-                )
-            case .error:
-                return Alert(
-                    title: Text("Error"),
-                    message: Text(actividadViewModel.messageAlert),
-                    dismissButton: .default(Text("OK"))
-                )
-            case .delete:
-                return Alert(
-                    title: Text("¿Seguro quieres eliminar la actividad?"),
-                    message: Text("Una vez eliminada no se podrá recuperar."),
-                    primaryButton: .destructive(Text("Eliminar")) {
-                        Task {
-                            await actividadViewModel.eliminarActividad(id: id, tipo: activityType)
+                    Spacer()
+                    
+                    if let level = level {
+                        Text(level)
+                            .font(.caption)
+                            .padding(6)
+                            .background(
+                                levelColor(for: level)
+                            )
+                            .cornerRadius(8)
+                    }
+                    
+                    if let attendees = attendees {
+                        HStack(spacing: 4) {
+                            Image(systemName: "person.2")
+                            Text("\(attendees)")
+                                .foregroundColor(.primary)
                         }
-                    },
-                    secondaryButton: .cancel(Text("Cancelar"))
-                )
+                    }
+                    
+                    // Modificar / Eliminar actividad
+                    Menu {
+                        Button(action: {
+                            // Acción para modificar la actividad
+                            print("Modificar actividad")
+                        }, label: {
+                            Label("Modificar actividad", systemImage: "pencil")
+                        })
+
+                        Button(action: {
+                            // Acción para eliminar la actividad
+                            actividadViewModel.activeAlert = .delete
+                        }, label: {
+                            Label("Eliminar actividad", systemImage: "trash")
+                                .foregroundColor(.red)
+                        })
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .foregroundColor(.black)
+                            .rotationEffect(.degrees(90))
+                            .padding()
+                    }
+
+                }
+                
+                if let date = date {
+                    infoRow(title: "Fecha", value: date)
+                }
+                
+                if let time = time {
+                    infoRow(title: "Hora", value: time)
+                }
+                
+                if let duration = duration {
+                    infoRow(title: "Duración", value: duration)
+                }
+                
+                if let location = location {
+                    infoRow(title: "Ubicación", value: location)
+                }
+                
+                // Imagen Placeholder
+                if let imagen = imagen {
+                    GeometryReader { geometry in
+                        WebImage(url: URL(string: imagen))
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: min(geometry.size.width, 350), height: 200)
+                            .cornerRadius(8)
+                            .clipped()
+                        }
+                    .frame(height: 200)
+                }
+                
+                let verde = colorManager.colorFromHex("7DA68D")
+                
+                Button(action: {
+                    path.append(.detalle(id: id))
+                }, label: {
+                    HStack {
+                        Text("Ver detalles")
+                            .font(.system(size: 18))
+                            .bold()
+                            .foregroundColor(verde)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                        
+                        Image(systemName: "arrow.forward.circle.fill")
+                            .font(.system(size: 18))
+                            .foregroundColor(verde)
+                    }
+                })
+                .buttonStyle(PlainButtonStyle())
+                .padding(.top, 8)
+                
+            }
+            .padding()
+            .background(Color(UIColor.systemBackground))
+            .cornerRadius(12)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.primary.opacity(0.2), lineWidth: 1))
+            .shadow(radius: 5)
+            .alert(item: $actividadViewModel.activeAlert) { alert in
+                switch alert {
+                case .success:
+                    return Alert(
+                        title: Text("Éxito"),
+                        message: Text(actividadViewModel.messageAlert),
+                        dismissButton: .default(Text("OK"))
+                    )
+                case .error:
+                    return Alert(
+                        title: Text("Error"),
+                        message: Text(actividadViewModel.messageAlert),
+                        dismissButton: .default(Text("OK"))
+                    )
+                case .delete:
+                    return Alert(
+                        title: Text("¿Seguro quieres eliminar la actividad?"),
+                        message: Text("Una vez eliminada no se podrá recuperar."),
+                        primaryButton: .destructive(Text("Eliminar")) {
+                            Task {
+                                await actividadViewModel.eliminarActividad(id: id, tipo: activityType)
+                                
+                                self.seeCard = false
+                                
+                                switch activityType {
+                                case "Rodada":
+                                    rodadasViewModel.fetchRodadas()
+                                    print("fetchRodadas")
+                                case "Evento":
+                                    eventosViewModel.fetchEventos()
+                                    print("fetchEventos")
+                                case "Taller":
+                                    talleresViewModel.fetchTalleres()
+                                    print("fetchTalleres")
+                                default:
+                                    break
+                                }
+                            }
+                        },
+                        secondaryButton: .cancel(Text("Cancelar"))
+                    )
+                }
             }
         }
     }

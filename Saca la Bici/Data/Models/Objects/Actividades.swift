@@ -49,12 +49,12 @@ struct Evento: Identifiable {
     let actividad: Actividad
 }
 
-struct Taller: Identifiable {
+struct Taller: Identifiable, Equatable {
     let id: String
     let actividad: Actividad
 }
 
-struct Actividad: Codable, Identifiable {
+struct Actividad: Codable, Identifiable, Equatable {
     let _id: String
     let titulo: String
     let fecha: String

@@ -29,5 +29,4 @@ class EliminarActividadRequirement: EliminarActividadRequirementProtocol {
         return try await repository.eliminarActividad(id: id, tipo: tipo)
     }
     
-    
 }

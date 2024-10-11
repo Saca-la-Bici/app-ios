@@ -308,8 +308,6 @@ class ActividadesAPIService {
             "tipo": tipo
         ]
         
-        print(parameters)
-        
         do {
             
             let response = try await AF.request(url, method: .patch, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
