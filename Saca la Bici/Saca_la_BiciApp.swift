@@ -134,6 +134,7 @@ struct SacalaBiciApp: App {
           SessionCoordinatorView()
               .environmentObject(sessionManager)
       }
+      .navigationViewStyle(StackNavigationViewStyle())
     }
   }
 }

@@ -78,6 +78,7 @@ struct ActivityCardView: View {
                         .frame(width: min(geometry.size.width, 350), height: 200)
                         .cornerRadius(8)
                         .clipped()
+                        .frame(maxWidth: .infinity)
                     }
                 .frame(height: 200)
             }
