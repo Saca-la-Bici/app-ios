@@ -19,6 +19,8 @@
 			</array>
 		</dict>
 	</array>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>MBXAccessToken</key>
 	<string>pk.eyJ1IjoiYXJzYW5teCIsImEiOiJjbTFvYTdiZHkwd2Z6MmtxNzJiZWhsOWg0In0._dFa3U7KqNZVCccqR5Kk-Q</string>
 	<key>NSAppTransportSecurity</key>

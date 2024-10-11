@@ -85,7 +85,7 @@ class ActividadViewModel: ObservableObject {
 
     @MainActor
     func validarDatosBase() {
-        if self.tituloActividad.isEmpty || self.ubicacionActividad.isEmpty {
+        if self.tituloActividad.trimmingCharacters(in: .whitespaces).isEmpty || self.ubicacionActividad.trimmingCharacters(in: .whitespaces).isEmpty {
             self.showAlert = true
             self.messageAlert = "Alguno de los datos está vacío. Por favor, rellene todos los campos."
             return
@@ -116,7 +116,7 @@ class ActividadViewModel: ObservableObject {
 
     @MainActor
     func registrarActividad() async {
-        if self.descripcionActividad.isEmpty {
+        if self.descripcionActividad.trimmingCharacters(in: .whitespaces).isEmpty {
             self.activeAlert = .error
             self.messageAlert = "La descripción de la actividad se encuentra vacía. Por favor, rellene el campo."
             return
