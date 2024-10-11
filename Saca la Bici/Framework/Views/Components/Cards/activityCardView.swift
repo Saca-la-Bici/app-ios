@@ -6,20 +6,23 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ActivityCardView: View {
+    @Binding var path: [ActivitiesPaths]
+    
+    var id: String
     var activityTitle: String
     var activityType: String
     var level: String?
     var date: String?
     var time: String?
     var duration: String?
+    var imagen: String?
     var location: String?
     var attendees: Int?
-    @ObservedObject private var userSessionManager = UserSessionManager.shared
     
-    @State private var isJoined: Bool = false
-    @State private var isStarted: Bool = false
+    let colorManager = ColorManager()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -36,12 +39,8 @@ struct ActivityCardView: View {
                         .font(.caption)
                         .padding(6)
                         .background(
-                            level == "Nivel 1" ? Color(red: 129.0 / 255.0, green: 199.0 / 255.0, blue: 132.0 / 255.0) :
-                            (level == "Nivel 2" ? Color(red: 56.0 / 255.0, green: 142.0 / 255.0, blue: 60.0 / 255.0) :
-                            (level == "Nivel 3" ? Color(red: 253.0 / 255.0, green: 216.0 / 255.0, blue: 53.0 / 255.0) :
-                            (level == "Nivel 4" ? Color(red: 255.0 / 255.0, green: 152.0 / 255.0, blue: 0.0 / 255.0) :
-                            (level == "Nivel 5" ? Color(red: 244.0 / 255.0, green: 67.0 / 255.0, blue: 54.0 / 255.0) :
-                            Color.gray)))))
+                            levelColor(for: level)
+                        )
                         .cornerRadius(8)
                 }
                 
@@ -54,131 +53,90 @@ struct ActivityCardView: View {
                 }
             }
             
-            // Fecha
             if let date = date {
-                HStack {
-                    Text("Fecha")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text(date)
-                        .font(.subheadline)
-                        .foregroundColor(.primary)
-                }
+                infoRow(title: "Fecha", value: date)
             }
             
-            // Hora
             if let time = time {
-                HStack {
-                    Text("Hora")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text(time)
-                        .font(.subheadline)
-                        .foregroundColor(.primary)
-                }
+                infoRow(title: "Hora", value: time)
             }
             
-            // Duración
             if let duration = duration {
-                HStack {
-                    Text("Duración")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text(duration)
-                        .font(.subheadline)
-                        .foregroundColor(.primary)
-                }
+                infoRow(title: "Duración", value: duration)
+            }
+            
+            if let location = location {
+                infoRow(title: "Ubicación", value: location)
             }
             
             // Imagen Placeholder
-            Rectangle()
-                .fill(Color.gray.opacity(0.3))
-                .frame(height: 100)
-                .cornerRadius(8)
-            
-            // Ubicación
-            if let location = location {
-                HStack {
-                    Text("Ubicación")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text(location)
-                        .font(.subheadline)
-                        .foregroundColor(.primary)
-                }
-            }
-            
-            // Botones según tipo de actividad y permisos
-            if activityType.lowercased() == "rodada" && userSessionManager.puedeIniciarRodada() {
-                // Botones para Rodada
-                VStack(spacing: 8) {
-                    // Botón de Iniciar/Parar Rodada
-                    Button(action: {
-                        isStarted.toggle()
-                        // Aquí puedes agregar lógica adicional para iniciar o parar la rodada
-                    }, label: {
-                        HStack {
-                            Image(systemName: isStarted ? "pause.circle" : "play.circle")
-                            Text(isStarted ? "Parar" : "Iniciar")
-                                .font(.headline)
-                        }
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(isStarted ? Color.red : ColorManager.shared.colorFromHex("#88B598"))
+            if let imagen = imagen {
+                GeometryReader { geometry in
+                    WebImage(url: URL(string: imagen))
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: min(geometry.size.width, 350), height: 200)
                         .cornerRadius(8)
-                    })
-                    .buttonStyle(PlainButtonStyle())
-                    
-                    // Botón de Asistencia
-                    Button(action: {
-                        // Lógica de asistencia
-                        // Implementa aquí la funcionalidad de asistencia
-                    }, label: {
-                        HStack {
-                            Image(systemName: "person.circle")
-                                .font(.headline)
-                            Text("Asistencia")
-                                .font(.headline)
-                        }
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.yellow)
-                        .cornerRadius(8)
-                    })
-                    .buttonStyle(PlainButtonStyle())
-                }
-            } else {
-                // Botón de Unirse para otras actividades o si no tiene permiso para iniciar rodada
-                Button(action: {
-                    isJoined.toggle()
-                    // Aquí puedes agregar lógica adicional para unirse o cancelar asistencia
-                }, label: {
-                    HStack {
-                        Image(systemName: isJoined ? "xmark.circle" : "plus.circle")
-                        Text(isJoined ? "Cancelar asistencia" : "Unirse")
-                            .font(.headline)
+                        .clipped()
                     }
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        isJoined
-                            ? Color.red
-                            : (userSessionManager.puedeIniciarRodada() && activityType.lowercased() != "rodada"
-                                ? ColorManager.shared.colorFromHex("#88B598") // Verde si puede iniciar rodada y no es rodada
-                                : Color(red: 215.0 / 255.0, green: 205.0 / 255.0, blue: 25.0 / 255.0))
-                    )
-                    .cornerRadius(8)
-                })
-                .buttonStyle(PlainButtonStyle())
+                .frame(height: 200)
             }
+            
+            let verde = colorManager.colorFromHex("7DA68D")
+            
+            Button(action: {
+                path.append(.detalle(id: id))
+            }, label: {
+                HStack {
+                    Text("Ver detalles")
+                        .font(.system(size: 18))
+                        .bold()
+                        .foregroundColor(verde)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                    
+                    Image(systemName: "arrow.forward.circle.fill")
+                        .font(.system(size: 18))
+                        .foregroundColor(verde)
+                }
+            })
+            .buttonStyle(PlainButtonStyle())
+            .padding(.top, 8)
+            
         }
         .padding()
         .background(Color(UIColor.systemBackground))
         .cornerRadius(12)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.primary.opacity(0.2), lineWidth: 1))
         .shadow(radius: 5)
-        .padding(.horizontal)
+    }
+    
+    private func infoRow(title: String, value: String) -> some View {
+        HStack {
+            Text(title)
+                .font(.subheadline)
+                .foregroundColor(.gray)
+            Text(value)
+                .font(.subheadline)
+                .foregroundColor(.primary)
+        }
+    }
+    
+    private func levelColor(for level: String) -> Color {
+        switch level {
+        case "Nivel 1":
+            return Color(red: 129.0 / 255.0, green: 199.0 / 255.0, blue: 132.0 / 255.0)
+        case "Nivel 2":
+            return Color(red: 56.0 / 255.0, green: 142.0 / 255.0, blue: 60.0 / 255.0)
+        case "Nivel 3":
+            return Color(red: 253.0 / 255.0, green: 216.0 / 255.0, blue: 53.0 / 255.0)
+        case "Nivel 4":
+            return Color(red: 255.0 / 255.0, green: 152.0 / 255.0, blue: 0.0 / 255.0)
+        case "Nivel 5":
+            return Color(red: 244.0 / 255.0, green: 67.0 / 255.0, blue: 54.0 / 255.0)
+        default:
+            return Color.gray
+        }
     }
 }

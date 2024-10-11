@@ -17,6 +17,13 @@ class ProfileAPIService {
         self.firebaseTokenManager = firebaseTokenManager
     }
     
+    let session = Session(configuration: {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 7.5 // Tiempo de espera de 7.5 segundos para la solicitud
+        configuration.timeoutIntervalForResource = 15 // Tiempo de espera de 15 segundos para el recurso
+        return configuration
+    }())
+    
     func consultarPerfilPropio(url: URL) async throws -> Profile {
         
         guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
@@ -29,7 +36,7 @@ class ProfileAPIService {
         ]
         
         do {
-            let profile = try await AF.request(url, method: .get, headers: headers)
+            let profile = try await session.request(url, method: .get, headers: headers)
                 .validate()
                 .serializingDecodable(Profile.self)
                 .value

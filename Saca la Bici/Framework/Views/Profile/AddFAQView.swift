@@ -74,7 +74,8 @@ struct AddFAQView: View {
                 .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button(action: {
-                                if viewModel.pregunta.isEmpty || viewModel.respuesta.isEmpty {
+                                if viewModel.pregunta.trimmingCharacters(in: .whitespaces).isEmpty ||
+                                    viewModel.respuesta.trimmingCharacters(in: .whitespaces).isEmpty {
                                     viewModel.errorMessage = "Debe ingresar una pregunta y una respuesta"
                                     viewModel.activeAlert = .error
                                 } else {
@@ -88,7 +89,7 @@ struct AddFAQView: View {
                                 }
                             }, label: {
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(.yellow)
+                                    .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
                             })
                             .buttonStyle(PlainButtonStyle())
                         }

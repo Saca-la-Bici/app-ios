@@ -29,9 +29,6 @@ struct ConsultarAnuncio: View {
 
                     Spacer()
 
-                    Image(systemName: "bell")
-                        .padding(.trailing)
-
                     if userSessionManager.puedeRegistrarAnuncio() {
                         Button(action: {
                             showAddAnuncioView = true

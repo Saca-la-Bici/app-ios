@@ -14,7 +14,7 @@ struct IconSelectionView: View {
     var body: some View {
         VStack {
             // Íconos para seleccionar la vista
-            HStack(spacing: 120) {
+            HStack(spacing: 100) {
                 // Ícono de calendario
                 Button {
                     withAnimation {
@@ -27,6 +27,7 @@ struct IconSelectionView: View {
                         .frame(width: 20, height: 20)
                         .foregroundColor(selectedIcon == 0 ? .yellow : .primary)
                 }
+                .buttonStyle(PlainButtonStyle())
 
                 // Ícono de palomita (checkmark)
                 Button {
@@ -40,6 +41,7 @@ struct IconSelectionView: View {
                             .frame(width: 15, height: 15)
                             .foregroundColor(selectedIcon == 1 ? .yellow : .primary)
                     }
+                    .buttonStyle(PlainButtonStyle())
 
                 // Ícono de mundo
                 Button {
@@ -47,31 +49,35 @@ struct IconSelectionView: View {
                             selectedIcon = 2
                         }
                     } label: {
-                        Image(systemName: "globe")
+                        Image(systemName: "globe.americas")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                             .foregroundColor(selectedIcon == 2 ? .yellow : .primary)
                     }
+                    .buttonStyle(PlainButtonStyle())
             }
             .padding(.bottom, 35)
             
             // ZStack para las vistas con animación de transición
             ZStack {
                 if selectedIcon == 0 {
-                    Text("Vista de Calendario")
-                        .font(.title)
-                        .transition(.slide)
+                    VStack {
+                        EventView()
+                        Spacer()
+                    }
+                    .transition(.scale)
                 } else if selectedIcon == 1 {
                     VStack {
                         MedalsView()
-                        EventView()
+                        Spacer()
                     }
-                    .transition(.slide)
+                    .transition(.scale)
                 } else if selectedIcon == 2 {
                     Text("Vista de mundo")
                         .font(.title)
-                        .transition(.slide)
+                        .transition(.scale)
+                    Spacer()
                 }
             }
             .offset(x: offset.width)

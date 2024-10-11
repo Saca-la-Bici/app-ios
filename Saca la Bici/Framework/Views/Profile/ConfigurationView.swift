@@ -16,6 +16,8 @@ struct ConfigurationView: View {
     
     @Binding var path: [ConfigurationPaths]
     
+    @State private var safariURL: URL?
+    
     var body: some View {
         VStack(spacing: 0) {
             ScrollView {
@@ -45,7 +47,7 @@ struct ConfigurationView: View {
                             
                             if userSessionManager.puedeModificarRol() {
                                 BotonSection(icono: "person.badge.plus",
-                                    titulo: "Asignación de Roles y Permisos",
+                                             titulo: "Asignación de Roles y Permisos",
                                              button: true,
                                              path: $path,
                                              nextPath: .asignacionRoles)
@@ -53,7 +55,7 @@ struct ConfigurationView: View {
                             
                             if userSessionManager.puedeDesactivarUsuario() {
                                 BotonSection(icono: "person.crop.circle.badge.minus",
-                                    titulo: "Desactivar Usuarios",
+                                             titulo: "Desactivar Usuarios",
                                              button: true,
                                              path: $path,
                                              nextPath: .desactivarUsuarios)
@@ -87,12 +89,25 @@ struct ConfigurationView: View {
                             .bold()
                             .padding(.leading, 20)
                         
-                        BotonSection(icono: "globe", titulo: "Saca la Bici",
-                                     button: false,
-                                     path: $path)
-                        BotonSection(icono: "globe", titulo: "Rentabici",
-                                     button: false,
-                                     path: $path)
+                        Button(action: {
+                            safariURL = URL(string: "http://sacalabici.org")
+                        }, label: {
+                            HStack {
+                                Image(systemName: "globe")
+                                Text("Saca la Bici")
+                            }
+                        })
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        Button(action: {
+                            safariURL = URL(string: "http://rentabici.sacalabici.org")
+                        }, label: {
+                            HStack {
+                                Image(systemName: "globe")
+                                Text("Rentabici")
+                            }
+                        })
+                        .buttonStyle(PlainButtonStyle())
                     }
                     .padding(.horizontal, 25)
                     
@@ -100,7 +115,9 @@ struct ConfigurationView: View {
                     
                     HStack {
                         Button {
-                            sessionManager.signOut()
+                            Task {
+                                await sessionManager.signOut()
+                            }
                         } label: {
                             Text("Cerrar Sesión")
                                 .foregroundColor(.red)
@@ -115,6 +132,15 @@ struct ConfigurationView: View {
         }
         .navigationTitle("Configuración y Privacidad")
         .padding(.top, 4)
+        .sheet(item: $safariURL) { url in
+            SafariView(url: url)
+        }
+        .alert(isPresented: $sessionManager.showAlert) {
+            Alert(
+                title: Text("Oops!"),
+                message: Text(sessionManager.messageAlert)
+            )
+        }
     }
 }
 

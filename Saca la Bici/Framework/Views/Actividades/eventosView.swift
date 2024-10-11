@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct EventosView: View {
+    @Binding var path: [ActivitiesPaths]
     @StateObject private var viewModel = EventosViewModel()
-    @ObservedObject private var userSessionManager = UserSessionManager.shared
     
     var body: some View {
         ScrollView {
@@ -24,10 +24,14 @@ struct EventosView: View {
                 } else {
                     ForEach(viewModel.eventos) { evento in
                         ActivityCardView(
+                            path: $path,
+                            id: evento.id,
                             activityTitle: evento.actividad.titulo,
                             activityType: "Evento",
                             date: FechaManager.shared.formatDate(evento.actividad.fecha),
                             time: evento.actividad.hora,
+                            duration: evento.actividad.duracion,
+                            imagen: evento.actividad.imagen,
                             location: evento.actividad.ubicacion,
                             attendees: evento.actividad.personasInscritas
                         )
