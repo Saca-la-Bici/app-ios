@@ -90,6 +90,7 @@ struct FAQView: View {
                                         nextPath: .faqDetail(faq: faq, permisos: userSessionManager.permisos)
                                     )
                                     .listRowBackground(Color(UIColor.systemGray5))
+                                    .foregroundColor(.primary)
                                 }
                             }
                         }
