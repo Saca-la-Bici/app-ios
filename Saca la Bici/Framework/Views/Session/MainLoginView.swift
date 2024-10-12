@@ -80,7 +80,9 @@ struct MainLoginView: View {
                         VStack {
                             ExternalLoginButton(
                                 action: {
-                                    await signUpViewModel.GoogleLogin()
+                                    Task {
+                                        await signUpViewModel.GoogleLogin()
+                                    }
                                 },
                                 buttonText: "Continúa con Google",
                                 imageName: "GoogleLogo",
