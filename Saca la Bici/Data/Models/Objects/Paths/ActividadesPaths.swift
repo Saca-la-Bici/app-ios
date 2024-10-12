@@ -16,4 +16,10 @@ enum ActivitiesPaths: Hashable {
     case descripcionTaller
     case rutas
     case detalle(id: String)
+    case editarRodada(id: String)
+    case editarEvento(id: String)
+    case editarTaller(id: String)
+    case editarDescripcionRodada(id: String)
+    case editarDescripcionEvento(id: String)
+    case editarDescripcionTaller(id: String)
 }

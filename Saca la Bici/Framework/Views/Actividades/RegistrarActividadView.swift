@@ -14,6 +14,12 @@ struct RegistrarActividadView: View {
     @ObservedObject var actividadViewModel = ActividadViewModel()
 
     var tipoActividad: String
+    
+    // ID para edicion
+    var id: String?
+    
+    // Variable para comprobar si se está agregando o editando
+    var isEditing: Bool
 
     var body: some View {
         ZStack {
@@ -74,9 +80,9 @@ struct RegistrarActividadView: View {
                                 if tipoActividad == "Rodada" {
                                     path.append(.rutas)
                                 } else if tipoActividad == "Evento" {
-                                    path.append(.descripcionEvento)
+                                    path.append(.editarDescripcionEvento(id: actividadViewModel.idActividad))
                                 } else if tipoActividad == "Taller" {
-                                    path.append(.descripcionTaller)
+                                    path.append(.editarDescripcionEvento(id: actividadViewModel.idActividad))
                                 }
                             }
                         },
@@ -101,15 +107,29 @@ struct RegistrarActividadView: View {
             }
         }
         .onAppear {
-            if tipoActividad == "Evento" {
-                actividadViewModel.tipoActividad = "Evento"
-            } else if tipoActividad == "Taller" {
-                actividadViewModel.tipoActividad = "Taller"
-            } else if tipoActividad == "Rodada" {
-                actividadViewModel.tipoActividad = "Rodada"
-            }
+            Task {
+                // Resetar campos
+                actividadViewModel.reset()
+                
+                // Modo edición
+                if isEditing {
+                    
+                    actividadViewModel.isEditing = true
+                    actividadViewModel.idActividad = id ?? ""
+                    
+                    await actividadViewModel.getActividad()
+                }
+                
+                if tipoActividad == "Evento" {
+                    actividadViewModel.tipoActividad = "Evento"
+                } else if tipoActividad == "Taller" {
+                    actividadViewModel.tipoActividad = "Taller"
+                } else if tipoActividad == "Rodada" {
+                    actividadViewModel.tipoActividad = "Rodada"
+                }
 
-            actividadViewModel.setTitulo()
+                actividadViewModel.setTitulo()
+            }
         }
     }
 }
@@ -123,7 +143,7 @@ struct RegistrarActividadView_Previews: PreviewProvider {
         @State var path: [ActivitiesPaths] = []
 
         var body: some View {
-            RegistrarActividadView(path: $path, tipoActividad: "Rodada")
+            RegistrarActividadView(path: $path, tipoActividad: "Rodada", isEditing: false)
         }
     }
 }

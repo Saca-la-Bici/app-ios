@@ -180,7 +180,7 @@ class ActividadesAPIService {
             "Content-Type": "multipart/form-data"
         ]
         
-        let parameters: Parameters = [
+        let parameters: [String: String] = [
             "id": actividadID
         ]
         

@@ -66,7 +66,13 @@ struct ActivityCardView: View {
                     Menu {
                         Button(action: {
                             // Acción para modificar la actividad
-                            print("Modificar actividad")
+                            if activityType == "Rodada" {
+                                path.append(.editarRodada(id: id))
+                            } else if activityType == "Evento" {
+                                path.append(.editarEvento(id: id))
+                            } else if activityType == "Taller" {
+                                path.append(.editarTaller(id: id))
+                            }
                         }, label: {
                             Label("Modificar actividad", systemImage: "pencil")
                         })

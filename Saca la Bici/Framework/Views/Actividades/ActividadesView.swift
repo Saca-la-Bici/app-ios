@@ -90,21 +90,33 @@ struct ActividadesView: View {
             .navigationDestination(for: ActivitiesPaths.self) { value in
                 switch value {
                 case .evento:
-                    RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Evento")
+                    RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Evento", isEditing: false)
                 case .rodada:
-                    RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Rodada")
+                    RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Rodada", isEditing: false)
                 case .taller:
-                    RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Taller")
+                    RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Taller", isEditing: false)
                 case .rutas:
                     RodadaRutaView(path: $path, actividadViewModel: actividadViewModel)
                 case .descripcionRodada:
-                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel)
+                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, isEditing: false)
                 case .descripcionEvento:
-                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel)
+                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, isEditing: false)
                 case .descripcionTaller:
-                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel)
+                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, isEditing: false)
                 case .detalle(let id):
                     ActividadIndividualView(path: $path, id: id)
+                case .editarEvento(let id):
+                    RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Evento", id: id, isEditing: true)
+                case .editarRodada(let id):
+                    RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Rodada", id: id, isEditing: true)
+                case .editarTaller(let id):
+                    RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Taller", id: id, isEditing: true)
+                case .editarDescripcionRodada(id: let id):
+                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, id: id, isEditing: true)
+                case .editarDescripcionEvento(id: let id):
+                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, id: id, isEditing: true)
+                case .editarDescripcionTaller(id: let id):
+                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, id: id, isEditing: true)
                 }
             }
         }

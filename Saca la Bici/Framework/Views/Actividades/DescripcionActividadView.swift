@@ -12,6 +12,12 @@ struct DescripcionActividadView: View {
     @Binding var path: [ActivitiesPaths]
 
     @ObservedObject var actividadViewModel = ActividadViewModel()
+    
+    // ID para edicion
+    var id: String?
+    
+    // Variable para comprobar si se está agregando o editando
+    var isEditing: Bool
 
     var body: some View {
         ZStack {
@@ -88,7 +94,7 @@ struct DescripcionActividadView_Previews: PreviewProvider {
         @State var path: [ActivitiesPaths] = []
 
         var body: some View {
-            DescripcionActividadView(path: $path)
+            DescripcionActividadView(path: $path, isEditing: false)
         }
     }
 }
