@@ -119,22 +119,31 @@ struct ActividadIndividualView: View {
                                         Task {
                                             await actividadIndividualViewModel.verificarAsistencia(
                                                 IDRodada: id, codigoAsistencia: actividadIndividualViewModel.codigoAsistencia, adminOrStaff: true)
-                                            showVerificarAsistenciaSheet.toggle()
+                                            if actividadIndividualViewModel.showAlertSheet != true {
+                                                showVerificarAsistenciaSheet.toggle()
+                                            }
                                         }
                                     } else {
                                         Task {
                                             await actividadIndividualViewModel.verificarAsistencia(
                                                 IDRodada: id,
                                                 codigoAsistencia: actividadIndividualViewModel.codigoAsistenciaField, adminOrStaff: false)
-                                            showVerificarAsistenciaSheet.toggle()
+                                            if actividadIndividualViewModel.showAlertSheet != true {
+                                                showVerificarAsistenciaSheet.toggle()
+                                            }
                                         }
                                     }
                                 },
                                 codigoAsistenciaField: $actividadIndividualViewModel.codigoAsistenciaField,
                                 codigoAsistencia: actividadIndividualViewModel.codigoAsistencia
                             )
-                            .presentationDetents([.fraction(0.3)]
-                            )
+                            .presentationDetents([.fraction(0.3)])
+                            .alert(isPresented: $actividadIndividualViewModel.showAlertSheet) {
+                                Alert(
+                                    title: Text("Oops!"),
+                                    message: Text(actividadIndividualViewModel.messageAlert),
+                                    dismissButton: .default(Text("Aceptar")))
+                            }
                         }
                     }
                 }
@@ -159,33 +168,27 @@ struct ActividadIndividualView: View {
                 return Alert(
                     title: Text("Éxito"),
                     message: Text(actividadIndividualViewModel.messageAlert),
-                    dismissButton: .default(Text("OK"))
+                    dismissButton: .default(Text("Aceptar"))
                 )
             case .error:
                 return Alert(
                     title: Text("Oops!"),
                     message: Text(actividadIndividualViewModel.messageAlert),
-                    dismissButton: .default(Text("OK"))
+                    dismissButton: .default(Text("Aceptar"))
                 )
             case .errorIndividual:
                 return Alert(
                     title: Text("Oops!"),
                     message: Text(actividadIndividualViewModel.messageAlert),
-                    dismissButton: .default(Text("OK")) {
+                    dismissButton: .default(Text("Aceptar")) {
                         path.removeLast()
                     }
-                )
-            case .verificarError:
-                return Alert(
-                    title: Text("Oops!"),
-                    message: Text(actividadIndividualViewModel.messageAlert),
-                    dismissButton: .default(Text("OK")) 
                 )
             case .none:
                 return Alert(
                     title: Text("Información"),
                     message: Text(actividadIndividualViewModel.messageAlert),
-                    dismissButton: .default(Text("OK"))
+                    dismissButton: .default(Text("Aceptar"))
                 )
             }
         }

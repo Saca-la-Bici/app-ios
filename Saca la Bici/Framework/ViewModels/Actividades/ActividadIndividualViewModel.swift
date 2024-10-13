@@ -13,6 +13,7 @@ class ActividadIndividualViewModel: ObservableObject {
     @Published var datosActividad = ActividadIndividualResponse()
     @Published var messageAlert = ""
     @Published var showAlert = false
+    @Published var showAlertSheet = false
     @Published var isLoading: Bool = false
     
     @Published var titulo: String = ""
@@ -33,7 +34,6 @@ class ActividadIndividualViewModel: ObservableObject {
         case success
         case error
         case errorIndividual
-        case verificarError
     }
     
     @Published var alertType: AlertType?
@@ -168,13 +168,18 @@ class ActividadIndividualViewModel: ObservableObject {
         if adminOrStaff == false {
             if codigoAsistenciaField.isEmpty {
                 self.messageAlert = "Ingresa un código para continuar."
-                self.alertType = .verificarError
-                self.showAlert = true
+                self.showAlertSheet = true
                 return
             }
         }
         
         let response = await verificarAsistenciaRequirement.verificarAsistencia(IDRodada: IDRodada, codigo: codigoAsistencia)
+        
+        if response?.status == 400 && response?.message == "Código de asistencia incorrecto" {
+            self.messageAlert = "El código de verificación es incorrecto. Por favor intente de nuevo."
+            self.showAlertSheet = true
+            return
+        }
         
         print(response)
     }

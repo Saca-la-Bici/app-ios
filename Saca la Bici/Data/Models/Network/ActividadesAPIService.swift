@@ -326,6 +326,14 @@ class ActividadesAPIService {
             if let data = response.data {
                 let errorResponse = String(decoding: data, as: UTF8.self)
                 print("\(errorResponse)")
+                
+                do {
+                    let response = try JSONDecoder().decode(AsistenciaResponse.self, from: data)
+                    
+                    return response
+                } catch {
+                    return nil
+                }
             }
             
             return nil
