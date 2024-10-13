@@ -78,7 +78,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         if let error = error {
             print("Error al obtener el token de FCM: \(error.localizedDescription)")
         } else if let fcmToken = fcmToken {
-            // Enviar el token al servidor 
             enviarTokenAlServidor(fcmToken)
         }
     }
@@ -87,11 +86,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
 
-        // Aquí cambias la pestaña al tocar la notificación
-        // Si recibe anuncioID cambia a la de anuncios
         if userInfo["anuncioID"] != nil {
             DispatchQueue.main.async {
-                // Cambia la pestaña a "Anuncios"
                 NotificationManager.shared.selectedTab = 2
             }
         }
@@ -99,10 +95,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         completionHandler()
     }
     
+    // Método para enviar el token de FCM al servidor
     func enviarTokenAlServidor(_ token: String) {
         let url = URL(string: "\(Api.base)\(Api.Routes.session)/actualizarTokenNotificacion")!
         
-        // Obtener el ID Token de Firebase para autenticar la solicitud
         if let currentUser = Auth.auth().currentUser {
             currentUser.getIDToken { idToken, error in
                 if let error = error {
@@ -115,18 +111,15 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
                     return
                 }
                 
-                // Define los headers necesarios
                 let headers: HTTPHeaders = [
                     "Authorization": "Bearer \(idToken)",
                     "Content-Type": "application/json"
                 ]
                 
-                // Define los parámetros que deseas enviar
                 let parameters: Parameters = [
                     "fcmToken": token
                 ]
                 
-                // Realiza la solicitud POST al backend
                 AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
                     .validate()
                     .response { response in
@@ -146,12 +139,13 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
 
 @main
 struct SacalaBiciApp: App {
-    // Register app delegate for Firebase setup
+    // Registrar el AppDelegate para configurar Firebase
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     @StateObject var sessionManager = SessionManager()
     
     init() {
+        // Configuración de la apariencia de la navegación
         let appearance = UINavigationBarAppearance()
         
         let darkerYellow = UIColor(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0, alpha: 1.0)
@@ -160,11 +154,13 @@ struct SacalaBiciApp: App {
             .foregroundColor: darkerYellow,
             .underlineStyle: 0
         ]
+        
         if let backImage = UIImage(systemName: "chevron.left")?.withTintColor(darkerYellow, renderingMode: .alwaysOriginal) {
             appearance.setBackIndicatorImage(backImage, transitionMaskImage: backImage)
         }
         
-        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(red: 212.0 / 255.0, green: 177.0 / 255.0, blue: 9.0 / 255.0, alpha: 1.0) 
+        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(red: 212.0 / 255.0, green: 177.0 / 255.0, blue: 9.0 / 255.0, alpha: 1.0)
+        
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().compactAppearance = appearance
@@ -172,12 +168,12 @@ struct SacalaBiciApp: App {
         UINavigationBar.appearance().tintColor = darkerYellow
     }
     
-  var body: some Scene {
-    WindowGroup {
-      NavigationView {
-          SessionCoordinatorView()
-              .environmentObject(sessionManager)
-      }
+    var body: some Scene {
+        WindowGroup {
+            NavigationView {
+                SessionCoordinatorView()
+                    .environmentObject(sessionManager)
+            }
+        }
     }
-  }
 }

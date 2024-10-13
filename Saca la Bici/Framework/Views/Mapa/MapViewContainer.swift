@@ -1,59 +1,53 @@
 import SwiftUI
 import MapboxMaps
 import CoreLocation
+import MapboxDirections
 
 struct MapViewContainer: UIViewRepresentable {
     @Binding var routeCoordinates: [CLLocationCoordinate2D]
     @Binding var distance: Double
     let locationManager = CLLocationManager()
-    
-    // Puntos de interés (inicio, descanso y fin)
-    enum RoutePointType: String {
-        case start = "Inicio"
-        case rest = "Descanso"
-        case end = "Fin"
-    }
-    
-    // Contador para los tres puntos
-    @State private var pointTypes: [RoutePointType] = [.start, .rest, .end]
-    
+
+    let directions: Directions = {
+        guard let accessToken = Bundle.main.object(forInfoDictionaryKey: "MBXAccessToken") as? String else {
+            fatalError("Mapbox access token is missing in Info.plist")
+        }
+        return Directions(credentials: Credentials(accessToken: accessToken))
+    }()
+
     func makeUIView(context: Context) -> MapView {
-        let mapView = MapView(frame: .zero)
+        let mapInitOptions = MapInitOptions(styleURI: .streets)
+        let mapView = MapView(frame: .zero, mapInitOptions: mapInitOptions)
         
-        // Inicializa la cámara en Querétaro
         let queretaroCoordinates = CLLocationCoordinate2D(latitude: 20.5888, longitude: -100.3899)
         let cameraOptions = CameraOptions(center: queretaroCoordinates, zoom: 14)
         mapView.mapboxMap.setCamera(to: cameraOptions)
         
-        // Configura el locationManager para pedir permisos de ubicación
         locationManager.delegate = context.coordinator
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
-        // Mostrar la ubicación del usuario con un puck
         var locationOptions = LocationOptions()
         locationOptions.puckType = .puck2D()
         mapView.location.options = locationOptions
         
-        // Manejadores de anotaciones
-        let pointAnnotationManager = mapView.annotations.makePointAnnotationManager()
-        let polylineAnnotationManager = mapView.annotations.makePolylineAnnotationManager()
-        
-        // Detectar taps en el mapa
         let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleMapTap(_:)))
         mapView.addGestureRecognizer(tapGesture)
         
         context.coordinator.mapView = mapView
-        context.coordinator.pointAnnotationManager = pointAnnotationManager
-        context.coordinator.polylineAnnotationManager = polylineAnnotationManager
+        context.coordinator.setupAnnotationManagers()
         
         return mapView
     }
-    
+
     func updateUIView(_ uiView: MapView, context: Context) {
-        context.coordinator.updateAnnotations(routeCoordinates: routeCoordinates)
+        if routeCoordinates.count == 3 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                context.coordinator.getRoute()
+            }
+        }
     }
-    
+
     func makeCoordinator() -> Coordinator {
         Coordinator(self, routeCoordinates: $routeCoordinates, distance: $distance)
     }
@@ -65,8 +59,6 @@ struct MapViewContainer: UIViewRepresentable {
         var mapView: MapView?
         var pointAnnotationManager: PointAnnotationManager?
         var polylineAnnotationManager: PolylineAnnotationManager?
-        
-        var pointTypes: [RoutePointType] = [.start, .rest, .end]
 
         init(_ parent: MapViewContainer, routeCoordinates: Binding<[CLLocationCoordinate2D]>, distance: Binding<Double>) {
             self.parent = parent
@@ -74,77 +66,138 @@ struct MapViewContainer: UIViewRepresentable {
             self.distance = distance
         }
 
-        // Maneja los taps en el mapa para agregar puntos
+        func setupAnnotationManagers() {
+            guard let mapView = mapView else { return }
+            pointAnnotationManager = mapView.annotations.makePointAnnotationManager()
+            polylineAnnotationManager = mapView.annotations.makePolylineAnnotationManager()
+        }
+
         @objc func handleMapTap(_ sender: UITapGestureRecognizer) {
             guard let mapView = mapView else { return }
             let location = sender.location(in: mapView)
             let coordinate = mapView.mapboxMap.coordinate(for: location)
             
-            // Limitar a tres puntos
             if routeCoordinates.wrappedValue.count < 3 {
                 routeCoordinates.wrappedValue.append(coordinate)
-                updateAnnotations(routeCoordinates: routeCoordinates.wrappedValue)
-                calculateDistance()
+                addMarker(at: coordinate, index: routeCoordinates.wrappedValue.count - 1)
+                print("Punto agregado: \(coordinate)")
+                
+                if routeCoordinates.wrappedValue.count == 3 {
+                    print("Se han seleccionado los 3 puntos. Calculando ruta...")
+                }
             } else {
                 print("Solo se permiten tres puntos: inicio, descanso y fin.")
             }
         }
 
-        // Actualiza las anotaciones en el mapa
-        func updateAnnotations(routeCoordinates: [CLLocationCoordinate2D]) {
-            guard routeCoordinates.count <= 3 else { return }
-            
-            let pointAnnotations = routeCoordinates.enumerated().map { (index, coordinate) -> PointAnnotation in
-                var annotation = PointAnnotation(coordinate: coordinate)
-                annotation.textField = pointTypes[index].rawValue
-                annotation.textColor = .init(UIColor.red) // Usar UIColor para especificar el color
-                return annotation
+        // Función para agregar un marcador en el mapa
+        func addMarker(at coordinate: CLLocationCoordinate2D, index: Int) {
+            guard let pointAnnotationManager = pointAnnotationManager else {
+                print("PointAnnotationManager no está inicializado.")
+                return
             }
-            pointAnnotationManager?.annotations = pointAnnotations
             
-            // Dibujar la ruta solo si hay dos o más puntos
-            if routeCoordinates.count > 1 {
-                var polyline = PolylineAnnotation(lineCoordinates: routeCoordinates)
-                polyline.lineColor = .init(UIColor.red) // Cambiar color utilizando UIColor
-                polyline.lineWidth = 5.0
-                polylineAnnotationManager?.annotations = [polyline]
+            var pointAnnotation = PointAnnotation(coordinate: coordinate)
+            
+            // Definir colores diferentes para los marcadores (inicio, descanso y final)
+            switch index {
+            case 0:
+                pointAnnotationManager.annotations.append(makePointAnnotation(at: coordinate, color: .black))  // Inicio
+            case 1:
+                pointAnnotationManager.annotations.append(makePointAnnotation(at: coordinate, color: .gray))   // Descanso
+            case 2:
+                pointAnnotationManager.annotations.append(makePointAnnotation(at: coordinate, color: .red))    // Final
+            default:
+                break
             }
         }
 
-        // Calcula la distancia de la ruta
-        func calculateDistance() {
-            var totalDistance = 0.0
-            for i in 1..<routeCoordinates.wrappedValue.count {
-                let start = routeCoordinates.wrappedValue[i-1]
-                let end = routeCoordinates.wrappedValue[i]
-                totalDistance += start.distance(to: end)
-            }
-            distance.wrappedValue = totalDistance / 1000 // Convertir a kilómetros
+        // Función para crear un PointAnnotation con un color específico
+        func makePointAnnotation(at coordinate: CLLocationCoordinate2D, color: UIColor) -> PointAnnotation {
+            var pointAnnotation = PointAnnotation(coordinate: coordinate)
+            pointAnnotation.iconColor = StyleColor(color)
+            return pointAnnotation
         }
 
-        // Manejo de la ubicación del usuario
+        func getRoute() {
+            print("Iniciando cálculo de ruta...")
+            print("Número de puntos seleccionados: \(routeCoordinates.wrappedValue.count)")
+            
+            guard routeCoordinates.wrappedValue.count == 3 else {
+                print("Número incorrecto de puntos para calcular la ruta.")
+                return
+            }
+            
+            let waypoints = routeCoordinates.wrappedValue.map { Waypoint(coordinate: $0) }
+            
+            // Verifica las coordenadas de los waypoints seleccionados
+            waypoints.forEach { waypoint in
+                print("Waypoint: \(waypoint.coordinate.latitude), \(waypoint.coordinate.longitude)")
+            }
+            
+            let options = RouteOptions(waypoints: waypoints, profileIdentifier: .cycling)
+
+            parent.directions.calculate(options) { (_, result) in
+                switch result {
+                case .failure(let error):
+                    print("Error calculando la ruta: \(error.localizedDescription)")
+                case .success(let response):
+                    guard let route = response.routes?.first else {
+                        print("No se encontró ninguna ruta.")
+                        return
+                    }
+                    print("Ruta obtenida: \(route)")
+                    
+                    if let geometry = route.shape {
+                        print("Geometría de la ruta: \(geometry)")
+                        DispatchQueue.main.async {
+                            self.drawRoute(geometry.coordinates)
+                            self.distance.wrappedValue = route.distance / 1000 // Convertir a kilómetros
+                        }
+                    } else {
+                        print("No se encontró geometría en la ruta.")
+                    }
+                }
+            }
+        }
+
+        func drawRoute(_ routeCoordinates: [CLLocationCoordinate2D]) {
+            guard let polylineAnnotationManager = polylineAnnotationManager else {
+                print("PolylineAnnotationManager no está inicializado.")
+                return
+            }
+            
+            polylineAnnotationManager.annotations = []
+            
+            if routeCoordinates.isEmpty {
+                print("Error: Las coordenadas de la ruta están vacías.")
+                return
+            } else {
+                print("Dibujando ruta con \(routeCoordinates.count) coordenadas.")
+            }
+
+            var polyline = PolylineAnnotation(lineCoordinates: routeCoordinates)
+            polyline.lineColor = StyleColor(.blue)
+            polyline.lineWidth = 2.5
+            
+            polylineAnnotationManager.annotations.append(polyline)
+            print("Ruta dibujada en el mapa.")
+        }
+
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            guard let location = locations.last, let mapView = mapView else { return }
+            guard let location = locations.last else { return }
             let userLocation = location.coordinate
             
-            // Centrar la cámara en la ubicación del usuario
             let cameraOptions = CameraOptions(center: userLocation, zoom: 14)
-            mapView.camera.ease(to: cameraOptions, duration: 1.0)
+            mapView?.camera.ease(to: cameraOptions, duration: 1.0)
         }
 
         func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
             if manager.authorizationStatus == .authorizedWhenInUse || manager.authorizationStatus == .authorizedAlways {
                 manager.startUpdatingLocation()
+            } else {
+                print("Permiso de ubicación no otorgado.")
             }
         }
-    }
-}
-
-// Extension para calcular distancia entre dos coordenadas
-extension CLLocationCoordinate2D {
-    func distance(to coordinate: CLLocationCoordinate2D) -> Double {
-        let start = CLLocation(latitude: self.latitude, longitude: self.longitude)
-        let end = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        return start.distance(from: end)
     }
 }

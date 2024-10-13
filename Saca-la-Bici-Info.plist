@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your precise location is used to calculate turn-by-turn directions, show your location on the map, and help improve the map.</string>
-	<key>LocationAccuracyAuthorizationDescription</key>
-	<string>Please enable precise location. Turn-by-turn directions only work when precise location data is available.</string>
+	<string>Tu ubicación se utilizará para proporcionar direcciones en el mapa y mejorar la navegación.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Tu ubicación se utilizará para mejorar la experiencia de navegación, incluso cuando la aplicación esté en segundo plano.</string>
+	<key>NSLocationAccuracyAuthorizationDescription</key>
+	<string>Se requiere una ubicación precisa para mostrar direcciones y navegación exactas en el mapa.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

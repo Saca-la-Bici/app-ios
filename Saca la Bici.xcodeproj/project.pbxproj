@@ -87,6 +87,8 @@
 		25F3681D2C9B7B49003322CF /* TituloComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3681C2C9B7B49003322CF /* TituloComponent.swift */; };
 		25F3681F2C9B8032003322CF /* MainViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3681E2C9B8032003322CF /* MainViewButton.swift */; };
 		25F368212C9BAEA3003322CF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F368202C9BAEA3003322CF /* LoadingView.swift */; };
+		693B9CE22CBA22DB0027B786 /* MapboxDirections in Frameworks */ = {isa = PBXBuildFile; productRef = 693B9CE12CBA22DB0027B786 /* MapboxDirections */; };
+		693B9CE42CBA22DB0027B786 /* mapbox-directions-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 693B9CE32CBA22DB0027B786 /* mapbox-directions-swift */; };
 		698D173B2CB7AE050083D202 /* MapViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698D173A2CB7ADFE0083D202 /* MapViewContainer.swift */; };
 		698D173D2CB7B1DE0083D202 /* RegisterRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698D173C2CB7B1DE0083D202 /* RegisterRouteView.swift */; };
 		6993203F2CB750F7000CA32F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6993203E2CB750F7000CA32F /* ContentView.swift */; };
@@ -297,8 +299,10 @@
 				252B64FD2C99FFE200A362C5 /* GoogleSignInSwift in Frameworks */,
 				252B64F32C99FF1000A362C5 /* Alamofire in Frameworks */,
 				2510D2112CB060E7004C29CC /* SDWebImageSwiftUI in Frameworks */,
+				693B9CE22CBA22DB0027B786 /* MapboxDirections in Frameworks */,
 				252B64FB2C99FFE200A362C5 /* GoogleSignIn in Frameworks */,
 				69A8045F2CB82D9900692D40 /* MapboxMaps in Frameworks */,
+				693B9CE42CBA22DB0027B786 /* mapbox-directions-swift in Frameworks */,
 				252B64F82C99FFBD00A362C5 /* FirebaseAuthCombine-Community in Frameworks */,
 				252B64F62C99FFBD00A362C5 /* FirebaseAuth in Frameworks */,
 			);
@@ -769,6 +773,8 @@
 				2510D20D2CB050F6004C29CC /* DurationPicker */,
 				2510D2102CB060E7004C29CC /* SDWebImageSwiftUI */,
 				69A8045E2CB82D9900692D40 /* MapboxMaps */,
+				693B9CE12CBA22DB0027B786 /* MapboxDirections */,
+				693B9CE32CBA22DB0027B786 /* mapbox-directions-swift */,
 			);
 			productName = "Saca la Bici";
 			productReference = 252B639B2C99F16700A362C5 /* Saca la Bici.app */;
@@ -854,6 +860,7 @@
 				2510D20C2CB050F6004C29CC /* XCRemoteSwiftPackageReference "DurationPicker" */,
 				2510D20F2CB060E7004C29CC /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				69A8045D2CB82D8B00692D40 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */,
+				693B9CE02CBA22DB0027B786 /* XCRemoteSwiftPackageReference "mapbox-directions-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 252B639C2C99F16700A362C5 /* Products */;
@@ -1440,6 +1447,14 @@
 				minimumVersion = 8.0.0;
 			};
 		};
+		693B9CE02CBA22DB0027B786 /* XCRemoteSwiftPackageReference "mapbox-directions-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mapbox/mapbox-directions-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.0;
+			};
+		};
 		69A8045D2CB82D8B00692D40 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mapbox/mapbox-maps-ios.git";
@@ -1490,6 +1505,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 252B64F42C99FFBD00A362C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		693B9CE12CBA22DB0027B786 /* MapboxDirections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 693B9CE02CBA22DB0027B786 /* XCRemoteSwiftPackageReference "mapbox-directions-swift" */;
+			productName = MapboxDirections;
+		};
+		693B9CE32CBA22DB0027B786 /* mapbox-directions-swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 693B9CE02CBA22DB0027B786 /* XCRemoteSwiftPackageReference "mapbox-directions-swift" */;
+			productName = "mapbox-directions-swift";
 		};
 		69A8045E2CB82D9900692D40 /* MapboxMaps */ = {
 			isa = XCSwiftPackageProductDependency;

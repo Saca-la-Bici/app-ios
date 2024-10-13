@@ -40,13 +40,12 @@ struct RegisterRouteView: View {
                     }
                     
                     MapViewContainer(routeCoordinates: $routeCoordinates, distance: $distance)
-                        .frame(height: 300)
+                        .frame(height: 400)
                         .cornerRadius(10)
                 }
                 .padding(.horizontal)
             }
             
-            // Botón de registrar ruta
             Button(action: {
                 print("Ruta registrada: \(routeCoordinates)")
             }) {
@@ -54,11 +53,12 @@ struct RegisterRouteView: View {
                     .bold()
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.yellow)
+                    .background(routeCoordinates.count == 3 ? Color.yellow : Color.gray)
                     .cornerRadius(10)
                     .foregroundColor(.black)
                     .padding(.horizontal)
             }
+            .disabled(routeCoordinates.count != 3)
         }
         .padding(.top)
         .navigationTitle("Agrega una ruta")
