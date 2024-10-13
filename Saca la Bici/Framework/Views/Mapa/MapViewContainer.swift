@@ -6,6 +6,7 @@ import MapboxDirections
 struct MapViewContainer: UIViewRepresentable {
     @Binding var routeCoordinates: [CLLocationCoordinate2D]
     @Binding var distance: Double
+    @Binding var isAddingRoute: Bool
     let locationManager = CLLocationManager()
 
     let directions: Directions = {
@@ -49,21 +50,23 @@ struct MapViewContainer: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self, routeCoordinates: $routeCoordinates, distance: $distance)
+        Coordinator(self, routeCoordinates: $routeCoordinates, distance: $distance, isAddingRoute: $isAddingRoute)
     }
 
     class Coordinator: NSObject, CLLocationManagerDelegate {
         var parent: MapViewContainer
         var routeCoordinates: Binding<[CLLocationCoordinate2D]>
         var distance: Binding<Double>
+        var isAddingRoute: Binding<Bool>
         var mapView: MapView?
         var pointAnnotationManager: PointAnnotationManager?
         var polylineAnnotationManager: PolylineAnnotationManager?
 
-        init(_ parent: MapViewContainer, routeCoordinates: Binding<[CLLocationCoordinate2D]>, distance: Binding<Double>) {
+        init(_ parent: MapViewContainer, routeCoordinates: Binding<[CLLocationCoordinate2D]>, distance: Binding<Double>, isAddingRoute: Binding<Bool>) {
             self.parent = parent
             self.routeCoordinates = routeCoordinates
             self.distance = distance
+            self.isAddingRoute = isAddingRoute
         }
 
         func setupAnnotationManagers() {
@@ -73,6 +76,12 @@ struct MapViewContainer: UIViewRepresentable {
         }
 
         @objc func handleMapTap(_ sender: UITapGestureRecognizer) {
+            // Verificar si estamos en el modo de agregar ruta
+            guard isAddingRoute.wrappedValue else {
+                print("No está permitido registrar puntos en este modo.")
+                return
+            }
+            
             guard let mapView = mapView else { return }
             let location = sender.location(in: mapView)
             let coordinate = mapView.mapboxMap.coordinate(for: location)
@@ -130,11 +139,6 @@ struct MapViewContainer: UIViewRepresentable {
             
             let waypoints = routeCoordinates.wrappedValue.map { Waypoint(coordinate: $0) }
             
-            // Verifica las coordenadas de los waypoints seleccionados
-            waypoints.forEach { waypoint in
-                print("Waypoint: \(waypoint.coordinate.latitude), \(waypoint.coordinate.longitude)")
-            }
-            
             let options = RouteOptions(waypoints: waypoints, profileIdentifier: .cycling)
 
             parent.directions.calculate(options) { (_, result) in
@@ -149,13 +153,10 @@ struct MapViewContainer: UIViewRepresentable {
                     print("Ruta obtenida: \(route)")
                     
                     if let geometry = route.shape {
-                        print("Geometría de la ruta: \(geometry)")
                         DispatchQueue.main.async {
                             self.drawRoute(geometry.coordinates)
                             self.distance.wrappedValue = route.distance / 1000 // Convertir a kilómetros
                         }
-                    } else {
-                        print("No se encontró geometría en la ruta.")
                     }
                 }
             }
@@ -172,32 +173,13 @@ struct MapViewContainer: UIViewRepresentable {
             if routeCoordinates.isEmpty {
                 print("Error: Las coordenadas de la ruta están vacías.")
                 return
-            } else {
-                print("Dibujando ruta con \(routeCoordinates.count) coordenadas.")
             }
 
             var polyline = PolylineAnnotation(lineCoordinates: routeCoordinates)
-            polyline.lineColor = StyleColor(.blue)
+            polyline.lineColor = StyleColor(.red)
             polyline.lineWidth = 2.5
             
             polylineAnnotationManager.annotations.append(polyline)
-            print("Ruta dibujada en el mapa.")
-        }
-
-        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            guard let location = locations.last else { return }
-            let userLocation = location.coordinate
-            
-            let cameraOptions = CameraOptions(center: userLocation, zoom: 14)
-            mapView?.camera.ease(to: cameraOptions, duration: 1.0)
-        }
-
-        func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-            if manager.authorizationStatus == .authorizedWhenInUse || manager.authorizationStatus == .authorizedAlways {
-                manager.startUpdatingLocation()
-            } else {
-                print("Permiso de ubicación no otorgado.")
-            }
         }
     }
 }

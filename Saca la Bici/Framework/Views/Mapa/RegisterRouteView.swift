@@ -2,11 +2,13 @@ import SwiftUI
 import MapboxMaps
 
 struct RegisterRouteView: View {
+    @Binding var routeCoordinates: [CLLocationCoordinate2D]
+    @Binding var distance: Double
+    @Binding var isAddingRoute: Bool
+    
     @State private var title: String = ""
     @State private var duration: String = ""
     @State private var selectedLevel: Int = 1
-    @State private var routeCoordinates: [CLLocationCoordinate2D] = []
-    @State private var distance: Double = 0.0
     
     let levels = ["Nivel 1", "Nivel 2", "Nivel 3", "Nivel 4", "Nivel 5"]
     
@@ -39,7 +41,7 @@ struct RegisterRouteView: View {
                             .padding()
                     }
                     
-                    MapViewContainer(routeCoordinates: $routeCoordinates, distance: $distance)
+                    MapViewContainer(routeCoordinates: $routeCoordinates, distance: $distance, isAddingRoute: $isAddingRoute)
                         .frame(height: 400)
                         .cornerRadius(10)
                 }
@@ -62,14 +64,13 @@ struct RegisterRouteView: View {
         }
         .padding(.top)
         .navigationTitle("Agrega una ruta")
-        .onTapGesture {
-            hideKeyboard()
+        .onAppear {
+            // Habilitar agregar ruta
+            isAddingRoute = true
         }
-    }
-}
-
-extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        .onDisappear {
+            // Deshabilitar agregar ruta cuando se sale de la pantalla
+            isAddingRoute = false
+        }
     }
 }
