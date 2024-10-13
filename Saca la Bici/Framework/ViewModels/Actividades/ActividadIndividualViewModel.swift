@@ -42,13 +42,16 @@ class ActividadIndividualViewModel: ObservableObject {
     
     private let consultarRequirement: ConsultarActividadIndRequirementProtocol
     private let gestionarAsistenciaRequirement: GestionarAsistenciaRequirementProtocol
+    private let verificarAsistenciaRequirement: VerificarAsistenciaRequirementProtocol
     
     init(
         consultarActividadIndividualRequirement: ConsultarActividadIndRequirementProtocol = ConsultarActividadIndividualRequirement.shared,
-        gestionarAsistenciaRequirement: GestionarAsistenciaRequirementProtocol = GestionarAsistenciaRequirement.shared
+        gestionarAsistenciaRequirement: GestionarAsistenciaRequirementProtocol = GestionarAsistenciaRequirement.shared,
+        verificarAsistenciaRequirement: VerificarAsistenciaRequirementProtocol = VerificarAsistenciaRequirement.shared
     ) {
         self.consultarRequirement = consultarActividadIndividualRequirement
         self.gestionarAsistenciaRequirement = gestionarAsistenciaRequirement
+        self.verificarAsistenciaRequirement = verificarAsistenciaRequirement
     }
     
     func updateProperties(from actividad: Actividad) {
@@ -151,5 +154,12 @@ class ActividadIndividualViewModel: ObservableObject {
             self.showAlert = true
         }
         isLoading = false
+    }
+    
+    @MainActor
+    func verificarAsistencia(IDRodada: String) async {
+        let response = await verificarAsistenciaRequirement.verificarAsistencia(IDRodada: IDRodada, codigo: "7305")
+        
+        print(response)
     }
 }

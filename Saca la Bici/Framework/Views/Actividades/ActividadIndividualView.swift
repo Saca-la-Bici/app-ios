@@ -96,6 +96,22 @@ struct ActividadIndividualView: View {
                         icono: actividadIndividualViewModel.isJoined ? "xmark" : "plus"
                     )
                     .padding()
+                    
+                    Spacer().frame(height: 20)
+                    
+                    CustomButton(
+                        text: "Verificar Asistencia",
+                        backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
+                        foregroundColor: .white,
+                        action: {
+                            Task {
+                                await actividadIndividualViewModel.verificarAsistencia(IDRodada: id)
+                            }
+                        },
+                        tieneIcono: true,
+                        icono: "calendar.badge.checkmark"
+                    )
+                    .padding()
                 }
                 .navigationTitle(actividadIndividualViewModel.titulo)
                 .sheet(item: $safariURL) { url in

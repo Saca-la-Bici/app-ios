@@ -127,3 +127,9 @@ struct ActividadResponse: Codable {
 struct ActionResponse: Codable {
     let message: String
 }
+
+struct AsistenciaResponse: Codable {
+    let status: Int
+    let message: String
+    let nuevaMedallaGanada: Bool?
+}
