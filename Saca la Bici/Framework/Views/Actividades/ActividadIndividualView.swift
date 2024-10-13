@@ -118,13 +118,14 @@ struct ActividadIndividualView: View {
                                     if userSessionManager.puedeVerificarAsistencia() {
                                         Task {
                                             await actividadIndividualViewModel.verificarAsistencia(
-                                                IDRodada: id, codigoAsistencia: actividadIndividualViewModel.codigoAsistencia)
+                                                IDRodada: id, codigoAsistencia: actividadIndividualViewModel.codigoAsistencia, adminOrStaff: true)
                                             showVerificarAsistenciaSheet.toggle()
                                         }
                                     } else {
                                         Task {
                                             await actividadIndividualViewModel.verificarAsistencia(
-                                                IDRodada: id, codigoAsistencia: actividadIndividualViewModel.codigoAsistenciaField)
+                                                IDRodada: id,
+                                                codigoAsistencia: actividadIndividualViewModel.codigoAsistenciaField, adminOrStaff: false)
                                             showVerificarAsistenciaSheet.toggle()
                                         }
                                     }
@@ -173,6 +174,12 @@ struct ActividadIndividualView: View {
                     dismissButton: .default(Text("OK")) {
                         path.removeLast()
                     }
+                )
+            case .verificarError:
+                return Alert(
+                    title: Text("Oops!"),
+                    message: Text(actividadIndividualViewModel.messageAlert),
+                    dismissButton: .default(Text("OK")) 
                 )
             case .none:
                 return Alert(

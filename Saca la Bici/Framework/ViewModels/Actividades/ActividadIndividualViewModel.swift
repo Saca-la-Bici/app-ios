@@ -33,6 +33,7 @@ class ActividadIndividualViewModel: ObservableObject {
         case success
         case error
         case errorIndividual
+        case verificarError
     }
     
     @Published var alertType: AlertType?
@@ -163,7 +164,16 @@ class ActividadIndividualViewModel: ObservableObject {
     }
     
     @MainActor
-    func verificarAsistencia(IDRodada: String, codigoAsistencia: String) async {
+    func verificarAsistencia(IDRodada: String, codigoAsistencia: String, adminOrStaff: Bool) async {
+        if adminOrStaff == false {
+            if codigoAsistenciaField.isEmpty {
+                self.messageAlert = "Ingresa un código para continuar."
+                self.alertType = .verificarError
+                self.showAlert = true
+                return
+            }
+        }
+        
         let response = await verificarAsistenciaRequirement.verificarAsistencia(IDRodada: IDRodada, codigo: codigoAsistencia)
         
         print(response)
