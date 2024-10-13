@@ -53,6 +53,8 @@
 		252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */; };
 		2552B8F22CB799F8007FDC82 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2552B8F12CB799F8007FDC82 /* ProfileImageView.swift */; };
 		255474E12CBB51E5004CFAFE /* VerificarAsistenciaRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E02CBB51E5004CFAFE /* VerificarAsistenciaRequirement.swift */; };
+		255474E42CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E32CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift */; };
+		255474E62CBC43E5004CFAFE /* FourNumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E52CBC43E5004CFAFE /* FourNumberField.swift */; };
 		256EE2EF2CADB92400425181 /* TextoLimiteMultilineField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EE2EE2CADB92400425181 /* TextoLimiteMultilineField.swift */; };
 		25858A102CB0AF5400A7719C /* ActividadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */; };
 		25858A122CB0AFE300A7719C /* ActividadIndividualView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A112CB0AFE300A7719C /* ActividadIndividualView.swift */; };
@@ -201,6 +203,8 @@
 		252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletarDatosStep1View.swift; sourceTree = "<group>"; };
 		2552B8F12CB799F8007FDC82 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		255474E02CBB51E5004CFAFE /* VerificarAsistenciaRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificarAsistenciaRequirement.swift; sourceTree = "<group>"; };
+		255474E32CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificarAsistenciaSheet.swift; sourceTree = "<group>"; };
+		255474E52CBC43E5004CFAFE /* FourNumberField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourNumberField.swift; sourceTree = "<group>"; };
 		256EE2EE2CADB92400425181 /* TextoLimiteMultilineField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextoLimiteMultilineField.swift; sourceTree = "<group>"; };
 		25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadViewModel.swift; sourceTree = "<group>"; };
 		25858A112CB0AFE300A7719C /* ActividadIndividualView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadIndividualView.swift; sourceTree = "<group>"; };
@@ -339,6 +343,7 @@
 				25C302C12C9A9390005AD742 /* TelefonoEmergenciaField.swift */,
 				25C302C32C9A9515005AD742 /* PasswordField.swift */,
 				25C302C52C9A9780005AD742 /* EmailField.swift */,
+				255474E52CBC43E5004CFAFE /* FourNumberField.swift */,
 			);
 			path = Fields;
 			sourceTree = "<group>";
@@ -600,6 +605,14 @@
 			path = Objects;
 			sourceTree = "<group>";
 		};
+		255474E22CBC3AD9004CFAFE /* Sheets */ = {
+			isa = PBXGroup;
+			children = (
+				255474E32CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift */,
+			);
+			path = Sheets;
+			sourceTree = "<group>";
+		};
 		25A7BE4D2CA61BEE00FCB8B6 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -622,6 +635,7 @@
 				251C5FCE2CAF2F1100CFAC87 /* Fields */,
 				251C5FD02CAF2F4F00CFAC87 /* Button */,
 				251C5FD22CAF2F7600CFAC87 /* Cards */,
+				255474E22CBC3AD9004CFAFE /* Sheets */,
 				AE9D1EDF2CB73ECE00750DC4 /* LinksComponent.swift */,
 				25F3681A2C9B62CD003322CF /* ImagenAmarillaFondo.swift */,
 				25F3681C2C9B7B49003322CF /* TituloComponent.swift */,
@@ -922,6 +936,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEF4467D2CA9F5D70004D5E8 /* ActividadesView.swift in Sources */,
+				255474E42CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift in Sources */,
 				252B64852C99FC5E00A362C5 /* Saca_la_BiciApp.swift in Sources */,
 				AE8E78932CA9E567007F7365 /* EventosViewModel.swift in Sources */,
 				25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */,
@@ -1015,6 +1030,7 @@
 				25F3681B2C9B62CD003322CF /* ImagenAmarillaFondo.swift in Sources */,
 				2510D2072CB04F0B004C29CC /* DurationPicker.swift in Sources */,
 				7B9C5EF82CACF66800441541 /* FAQRepository.swift in Sources */,
+				255474E62CBC43E5004CFAFE /* FourNumberField.swift in Sources */,
 				259EF8B72CA23899007CE3FE /* UserProfileSessionAPIService.swift in Sources */,
 				25C302C02C9A91A3005AD742 /* TextoLimiteField.swift in Sources */,
 				252B64E12C99FE6F00A362C5 /* SignUpRequirement.swift in Sources */,

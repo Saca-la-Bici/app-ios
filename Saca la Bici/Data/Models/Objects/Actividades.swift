@@ -116,11 +116,13 @@ struct ActividadResponse: Codable {
     let _id: String
     let informacion: [Actividad]
     let ruta: Ruta?
+    let codigoAsistencia: Int?
     
-    init(_id: String = "", informacion: [Actividad] = [], ruta: Ruta? = nil) {
+    init(_id: String = "", informacion: [Actividad] = [], ruta: Ruta? = nil, codigoAsistencia: Int? = nil) {
         self._id = _id
         self.informacion = informacion
         self.ruta = ruta
+        self.codigoAsistencia = codigoAsistencia
     }
 }
 

@@ -20,6 +20,7 @@ struct ActividadIndividualView: View {
     @ObservedObject private var userSessionManager = UserSessionManager.shared
 
     @State private var safariURL: URL?
+    @State private var showVerificarAsistenciaSheet = false
 
     var body: some View {
         ZStack {
@@ -97,21 +98,44 @@ struct ActividadIndividualView: View {
                     )
                     .padding()
                     
-                    Spacer().frame(height: 20)
-                    
-                    CustomButton(
-                        text: "Verificar Asistencia",
-                        backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
-                        foregroundColor: .white,
-                        action: {
-                            Task {
-                                await actividadIndividualViewModel.verificarAsistencia(IDRodada: id)
-                            }
-                        },
-                        tieneIcono: true,
-                        icono: "calendar.badge.checkmark"
-                    )
-                    .padding()
+                    if actividadIndividualViewModel.tipo == "Rodada" {
+                        Spacer().frame(height: 10)
+                        
+                        CustomButton(
+                            text: "Verificar Asistencia",
+                            backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
+                            foregroundColor: .white,
+                            action: {
+                                showVerificarAsistenciaSheet.toggle()
+                            },
+                            tieneIcono: true,
+                            icono: "calendar.badge.checkmark"
+                        )
+                        .padding()
+                        .sheet(isPresented: $showVerificarAsistenciaSheet) {
+                            VerificarAsistenciaSheet(
+                                verificarAction: {
+                                    if userSessionManager.puedeVerificarAsistencia() {
+                                        Task {
+                                            await actividadIndividualViewModel.verificarAsistencia(
+                                                IDRodada: id, codigoAsistencia: actividadIndividualViewModel.codigoAsistencia)
+                                            showVerificarAsistenciaSheet.toggle()
+                                        }
+                                    } else {
+                                        Task {
+                                            await actividadIndividualViewModel.verificarAsistencia(
+                                                IDRodada: id, codigoAsistencia: actividadIndividualViewModel.codigoAsistenciaField)
+                                            showVerificarAsistenciaSheet.toggle()
+                                        }
+                                    }
+                                },
+                                codigoAsistenciaField: $actividadIndividualViewModel.codigoAsistenciaField,
+                                codigoAsistencia: actividadIndividualViewModel.codigoAsistencia
+                            )
+                            .presentationDetents([.fraction(0.3)]
+                            )
+                        }
+                    }
                 }
                 .navigationTitle(actividadIndividualViewModel.titulo)
                 .sheet(item: $safariURL) { url in

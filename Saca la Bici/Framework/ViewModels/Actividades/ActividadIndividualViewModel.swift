@@ -37,6 +37,9 @@ class ActividadIndividualViewModel: ObservableObject {
     
     @Published var alertType: AlertType?
     
+    @Published var codigoAsistencia: String = ""
+    @Published var codigoAsistenciaField: String = ""
+    
     private let empty = ActividadIndividualResponse()
     private var userSessionManager = UserSessionManager.shared
     
@@ -92,6 +95,9 @@ class ActividadIndividualViewModel: ObservableObject {
             if self.tipo == "Rodada" {
                 self.distancia = datosActividad.actividad.ruta?.distancia ?? ""
                 self.nivel = datosActividad.actividad.ruta?.nivel ?? ""
+                
+                let codigoTemp = datosActividad.actividad.codigoAsistencia ?? 0
+                self.codigoAsistencia = String(codigoTemp)
             }
             self.isLoading = false
             
@@ -157,8 +163,8 @@ class ActividadIndividualViewModel: ObservableObject {
     }
     
     @MainActor
-    func verificarAsistencia(IDRodada: String) async {
-        let response = await verificarAsistenciaRequirement.verificarAsistencia(IDRodada: IDRodada, codigo: "7305")
+    func verificarAsistencia(IDRodada: String, codigoAsistencia: String) async {
+        let response = await verificarAsistenciaRequirement.verificarAsistencia(IDRodada: IDRodada, codigo: codigoAsistencia)
         
         print(response)
     }
