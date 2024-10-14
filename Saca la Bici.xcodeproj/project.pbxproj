@@ -54,7 +54,7 @@
 		2552B8F22CB799F8007FDC82 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2552B8F12CB799F8007FDC82 /* ProfileImageView.swift */; };
 		255474E12CBB51E5004CFAFE /* VerificarAsistenciaRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E02CBB51E5004CFAFE /* VerificarAsistenciaRequirement.swift */; };
 		255474E42CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E32CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift */; };
-		255474E62CBC43E5004CFAFE /* FourNumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E52CBC43E5004CFAFE /* FourNumberField.swift */; };
+		255474E62CBC43E5004CFAFE /* CodigoNumericoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E52CBC43E5004CFAFE /* CodigoNumericoView.swift */; };
 		256EE2EF2CADB92400425181 /* TextoLimiteMultilineField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EE2EE2CADB92400425181 /* TextoLimiteMultilineField.swift */; };
 		25858A102CB0AF5400A7719C /* ActividadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */; };
 		25858A122CB0AFE300A7719C /* ActividadIndividualView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A112CB0AFE300A7719C /* ActividadIndividualView.swift */; };
@@ -204,7 +204,7 @@
 		2552B8F12CB799F8007FDC82 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		255474E02CBB51E5004CFAFE /* VerificarAsistenciaRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificarAsistenciaRequirement.swift; sourceTree = "<group>"; };
 		255474E32CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificarAsistenciaSheet.swift; sourceTree = "<group>"; };
-		255474E52CBC43E5004CFAFE /* FourNumberField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourNumberField.swift; sourceTree = "<group>"; };
+		255474E52CBC43E5004CFAFE /* CodigoNumericoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodigoNumericoView.swift; sourceTree = "<group>"; };
 		256EE2EE2CADB92400425181 /* TextoLimiteMultilineField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextoLimiteMultilineField.swift; sourceTree = "<group>"; };
 		25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadViewModel.swift; sourceTree = "<group>"; };
 		25858A112CB0AFE300A7719C /* ActividadIndividualView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadIndividualView.swift; sourceTree = "<group>"; };
@@ -343,7 +343,7 @@
 				25C302C12C9A9390005AD742 /* TelefonoEmergenciaField.swift */,
 				25C302C32C9A9515005AD742 /* PasswordField.swift */,
 				25C302C52C9A9780005AD742 /* EmailField.swift */,
-				255474E52CBC43E5004CFAFE /* FourNumberField.swift */,
+				255474E52CBC43E5004CFAFE /* CodigoNumericoView.swift */,
 			);
 			path = Fields;
 			sourceTree = "<group>";
@@ -1030,7 +1030,7 @@
 				25F3681B2C9B62CD003322CF /* ImagenAmarillaFondo.swift in Sources */,
 				2510D2072CB04F0B004C29CC /* DurationPicker.swift in Sources */,
 				7B9C5EF82CACF66800441541 /* FAQRepository.swift in Sources */,
-				255474E62CBC43E5004CFAFE /* FourNumberField.swift in Sources */,
+				255474E62CBC43E5004CFAFE /* CodigoNumericoView.swift in Sources */,
 				259EF8B72CA23899007CE3FE /* UserProfileSessionAPIService.swift in Sources */,
 				25C302C02C9A91A3005AD742 /* TextoLimiteField.swift in Sources */,
 				252B64E12C99FE6F00A362C5 /* SignUpRequirement.swift in Sources */,

@@ -13,7 +13,8 @@ struct VerificarAsistenciaSheet: View {
     @Binding var codigoAsistenciaField: String
     var codigoAsistencia: String
     
-    @FocusState private var isTextFieldFocused: Bool
+    @FocusState var showkeyboard: Bool
+    @Binding var showAlertSheet: Bool
     
     var body: some View {
         VStack {
@@ -38,9 +39,9 @@ struct VerificarAsistenciaSheet: View {
                     .font(.headline)
                     .padding()
                 
-                FourNumberField(text: $codigoAsistenciaField, placeholder: "Código de 4 dígitos")
+                CodigoNumericoView(codigo: $codigoAsistenciaField, limite: 4)
                      .padding()
-                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                     .focused($showkeyboard)
                 
                 CustomButton(
                     text: "Verificar",
@@ -53,6 +54,20 @@ struct VerificarAsistenciaSheet: View {
                     icono: "checkmark.circle"
                 )
                 .padding()
+            }
+        }
+        .onAppear {
+            if !showAlertSheet {
+                showkeyboard = true
+            }
+        }
+        .onChange(of: showAlertSheet) {
+            if showAlertSheet {
+                // Si la alerta está activa, ocultar el teclado
+                showkeyboard = false
+            } else {
+                // Si la alerta se ha cerrado, mostrar el teclado nuevamente
+                showkeyboard = true
             }
         }
         .padding()

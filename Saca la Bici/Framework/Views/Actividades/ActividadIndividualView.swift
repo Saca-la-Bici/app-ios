@@ -135,14 +135,16 @@ struct ActividadIndividualView: View {
                                     }
                                 },
                                 codigoAsistenciaField: $actividadIndividualViewModel.codigoAsistenciaField,
-                                codigoAsistencia: actividadIndividualViewModel.codigoAsistencia
+                                codigoAsistencia: actividadIndividualViewModel.codigoAsistencia,
+                                showAlertSheet: $actividadIndividualViewModel.showAlertSheet
                             )
-                            .presentationDetents([.fraction(0.3)])
+                            .presentationDetents([.fraction(0.35)])
                             .alert(isPresented: $actividadIndividualViewModel.showAlertSheet) {
                                 Alert(
                                     title: Text("Oops!"),
                                     message: Text(actividadIndividualViewModel.messageAlert),
-                                    dismissButton: .default(Text("Aceptar")))
+                                    dismissButton: .default(Text("Aceptar"))
+                                )
                             }
                         }
                     }

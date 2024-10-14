@@ -166,8 +166,8 @@ class ActividadIndividualViewModel: ObservableObject {
     @MainActor
     func verificarAsistencia(IDRodada: String, codigoAsistencia: String, adminOrStaff: Bool) async {
         if adminOrStaff == false {
-            if codigoAsistenciaField.isEmpty {
-                self.messageAlert = "Ingresa un código para continuar."
+            if codigoAsistenciaField.isEmpty || codigoAsistenciaField.count != 4 {
+                self.messageAlert = "Ingresa un código de 4 números para continuar."
                 self.showAlertSheet = true
                 return
             }
