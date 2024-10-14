@@ -89,6 +89,9 @@
 		25F368212C9BAEA3003322CF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F368202C9BAEA3003322CF /* LoadingView.swift */; };
 		6993203C2CB750C4000CA32F /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 6993203B2CB750C4000CA32F /* MapboxMaps */; };
 		6993203F2CB750F7000CA32F /* MapaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6993203E2CB750F7000CA32F /* MapaView.swift */; };
+		6D7221332CBDA61400C606D5 /* ModificarPerfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7221322CBDA60500C606D5 /* ModificarPerfilView.swift */; };
+		6D7221372CBDA67E00C606D5 /* ModificarPerfilViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7221362CBDA67600C606D5 /* ModificarPerfilViewModel.swift */; };
+		6D7221392CBDA6A000C606D5 /* ModificarPerfilRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7221382CBDA69300C606D5 /* ModificarPerfilRequirement.swift */; };
 		6DD117262CAE5C790084314A /* ConsultarPerfilPropioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD117252CAE5C6A0084314A /* ConsultarPerfilPropioViewModel.swift */; };
 		6DD1172B2CAE61190084314A /* ConsultarPerfilPropioRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD1172A2CAE60000084314A /* ConsultarPerfilPropioRequirement.swift */; };
 		6DD1172E2CAE61D40084314A /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD1172D2CAE61CF0084314A /* Profile.swift */; };
@@ -235,6 +238,9 @@
 		25F3681E2C9B8032003322CF /* MainViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewButton.swift; sourceTree = "<group>"; };
 		25F368202C9BAEA3003322CF /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		6993203E2CB750F7000CA32F /* MapaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapaView.swift; sourceTree = "<group>"; };
+		6D7221322CBDA60500C606D5 /* ModificarPerfilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModificarPerfilView.swift; sourceTree = "<group>"; };
+		6D7221362CBDA67600C606D5 /* ModificarPerfilViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModificarPerfilViewModel.swift; sourceTree = "<group>"; };
+		6D7221382CBDA69300C606D5 /* ModificarPerfilRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModificarPerfilRequirement.swift; sourceTree = "<group>"; };
 		6DD117252CAE5C6A0084314A /* ConsultarPerfilPropioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarPerfilPropioViewModel.swift; sourceTree = "<group>"; };
 		6DD1172A2CAE60000084314A /* ConsultarPerfilPropioRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarPerfilPropioRequirement.swift; sourceTree = "<group>"; };
 		6DD1172D2CAE61CF0084314A /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -601,6 +607,7 @@
 		25A7BE4D2CA61BEE00FCB8B6 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				6D7221322CBDA60500C606D5 /* ModificarPerfilView.swift */,
 				AE5BA04A2CB1B1B400AE8C0E /* ConsultarUsuariosView.swift */,
 				25A7BE502CA61C9500FCB8B6 /* ProfileView.swift */,
 				25A7BE4E2CA61C0600FCB8B6 /* ConfigurationView.swift */,
@@ -645,6 +652,7 @@
 		6DD117272CAE5F880084314A /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				6D7221382CBDA69300C606D5 /* ModificarPerfilRequirement.swift */,
 				AE5BA04C2CB1B1D800AE8C0E /* ConsultarUsuariosRequirement.swift */,
 				6DD1172A2CAE60000084314A /* ConsultarPerfilPropioRequirement.swift */,
 				2509D74C2CB489F2008DF692 /* ModificarRolRequirement.swift */,
@@ -655,6 +663,7 @@
 		7B9C5ED22CA9E4C700441541 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				6D7221362CBDA67600C606D5 /* ModificarPerfilViewModel.swift */,
 				AE5BA0462CB1B18D00AE8C0E /* ConsultarUsuariosViewModel.swift */,
 				6DD117252CAE5C6A0084314A /* ConsultarPerfilPropioViewModel.swift */,
 				7B9C5ED32CA9E4D600441541 /* FAQViewModel.swift */,
@@ -948,6 +957,7 @@
 				25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */,
 				25858A122CB0AFE300A7719C /* ActividadIndividualView.swift in Sources */,
 				AE8E78902CA9E527007F7365 /* ConsultarActividadesRequirement.swift in Sources */,
+				6D7221372CBDA67E00C606D5 /* ModificarPerfilViewModel.swift in Sources */,
 				252B64EB2C99FE7200A362C5 /* User.swift in Sources */,
 				AE8E78AC2CA9E662007F7365 /* talleresView.swift in Sources */,
 				252B64ED2C99FE7200A362C5 /* APIRoutes.swift in Sources */,
@@ -969,6 +979,7 @@
 				2510D2032CB04E69004C29CC /* RegistrarActividadView.swift in Sources */,
 				25858A182CB0DBC700A7719C /* ActividadInfoView.swift in Sources */,
 				7B9C5EE42CAA571000441541 /* AddFAQViewModel.swift in Sources */,
+				6D7221332CBDA61400C606D5 /* ModificarPerfilView.swift in Sources */,
 				7B9C5ED62CA9E5C000441541 /* FAQModelo.swift in Sources */,
 				252B64D62C99FE5900A362C5 /* MenuTabs.swift in Sources */,
 				25C302C22C9A9390005AD742 /* TelefonoEmergenciaField.swift in Sources */,
@@ -1014,6 +1025,7 @@
 				7B9C5EF82CACF66800441541 /* FAQRepository.swift in Sources */,
 				259EF8B72CA23899007CE3FE /* UserProfileSessionAPIService.swift in Sources */,
 				25C302C02C9A91A3005AD742 /* TextoLimiteField.swift in Sources */,
+				6D7221392CBDA6A000C606D5 /* ModificarPerfilRequirement.swift in Sources */,
 				252B64E12C99FE6F00A362C5 /* SignUpRequirement.swift in Sources */,
 				252B64DC2C99FE5900A362C5 /* LoginViewModel.swift in Sources */,
 				AE8E788B2CA9E4B7007F7365 /* UserSessionManager.swift in Sources */,
