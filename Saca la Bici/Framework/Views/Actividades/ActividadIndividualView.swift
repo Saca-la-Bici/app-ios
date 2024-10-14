@@ -79,9 +79,8 @@ struct ActividadIndividualView: View {
                     )
                     .padding()
 
-                    Spacer().frame(height: 20)
-
                     if actividadIndividualViewModel.usuarioVerificado == false {
+                        Spacer().frame(height: 20)
                         CustomButton(
                             text: actividadIndividualViewModel.isJoined ? "Cancelar asistencia" : "Unirse",
                             backgroundColor: actividadIndividualViewModel.isJoined ? .red : Color(red: 0.961, green: 0.802, blue: 0.048),
@@ -176,6 +175,29 @@ struct ActividadIndividualView: View {
                             }
                         }
                     }
+                    
+                    if actividadIndividualViewModel.usuarioVerificado == true {
+                        HStack {
+                            Image(systemName: "info.circle")
+                                .font(.system(size: 22))
+                                .foregroundColor(ColorManager.shared.colorFromHex("#7DA68D"))
+
+                            Text("¡Ya verificaste tu asistencia para esta rodada!")
+                                .foregroundColor(.primary)
+                                .font(.system(size: 18, weight: .bold))
+                            
+                            Spacer()
+                        }
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(Color.gray.opacity(0.2))
+                                .shadow(radius: 5)
+                        )
+                        .padding(.horizontal)
+                    }
+                    
+                    Spacer().frame(height: 10)
                 }
                 .navigationTitle(actividadIndividualViewModel.titulo)
                 .sheet(item: $safariURL) { url in
