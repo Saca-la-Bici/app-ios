@@ -36,7 +36,14 @@ class ActividadIndividualViewModel: ObservableObject {
         case errorIndividual
     }
     
+    enum AlertTypeSheet {
+        case success
+        case error
+        case errorInscrito
+    }
+    
     @Published var alertType: AlertType?
+    @Published var alertTypeSheet: AlertTypeSheet?
     
     @Published var codigoAsistencia: String = ""
     @Published var codigoAsistenciaField: String = ""
@@ -179,18 +186,27 @@ class ActividadIndividualViewModel: ObservableObject {
             if response?.status == 400 && response?.message == "Código de asistencia incorrecto" {
                 self.messageAlert = "El código de verificación es incorrecto. Por favor intente de nuevo."
                 self.showAlertSheet = true
+                self.alertTypeSheet = .error
                 return
             } else if response?.status == 400 && response?.message == "La rodada no tiene un código de asistencia" {
                 self.messageAlert = "La rodada no tiene un código de asistencia."
                 self.showAlertSheet = true
+                self.alertTypeSheet = .error
                 return
+            } else if response?.status == 400 && response?.message == "Asistencia ya verificada para esta rodada" {
+                self.messageAlert = "Ya verificaste la asistencia para esta rodada. ¡Gracias por participar!"
+                self.showAlertSheet = true
+                self.alertTypeSheet = .errorInscrito
+                return
+            } else if response?.status == 200 {
+                self.messageAlert = "Tu asistencia ha sido verificada. ¡Gracias por asistir!"
+                self.showAlertSheet = true
+                self.alertTypeSheet = .success
             }
         } else {
             self.messageAlert = "Hubo un error al verificar tu asistencia. Por favor intentelo de nuevo."
             self.showAlertSheet = true
             return
         }
-        
-        print(response)
     }
 }

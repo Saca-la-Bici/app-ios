@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import FirebaseInAppMessaging
 
 extension URL: @retroactive Identifiable {
     public var id: String { absoluteString }
@@ -119,18 +120,12 @@ struct ActividadIndividualView: View {
                                         Task {
                                             await actividadIndividualViewModel.verificarAsistencia(
                                                 IDRodada: id, codigoAsistencia: actividadIndividualViewModel.codigoAsistencia, adminOrStaff: true)
-                                            if actividadIndividualViewModel.showAlertSheet != true {
-                                                showVerificarAsistenciaSheet.toggle()
-                                            }
                                         }
                                     } else {
                                         Task {
                                             await actividadIndividualViewModel.verificarAsistencia(
                                                 IDRodada: id,
                                                 codigoAsistencia: actividadIndividualViewModel.codigoAsistenciaField, adminOrStaff: false)
-                                            if actividadIndividualViewModel.showAlertSheet != true {
-                                                showVerificarAsistenciaSheet.toggle()
-                                            }
                                         }
                                     }
                                 },
@@ -140,11 +135,39 @@ struct ActividadIndividualView: View {
                             )
                             .presentationDetents([.fraction(0.35)])
                             .alert(isPresented: $actividadIndividualViewModel.showAlertSheet) {
-                                Alert(
-                                    title: Text("Oops!"),
-                                    message: Text(actividadIndividualViewModel.messageAlert),
-                                    dismissButton: .default(Text("Aceptar"))
-                                )
+                                switch actividadIndividualViewModel.alertTypeSheet {
+                                case .success:
+                                    return Alert(
+                                        title: Text("Éxito"),
+                                        message: Text(actividadIndividualViewModel.messageAlert),
+                                        dismissButton: .default(Text("Aceptar")) {
+                                            showVerificarAsistenciaSheet.toggle()
+                                            actividadIndividualViewModel.codigoAsistenciaField = ""
+                                            InAppMessaging.inAppMessaging().triggerEvent("medal_earned")
+                                        }
+                                    )
+                                case .error:
+                                    return Alert(
+                                        title: Text("Oops!"),
+                                        message: Text(actividadIndividualViewModel.messageAlert),
+                                        dismissButton: .default(Text("Aceptar"))
+                                    )
+                                case .errorInscrito:
+                                    return Alert(
+                                        title: Text("Oops!"),
+                                        message: Text(actividadIndividualViewModel.messageAlert),
+                                        dismissButton: .default(Text("Aceptar")) {
+                                            showVerificarAsistenciaSheet.toggle()
+                                            actividadIndividualViewModel.codigoAsistenciaField = ""
+                                        }
+                                    )
+                                case .none:
+                                    return Alert(
+                                        title: Text("Información"),
+                                        message: Text(actividadIndividualViewModel.messageAlert),
+                                        dismissButton: .default(Text("Aceptar"))
+                                    )
+                                }
                             }
                         }
                     }

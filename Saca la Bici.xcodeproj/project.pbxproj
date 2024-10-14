@@ -55,6 +55,7 @@
 		255474E12CBB51E5004CFAFE /* VerificarAsistenciaRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E02CBB51E5004CFAFE /* VerificarAsistenciaRequirement.swift */; };
 		255474E42CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E32CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift */; };
 		255474E62CBC43E5004CFAFE /* CodigoNumericoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E52CBC43E5004CFAFE /* CodigoNumericoView.swift */; };
+		255474E82CBD82D6004CFAFE /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 255474E72CBD82D6004CFAFE /* FirebaseInAppMessaging-Beta */; };
 		256EE2EF2CADB92400425181 /* TextoLimiteMultilineField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EE2EE2CADB92400425181 /* TextoLimiteMultilineField.swift */; };
 		25858A102CB0AF5400A7719C /* ActividadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */; };
 		25858A122CB0AFE300A7719C /* ActividadIndividualView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A112CB0AFE300A7719C /* ActividadIndividualView.swift */; };
@@ -305,6 +306,7 @@
 				6993203C2CB750C4000CA32F /* MapboxMaps in Frameworks */,
 				252B64F82C99FFBD00A362C5 /* FirebaseAuthCombine-Community in Frameworks */,
 				252B64F62C99FFBD00A362C5 /* FirebaseAuth in Frameworks */,
+				255474E82CBD82D6004CFAFE /* FirebaseInAppMessaging-Beta in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,6 +785,7 @@
 				2510D20D2CB050F6004C29CC /* DurationPicker */,
 				2510D2102CB060E7004C29CC /* SDWebImageSwiftUI */,
 				6993203B2CB750C4000CA32F /* MapboxMaps */,
+				255474E72CBD82D6004CFAFE /* FirebaseInAppMessaging-Beta */,
 			);
 			productName = "Saca la Bici";
 			productReference = 252B639B2C99F16700A362C5 /* Saca la Bici.app */;
@@ -1503,6 +1506,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 252B64F92C99FFE200A362C5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		255474E72CBD82D6004CFAFE /* FirebaseInAppMessaging-Beta */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 252B64F42C99FFBD00A362C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseInAppMessaging-Beta";
 		};
 		25A7BE5F2CA775CF00FCB8B6 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
