@@ -175,8 +175,14 @@ class ActividadIndividualViewModel: ObservableObject {
         
         let response = await verificarAsistenciaRequirement.verificarAsistencia(IDRodada: IDRodada, codigo: codigoAsistencia)
         
-        if response?.status == 400 && response?.message == "Código de asistencia incorrecto" {
-            self.messageAlert = "El código de verificación es incorrecto. Por favor intente de nuevo."
+        if response != nil {
+            if response?.status == 400 && response?.message == "Código de asistencia incorrecto" {
+                self.messageAlert = "El código de verificación es incorrecto. Por favor intente de nuevo."
+                self.showAlertSheet = true
+                return
+            }
+        } else {
+            self.messageAlert = "Hubo un error al verificar tu asistencia. Por favor intentelo de nuevo. "
             self.showAlertSheet = true
             return
         }
