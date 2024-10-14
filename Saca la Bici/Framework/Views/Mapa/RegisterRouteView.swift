@@ -1,5 +1,7 @@
 import SwiftUI
 import MapboxMaps
+import CoreLocation
+import FirebaseAuth  
 
 struct RegisterRouteView: View {
     @Binding var routeCoordinates: [CLLocationCoordinate2D]
@@ -9,9 +11,12 @@ struct RegisterRouteView: View {
     @State private var title: String = ""
     @State private var duration: String = ""
     @State private var selectedLevel: Int = 1
-    
+    @State private var isSubmitting: Bool = false
+    @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
+
     let levels = ["Nivel 1", "Nivel 2", "Nivel 3", "Nivel 4", "Nivel 5"]
-    
+
     var body: some View {
         VStack {
             ScrollView {
@@ -37,7 +42,7 @@ struct RegisterRouteView: View {
                         .background(Color(.systemGray6))
                         .cornerRadius(10)
                         
-                        Text("Distancia: \(distance, specifier: "%.2f") km ")
+                        Text("Distancia: \(distance, specifier: "%.2f") km")
                             .padding()
                     }
                     
@@ -49,9 +54,56 @@ struct RegisterRouteView: View {
             }
             
             Button(action: {
-                print("Ruta registrada: \(routeCoordinates)")
+                if routeCoordinates.count == 3 {
+                    isSubmitting = true
+                    
+                    let routeDetails = RouteDetails(
+                        titulo: title,
+                        distancia: String(format: "%.2f", distance),
+                        tiempo: duration,
+                        nivel: levels[selectedLevel - 1],
+                        start: routeCoordinates[0],
+                        stopover: routeCoordinates[1],
+                        end: routeCoordinates[2]
+                    )
+                    
+                    // Obtener el token de Firebase para la autenticación
+                    Auth.auth().currentUser?.getIDToken { idToken, error in
+                        if let error = error {
+                            print("Error al obtener el ID token: \(error.localizedDescription)")
+                            self.isSubmitting = false
+                            self.alertMessage = "Error al obtener el token de autenticación."
+                            self.showAlert = true
+                            return
+                        }
+                        
+                        guard let idToken = idToken else {
+                            print("No se pudo obtener el ID token.")
+                            self.isSubmitting = false
+                            self.alertMessage = "No se pudo obtener el token de autenticación."
+                            self.showAlert = true
+                            return
+                        }
+
+                        RouteAPIService.shared.sendRoute(routeDetails: routeDetails, idToken: idToken) { success in
+                            DispatchQueue.main.async {
+                                isSubmitting = false
+                                if success {
+                                    alertMessage = "Ruta registrada exitosamente."
+                                } else {
+                                    alertMessage = "Error al registrar la ruta."
+                                }
+                                showAlert = true
+                            }
+                        }
+                    }
+                    
+                } else {
+                    alertMessage = "Debe seleccionar exactamente 3 puntos para registrar la ruta."
+                    showAlert = true
+                }
             }) {
-                Text("Registrar Ruta")
+                Text(isSubmitting ? "Registrando..." : "Registrar Ruta")
                     .bold()
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -60,16 +112,17 @@ struct RegisterRouteView: View {
                     .foregroundColor(.black)
                     .padding(.horizontal)
             }
-            .disabled(routeCoordinates.count != 3)
+            .disabled(routeCoordinates.count != 3 || isSubmitting)
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Registro de Ruta"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            }
         }
         .padding(.top)
         .navigationTitle("Agrega una ruta")
         .onAppear {
-            // Habilitar agregar ruta
             isAddingRoute = true
         }
         .onDisappear {
-            // Deshabilitar agregar ruta cuando se sale de la pantalla
             isAddingRoute = false
         }
     }

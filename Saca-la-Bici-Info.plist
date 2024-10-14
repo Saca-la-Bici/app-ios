@@ -25,6 +25,23 @@
 	<string>pk.eyJ1IjoiYXJzYW5teCIsImEiOiJjbTFvYTdiZHkwd2Z6MmtxNzJiZWhsOWg0In0._dFa3U7KqNZVCccqR5Kk-Q</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<string></string>
+		</dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>NSExceptionDomains</key>
+			<dict>
+				<key>3.145.117.182</key>
+				<dict/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.0</string>
+			</dict>
+		</dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>

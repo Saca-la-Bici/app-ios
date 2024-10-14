@@ -9,14 +9,12 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                // Pasamos la variable isAddingRoute a MapViewContainer para controlar si se pueden registrar puntos
                 MapViewContainer(routeCoordinates: $routeCoordinates, distance: $distance, isAddingRoute: $isAddingRoute)
                     .ignoresSafeArea()
 
                 VStack {
                     HStack {
                         Spacer()
-                        // Cambiamos isAddingRoute a true cuando se presiona el botón para registrar la ruta
                         NavigationLink(destination: RegisterRouteView(routeCoordinates: $routeCoordinates, distance: $distance, isAddingRoute: $isAddingRoute)) {
                             Image(systemName: "plus.circle.fill")
                                 .font(.largeTitle)

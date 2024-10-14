@@ -11,7 +11,7 @@ struct MapViewContainer: UIViewRepresentable {
 
     let directions: Directions = {
         guard let accessToken = Bundle.main.object(forInfoDictionaryKey: "MBXAccessToken") as? String else {
-            fatalError("Mapbox access token is missing in Info.plist")
+            fatalError("No esta Mapbox en el .plist")
         }
         return Directions(credentials: Credentials(accessToken: accessToken))
     }()
@@ -76,7 +76,7 @@ struct MapViewContainer: UIViewRepresentable {
         }
 
         @objc func handleMapTap(_ sender: UITapGestureRecognizer) {
-            // Verificar si estamos en el modo de agregar ruta
+            // Verificar modo de agregar ruta
             guard isAddingRoute.wrappedValue else {
                 print("No está permitido registrar puntos en este modo.")
                 return
@@ -111,11 +111,11 @@ struct MapViewContainer: UIViewRepresentable {
             // Definir colores diferentes para los marcadores (inicio, descanso y final)
             switch index {
             case 0:
-                pointAnnotationManager.annotations.append(makePointAnnotation(at: coordinate, color: .black))  // Inicio
+                pointAnnotationManager.annotations.append(makePointAnnotation(at: coordinate, color: .black))
             case 1:
-                pointAnnotationManager.annotations.append(makePointAnnotation(at: coordinate, color: .gray))   // Descanso
+                pointAnnotationManager.annotations.append(makePointAnnotation(at: coordinate, color: .gray))
             case 2:
-                pointAnnotationManager.annotations.append(makePointAnnotation(at: coordinate, color: .red))    // Final
+                pointAnnotationManager.annotations.append(makePointAnnotation(at: coordinate, color: .red))
             default:
                 break
             }

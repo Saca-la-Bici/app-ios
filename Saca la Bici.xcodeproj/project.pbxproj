@@ -89,6 +89,7 @@
 		25F368212C9BAEA3003322CF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F368202C9BAEA3003322CF /* LoadingView.swift */; };
 		693B9CE22CBA22DB0027B786 /* MapboxDirections in Frameworks */ = {isa = PBXBuildFile; productRef = 693B9CE12CBA22DB0027B786 /* MapboxDirections */; };
 		693B9CE42CBA22DB0027B786 /* mapbox-directions-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 693B9CE32CBA22DB0027B786 /* mapbox-directions-swift */; };
+		693B9CEF2CBD7DF40027B786 /* RouteAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693B9CEE2CBD7DF40027B786 /* RouteAPIService.swift */; };
 		698D173B2CB7AE050083D202 /* MapViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698D173A2CB7ADFE0083D202 /* MapViewContainer.swift */; };
 		698D173D2CB7B1DE0083D202 /* RegisterRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698D173C2CB7B1DE0083D202 /* RegisterRouteView.swift */; };
 		6993203F2CB750F7000CA32F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6993203E2CB750F7000CA32F /* ContentView.swift */; };
@@ -237,6 +238,7 @@
 		25F3681C2C9B7B49003322CF /* TituloComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TituloComponent.swift; sourceTree = "<group>"; };
 		25F3681E2C9B8032003322CF /* MainViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewButton.swift; sourceTree = "<group>"; };
 		25F368202C9BAEA3003322CF /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		693B9CEE2CBD7DF40027B786 /* RouteAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteAPIService.swift; sourceTree = "<group>"; };
 		698D173A2CB7ADFE0083D202 /* MapViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewContainer.swift; sourceTree = "<group>"; };
 		698D173C2CB7B1DE0083D202 /* RegisterRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouteView.swift; sourceTree = "<group>"; };
 		6993203E2CB750F7000CA32F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 		252B64E62C99FE7200A362C5 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				693B9CEE2CBD7DF40027B786 /* RouteAPIService.swift */,
 				AE5BA0522CB1B26800AE8C0E /* UsuariosAPIService.swift */,
 				6DD117312CAE62850084314A /* ProfileAPIService.swift */,
 				AE8E788C2CA9E4CF007F7365 /* ActividadesAPIService.swift */,
@@ -1018,6 +1021,7 @@
 				25A7BE622CA9B17C00FCB8B6 /* NotificationManager.swift in Sources */,
 				25D0E5192CA38C6C00B431A9 /* RestablecerContraseñaRequirement.swift in Sources */,
 				AE8E78882CA9E457007F7365 /* ActividadesRepository.swift in Sources */,
+				693B9CEF2CBD7DF40027B786 /* RouteAPIService.swift in Sources */,
 				252B64E02C99FE6F00A362C5 /* LoginRequirement.swift in Sources */,
 				25F3681B2C9B62CD003322CF /* ImagenAmarillaFondo.swift in Sources */,
 				2510D2072CB04F0B004C29CC /* DurationPicker.swift in Sources */,
