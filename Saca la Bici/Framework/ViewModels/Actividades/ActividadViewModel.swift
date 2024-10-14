@@ -217,6 +217,8 @@ class ActividadViewModel: ObservableObject {
             self.tituloActividad = actividad!.titulo
             self.selectedTime = parseTime(time: actividad!.hora)
             self.ubicacionActividad = actividad!.ubicacion
+            self.descripcionActividad = actividad!.descripcion
+            self.selectedTimeDuration = parseDurationTime(duration: actividad!.duracion)
             
         } else {
             // Mensaje de error
@@ -228,6 +230,7 @@ class ActividadViewModel: ObservableObject {
     
     private func parseDate(date: String) -> Date {
         
+        // DateFormater
         let dateFormatter = DateFormatter()
         
         // Establecer el formato adecuado de la fecha
@@ -242,6 +245,7 @@ class ActividadViewModel: ObservableObject {
     
     private func parseTime(time: String) -> Date {
         
+        // DateFormater
         let dateFormatter = DateFormatter()
 
         // Establecer el formato adecuado de la fecha
@@ -249,6 +253,30 @@ class ActividadViewModel: ObservableObject {
 
         // Convertir el string a Date
         return dateFormatter.date(from: time)!
+    }
+    
+    private func parseDurationTime(duration: String) -> TimeInterval {
+        
+        // Variables
+        var hours: Int = 0
+        var minutes: Int = 0
+        
+        // Obtener lista de palabras
+        let words = duration.split(separator: " ")
+        
+        // Si tiene horas
+        if words[1] == "horas" {
+            hours = Int(words[0])!
+            minutes = Int(words[2])!
+        } else {
+            minutes = Int(words[0])!
+        }
+        
+        // Calcular el TimeInterval en segundos
+        let totalSeconds = (hours * 3600) + (minutes * 60)
+        
+        // Retornar el TimeInterval
+        return TimeInterval(totalSeconds)
     }
 
 }
