@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct FAQView: View {
+struct FAQView<PathType: Equatable>: View {
 
     @ObservedObject private var userSessionManager = UserSessionManager.shared
     
@@ -19,7 +19,7 @@ struct FAQView: View {
     @State private var searchText: String = ""
     
     // Binding
-    @Binding var path: [ConfigurationPaths]
+    @Binding var path: [PathType]
     
     var body: some View {
         
@@ -37,7 +37,15 @@ struct FAQView: View {
                     if userSessionManager.canCreateFAQ() {
                         Spacer()
                         Button(action: {
-                            path.append(.addFAQ)
+                            if let activityPath = PathType.self as? ActivitiesPaths.Type {
+                                if let addFAQPath = activityPath.addFAQ as? PathType {
+                                    path.append(addFAQPath)
+                                }
+                            } else if let configPath = PathType.self as? ConfigurationPaths.Type {
+                                if let addFAQPath = configPath.addFAQ as? PathType {
+                                    path.append(addFAQPath)
+                                }
+                            }
                         }, label: {
                             Image(systemName: "plus")
                                 .padding()
@@ -87,7 +95,7 @@ struct FAQView: View {
                                         faq: faq,
                                         permisos: userSessionManager.permisos,
                                         path: $path,
-                                        nextPath: .faqDetail(faq: faq, permisos: userSessionManager.permisos)
+                                        nextPath: getNextPath(for: faq)
                                     )
                                     .listRowBackground(Color(UIColor.systemGray5))
                                     .foregroundColor(.primary)
@@ -118,6 +126,15 @@ struct FAQView: View {
                 }
             }
         }
+    }
+    
+    func getNextPath(for faq: FAQ) -> PathType? {
+        if let pathType = PathType.self as? ActivitiesPaths.Type {
+            return pathType.faqDetail(faq: faq, permisos: userSessionManager.permisos) as? PathType
+        } else if let pathType = PathType.self as? ConfigurationPaths.Type {
+            return pathType.faqDetail(faq: faq, permisos: userSessionManager.permisos) as? PathType
+        }
+        return nil
     }
 }
 

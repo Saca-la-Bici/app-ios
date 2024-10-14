@@ -13,6 +13,7 @@ protocol ActividadesAPIProtocol {
     func getTalleres() async throws -> (talleres: [Taller], permisos: [String])
     func registrarActividad(actividad: DatosActividad) async throws -> Int?
     func consultarActividadIndividual(actividadID: String) async -> ActividadIndividualResponse?
+    func verificarAsistencia(IDRodada: String, codigo: String) async -> AsistenciaResponse?
 }
 
 class ActividadesRepository: ActividadesAPIProtocol {
@@ -123,5 +124,10 @@ class ActividadesRepository: ActividadesAPIProtocol {
         }
 
         return try await actividadesAPIService.cancelarAsistencia(url: url, actividadId: actividadId, tipo: tipo)
+    }
+    
+    func verificarAsistencia(IDRodada: String, codigo: String) async -> AsistenciaResponse? {
+        return await actividadesAPIService.verificarAsistencia(
+            url: URL(string: "\(Api.base)\(Api.Routes.rodadas)/verificarAsistencia")!, IDRodada: IDRodada, codigo: codigo)
     }
 }

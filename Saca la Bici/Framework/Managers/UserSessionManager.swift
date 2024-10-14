@@ -75,4 +75,8 @@ class UserSessionManager: ObservableObject {
     func canCreateFAQ() -> Bool {
         return tienePermiso("Registrar pregunta frecuente")
     }
+    
+    func puedeVerificarAsistencia() -> Bool {
+        return tienePermiso("Verificar asistencia")
+    }
 }

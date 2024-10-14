@@ -58,6 +58,7 @@ struct ActividadInfoView: View {
                             .underline()
                             .foregroundColor(.blue)
                     }
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
 

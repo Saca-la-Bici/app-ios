@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UpdateFAQView: View {
+struct UpdateFAQView<PathType: Equatable>: View {
     
     // FAQ
     var faq: FAQ
@@ -16,7 +16,7 @@ struct UpdateFAQView: View {
     @ObservedObject var viewModel = UpdateFAQViewModel()
     
     // Binding
-    @Binding var path: [ConfigurationPaths]
+    @Binding var path: [PathType]
     
     @Environment(\.presentationMode) var presentationMode
     
