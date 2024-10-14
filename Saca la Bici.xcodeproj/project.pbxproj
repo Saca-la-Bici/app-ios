@@ -132,6 +132,8 @@
 		AE8E78AA2CA9E659007F7365 /* rodadasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78A92CA9E653007F7365 /* rodadasView.swift */; };
 		AE8E78AC2CA9E662007F7365 /* talleresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78AB2CA9E65C007F7365 /* talleresView.swift */; };
 		AE9D1EE02CB73EDB00750DC4 /* LinksComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9D1EDF2CB73ECE00750DC4 /* LinksComponent.swift */; };
+		AED990EA2CBD6F1C00F1E64F /* IniciarRodadaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED990E92CBD6F1200F1E64F /* IniciarRodadaViewModel.swift */; };
+		AED990EC2CBD6F3000F1E64F /* IniciarRodadaRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED990EB2CBD6F2700F1E64F /* IniciarRodadaRequirement.swift */; };
 		AEE34B8A2C9FA61800C2EECE /* modificarAnuncioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */; };
 		AEF4467D2CA9F5D70004D5E8 /* ActividadesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF4467C2CA9F5D20004D5E8 /* ActividadesView.swift */; };
 		AEF4467F2CA9F7B20004D5E8 /* FechaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF4467E2CA9F7AD0004D5E8 /* FechaManager.swift */; };
@@ -278,6 +280,8 @@
 		AE8E78A92CA9E653007F7365 /* rodadasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rodadasView.swift; sourceTree = "<group>"; };
 		AE8E78AB2CA9E65C007F7365 /* talleresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talleresView.swift; sourceTree = "<group>"; };
 		AE9D1EDF2CB73ECE00750DC4 /* LinksComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksComponent.swift; sourceTree = "<group>"; };
+		AED990E92CBD6F1200F1E64F /* IniciarRodadaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IniciarRodadaViewModel.swift; sourceTree = "<group>"; };
+		AED990EB2CBD6F2700F1E64F /* IniciarRodadaRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IniciarRodadaRequirement.swift; sourceTree = "<group>"; };
 		AEE34B892C9FA61800C2EECE /* modificarAnuncioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modificarAnuncioView.swift; sourceTree = "<group>"; };
 		AEF4467C2CA9F5D20004D5E8 /* ActividadesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesView.swift; sourceTree = "<group>"; };
 		AEF4467E2CA9F7AD0004D5E8 /* FechaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FechaManager.swift; sourceTree = "<group>"; };
@@ -704,6 +708,7 @@
 		AE8E788E2CA9E516007F7365 /* Actividades */ = {
 			isa = PBXGroup;
 			children = (
+				AED990EB2CBD6F2700F1E64F /* IniciarRodadaRequirement.swift */,
 				AEFD01A12CB331F6003B37C3 /* InscribirActividadRequirement.swift */,
 				2510D1FA2CB04C93004C29CC /* RegistrarActividadRequirement.swift */,
 				AE8E788F2CA9E520007F7365 /* ConsultarActividadesRequirement.swift */,
@@ -715,6 +720,7 @@
 		AE8E78912CA9E558007F7365 /* Actividades */ = {
 			isa = PBXGroup;
 			children = (
+				AED990E92CBD6F1200F1E64F /* IniciarRodadaViewModel.swift */,
 				25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */,
 				AE8E78962CA9E599007F7365 /* TalleresViewModel.swift */,
 				AE8E78942CA9E57A007F7365 /* RodadasViewModel.swift */,
@@ -985,6 +991,7 @@
 				25A7BE582CA664A800FCB8B6 /* SeguridadAccesoView.swift in Sources */,
 				25858A102CB0AF5400A7719C /* ActividadViewModel.swift in Sources */,
 				7B9C5EDE2CAA257E00441541 /* FAQDetailView.swift in Sources */,
+				AED990EC2CBD6F3000F1E64F /* IniciarRodadaRequirement.swift in Sources */,
 				7B9C5EDC2CAA219800441541 /* FAQCard.swift in Sources */,
 				251C5FD42CAF360800CFAC87 /* ImagePicker.swift in Sources */,
 				25858A142CB0B87600A7719C /* ActividadIndividualViewModel.swift in Sources */,
@@ -999,6 +1006,7 @@
 				252B64DB2C99FE5900A362C5 /* LoginView.swift in Sources */,
 				25C302C82C9A9E7C005AD742 /* CompletarDatosStep2View.swift in Sources */,
 				25A7BE512CA61C9500FCB8B6 /* ProfileView.swift in Sources */,
+				AED990EA2CBD6F1C00F1E64F /* IniciarRodadaViewModel.swift in Sources */,
 				AE8E788D2CA9E4D9007F7365 /* ActividadesAPIService.swift in Sources */,
 				259CBBA02CA0E44A0067B550 /* SessionPaths.swift in Sources */,
 				7B9C5EEC2CAB754100441541 /* FAQDetailViewModel.swift in Sources */,
