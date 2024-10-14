@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FAQDetailView: View {
+struct FAQDetailView<PathType: Equatable>: View {
     
     // Parámetro
     var faq: FAQ
@@ -22,7 +22,7 @@ struct FAQDetailView: View {
     @State private var showDeleteConfirmation = false
     
     // Binding
-    @Binding var path: [ConfigurationPaths]
+    @Binding var path: [PathType]
     
     var body: some View {
         ZStack {
@@ -59,7 +59,15 @@ struct FAQDetailView: View {
                                 text: "Editar Pregunta",
                                 backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                                 action: {
-                                    path.append(.updateFAQ(faq: viewModel.faq ?? faq))
+                                    if let activityPath = PathType.self as? ActivitiesPaths.Type {
+                                        if let updateFAQPath = activityPath.updateFAQ(faq: viewModel.faq ?? faq) as? PathType {
+                                            path.append(updateFAQPath)
+                                        }
+                                    } else if let configPath = PathType.self as? ConfigurationPaths.Type {
+                                        if let updateFAQPath = configPath.updateFAQ(faq: viewModel.faq ?? faq) as? PathType {
+                                            path.append(updateFAQPath)
+                                        }
+                                    }
                                 }
                             )
                         }
@@ -135,7 +143,7 @@ struct FAQDetailView: View {
 }
 
 #Preview {
-    FAQDetailView(
+    FAQDetailView<ConfigurationPaths>(
         faq: FAQ(IdPregunta: 1, Pregunta: "Pregunta 1", Respuesta: "Respuesta 1", Tema: "Tema 1", Imagen: ""),
         permisos: [],
         path: .constant([])

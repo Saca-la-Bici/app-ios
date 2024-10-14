@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct FAQCard: View {
+struct FAQCard<PathType: Equatable>: View {
     
     // Parametros
     var faq: FAQ
     var permisos: [String]
     
-    @Binding var path: [ConfigurationPaths]
-    var nextPath: ConfigurationPaths?
+    @Binding var path: [PathType]
+    var nextPath: PathType?
     
     var body: some View {
         Button {
