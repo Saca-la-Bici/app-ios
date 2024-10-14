@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import FirebaseAuth
 
 @MainActor
 class ActividadIndividualViewModel: ObservableObject {
@@ -47,6 +48,7 @@ class ActividadIndividualViewModel: ObservableObject {
     
     @Published var codigoAsistencia: String = ""
     @Published var codigoAsistenciaField: String = ""
+    @Published var usuarioVerificado: Bool = false
     
     private let empty = ActividadIndividualResponse()
     private var userSessionManager = UserSessionManager.shared
@@ -106,6 +108,19 @@ class ActividadIndividualViewModel: ObservableObject {
                 
                 let codigoTemp = datosActividad.actividad.codigoAsistencia ?? 0
                 self.codigoAsistencia = String(codigoTemp)
+                
+                if let user = Auth.auth().currentUser {
+                    let uid = user.uid
+                    
+                    if let usuariosVerificados = datosActividad.actividad.usuariosVerificados {
+                        if usuariosVerificados.contains(uid) {
+                            self.usuarioVerificado = true
+                        } else {
+                            self.usuarioVerificado = false
+                        }
+                    }
+                }
+                
             }
             self.isLoading = false
             

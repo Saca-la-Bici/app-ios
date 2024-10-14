@@ -99,7 +99,8 @@ struct ActividadIndividualView: View {
                     )
                     .padding()
                     
-                    if actividadIndividualViewModel.tipo == "Rodada" {
+                    if actividadIndividualViewModel.tipo == "Rodada" &&
+                        actividadIndividualViewModel.usuarioVerificado == false {
                         Spacer().frame(height: 10)
                         
                         CustomButton(
@@ -144,6 +145,7 @@ struct ActividadIndividualView: View {
                                             showVerificarAsistenciaSheet.toggle()
                                             actividadIndividualViewModel.codigoAsistenciaField = ""
                                             InAppMessaging.inAppMessaging().triggerEvent("medal_earned")
+                                            actividadIndividualViewModel.usuarioVerificado = true
                                         }
                                     )
                                 case .error:
