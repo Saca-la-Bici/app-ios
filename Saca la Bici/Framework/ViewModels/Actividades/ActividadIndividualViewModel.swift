@@ -109,11 +109,9 @@ class ActividadIndividualViewModel: ObservableObject {
                 let codigoTemp = datosActividad.actividad.codigoAsistencia ?? 0
                 self.codigoAsistencia = String(codigoTemp)
                 
-                if let user = Auth.auth().currentUser {
-                    let uid = user.uid
-                    
+                if let currentUserID = userSessionManager.currentUserID {
                     if let usuariosVerificados = datosActividad.actividad.usuariosVerificados {
-                        if usuariosVerificados.contains(uid) {
+                        if usuariosVerificados.contains(currentUserID) {
                             self.usuarioVerificado = true
                         } else {
                             self.usuarioVerificado = false

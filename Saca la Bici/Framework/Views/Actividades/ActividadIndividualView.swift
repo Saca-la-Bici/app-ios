@@ -81,26 +81,29 @@ struct ActividadIndividualView: View {
 
                     Spacer().frame(height: 20)
 
-                    CustomButton(
-                        text: actividadIndividualViewModel.isJoined ? "Cancelar asistencia" : "Unirse",
-                        backgroundColor: actividadIndividualViewModel.isJoined ? .red : Color(red: 0.961, green: 0.802, blue: 0.048),
-                        foregroundColor: .white,
-                        action: {
-                            Task {
-                                if actividadIndividualViewModel.isJoined {
-                                    await actividadIndividualViewModel.cancelarAsistencia(actividadID: id)
-                                } else {
-                                    await actividadIndividualViewModel.inscribirActividad(actividadID: id)
+                    if actividadIndividualViewModel.usuarioVerificado == false {
+                        CustomButton(
+                            text: actividadIndividualViewModel.isJoined ? "Cancelar asistencia" : "Unirse",
+                            backgroundColor: actividadIndividualViewModel.isJoined ? .red : Color(red: 0.961, green: 0.802, blue: 0.048),
+                            foregroundColor: .white,
+                            action: {
+                                Task {
+                                    if actividadIndividualViewModel.isJoined {
+                                        await actividadIndividualViewModel.cancelarAsistencia(actividadID: id)
+                                    } else {
+                                        await actividadIndividualViewModel.inscribirActividad(actividadID: id)
+                                    }
                                 }
-                            }
-                        },
-                        tieneIcono: true,
-                        icono: actividadIndividualViewModel.isJoined ? "xmark" : "plus"
-                    )
-                    .padding()
+                            },
+                            tieneIcono: true,
+                            icono: actividadIndividualViewModel.isJoined ? "xmark" : "plus"
+                        )
+                        .padding()
+                    }
                     
                     if actividadIndividualViewModel.tipo == "Rodada" &&
-                        actividadIndividualViewModel.usuarioVerificado == false {
+                        actividadIndividualViewModel.usuarioVerificado == false &&
+                        actividadIndividualViewModel.isJoined == true {
                         Spacer().frame(height: 10)
                         
                         CustomButton(
