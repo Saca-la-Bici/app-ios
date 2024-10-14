@@ -19,10 +19,14 @@ struct VerificarAsistenciaSheet: View {
     var body: some View {
         VStack {
             if userSessionManager.puedeVerificarAsistencia() {
-                Text("Código de Verificación: \(codigoAsistencia)")
-                    .font(.headline)
-                    .padding()
-                
+                HStack {
+                    Text("Código de Verificación: ")
+                        .font(.system(size: 16)) // Tamaño normal para el texto
+                    Text(codigoAsistencia)
+                        .font(.system(size: 34, weight: .bold)) // Tamaño grande y negrita para el número
+                }
+                .padding(.vertical, 20) // Espaciado vertical
+
                 CustomButton(
                     text: "Verificar Asistencia",
                     backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),

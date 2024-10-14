@@ -180,9 +180,13 @@ class ActividadIndividualViewModel: ObservableObject {
                 self.messageAlert = "El código de verificación es incorrecto. Por favor intente de nuevo."
                 self.showAlertSheet = true
                 return
+            } else if response?.status == 400 && response?.message == "La rodada no tiene un código de asistencia" {
+                self.messageAlert = "La rodada no tiene un código de asistencia."
+                self.showAlertSheet = true
+                return
             }
         } else {
-            self.messageAlert = "Hubo un error al verificar tu asistencia. Por favor intentelo de nuevo. "
+            self.messageAlert = "Hubo un error al verificar tu asistencia. Por favor intentelo de nuevo."
             self.showAlertSheet = true
             return
         }
