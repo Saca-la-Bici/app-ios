@@ -86,6 +86,7 @@ class ActividadViewModel: ObservableObject {
         tipoActividad = ""
         navTitulo = ""
         guardarBoton = ""
+        isEditing = false
     }
     
     @MainActor
@@ -204,8 +205,6 @@ class ActividadViewModel: ObservableObject {
     
     @MainActor
     func getActividad() async {
-        
-        print(idActividad)
         
         let actividadIndividualResponse = await modificarActividadRequirement.consultarActividadIndividual(actividadId: self.idActividad)
         
