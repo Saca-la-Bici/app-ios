@@ -77,7 +77,7 @@ struct ActivityCardView: View {
                             Label("Modificar actividad", systemImage: "pencil")
                         })
 
-                        Button(action: {
+                        Button(role: .destructive, action: {
                             // Acción para eliminar la actividad
                             actividadViewModel.activeAlert = .delete
                         }, label: {
