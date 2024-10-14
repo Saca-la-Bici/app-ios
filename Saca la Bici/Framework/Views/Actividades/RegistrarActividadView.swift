@@ -30,10 +30,97 @@ struct RegistrarActividadView: View {
 
                     HStack {
                         Spacer()
-                        // Para subir la imagen
-                        ImagePickerView(
-                            selectedItem: $actividadViewModel.selectedItem,
-                            selectedImageData: $actividadViewModel.selectedImageData)
+                        
+                        // Si no hay imagen seleccionada ni URL de imagen existente:
+                        if actividadViewModel.selectedImageData == nil && actividadViewModel.existingImageURL == nil {
+                            
+                            ImagePickerView(selectedItem: $actividadViewModel.selectedItem, selectedImageData: $actividadViewModel.selectedImageData)
+                            
+                        }
+                        // Si hay una imagen seleccionada por el usuario (nueva)
+                        else if let data = actividadViewModel.selectedImageData, let uiImage = UIImage(data: data) {
+                            
+                            // Mostrar la imagen seleccionada
+                            VStack {
+                                    Image(uiImage: uiImage)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 200, height: 200)
+                                        .cornerRadius(10)
+                                    Button(action: {
+                                        actividadViewModel.selectedImageData = nil
+                                    }, label: {
+                                        Text("Eliminar Imagen")
+                                            .foregroundColor(.red)
+                                            .padding(.top, 5)
+                                    })
+                                    .buttonStyle(PlainButtonStyle())
+                                }
+                            
+                        }
+                        // Hay una imagen del S3
+                        else if let imageURL = actividadViewModel.existingImageURL {
+                            // Mostrar la imagen existente
+                            VStack {
+                                AsyncImage(url: imageURL) { phase in
+                                    if let image = phase.image {
+                                        image
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 200, height: 200)
+                                            .cornerRadius(10)
+                                    } else if phase.error != nil {
+                                        // Error al cargar la imagen
+                                        Image(systemName: "photo")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 200, height: 200)
+                                            .cornerRadius(10)
+                                    } else {
+                                        // Placeholder mientras se carga la imagen
+                                        ProgressView()
+                                            .frame(width: 200, height: 200)
+                                    }
+                                }
+                                
+                                HStack {
+                                    // Usar el componente ImagePickerView para cambiar la imagen existente
+                                    PhotosPicker(
+                                        selection: $actividadViewModel.selectedItem,
+                                        matching: .images,
+                                        photoLibrary: .shared(),
+                                        label: {
+                                            Text("Cambiar Imagen")
+                                                .foregroundColor(.blue)
+                                                .padding(.top, 5)
+                                        }
+                                    )
+                                    .buttonStyle(PlainButtonStyle())
+                                    
+                                    Button(action: {
+                                        // Eliminar la imagen existente
+                                        actividadViewModel.selectedImageData = nil
+                                        actividadViewModel.existingImageURL = nil
+                                        actividadViewModel.existingImageData = nil
+                                    }, label: {
+                                        Text("Eliminar Imagen")
+                                            .foregroundColor(.red)
+                                            .padding(.top, 5)
+                                    })
+                                }
+                            }
+                            .onChange(of: actividadViewModel.selectedItem) { _, newItem in
+                                Task {
+                                    if let data = try? await newItem?.loadTransferable(type: Data.self),
+                                       UIImage(data: data) != nil {
+                                        actividadViewModel.selectedImageData = data
+                                        actividadViewModel.existingImageURL = nil
+                                        actividadViewModel.existingImageData = nil
+                                    }
+                                }
+                            }
+                        }
+                        
                         Spacer()
                     }
 

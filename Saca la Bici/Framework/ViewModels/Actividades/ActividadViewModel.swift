@@ -17,8 +17,12 @@ class ActividadViewModel: ObservableObject {
     @Published var ubicacionActividad: String = ""
     @Published var descripcionActividad: String = ""
     
+    // Imagen
+    @Published var existingImageURL: URL?
+    @Published var existingImageData: Data?
     @Published var selectedItem: PhotosPickerItem?
     @Published var selectedImageData: Data?
+    
     @Published var selectedTime: Date = {
         var components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
         components.hour = 21
@@ -213,13 +217,13 @@ class ActividadViewModel: ObservableObject {
         if actividad != nil {
             
             // Rellenar los campos
+            self.existingImageURL = URL(string: actividad!.imagen ?? "")
             self.selectedDate = parseDate(date: actividad!.fecha)
             self.tituloActividad = actividad!.titulo
             self.selectedTime = parseTime(time: actividad!.hora)
             self.ubicacionActividad = actividad!.ubicacion
             self.descripcionActividad = actividad!.descripcion
             self.selectedTimeDuration = parseDurationTime(duration: actividad!.duracion)
-            
         } else {
             // Mensaje de error
             self.messageAlert = "No se encontró la actividad."
