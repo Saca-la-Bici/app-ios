@@ -17,9 +17,13 @@ class ModificarPerfilViewModel: ObservableObject {
     func modificarPerfil(nombre: String, username: String, tipoSangre: String, numeroEmergencia: String) async -> String {
         
         do {
+            
+            let tipoSangreEnviar = tipoSangre == "Sin seleccionar" ? "" : tipoSangre
+            
             resultado = try await modificarPerfilRequirement.modificarPerfil(
                 nombre: nombre, username: username,
-                tipoSangre: tipoSangre, numeroEmergencia: numeroEmergencia)
+                tipoSangre: tipoSangreEnviar, numeroEmergencia: numeroEmergencia)
+            resultado = "Perfil modificado correctamente"
         } catch {
             print("Error: \(error.localizedDescription)")
             resultado = "Error al modificar el perfil, intentelo más tarde"
@@ -27,5 +31,9 @@ class ModificarPerfilViewModel: ObservableObject {
         
         return resultado
     }
+    
+    // Creas dos variables más por si se comete un error
+    @Published var messageAlert = ""
+    @Published var showAlert = false
     
 }

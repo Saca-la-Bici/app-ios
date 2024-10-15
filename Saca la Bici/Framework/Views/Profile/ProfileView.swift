@@ -55,6 +55,16 @@ struct ProfileView: View {
                         
                         // Imagen de perfil con borde de color
                         VStack {
+                            
+                            HStack {
+                                Text(consultarPerfilPropioViewModel.profile?.username ?? "")
+                                    .font(.system(size: 14))
+                                    .fontWeight(.bold)
+                                    .padding(.leading, 20)
+                                
+                                Spacer()
+                            }
+                            
                             HStack {
                                 // Elementos invisibles para alinear el contenido
                                 HStack(spacing: 3) {
@@ -114,10 +124,12 @@ struct ProfileView: View {
                                         .resizable()
                                         .frame(width: 18, height: 20)
                                         .padding(.top, 50)
+                                        .opacity(consultarPerfilPropioViewModel.profile?.tipoSangre == "Sin seleccionar" ? 0 : 1)
                                     
                                     Text(consultarPerfilPropioViewModel.profile?.tipoSangre ?? "")
                                         .font(.subheadline)
                                         .padding(.top, 50)
+                                        .opacity(consultarPerfilPropioViewModel.profile?.tipoSangre == "Sin seleccionar" ? 0 : 1)
                                 }
                             }
                             .frame(maxWidth: .infinity)
@@ -208,7 +220,7 @@ struct ProfileView: View {
                 case .asignacionRoles:
                     ConsultarUsuariosView(path: $path)
                 case .editProfile:
-                    ModificarPerfilView()
+                    ModificarPerfilView(path: $path)
                 default:
                     EmptyView()
                 }

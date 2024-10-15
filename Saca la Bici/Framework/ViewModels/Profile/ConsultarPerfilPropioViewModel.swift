@@ -23,6 +23,8 @@ class ConsultarPerfilPropioViewModel: ObservableObject {
         do {
             
             self.profile = try await consultarPerfilPropioRequirement.consultarPerfilPropio()
+            self.profile?.tipoSangre = profile?.tipoSangre?.isEmpty == true ? "Sin seleccionar" : profile?.tipoSangre ?? "Sin seleccionar"
+            
         } catch {
             self.errorMessage = "Hubo un error al ingresar a tu perfil, intente de nuevo más tarde"
             
