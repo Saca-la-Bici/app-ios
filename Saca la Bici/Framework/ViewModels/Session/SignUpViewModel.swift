@@ -212,10 +212,14 @@ class SignUpViewModel: ObservableObject {
     @MainActor
     func completarRegistro() async {
         
-        if self.countryCode.isEmpty || self.phoneNumber.isEmpty || self.selectedBloodType == "Selecciona tu tipo de sangre" {
+        if self.countryCode.isEmpty || self.phoneNumber.isEmpty {
             self.messageAlert = "Falta de llenar algún dato. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
+        }
+        
+        if self.selectedBloodType == "Sin seleccionar" {
+            self.selectedBloodType = ""
         }
         
         let numeroEmergencia = "+" + self.countryCode + self.phoneNumber
