@@ -10,11 +10,14 @@ import SwiftUI
 struct ModificarPerfilView: View {
     
     @StateObject private var consultarPerfilPropioViewModel = ConsultarPerfilPropioViewModel.shared
+    @StateObject private var modificarPerfilViewModel = ModificarPerfilViewModel()
 
     @State private var nombre: String
     @State private var nombreUsuario: String
     @State private var tipoSangre: String
     @State private var telefonoEmergencia: String = ""
+    @State private var resultado: String = ""
+    @State private var mostrarAlerta: Bool = false
     
     let tiposSangre = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "No seleccionado"]
     
@@ -92,8 +95,34 @@ struct ModificarPerfilView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .navigationTitle("Editar Perfil")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            Task {
+                                // Llama la función asincrónica y guarda el resultado concatenado
+                                resultado = await modificarPerfilViewModel.modificarPerfil(
+                                    nombre: nombre,
+                                    username: nombreUsuario,
+                                    tipoSangre: tipoSangre,
+                                    numeroEmergencia: telefonoEmergencia
+                                )
+                                
+                                mostrarAlerta = true
+                            }
+                        } label: {
+                            Image(systemName: "checkmark")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(.yellow)
+                        }
+                    }
+                }
+                .alert("Resultado", isPresented: $mostrarAlerta) {
+                    Button("Aceptar", role: .cancel) {}
+                } message: {
+                    Text(resultado)
+                }
             }
         }
     }
-
-
