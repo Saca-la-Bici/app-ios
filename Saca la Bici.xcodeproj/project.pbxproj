@@ -56,6 +56,7 @@
 		255474E42CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E32CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift */; };
 		255474E62CBC43E5004CFAFE /* CodigoNumericoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E52CBC43E5004CFAFE /* CodigoNumericoView.swift */; };
 		255474E82CBD82D6004CFAFE /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 255474E72CBD82D6004CFAFE /* FirebaseInAppMessaging-Beta */; };
+		255474EA2CBEDA73004CFAFE /* InformacionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E92CBEDA73004CFAFE /* InformacionView.swift */; };
 		256EE2EF2CADB92400425181 /* TextoLimiteMultilineField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EE2EE2CADB92400425181 /* TextoLimiteMultilineField.swift */; };
 		25858A102CB0AF5400A7719C /* ActividadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */; };
 		25858A122CB0AFE300A7719C /* ActividadIndividualView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A112CB0AFE300A7719C /* ActividadIndividualView.swift */; };
@@ -206,6 +207,7 @@
 		255474E02CBB51E5004CFAFE /* VerificarAsistenciaRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificarAsistenciaRequirement.swift; sourceTree = "<group>"; };
 		255474E32CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificarAsistenciaSheet.swift; sourceTree = "<group>"; };
 		255474E52CBC43E5004CFAFE /* CodigoNumericoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodigoNumericoView.swift; sourceTree = "<group>"; };
+		255474E92CBEDA73004CFAFE /* InformacionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformacionView.swift; sourceTree = "<group>"; };
 		256EE2EE2CADB92400425181 /* TextoLimiteMultilineField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextoLimiteMultilineField.swift; sourceTree = "<group>"; };
 		25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadViewModel.swift; sourceTree = "<group>"; };
 		25858A112CB0AFE300A7719C /* ActividadIndividualView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadIndividualView.swift; sourceTree = "<group>"; };
@@ -620,6 +622,7 @@
 			children = (
 				AE5BA04A2CB1B1B400AE8C0E /* ConsultarUsuariosView.swift */,
 				25A7BE502CA61C9500FCB8B6 /* ProfileView.swift */,
+				255474E92CBEDA73004CFAFE /* InformacionView.swift */,
 				25A7BE4E2CA61C0600FCB8B6 /* ConfigurationView.swift */,
 				25A7BE572CA664A800FCB8B6 /* SeguridadAccesoView.swift */,
 				7B9C5EDF2CAA4FB400441541 /* AddFAQView.swift */,
@@ -996,6 +999,7 @@
 				2510D2092CB04F2E004C29CC /* FechaPicker.swift in Sources */,
 				6DD117262CAE5C790084314A /* ConsultarPerfilPropioViewModel.swift in Sources */,
 				25A7BE5C2CA7713A00FCB8B6 /* FirebaseTokenManager.swift in Sources */,
+				255474EA2CBEDA73004CFAFE /* InformacionView.swift in Sources */,
 				6DD1172B2CAE61190084314A /* ConsultarPerfilPropioRequirement.swift in Sources */,
 				252B64D82C99FE5900A362C5 /* MainLoginView.swift in Sources */,
 				252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */,

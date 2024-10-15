@@ -171,6 +171,8 @@ struct ProfileView: View {
                     PasswordRecoveryView<ConfigurationPaths>(path: $path, showIniciarSesion: false )
                 case .asignacionRoles:
                     ConsultarUsuariosView(path: $path)
+                case .informacion:
+                    InformacionView(path: $path)
                 default:
                     EmptyView()
                 }
