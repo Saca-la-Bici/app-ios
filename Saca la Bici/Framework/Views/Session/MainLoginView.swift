@@ -14,6 +14,7 @@ struct MainLoginView: View {
     
     // Estado para la pila de navegación
     @State private var path: [SessionPaths] = []
+    @State private var safariURL: URL?
     
     // ViewModel para pasar a las otras vistas
     @StateObject var signUpViewModel = SignUpViewModel()
@@ -107,6 +108,24 @@ struct MainLoginView: View {
                             .signInWithAppleButtonStyle(.black)
                             .frame(height: 50)
                         }
+                        
+                        VStack(spacing: 5) {
+                            Button(action: {
+                                safariURL = URL(string: "http://18.220.205.53:8080/politicasAplicacion/politicaPrivacidad")
+                            }, label: {
+                                Text("Política de Privacidad")
+                                    .font(.footnote)
+                                    .foregroundColor(ColorManager.shared.colorFromHex("#7DA68D"))
+                            })
+                            
+                            Button(action: {
+                                safariURL = URL(string: "http://18.220.205.53:8080/politicasAplicacion/terminosCondiciones")
+                            }, label: {
+                                Text("Términos y Condiciones")
+                                    .font(.footnote)
+                                    .foregroundColor(ColorManager.shared.colorFromHex("#7DA68D"))
+                            })
+                        }
                     }
                     .padding(.horizontal, 30.0)
                     .padding(.vertical, 20.0)
@@ -132,6 +151,9 @@ struct MainLoginView: View {
                 default:
                     EmptyView()
                 }
+            }
+            .sheet(item: $safariURL) { url in
+                SafariView(url: url)
             }
         }
     }
