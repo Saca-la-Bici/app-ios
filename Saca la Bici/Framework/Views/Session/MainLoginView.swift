@@ -117,6 +117,7 @@ struct MainLoginView: View {
                                     .font(.footnote)
                                     .foregroundColor(ColorManager.shared.colorFromHex("#7DA68D"))
                             })
+                            .buttonStyle(PlainButtonStyle())
                             
                             Button(action: {
                                 safariURL = URL(string: "http://18.220.205.53:8080/politicasAplicacion/terminosCondiciones")
@@ -125,6 +126,7 @@ struct MainLoginView: View {
                                     .font(.footnote)
                                     .foregroundColor(ColorManager.shared.colorFromHex("#7DA68D"))
                             })
+                            .buttonStyle(PlainButtonStyle())
                         }
                     }
                     .padding(.horizontal, 30.0)
