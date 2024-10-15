@@ -102,6 +102,21 @@ struct ActividadIndividualView: View {
                         .padding()
                     }
                     
+                    if actividadIndividualViewModel.isJoined && actividadIndividualViewModel.tipo == "Rodada" &&
+                        userSessionManager.puedeIniciarRodada() {
+                        CustomButton(
+                            text: rodadaIniciada ? "Parar" : "Iniciar rodada",
+                            backgroundColor: rodadaIniciada ? .red : colorManager.colorFromHex("88B598"),
+                            foregroundColor: .white,
+                            action: {
+                                rodadaIniciada.toggle()
+                            },
+                            tieneIcono: true,
+                            icono: rodadaIniciada ? "stop.circle" : "play.circle"
+                        )
+                        .padding(.horizontal)
+                    }
+                    
                     if actividadIndividualViewModel.tipo == "Rodada" &&
                         actividadIndividualViewModel.usuarioVerificado == false &&
                         actividadIndividualViewModel.isJoined == true {
