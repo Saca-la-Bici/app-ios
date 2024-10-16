@@ -155,7 +155,7 @@ class SignUpViewModel: ObservableObject {
             return
         }
         
-        let numeroEmergencia = "+" + self.countryCode + self.phoneNumber
+        let numeroEmergencia = self.countryCode + self.phoneNumber
         
         let usuarioNuevo = UserNuevo(username: self.username, password: self.confirmPassword,
                                      nombre: nombreCompleto, email: self.email, fechaNacimiento: fechaNacimiento,
@@ -222,7 +222,7 @@ class SignUpViewModel: ObservableObject {
             self.selectedBloodType = ""
         }
         
-        let numeroEmergencia = "+" + self.countryCode + self.phoneNumber
+        let numeroEmergencia = self.countryCode + self.phoneNumber
         
         let usuarioNuevo = UserExterno(username: self.username, fechaNacimiento: fechaNacimiento,
                                        tipoSangre: self.selectedBloodType, numeroEmergencia: numeroEmergencia)
