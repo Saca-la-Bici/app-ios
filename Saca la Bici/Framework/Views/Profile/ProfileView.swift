@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ProfileView: View {
     @State private var path: [ConfigurationPaths] = []
+    @State private var path2: [ActivitiesPaths] = []
     
     @StateObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
+    @StateObject var actividadViewModel = ActividadViewModel()
     
     @StateObject private var consultarPerfilPropioViewModel = ConsultarPerfilPropioViewModel.shared
     
@@ -181,7 +183,7 @@ struct ProfileView: View {
                         .padding(.horizontal, 100)
                         .padding(.bottom, 10)
 
-                        IconSelectionView()
+                        IconSelectionView(path: $path2)
                     }
                 }
                 Spacer()
@@ -226,6 +228,34 @@ struct ProfileView: View {
                     ModificarPerfilView(path: $path)
                 default:
                     EmptyView()
+                }
+            }
+            .navigationDestination(for: ActivitiesPaths.self) { value in
+                switch value {
+                case .evento:
+                    RegistrarActividadView(path: $path2, actividadViewModel: actividadViewModel, tipoActividad: "Evento")
+                case .rodada:
+                    RegistrarActividadView(path: $path2, actividadViewModel: actividadViewModel, tipoActividad: "Rodada")
+                case .taller:
+                    RegistrarActividadView(path: $path2, actividadViewModel: actividadViewModel, tipoActividad: "Taller")
+                case .rutas:
+                    RodadaRutaView(path: $path2, actividadViewModel: actividadViewModel)
+                case .descripcionRodada:
+                    DescripcionActividadView(path: $path2, actividadViewModel: actividadViewModel)
+                case .descripcionEvento:
+                    DescripcionActividadView(path: $path2, actividadViewModel: actividadViewModel)
+                case .descripcionTaller:
+                    DescripcionActividadView(path: $path2, actividadViewModel: actividadViewModel)
+                case .detalle(let id):
+                    ActividadIndividualView(path: $path2, id: id)
+                case .faqs:
+                    FAQView<ActivitiesPaths>(path: $path2)
+                case .faqDetail(let faq, let permisos):
+                    FAQDetailView<ActivitiesPaths>(faq: faq, permisos: permisos, path: $path2)
+                case .addFAQ:
+                    AddFAQView<ActivitiesPaths>(path: $path2)
+                case .updateFAQ(let faq):
+                    UpdateFAQView<ActivitiesPaths>(faq: faq, path: $path2)
                 }
             }
         }
