@@ -82,29 +82,6 @@ struct IconSelectionView: View {
                     }
                 }
             }
-            .offset(x: offset.width)
-            .gesture(
-                DragGesture()
-                    .onChanged { gesture in
-                        offset = gesture.translation
-                    }
-                    .onEnded { gesture in
-                        if gesture.translation.width < -100 && selectedIcon < 2 {
-                            withAnimation {
-                                selectedIcon += 1
-                            }
-                        } else if gesture.translation.width > 100 && selectedIcon > 0 {
-                            withAnimation {
-                                selectedIcon -= 1
-                            }
-                        }
-                        withAnimation {
-                            offset = .zero
-                        }
-                    }
-            )
-            .animation(.easeInOut, value: selectedIcon)
-
             Spacer()
         }
         .padding()
