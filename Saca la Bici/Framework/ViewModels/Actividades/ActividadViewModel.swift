@@ -44,7 +44,9 @@ class ActividadViewModel: ObservableObject {
     @Published var navTitulo: String = ""
     @Published var guardarBoton: String = ""
     
+    // Modificar vista
     @Published var isEditing: Bool = false
+    @Published var isLoading: Bool = false
     
     enum ActiveAlert: Identifiable {
         case error
@@ -248,11 +250,17 @@ class ActividadViewModel: ObservableObject {
         )
             
         do {
+            // Cargando
+            self.isLoading = true
+            
             // Modificar actividad
             _ = try await modificarActividadRequirement.modificarActividad(
                 id: self.idActividad,
                 datosActividad: datosActividad
             )
+            
+            // Dejar de cargar
+            self.isLoading = false
             
             // Exito
             if isEditing {
@@ -262,6 +270,7 @@ class ActividadViewModel: ObservableObject {
                 self.messageAlert = "La actividad fue registrada correctamente."
                 self.activeAlert = .success
             }
+            
         } catch let urlError as URLError {
             switch urlError.code {
             case .notConnectedToInternet:
