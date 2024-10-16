@@ -62,10 +62,10 @@ struct ImagePickerProfile: View {
                 isPhotoPickerPresented = true // Muestra el PhotosPicker
             } label: {
                 Text("Cambiar foto de perfil")
-                    .foregroundColor(.yellow)
-                    .font(.caption)
-                    .padding(.top, 5)
+                    .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
+                    .padding(.top, 15)
             }
+            .buttonStyle(PlainButtonStyle())
         }
         .onTapGesture {
             isPhotoPickerPresented = true // Abre el PhotosPicker tocando la imagen

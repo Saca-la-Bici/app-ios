@@ -19,12 +19,19 @@ struct ModificarPerfilView: View {
     @State private var selectedItem: PhotosPickerItem?
     @State private var selectedImageData: Data? // Para almacenar la imagen seleccionada
 
-    let tiposSangre = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Sin seleccionar"]
+    let tiposSangre = [ "Sin seleccionar", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]
 
     var body: some View {
         VStack {
             profileHeader() // Encabezado del perfil con la imagen seleccionada
             formFields() // Campos del formulario
+        }
+        .navigationTitle("Editar Perfil")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                saveButton() // Botón para guardar cambios
+            }
         }
         .onAppear {
             // Inicializa los valores del perfil al aparecer la vista
@@ -44,11 +51,6 @@ struct ModificarPerfilView: View {
                         print("Error al cargar la imagen: \(error)")
                     }
                 }
-            }
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                saveButton() // Botón para guardar cambios
             }
         }
         .alert("Resultado", isPresented: $mostrarAlerta) {
@@ -143,10 +145,7 @@ struct ModificarPerfilView: View {
             }
         } label: {
             Image(systemName: "checkmark")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 15, height: 15)
-                .foregroundColor(.yellow)
+                .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
         }
     }
     
