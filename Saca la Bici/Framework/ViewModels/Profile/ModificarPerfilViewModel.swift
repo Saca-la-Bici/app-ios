@@ -5,6 +5,7 @@ class ModificarPerfilViewModel: ObservableObject {
     let modificarPerfilRequirement = ModificarPerfilRequirement()
     
     @Published var messageAlert = ""
+    @Published var alertTitle = ""
     @Published var showAlert = false
     private var resultado: String = ""
     
@@ -13,6 +14,7 @@ class ModificarPerfilViewModel: ObservableObject {
         // Validar que el nombre no esté vacío y solo contenga texto
         if nombre.isEmpty || !isOnlyText(nombre) {
             self.messageAlert = "El nombre ingresado no es válido."
+            self.alertTitle = "Oops!"
             self.showAlert = true
             return false
         }
@@ -20,6 +22,7 @@ class ModificarPerfilViewModel: ObservableObject {
         // Validar que el nombre de usuario no esté vacío y no contenga solo números o caracteres especiales
         if username.isEmpty || !isNotOnlyNumbers(username) || !isNotOnlySpecialCharacters(username) {
             self.messageAlert = "El nombre de usuario ingresado no es válido."
+            self.alertTitle = "Oops!"
             self.showAlert = true
             return false
         }
@@ -27,6 +30,7 @@ class ModificarPerfilViewModel: ObservableObject {
         // Validar que el número de emergencia no esté vacío y contenga solo números
         if numeroEmergencia.isEmpty || !isOnlyNumbers(numeroEmergencia) {
             self.messageAlert = "El número de emergencia ingresado no es válido."
+            self.alertTitle = "Oops!"
             self.showAlert = true
             return false
         }
@@ -51,9 +55,11 @@ class ModificarPerfilViewModel: ObservableObject {
                 nombre: nombre, username: username,
                 tipoSangre: tipoSangreEnviar, numeroEmergencia: numeroEmergencia, imagen: imagen
             )
+            self.alertTitle = "¡Éxito!"
             resultado = "Perfil modificado correctamente"
         } catch {
             print("Error: \(error.localizedDescription)")
+            self.alertTitle = "Oops!"
             resultado = "Error al modificar el perfil, intentelo más tarde"
         }
         

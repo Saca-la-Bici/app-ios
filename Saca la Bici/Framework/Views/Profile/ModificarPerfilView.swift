@@ -55,7 +55,7 @@ struct ModificarPerfilView: View {
                         }
                     }
                 }
-                .alert("Resultado", isPresented: $mostrarAlerta) {
+                .alert(modificarPerfilViewModel.alertTitle, isPresented: $mostrarAlerta) {
                     Button("Aceptar", role: .cancel) {
                         if resultado == "Perfil modificado correctamente" {
                             path.removeLast() // Solo regresa si el perfil fue modificado exitosamente
