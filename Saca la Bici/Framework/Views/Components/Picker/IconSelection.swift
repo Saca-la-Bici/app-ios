@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct IconSelectionView: View {
-    @Binding var path: [ActivitiesPaths]
     @State private var selectedIcon = 1
     @State private var offset: CGSize = .zero
 
@@ -58,13 +57,13 @@ struct IconSelectionView: View {
                     }
                     .buttonStyle(PlainButtonStyle())
             }
-            .padding(.bottom, 35)
+            .padding(.bottom, 15)
             
             // ZStack para las vistas con animación de transición
             ZStack {
                 if selectedIcon == 0 {
                     VStack {
-                        EventView(path: $path)
+                        EventView()
                         Spacer()
                     }
                     .transition(.scale)

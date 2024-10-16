@@ -94,15 +94,15 @@ struct ConsultarEstadisticasView: View {
                         .font(.subheadline)
                     
                     Text("Todos los datos se obtuvieron usando un coche Versa como base")
-                        .font(.subheadline)
-                        .padding(.top, 15)
+                        .font(.caption)
+                        .padding(.top, 30)
                 }
                 .padding()
             }
             .padding()
         }
         .onAppear {
-            viewModel.calcularEstadisticas(kilometers: Float(viewModel.profile?.kilometrosRecorridos ?? 0))
+            viewModel.calcularEstadisticas(kilometers: Float(viewModel.profile?.kilometrosMes ?? 0))
         }
     }
 }
