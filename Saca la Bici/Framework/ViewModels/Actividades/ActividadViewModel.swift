@@ -222,7 +222,9 @@ class ActividadViewModel: ObservableObject {
         let fechaString = formatoFecha.string(from: self.selectedDate)
         
         // Duracion
-        let duracion = self.durationFormatter
+        let duracionString = self.parseDurationString(duration: self.selectedTimeDuration)
+        
+        // Duracion string
         
         // Referencia a actividadResponse?.informacion[0]
         let info = self.actividadResponse?.informacion[0]
@@ -231,15 +233,15 @@ class ActividadViewModel: ObservableObject {
         let imagen: Data? = self.existingImageData ?? self.selectedImageData ?? nil
         
         let datosActividad = ModificarActividadModel(
-            id: actividadResponse?._id ?? "",
-            titulo: info?.titulo ?? "",
+            id: self.idActividad,
+            titulo: self.tituloActividad,
             fecha: fechaString,
             hora: horaString,
             personasInscritas: info?.personasInscritas ?? 0,
-            ubicacion: info?.ubicacion ?? "",
-            descripcion: info?.descripcion ?? "",
+            ubicacion: self.ubicacionActividad,
+            descripcion: self.descripcionActividad,
             estado: info?.estado ?? true,
-            duracion: duracion,
+            duracion: duracionString,
             imagen: imagen,
             tipo: info?.tipo ?? "",
             foro: info?.foro,
@@ -371,6 +373,15 @@ class ActividadViewModel: ObservableObject {
         
         // Retornar el TimeInterval
         return TimeInterval(totalSeconds)
+    }
+    
+    func parseDurationString(duration: TimeInterval) -> String {
+        
+        let hours: Int = Int(duration / 3600)
+        let minutes: Int = Int((duration.truncatingRemainder(dividingBy: 3600)) / 60)
+        
+        return "\(hours) horas \(minutes) minutos"
+                                                            
     }
     
     func getDataFromURL(url: URL) async throws -> Data {

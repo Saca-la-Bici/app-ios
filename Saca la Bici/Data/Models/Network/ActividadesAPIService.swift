@@ -298,6 +298,8 @@ class ActividadesAPIService {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
         
+        print("ID Token: \(idToken)")
+        
         // Subdiccionario de Informacion
         let informacion: [String: String] = [
             "titulo": datosActividad.titulo,
@@ -315,10 +317,6 @@ class ActividadesAPIService {
         // Array de usuarios inscritos
         let usuariosInscritos: [String] = datosActividad.usuariosInscritos ?? []
         
-        print("informacion: \(informacion)")
-        print("usuariosInscritos: \(usuariosInscritos)")
-        print("imagen: \(String(describing: datosActividad.imagen))")
-        
         // Headers
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(idToken)",
@@ -330,26 +328,23 @@ class ActividadesAPIService {
 
                 // Añadir cada campo dentro de 'informacion'
                 for (key, value) in informacion {
+                    print("informacion[\(key)]: \(value)")
                     multipartFormData.append(Data(value.utf8), withName: "informacion[\(key)]")
                 }
-                
-                print("Información subida")
 
                 // Añadir la imagen (si existe)
                 if let imageData = datosActividad.imagen {
+                    print("file: \(imageData)")
                     multipartFormData.append(imageData, withName: "file", fileName: "image.jpg", mimeType: "image/jpeg")
                 }
-                
-                print("Imagen subida")
                 
                 // Añadir usuarios inscritos
                 for (index, usuario) in usuariosInscritos.enumerated() {
                     if let usuarioData = usuario.data(using: .utf8) {
+                        print("usuariosInscritos[\(index)]: \(usuario)")
                         multipartFormData.append(usuarioData, withName: "usuariosInscritos[\(index)]")
                     }
                 }
-                
-                print("Usuarios inscritos subidos")
                 
             }, to: url, method: .patch, headers: headers)
             .validate()
