@@ -68,6 +68,7 @@ struct Actividad: Codable, Identifiable, Equatable {
     let tipo: String
     let comentarios: String?
     let usuariosInscritos: [String]
+    let foro: String?
 
     var id: String { _id }
 }
@@ -131,4 +132,21 @@ struct ActionResponse: Codable {
 struct EliminarActividadResponse: Codable {
     var code: Int
     var msg: String
+}
+
+struct ModificarActividadModel: Codable {
+    let id: String
+    let titulo: String
+    let fecha: String
+    let hora: String
+    let personasInscritas: Int
+    let ubicacion: String
+    let descripcion: String
+    let estado: Bool
+    let duracion: String
+    let imagen: Data?
+    let tipo: String
+    let foro: String?
+    let usuariosInscritos: [String]?
+    let ruta: String?
 }

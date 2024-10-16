@@ -125,6 +125,30 @@ class ActividadesRepository: ActividadesAPIProtocol {
         return try await actividadesAPIService.cancelarAsistencia(url: url, actividadId: actividadId, tipo: tipo)
     }
     
+    func modificarActividad(id: String, datosActividad: ModificarActividadModel) async throws -> ActionResponse? {
+        
+        var tipoURL = "/"
+        
+        switch datosActividad.tipo {
+        case "Rodada":
+            tipoURL += "rodada"
+        case "Evento":
+            tipoURL += "evento"
+        case "Taller":
+            tipoURL += "taller"
+        default:
+            tipoURL += ""
+        }
+        
+        guard let url = URL(string: "\(Api.base)\(Api.Routes.actividades)/modificar\(tipoURL)?id=\(id)") else {
+            throw URLError(.badURL)
+        }
+        
+        print("URL: \(url)")
+        
+        return try await actividadesAPIService.modificarActividad(url: url, id: id, datosActividad: datosActividad)
+    }
+    
     func eliminarActividad(id: String, tipo: String) async throws -> EliminarActividadResponse {
         let url = URL(string: "\(Api.base)\(Api.Routes.actividades)/eliminar")!
         return try await actividadesAPIService.eliminarActividad(url: url, id: id, tipo: tipo)

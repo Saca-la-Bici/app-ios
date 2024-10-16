@@ -46,7 +46,11 @@ struct DescripcionActividadView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         Task {
-                            await actividadViewModel.registrarActividad()
+                            if isEditing {
+                                await actividadViewModel.modificarActividad()
+                            } else {
+                                await actividadViewModel.registrarActividad()
+                            }
                         }
                     }, label: {
                         Image(systemName: "checkmark")

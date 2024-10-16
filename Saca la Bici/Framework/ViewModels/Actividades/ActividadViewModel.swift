@@ -12,6 +12,11 @@ import PhotosUI
 @MainActor
 class ActividadViewModel: ObservableObject {
     @Published var showRegistrarActividadSheet = false
+    
+    // Modelo Actividad
+    private var actividadResponse: ActividadResponse?
+
+    // Campos actividad
     @Published var idActividad: String = ""
     @Published var tituloActividad: String = ""
     @Published var ubicacionActividad: String = ""
@@ -195,6 +200,89 @@ class ActividadViewModel: ObservableObject {
     }
     
     @MainActor
+    func modificarActividad() async {
+
+        // Validar que la descripción no esté vacía
+        if self.descripcionActividad.isEmpty {
+            self.activeAlert = .error
+            self.messageAlert = "La descripción de la actividad se encuentra vacía. Por favor, rellene el campo."
+            return
+        }
+        
+        // Formateadores de hora
+        let formatoHora = DateFormatter()
+        formatoHora.dateFormat = "HH:mm"
+        
+        // Formateadores de fecha
+        let formatoFecha = DateFormatter()
+        formatoFecha.dateFormat = "yyyy-MM-dd"
+        
+        // Fecha y hora formateada
+        let horaString = formatoHora.string(from: self.selectedTime)
+        let fechaString = formatoFecha.string(from: self.selectedDate)
+        
+        // Duracion
+        let duracion = self.durationFormatter
+        
+        // Referencia a actividadResponse?.informacion[0]
+        let info = self.actividadResponse?.informacion[0]
+        
+        // Obtener imagen
+        let imagen: Data? = self.existingImageData ?? self.selectedImageData ?? nil
+        
+        let datosActividad = ModificarActividadModel(
+            id: actividadResponse?._id ?? "",
+            titulo: info?.titulo ?? "",
+            fecha: fechaString,
+            hora: horaString,
+            personasInscritas: info?.personasInscritas ?? 0,
+            ubicacion: info?.ubicacion ?? "",
+            descripcion: info?.descripcion ?? "",
+            estado: info?.estado ?? true,
+            duracion: duracion,
+            imagen: imagen,
+            tipo: info?.tipo ?? "",
+            foro: info?.foro,
+            usuariosInscritos: info?.usuariosInscritos ?? [],
+            ruta: actividadResponse?.ruta?._id
+        )
+            
+        do {
+            // Modificar actividad
+            _ = try await modificarActividadRequirement.modificarActividad(
+                id: self.idActividad,
+                datosActividad: datosActividad
+            )
+            
+            // Exito
+            if isEditing {
+                self.messageAlert = "La actividad fue modificada correctamente."
+                self.activeAlert = .success
+            } else {
+                self.messageAlert = "La actividad fue registrada correctamente."
+                self.activeAlert = .success
+            }
+        } catch let urlError as URLError {
+            switch urlError.code {
+            case .notConnectedToInternet:
+                self.messageAlert = "No tienes conexión a Internet. Verifica tu conexión e intenta nuevamente."
+                self.activeAlert = .error
+            case .timedOut:
+                self.messageAlert = "La solicitud ha excedido el tiempo de espera. Inténtalo de nuevo más tarde."
+                self.activeAlert = .error
+            default:
+                self.messageAlert = "Hubo un error al modificar la actividad. Inténtelo de nuevo más tarde."
+                self.activeAlert = .error
+            }
+        } catch {
+            print("Error: \(error.localizedDescription)")
+            self.messageAlert = "Hubo un error desconocido al modificar la actividad. Inténtelo de nuevo más tarde."
+            self.activeAlert = .error
+        }
+        
+    }
+    
+    @MainActor
     func eliminarActividad(id: String, tipo: String) async {
         do {
             _ = try await eliminarActividadRequirement.eliminarActividad(id: id, tipo: tipo)
@@ -212,7 +300,9 @@ class ActividadViewModel: ObservableObject {
         
         let actividadIndividualResponse = await modificarActividadRequirement.consultarActividadIndividual(actividadId: self.idActividad)
         
-        let actividad = actividadIndividualResponse?.actividad.informacion[0]
+        self.actividadResponse = actividadIndividualResponse?.actividad ?? nil
+        
+        let actividad = self.actividadResponse?.informacion[0] ?? nil
         
         if actividad != nil {
             
@@ -282,5 +372,17 @@ class ActividadViewModel: ObservableObject {
         // Retornar el TimeInterval
         return TimeInterval(totalSeconds)
     }
-
+    
+    func getDataFromURL(url: URL) async throws -> Data {
+        do {
+            // Usa URLSession para obtener los datos
+            let (data, _) = try await URLSession.shared.data(from: url)
+            // Retornar
+            return data
+        } catch {
+            print("Error: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
 }

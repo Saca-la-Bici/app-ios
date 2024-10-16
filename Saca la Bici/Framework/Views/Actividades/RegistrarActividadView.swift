@@ -205,6 +205,7 @@ struct RegistrarActividadView: View {
                     actividadViewModel.idActividad = id ?? ""
                     
                     await actividadViewModel.getActividad()
+                    print("ID: \(actividadViewModel.idActividad)")
                 }
                 
                 if tipoActividad == "Evento" {
