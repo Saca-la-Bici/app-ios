@@ -10,6 +10,8 @@ import SwiftUI
 struct RutaCardView: View {
     let ruta: Ruta
     let isSelected: Bool
+    
+    var onDelete: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -44,6 +46,13 @@ struct RutaCardView: View {
         .cornerRadius(10)
         .shadow(radius: 5)
         .contentShape(Rectangle())
+        .contextMenu {
+            Button(role: .destructive, action: {
+                onDelete()
+            }, label: {
+                Label("Eliminar", systemImage: "trash")
+            })
+        }
     }
     
     private func levelColor(for level: String) -> Color {

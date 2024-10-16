@@ -63,4 +63,36 @@ class RutasAPIService {
             return nil
         }
     }
+    
+    func eliminarRuta(url: URL) async -> Int? {
+        
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
+            print("No se pudo obtener el ID Token")
+            return nil
+        }
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+        
+        let taskRequest = session.request(url, method: .put, headers: headers).validate()
+        let response = await taskRequest.serializingData().response
+        
+        let statusCode = response.response?.statusCode
+        
+        switch response.result {
+        case .success:
+            return statusCode
+        case let .failure(error):
+            debugPrint("Error en la solicitud: \(error.localizedDescription)")
+            
+            // Imprimir el cuerpo de la respuesta en caso de error
+            if let data = response.data {
+                let errorResponse = String(decoding: data, as: UTF8.self)
+                print("\(errorResponse)")
+            }
+            return 500
+        }
+    }
 }

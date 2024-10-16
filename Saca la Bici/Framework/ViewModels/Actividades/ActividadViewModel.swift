@@ -28,7 +28,9 @@ class ActividadViewModel: ObservableObject {
     @Published var selectedTimeDuration: TimeInterval = 150 * 60
 
     @Published var messageAlert = ""
+    @Published var tituloAlertaRuta = ""
     @Published var showAlert = false
+    @Published var reloadRutas = false
     @Published var showAlertDescripcion = false
     @Published var tipoActividad: String = ""
     @Published var navTitulo: String = ""
@@ -37,12 +39,30 @@ class ActividadViewModel: ObservableObject {
     @Published var rutas: [Ruta] = []
     @Published var selectedRuta: Ruta?
     
+    @Published var isLoading: Bool = false
+    
     enum ActiveAlert: Identifiable {
         case error
         case success
 
         var id: Int {
             hashValue
+        }
+    }
+    
+    @Published var alertTypeRuta: AlertTypeRuta?
+    
+    enum AlertTypeRuta: Identifiable {
+        case delete(ruta: Ruta)
+        case validation
+        
+        var id: UUID {
+            switch self {
+            case .delete:
+                return UUID()
+            case .validation:
+                return UUID() 
+            }
         }
     }
     
@@ -94,6 +114,8 @@ class ActividadViewModel: ObservableObject {
             return
         }
         
+        self.isLoading = true
+        
         let rutas = await registrarActividadRequirement.getRutas()
         
         if rutas == nil {
@@ -103,13 +125,17 @@ class ActividadViewModel: ObservableObject {
         } else {
             self.rutas = rutas?.rutas ?? []
         }
+        
+        self.isLoading = false
     }
     
     @MainActor
     func validarRuta() {
         if self.selectedRuta == nil {
             self.showAlert = true
+            self.alertTypeRuta = .validation
             self.messageAlert = "No seleccionó una ruta. Por favor, seleccione una ruta."
+            self.tituloAlertaRuta = "Oops!"
             return
         }
     }
@@ -185,6 +211,25 @@ class ActividadViewModel: ObservableObject {
         } catch {
                 self.messageAlert = "Hubo un error al registrar la actividad. Inténtelo de nuevo más tarde."
                 self.activeAlert = .error
+        }
+    }
+    
+    @MainActor
+    func eliminarActividad(IDRuta: String) async {
+        let responseStatus = await registrarActividadRequirement.eliminarRuta(IDRuta: IDRuta)
+        
+        if responseStatus == 200 {
+            self.showAlert = true
+            self.alertTypeRuta = .validation
+            self.reloadRutas = true
+            self.messageAlert = "La ruta se eliminó correctamente."
+            self.tituloAlertaRuta = "¡Éxito!"
+        } else if responseStatus == 500 {
+            self.showAlert = true
+            self.alertTypeRuta = .validation
+            self.messageAlert = "Hubo un error al eliminar la ruta. Por favor intente de nuevo."
+            self.tituloAlertaRuta = "Oops!"
+            return
         }
     }
 

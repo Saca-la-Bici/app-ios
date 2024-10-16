@@ -11,6 +11,7 @@ import Foundation
 protocol RegistrarActividadRequirementProtocol {
     func registrarActividad(actividad: DatosActividad) async throws -> Int?
     func getRutas() async -> RutasResponse?
+    func eliminarRuta(IDRuta: String) async -> Int?
 }
 
 class RegistrarActividadRequirement: RegistrarActividadRequirementProtocol {
@@ -34,6 +35,10 @@ class RegistrarActividadRequirement: RegistrarActividadRequirementProtocol {
     
     func getRutas() async -> RutasResponse? {
         return await rutasRepository.getRutas()
+    }
+    
+    func eliminarRuta(IDRuta: String) async -> Int? {
+        return await rutasRepository.eliminarRuta(IDRuta: IDRuta)
     }
 
 }

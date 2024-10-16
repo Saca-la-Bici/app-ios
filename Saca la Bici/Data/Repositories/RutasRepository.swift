@@ -9,6 +9,7 @@ import Foundation
 
 protocol RutasAPIProtocol {
     func getRutas() async -> RutasResponse?
+    func eliminarRuta(IDRuta: String) async -> Int?
 }
 
 class RutasRepository: RutasAPIProtocol {
@@ -24,5 +25,10 @@ class RutasRepository: RutasAPIProtocol {
     func getRutas() async -> RutasResponse? {
         return await rutasAPIService.getRutas(
             url: URL(string: "\(Api.base)\(Api.Routes.mapa)/consultarRutas")!)
+    }
+    
+    func eliminarRuta(IDRuta: String) async -> Int? {
+        return await rutasAPIService.eliminarRuta(
+            url: URL(string: "\(Api.base)\(Api.Routes.mapa)/eliminarRuta/\(IDRuta)")!)
     }
 }
