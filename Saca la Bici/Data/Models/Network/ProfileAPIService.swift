@@ -67,7 +67,6 @@ class ProfileAPIService {
                 
                 return medallasResponse
             } catch {
-                print("Error al obtener medallas: \(error.localizedDescription)")
                 throw error
             }
         }
