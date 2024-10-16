@@ -74,10 +74,10 @@ struct IconSelectionView: View {
                     }
                     .transition(.scale)
                 } else if selectedIcon == 2 {
-                    Text("Vista de mundo")
-                        .font(.title)
-                        .transition(.scale)
-                    Spacer()
+                    VStack {
+                        ConsultarEstadisticasView()
+                        Spacer()
+                    }
                 }
             }
             .offset(x: offset.width)
