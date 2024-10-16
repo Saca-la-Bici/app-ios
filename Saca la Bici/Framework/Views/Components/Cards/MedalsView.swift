@@ -8,53 +8,72 @@
 import SwiftUI
 
 struct MedalsView: View {
+    @StateObject private var viewModel = MedalsViewModel()
+    
+    let columnas = [
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
     var body: some View {
-        HStack {
-            // Medalla 1
-            VStack {
-                Image("Medalla5Asistencias")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 60, height: 60)  // Tamaño de la medalla
-                Text("Asiste a 5 rodadas")
-                    .font(.system(size: 10))
-                    .foregroundColor(.black)
+        VStack {
+            if viewModel.isLoading {
+                ProgressView("Cargando medallas...")
+                    .padding()
+            } else if let error = viewModel.errorMessage {
+                Text(error)
+                    .foregroundColor(.red)
+                    .padding()
+            } else {
+                if viewModel.medallas.isEmpty {
+                    // Mostrar mensaje cuando no hay medallas
+                    Text("Aún no has desbloqueado ninguna medalla")
+                        .foregroundColor(.gray)
+                        .font(.headline)
+                        .padding()
+                } else {
+                    // Mostrar la cuadrícula de medallas
+                    ScrollView {
+                        LazyVGrid(columns: columnas, spacing: 20) {
+                            ForEach(viewModel.medallas) { medalla in
+                                VStack {
+                                    AsyncImage(url: URL(string: medalla.imagen)) { phase in
+                                        switch phase {
+                                        case .empty:
+                                            ProgressView()
+                                                .frame(width: 60, height: 60)
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 60, height: 60)
+                                        case .failure:
+                                            Image(systemName: "photo")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 60, height: 60)
+                                                .foregroundColor(.gray)
+                                        @unknown default:
+                                            EmptyView()
+                                        }
+                                    }
+                                    Text(medalla.nombre)
+                                        .font(.system(size: 10))
+                                        .foregroundColor(medalla.estado ? .black : .gray)
+                                }
+                                .padding()
+                                .background(medalla.estado ? Color.white : Color.gray.opacity(0.2))
+                                .cornerRadius(8)
+                            }
+                        }
+                        .padding()
+                    }
+                }
             }
-            .padding(.trailing, 30)
-
-            // Medalla 2
-            VStack {
-                Image("MedallaNivelExperto")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 60, height: 60)  // Tamaño de la medalla
-                Text("Nivel experto")
-                    .font(.system(size: 10))
-                    .foregroundColor(.black)
-            }
-            .padding(.trailing, 30)
-
-            // Medalla 3
-            VStack {
-                Image("Medalla50km")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 60, height: 60)  // Tamaño de la medalla
-                Text("Recorre 50km")
-                    .font(.system(size: 10))
-                    .foregroundColor(.black)
-            }
-
-            // Flecha visible a la derecha
-            VStack {
-                Image(systemName: "chevron.right")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 10, height: 10)
-                    .foregroundColor(.black)
-            }
-            
         }
-        .padding(.bottom, 40)
+        .onAppear {
+            viewModel.fetchMedallas()
+        }
     }
 }
