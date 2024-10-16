@@ -57,13 +57,14 @@ struct ProfileView: View {
                         VStack {
                             
                             HStack {
+                                Image(systemName: "person.circle")
                                 Text(consultarPerfilPropioViewModel.profile?.username ?? "")
                                     .font(.system(size: 14))
                                     .fontWeight(.bold)
-                                    .padding(.leading, 20)
                                 
                                 Spacer()
                             }
+                            .padding(.leading, 20)
                             
                             HStack {
                                 // Elementos invisibles para alinear el contenido
@@ -90,6 +91,7 @@ struct ProfileView: View {
                                         case .success(let image):
                                             image
                                                 .resizable()
+                                                .aspectRatio(contentMode: .fill)
                                                 .frame(width: 80, height: 80)
                                                 .clipShape(Circle())
                                                 .overlay(Circle().stroke(Color.black, lineWidth: 1))
