@@ -8,59 +8,46 @@
 import SwiftUI
 
 struct EventView: View {
-    var body: some View {
-        VStack {
-            // Título y conteo de usuarios
-            HStack {
-                Text("Foro nacional de la bicicleta")
-                    .font(.system(size: 14))
-                    .fontWeight(.bold)
-                    .foregroundColor(.black)
-                Spacer()
-                HStack {
-                    Image("Participantes")
-                        .resizable()
-                        .frame(width: 20, height: 10)
-                        .foregroundColor(.black)
-                    Text("245")
-                        .font(.system(size: 14))
-                        .foregroundColor(.black)
-                }
-            }
+    @Binding var path: [ActivitiesPaths]
+    @StateObject private var viewModel = EventosViewModel()
 
-            // Imagen y detalles del evento (fecha, hora)
-            HStack {
-                // Imagen del evento (placeholder)
-                Image(systemName: "rectangle.on.rectangle.angled")
-                    .resizable()
-                    .frame(width: 160, height: 110)
-                    .background(Color.gray.opacity(0.3))  // Fondo gris claro
-                    .cornerRadius(8)
-                    .padding(.trailing, 10)
-                
-                // Detalles del evento
-                VStack(alignment: .leading, spacing: 13) {
-                    Text("Fecha")
-                        .font(.system(size: 11))
-                        .foregroundColor(.gray)
-                    Text("Miércoles 26 junio 2024")
-                        .font(.system(size: 11))
-                        .foregroundColor(.black)
-                    HStack {
-                        Text("Hora")
-                            .font(.system(size: 11))
-                            .foregroundColor(.gray)
-                        Text("13:00")
-                            .font(.system(size: 11))
-                            .foregroundColor(.black)
+    var body: some View {
+        
+        VStack {
+            if viewModel.isLoading {
+                ProgressView()
+            } else if let errorMessage = viewModel.errorMessage {
+                Text("Error: \(errorMessage)")
+                    .foregroundColor(.red)
+                    .padding()
+            } else if viewModel.eventos.isEmpty {
+                Text("No estás inscrito en ningún evento.")
+                    .foregroundColor(.gray)
+                    .padding()
+            } else {
+                ScrollView {
+                    VStack(spacing: 16) {
+                        ForEach(viewModel.eventos) { evento in
+                            ActivityCardView(
+                                path: $path,
+                                id: evento.id,
+                                activityTitle: evento.actividad.titulo,
+                                activityType: evento.actividad.tipo,
+                                date: FechaManager.shared.formatDate(evento.actividad.fecha),
+                                time: evento.actividad.hora,
+                                duration: evento.actividad.duracion,
+                                imagen: evento.actividad.imagen,
+                                location: evento.actividad.ubicacion,
+                                attendees: evento.actividad.personasInscritas
+                            )
+                        }
                     }
-                    
+                    .padding()
                 }
             }
         }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(15)
-        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)  // Sombra
+        .onAppear {
+            viewModel.fetchEventosFiltrados()
+        }
     }
 }
