@@ -49,6 +49,28 @@ class ProfileAPIService {
         
     }
     
+    func consultarMedallas(url: URL) async throws -> MedallasResponse {
+            guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
+                throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+            }
+            
+            let headers: HTTPHeaders = [
+                "Authorization": "Bearer \(idToken)",
+                "Content-Type": "application/json"
+            ]
+            
+            do {
+                let medallasResponse = try await session.request(url, method: .get, headers: headers)
+                    .validate()
+                    .serializingDecodable(MedallasResponse.self)
+                    .value
+                
+                return medallasResponse
+            } catch {
+                throw error
+            }
+        }
+    
     func modificarPerfil(nombre: String, username: String, tipoSangre: String, numeroEmergencia: String, url: URL, imagen: Data?) async throws -> String {
         
         guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
