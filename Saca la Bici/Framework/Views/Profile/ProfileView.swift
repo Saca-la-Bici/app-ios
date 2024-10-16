@@ -11,7 +11,6 @@ struct ProfileView: View {
     @State private var path: [ConfigurationPaths] = []
     
     @StateObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
-    @StateObject var actividadViewModel = ActividadViewModel()
     
     @StateObject private var consultarPerfilPropioViewModel = ConsultarPerfilPropioViewModel.shared
     

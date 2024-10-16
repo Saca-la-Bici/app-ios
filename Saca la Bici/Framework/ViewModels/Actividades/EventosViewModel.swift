@@ -41,33 +41,4 @@ class EventosViewModel: ObservableObject {
         }
     }
     
-    func fetchEventosFiltrados() {
-        Task {
-            do {
-                isLoading = true
-                errorMessage = nil
-                let (eventos, permisos) = try await getEventosUseCase.execute()
-                userSessionManager.updatePermisos(newPermisos: permisos)
-                
-                // Obtener el UID del usuario actual
-                guard let currentUserId = Auth.auth().currentUser?.uid else {
-                    throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID del usuario actual"])
-                }
-                
-                // Filtrar los eventos donde usuariosInscritos contiene el UID del usuario actual
-                let eventosFiltrados = eventos.filter { evento in
-                    evento.actividad.usuariosInscritos.contains(currentUserId)
-                }
-                
-                // Asignar los eventos filtrados a self.eventos
-                self.eventos = eventosFiltrados
-                isLoading = false
-            } catch {
-                isLoading = false
-                errorMessage = error.localizedDescription
-                print("Error al obtener eventos: \(error)")
-            }
-        }
-    }
-    
 }
