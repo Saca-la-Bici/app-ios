@@ -197,6 +197,10 @@ struct ActividadIndividualView: View {
                         .padding(.horizontal)
                     }
                     
+                    // Foro
+                    ForoView(path: $path)
+                        .padding()
+                    
                     Spacer().frame(height: 10)
                 }
                 .navigationTitle(actividadIndividualViewModel.titulo)

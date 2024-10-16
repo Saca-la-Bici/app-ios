@@ -118,7 +118,10 @@ struct ActividadesView: View {
                     AddFAQView<ActivitiesPaths>(path: $path)
                 case .updateFAQ(let faq):
                     UpdateFAQView<ActivitiesPaths>(faq: faq, path: $path)
+                case .answers:
+                    CommentView(path: $path)
                 }
+                
             }
         }
     }
