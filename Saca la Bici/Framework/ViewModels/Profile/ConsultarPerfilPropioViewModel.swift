@@ -14,6 +14,7 @@ class ConsultarPerfilPropioViewModel: ObservableObject {
     @Published var isLoading: Bool = true
     @Published var error: Error?
     @Published var errorMessage: String?
+    @Published var showAlert = false
     
     let consultarPerfilPropioRequirement = ConsultarPerfilPropioRequirement()
     
@@ -26,6 +27,7 @@ class ConsultarPerfilPropioViewModel: ObservableObject {
             self.profile?.tipoSangre = profile?.tipoSangre?.isEmpty == true ? "Sin seleccionar" : profile?.tipoSangre ?? "Sin seleccionar"
             
         } catch {
+            self.showAlert = true
             self.errorMessage = "Hubo un error al ingresar a tu perfil, intente de nuevo más tarde"
             
             // Manejo del error en caso de que algo falle

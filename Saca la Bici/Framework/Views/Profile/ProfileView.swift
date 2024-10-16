@@ -187,12 +187,13 @@ struct ProfileView: View {
                 Spacer()
             }
             .onAppear {
+                consultarPerfilPropioViewModel.showAlert = false
                 Task {
                     try await
                     consultarPerfilPropioViewModel.consultarPerfilPropio()
                 }
             }
-            .alert(isPresented: .constant(consultarPerfilPropioViewModel.errorMessage != nil)) {
+            .alert(isPresented: $consultarPerfilPropioViewModel.showAlert) {
                 Alert(
                     title: Text("Oops!"),
                     message: Text(consultarPerfilPropioViewModel.errorMessage ?? "Hubo un error al ingresar a tu perfil, intente de nuevo más tarde"),
