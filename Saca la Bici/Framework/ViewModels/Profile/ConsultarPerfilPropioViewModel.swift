@@ -22,7 +22,7 @@ class ConsultarPerfilPropioViewModel: ObservableObject {
        @Published var airCleaned: Float = 0.0
        @Published var gasSaved: Float = 0.0
 
-       // Porcentajes (si aún los necesitas)
+       // Porcentajes
        @Published var percentageWater: Float = 0.0
        @Published var percentageCO2: Float = 0.0
        @Published var percentageAir: Float = 0.0
@@ -44,10 +44,6 @@ class ConsultarPerfilPropioViewModel: ObservableObject {
             self.profile = try await consultarPerfilPropioRequirement.consultarPerfilPropio()
             self.profile?.tipoSangre = profile?.tipoSangre?.isEmpty == true ? "Sin seleccionar" : profile?.tipoSangre ?? "Sin seleccionar"
             
-            if let kilometers = self.profile?.kilometrosRecorridos {
-                        self.calculateEnvironmentalSavings(kilometers: Float(kilometers))
-                    }
-            
         } catch {
             self.showAlert = true
             self.errorMessage = "Hubo un error al ingresar a tu perfil, intente de nuevo más tarde"
@@ -59,7 +55,7 @@ class ConsultarPerfilPropioViewModel: ObservableObject {
         self.isLoading = false
     }
     
-    private func calculateEnvironmentalSavings(kilometers: Float) {
+    func calcularEstadisticas(kilometers: Float) {
             // Valores de referencia
             let versaGasConsume: Float = 9.0 // km por litro
             let emissionCO2: Float = 2.31 // kg de CO2 por litro de gasolina

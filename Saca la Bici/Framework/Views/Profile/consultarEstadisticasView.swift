@@ -15,11 +15,17 @@ struct ConsultarEstadisticasView: View {
             VStack(spacing: 20) {
                 // Agua ahorrada
                 VStack(alignment: .leading) {
+                    
+                    Text("Ahorro de Recursos")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .padding(.bottom, 15)
+                    
                     HStack {
                         Text("Agua")
                             .font(.headline)
                         Spacer()
-                        Text("\(Int($viewModel.maxWater.wrappedValue))L")
+                        Text(String(format: "%.2f L", (viewModel.maxWater)))
                             .font(.subheadline)
                     }
 
@@ -38,7 +44,7 @@ struct ConsultarEstadisticasView: View {
                         Text("CO₂")
                             .font(.headline)
                         Spacer()
-                        Text("\(Int($viewModel.maxCO2.wrappedValue))kg")
+                        Text(String(format: "%.2f kg", viewModel.maxCO2))
                             .font(.subheadline)
                     }
 
@@ -57,7 +63,7 @@ struct ConsultarEstadisticasView: View {
                         Text("Aire limpio")
                             .font(.headline)
                         Spacer()
-                        Text("\(Int($viewModel.maxAir.wrappedValue))g")
+                        Text(String(format: "%.2f g", viewModel.maxAir))
                             .font(.subheadline)
                     }
 
@@ -76,7 +82,7 @@ struct ConsultarEstadisticasView: View {
                         Text("Gasolina")
                             .font(.headline)
                         Spacer()
-                        Text("\(Int($viewModel.maxGas.wrappedValue))L")
+                        Text(String(format: "%.2f L", viewModel.maxGas))
                             .font(.subheadline)
                     }
 
@@ -86,13 +92,17 @@ struct ConsultarEstadisticasView: View {
 
                     Text("Gasolina ahorrada por usar la bicicleta: \(String(format: "%.2f L", viewModel.gasSaved))")
                         .font(.subheadline)
+                    
+                    Text("Todos los datos se obtuvieron usando un coche Versa como base")
+                        .font(.subheadline)
+                        .padding(.top, 15)
                 }
                 .padding()
-                
-                Text("Todos los datos se obtuvieron usando un coche Versa como base")
-                    .font(.subheadline)
             }
             .padding()
+        }
+        .onAppear {
+            viewModel.calcularEstadisticas(kilometers: Float(viewModel.profile?.kilometrosRecorridos ?? 0))
         }
     }
 }
