@@ -98,6 +98,7 @@ class ActividadViewModel: ObservableObject {
         navTitulo = ""
         guardarBoton = ""
         isEditing = false
+        isLoading = false
     }
     
     @MainActor
@@ -307,7 +308,13 @@ class ActividadViewModel: ObservableObject {
     @MainActor
     func getActividad() async {
         
+        // Cargando
+        self.isLoading = true
+        
         let actividadIndividualResponse = await modificarActividadRequirement.consultarActividadIndividual(actividadId: self.idActividad)
+        
+        // Dejar de cargar
+        self.isLoading = false
         
         self.actividadResponse = actividadIndividualResponse?.actividad ?? nil
         
@@ -317,7 +324,7 @@ class ActividadViewModel: ObservableObject {
             
             // Rellenar los campos
             self.existingImageURL = URL(string: actividad!.imagen ?? "")
-            self.existingImageData = await self.getDataFromURL(url: existingImageURL!)
+            self.existingImageData = await self.getDataFromURL(url: self.existingImageURL)
             self.selectedDate = parseDate(date: actividad!.fecha)
             self.tituloActividad = actividad!.titulo
             self.selectedTime = parseTime(time: actividad!.hora)
@@ -392,17 +399,19 @@ class ActividadViewModel: ObservableObject {
                                                             
     }
     
-    func getDataFromURL(url: URL) async -> Data? {
+    func getDataFromURL(url: URL?) async -> Data? {
+        
+        if url == nil { return nil }
+        
         do {
             // Usa URLSession para obtener los datos
-            let (data, _) = try await URLSession.shared.data(from: url)
+            let (data, _) = try await URLSession.shared.data(from: url!)
             
             return data
         } catch {
             print("Error: \(error.localizedDescription)")
+            return nil
         }
-        
-        return nil
     }
     
 }

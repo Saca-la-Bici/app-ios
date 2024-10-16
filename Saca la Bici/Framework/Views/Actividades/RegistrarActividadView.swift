@@ -192,6 +192,13 @@ struct RegistrarActividadView: View {
                     message: Text(actividadViewModel.messageAlert)
                 )
             }
+            .zIndex(1)
+            .blur(radius: actividadViewModel.isLoading ? 10 : 0)
+            
+            if actividadViewModel.isLoading {
+                ProgressView()
+                    .zIndex(2)
+            }
         }
         .onAppear {
             Task {
