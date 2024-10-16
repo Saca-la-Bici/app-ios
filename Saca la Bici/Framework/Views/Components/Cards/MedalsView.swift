@@ -21,9 +21,10 @@ struct MedalsView: View {
             if viewModel.isLoading {
                 ProgressView("Cargando medallas...")
                     .padding()
-            } else if let error = viewModel.errorMessage {
-                Text(error)
+            } else if viewModel.errorMessage != nil {
+                Text("Hubo un error al cargar las medallas")
                     .foregroundColor(.red)
+                    .font(.headline)
                     .padding()
             } else {
                 if viewModel.medallas.isEmpty {
