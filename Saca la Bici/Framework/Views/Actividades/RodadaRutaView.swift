@@ -9,31 +9,59 @@ import SwiftUI
 
 struct RodadaRutaView: View {
     @Binding var path: [ActivitiesPaths]
-
+    
     @ObservedObject var actividadViewModel = ActividadViewModel()
-
+    
     var body: some View {
         ZStack {
             ScrollView {
                 VStack {
-                    Text("Agregar lo que va en rutas")
-
-                    CustomButton(
-                        text: "Siguiente",
-                        backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
-                        action: {
-                            path.append(.descripcionRodada)
-                        },
-                        tieneIcono: true,
-                        icono: "chevron.right"
-                    )
+                    
+                    if actividadViewModel.rutas.isEmpty {
+                        
+                    } else {
+                        Spacer().frame(height: 10)
+                        
+                        Text("Selecciona la ruta de la rodada:")
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Spacer().frame(height: 15)
+                        
+                        ForEach(actividadViewModel.rutas) { ruta in
+                            RutaCardView(ruta: ruta,
+                                         isSelected: actividadViewModel.selectedRuta?.id == ruta.id)
+                                .onTapGesture {
+                                    actividadViewModel.selectedRuta = ruta
+                                }
+                        }
+                        
+                        Spacer().frame(height: 40)
+                        
+                        CustomButton(
+                            text: "Siguiente",
+                            backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
+                            action: {
+                                actividadViewModel.validarRuta()
+                                
+                                if actividadViewModel.showAlert != true {
+                                    path.append(.descripcionRodada)
+                                }
+                            },
+                            tieneIcono: true,
+                            icono: "chevron.right"
+                        )
+                    }
                 }
                 .padding()
             }
         }
         .navigationTitle(actividadViewModel.navTitulo)
-        .onTapGesture {
-            UIApplication.shared.hideKeyboard()
+        .alert(isPresented: $actividadViewModel.showAlert) {
+            Alert(
+                title: Text("Oops!"),
+                message: Text(actividadViewModel.messageAlert)
+            )
         }
     }
 }

@@ -34,6 +34,9 @@ class ActividadViewModel: ObservableObject {
     @Published var navTitulo: String = ""
     @Published var guardarBoton: String = ""
     
+    @Published var rutas: [Ruta] = []
+    @Published var selectedRuta: Ruta?
+    
     enum ActiveAlert: Identifiable {
         case error
         case success
@@ -84,10 +87,29 @@ class ActividadViewModel: ObservableObject {
     }
 
     @MainActor
-    func validarDatosBase() {
+    func validarDatosBase() async {
         if self.tituloActividad.trimmingCharacters(in: .whitespaces).isEmpty || self.ubicacionActividad.trimmingCharacters(in: .whitespaces).isEmpty {
             self.showAlert = true
             self.messageAlert = "Alguno de los datos está vacío. Por favor, rellene todos los campos."
+            return
+        }
+        
+        let rutas = await registrarActividadRequirement.getRutas()
+        
+        if rutas == nil {
+            self.showAlert = true
+            self.messageAlert = "Hubo un error al obtener las rutas. Por favor, intente más tarde."
+            return
+        } else {
+            self.rutas = rutas?.rutas ?? []
+        }
+    }
+    
+    @MainActor
+    func validarRuta() {
+        if self.selectedRuta == nil {
+            self.showAlert = true
+            self.messageAlert = "No seleccionó una ruta. Por favor, seleccione una ruta."
             return
         }
     }
@@ -135,7 +157,8 @@ class ActividadViewModel: ObservableObject {
 
         let datosRegistrar = DatosActividad(titulo: self.tituloActividad, fecha: fechaString, hora: horaString,
                                             duracion: duracionString, descripcion: self.descripcionActividad,
-                                            imagen: self.selectedImageData, tipo: self.tipoActividad, ubicacion: self.ubicacionActividad)
+                                            imagen: self.selectedImageData, tipo: self.tipoActividad,
+                                            ubicacion: self.ubicacionActividad, ruta: self.selectedRuta?._id)
 
         do {
             let responseStatus = try await registrarActividadRequirement.registrarActividad(actividad: datosRegistrar)
