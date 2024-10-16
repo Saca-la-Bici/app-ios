@@ -116,6 +116,7 @@
 		7B9C5EEE2CAC9A8100441541 /* UpdateFAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5EED2CAC9A8100441541 /* UpdateFAQView.swift */; };
 		7B9C5EF22CACBFEA00441541 /* UpdateFAQViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5EF12CACBFEA00441541 /* UpdateFAQViewModel.swift */; };
 		7B9C5EF82CACF66800441541 /* FAQRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5EF72CACF66800441541 /* FAQRepository.swift */; };
+		AE004A252CBF7ACB00CB8DD7 /* MedallasRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE004A242CBF7AC500CB8DD7 /* MedallasRepository.swift */; };
 		AE41A6D92C9A613800921BDF /* AnuncioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6D82C9A612F00921BDF /* AnuncioViewModel.swift */; };
 		AE41A6DD2C9A62F400921BDF /* ConsultarAnuncioRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6DC2C9A62E400921BDF /* ConsultarAnuncioRequirement.swift */; };
 		AE41A6E12C9A633100921BDF /* AnuncioRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */; };
@@ -129,6 +130,9 @@
 		AE5BA04F2CB1B1FD00AE8C0E /* UsuariosRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BA04E2CB1B1F200AE8C0E /* UsuariosRepository.swift */; };
 		AE5BA0512CB1B23A00AE8C0E /* ConsultarUsuarios.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BA0502CB1B23300AE8C0E /* ConsultarUsuarios.swift */; };
 		AE5BA0532CB1B27100AE8C0E /* UsuariosAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5BA0522CB1B26800AE8C0E /* UsuariosAPIService.swift */; };
+		AE6AB5032CBF6FF900D248E6 /* ConsultarMedallaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6AB5022CBF6FF200D248E6 /* ConsultarMedallaViewModel.swift */; };
+		AE6AB5052CBF711900D248E6 /* ConsultarMedallasRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6AB5042CBF711000D248E6 /* ConsultarMedallasRequirement.swift */; };
+		AE6AB5072CBF714A00D248E6 /* Medallas.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6AB5062CBF714800D248E6 /* Medallas.swift */; };
 		AE8E78862CA9E3B7007F7365 /* Actividades.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78852CA9E3B3007F7365 /* Actividades.swift */; };
 		AE8E78882CA9E457007F7365 /* ActividadesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E78872CA9E450007F7365 /* ActividadesRepository.swift */; };
 		AE8E788B2CA9E4B7007F7365 /* UserSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E788A2CA9E4B4007F7365 /* UserSessionManager.swift */; };
@@ -271,6 +275,7 @@
 		7B9C5EED2CAC9A8100441541 /* UpdateFAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFAQView.swift; sourceTree = "<group>"; };
 		7B9C5EF12CACBFEA00441541 /* UpdateFAQViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFAQViewModel.swift; sourceTree = "<group>"; };
 		7B9C5EF72CACF66800441541 /* FAQRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQRepository.swift; sourceTree = "<group>"; };
+		AE004A242CBF7AC500CB8DD7 /* MedallasRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedallasRepository.swift; sourceTree = "<group>"; };
 		AE41A6D82C9A612F00921BDF /* AnuncioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnuncioViewModel.swift; sourceTree = "<group>"; };
 		AE41A6DC2C9A62E400921BDF /* ConsultarAnuncioRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarAnuncioRequirement.swift; sourceTree = "<group>"; };
 		AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnuncioRepository.swift; sourceTree = "<group>"; };
@@ -284,6 +289,9 @@
 		AE5BA04E2CB1B1F200AE8C0E /* UsuariosRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsuariosRepository.swift; sourceTree = "<group>"; };
 		AE5BA0502CB1B23300AE8C0E /* ConsultarUsuarios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarUsuarios.swift; sourceTree = "<group>"; };
 		AE5BA0522CB1B26800AE8C0E /* UsuariosAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsuariosAPIService.swift; sourceTree = "<group>"; };
+		AE6AB5022CBF6FF200D248E6 /* ConsultarMedallaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarMedallaViewModel.swift; sourceTree = "<group>"; };
+		AE6AB5042CBF711000D248E6 /* ConsultarMedallasRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarMedallasRequirement.swift; sourceTree = "<group>"; };
+		AE6AB5062CBF714800D248E6 /* Medallas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Medallas.swift; sourceTree = "<group>"; };
 		AE8E78852CA9E3B3007F7365 /* Actividades.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actividades.swift; sourceTree = "<group>"; };
 		AE8E78872CA9E450007F7365 /* ActividadesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadesRepository.swift; sourceTree = "<group>"; };
 		AE8E788A2CA9E4B4007F7365 /* UserSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionManager.swift; sourceTree = "<group>"; };
@@ -596,6 +604,7 @@
 		252B650C2C9A426200A362C5 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				AE004A242CBF7AC500CB8DD7 /* MedallasRepository.swift */,
 				AE5BA04E2CB1B1F200AE8C0E /* UsuariosRepository.swift */,
 				6DD1172F2CAE620F0084314A /* ProfileRepository.swift */,
 				AE8E78872CA9E450007F7365 /* ActividadesRepository.swift */,
@@ -609,6 +618,7 @@
 		252B650D2C9A427D00A362C5 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				AE6AB5062CBF714800D248E6 /* Medallas.swift */,
 				2510D2122CB075EC004C29CC /* Paths */,
 				252B64E22C99FE7200A362C5 /* APIRoutes.swift */,
 				6DD1172D2CAE61CF0084314A /* Profile.swift */,
@@ -679,6 +689,7 @@
 		6DD117272CAE5F880084314A /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				AE6AB5042CBF711000D248E6 /* ConsultarMedallasRequirement.swift */,
 				6D7221382CBDA69300C606D5 /* ModificarPerfilRequirement.swift */,
 				AE5BA04C2CB1B1D800AE8C0E /* ConsultarUsuariosRequirement.swift */,
 				6DD1172A2CAE60000084314A /* ConsultarPerfilPropioRequirement.swift */,
@@ -690,6 +701,7 @@
 		7B9C5ED22CA9E4C700441541 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				AE6AB5022CBF6FF200D248E6 /* ConsultarMedallaViewModel.swift */,
 				6D7221362CBDA67600C606D5 /* ModificarPerfilViewModel.swift */,
 				AE5BA0462CB1B18D00AE8C0E /* ConsultarUsuariosViewModel.swift */,
 				6DD117252CAE5C6A0084314A /* ConsultarPerfilPropioViewModel.swift */,
@@ -995,6 +1007,7 @@
 				252B64ED2C99FE7200A362C5 /* APIRoutes.swift in Sources */,
 				25F3681F2C9B8032003322CF /* MainViewButton.swift in Sources */,
 				AE8E78972CA9E59E007F7365 /* TalleresViewModel.swift in Sources */,
+				AE6AB5052CBF711900D248E6 /* ConsultarMedallasRequirement.swift in Sources */,
 				AE5BA0512CB1B23A00AE8C0E /* ConsultarUsuarios.swift in Sources */,
 				2510D20B2CB04F3E004C29CC /* HoraPicker.swift in Sources */,
 				252B64EE2C99FE7200A362C5 /* SessionAPIService.swift in Sources */,
@@ -1006,10 +1019,12 @@
 				252B64EF2C99FE7200A362C5 /* SessionRepository.swift in Sources */,
 				AE9D1EE02CB73EDB00750DC4 /* LinksComponent.swift in Sources */,
 				252B64D52C99FE5900A362C5 /* SignUpStep3View.swift in Sources */,
+				AE6AB5072CBF714A00D248E6 /* Medallas.swift in Sources */,
 				AE8E78A82CA9E650007F7365 /* eventosView.swift in Sources */,
 				256EE2EF2CADB92400425181 /* TextoLimiteMultilineField.swift in Sources */,
 				2510D2032CB04E69004C29CC /* RegistrarActividadView.swift in Sources */,
 				25858A182CB0DBC700A7719C /* ActividadInfoView.swift in Sources */,
+				AE6AB5032CBF6FF900D248E6 /* ConsultarMedallaViewModel.swift in Sources */,
 				7B9C5EE42CAA571000441541 /* AddFAQViewModel.swift in Sources */,
 				6D7221332CBDA61400C606D5 /* ModificarPerfilView.swift in Sources */,
 				7B9C5ED62CA9E5C000441541 /* FAQModelo.swift in Sources */,
@@ -1033,6 +1048,7 @@
 				25858A142CB0B87600A7719C /* ActividadIndividualViewModel.swift in Sources */,
 				7B9C5ED12CA9D94900441541 /* FAQView.swift in Sources */,
 				2510D1FB2CB04C9C004C29CC /* RegistrarActividadRequirement.swift in Sources */,
+				AE004A252CBF7ACB00CB8DD7 /* MedallasRepository.swift in Sources */,
 				259CBB9A2C9E29C00067B550 /* AppleCryptoHelpers.swift in Sources */,
 				AE8E78AA2CA9E659007F7365 /* rodadasView.swift in Sources */,
 				25C302C42C9A9515005AD742 /* PasswordField.swift in Sources */,
