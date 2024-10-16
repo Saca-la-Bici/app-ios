@@ -94,6 +94,9 @@
 		698D173D2CB7B1DE0083D202 /* RegisterRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698D173C2CB7B1DE0083D202 /* RegisterRouteView.swift */; };
 		6993203F2CB750F7000CA32F /* MapaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6993203E2CB750F7000CA32F /* MapaView.swift */; };
 		69A8045F2CB82D9900692D40 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 69A8045E2CB82D9900692D40 /* MapboxMaps */; };
+		69F761922CC06EFA00284743 /* RouteDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F761912CC06EFA00284743 /* RouteDetails.swift */; };
+		69F761942CC0749900284743 /* RegisterRouteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F761932CC0749900284743 /* RegisterRouteViewModel.swift */; };
+		69F761962CC074A200284743 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F761952CC074A200284743 /* MapViewModel.swift */; };
 		6DD117262CAE5C790084314A /* ConsultarPerfilPropioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD117252CAE5C6A0084314A /* ConsultarPerfilPropioViewModel.swift */; };
 		6DD1172B2CAE61190084314A /* ConsultarPerfilPropioRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD1172A2CAE60000084314A /* ConsultarPerfilPropioRequirement.swift */; };
 		6DD1172E2CAE61D40084314A /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD1172D2CAE61CF0084314A /* Profile.swift */; };
@@ -242,6 +245,9 @@
 		698D173A2CB7ADFE0083D202 /* MapViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewContainer.swift; sourceTree = "<group>"; };
 		698D173C2CB7B1DE0083D202 /* RegisterRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouteView.swift; sourceTree = "<group>"; };
 		6993203E2CB750F7000CA32F /* MapaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapaView.swift; sourceTree = "<group>"; };
+		69F761912CC06EFA00284743 /* RouteDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetails.swift; sourceTree = "<group>"; };
+		69F761932CC0749900284743 /* RegisterRouteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouteViewModel.swift; sourceTree = "<group>"; };
+		69F761952CC074A200284743 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		6DD117252CAE5C6A0084314A /* ConsultarPerfilPropioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarPerfilPropioViewModel.swift; sourceTree = "<group>"; };
 		6DD1172A2CAE60000084314A /* ConsultarPerfilPropioRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarPerfilPropioRequirement.swift; sourceTree = "<group>"; };
 		6DD1172D2CAE61CF0084314A /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -451,6 +457,7 @@
 		252B64C42C99FE5900A362C5 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				69F761882CC0585500284743 /* Mapa */,
 				AE8E78912CA9E558007F7365 /* Actividades */,
 				7B9C5ED22CA9E4C700441541 /* Profile */,
 				252B64FE2C9A01FD00A362C5 /* Session */,
@@ -595,6 +602,7 @@
 		252B650D2C9A427D00A362C5 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				69F761912CC06EFA00284743 /* RouteDetails.swift */,
 				2510D2122CB075EC004C29CC /* Paths */,
 				252B64E22C99FE7200A362C5 /* APIRoutes.swift */,
 				6DD1172D2CAE61CF0084314A /* Profile.swift */,
@@ -648,6 +656,15 @@
 				698D173C2CB7B1DE0083D202 /* RegisterRouteView.swift */,
 				698D173A2CB7ADFE0083D202 /* MapViewContainer.swift */,
 				6993203E2CB750F7000CA32F /* MapaView.swift */,
+			);
+			path = Mapa;
+			sourceTree = "<group>";
+		};
+		69F761882CC0585500284743 /* Mapa */ = {
+			isa = PBXGroup;
+			children = (
+				69F761952CC074A200284743 /* MapViewModel.swift */,
+				69F761932CC0749900284743 /* RegisterRouteViewModel.swift */,
 			);
 			path = Mapa;
 			sourceTree = "<group>";
@@ -935,6 +952,7 @@
 				252B64852C99FC5E00A362C5 /* Saca_la_BiciApp.swift in Sources */,
 				AE8E78932CA9E567007F7365 /* EventosViewModel.swift in Sources */,
 				25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */,
+				69F761942CC0749900284743 /* RegisterRouteViewModel.swift in Sources */,
 				AE5BA0532CB1B27100AE8C0E /* UsuariosAPIService.swift in Sources */,
 				2512D3A42CAFAB90003BCA6A /* EventView.swift in Sources */,
 				252B64D12C99FE5900A362C5 /* SessionCoordinatorView.swift in Sources */,
@@ -1001,6 +1019,7 @@
 				7B9C5EDC2CAA219800441541 /* FAQCard.swift in Sources */,
 				251C5FD42CAF360800CFAC87 /* ImagePicker.swift in Sources */,
 				25858A142CB0B87600A7719C /* ActividadIndividualViewModel.swift in Sources */,
+				69F761962CC074A200284743 /* MapViewModel.swift in Sources */,
 				7B9C5ED12CA9D94900441541 /* FAQView.swift in Sources */,
 				2510D1FB2CB04C9C004C29CC /* RegistrarActividadRequirement.swift in Sources */,
 				259CBB9A2C9E29C00067B550 /* AppleCryptoHelpers.swift in Sources */,
@@ -1036,6 +1055,7 @@
 				698D173B2CB7AE050083D202 /* MapViewContainer.swift in Sources */,
 				7B9C5ED42CA9E4D600441541 /* FAQViewModel.swift in Sources */,
 				AE41A6E52C9A648B00921BDF /* consultarAnuncioView.swift in Sources */,
+				69F761922CC06EFA00284743 /* RouteDetails.swift in Sources */,
 				AEF446822CA9FE7E0004D5E8 /* ColorManager.swift in Sources */,
 				AE5BA04F2CB1B1FD00AE8C0E /* UsuariosRepository.swift in Sources */,
 				AE41A6D92C9A613800921BDF /* AnuncioViewModel.swift in Sources */,
