@@ -7,12 +7,14 @@
 
 import Foundation
 import Combine
+import FirebaseAuth
 
 @MainActor
 class ActividadIndividualViewModel: ObservableObject {
     @Published var datosActividad = ActividadIndividualResponse()
     @Published var messageAlert = ""
     @Published var showAlert = false
+    @Published var showAlertSheet = false
     @Published var isLoading: Bool = false
     
     @Published var titulo: String = ""
@@ -35,20 +37,34 @@ class ActividadIndividualViewModel: ObservableObject {
         case errorIndividual
     }
     
+    enum AlertTypeSheet {
+        case success
+        case error
+        case errorInscrito
+    }
+    
     @Published var alertType: AlertType?
+    @Published var alertTypeSheet: AlertTypeSheet?
+    
+    @Published var codigoAsistencia: String = ""
+    @Published var codigoAsistenciaField: String = ""
+    @Published var usuarioVerificado: Bool = false
     
     private let empty = ActividadIndividualResponse()
     private var userSessionManager = UserSessionManager.shared
     
     private let consultarRequirement: ConsultarActividadIndRequirementProtocol
     private let gestionarAsistenciaRequirement: GestionarAsistenciaRequirementProtocol
+    private let verificarAsistenciaRequirement: VerificarAsistenciaRequirementProtocol
     
     init(
         consultarActividadIndividualRequirement: ConsultarActividadIndRequirementProtocol = ConsultarActividadIndividualRequirement.shared,
-        gestionarAsistenciaRequirement: GestionarAsistenciaRequirementProtocol = GestionarAsistenciaRequirement.shared
+        gestionarAsistenciaRequirement: GestionarAsistenciaRequirementProtocol = GestionarAsistenciaRequirement.shared,
+        verificarAsistenciaRequirement: VerificarAsistenciaRequirementProtocol = VerificarAsistenciaRequirement.shared
     ) {
         self.consultarRequirement = consultarActividadIndividualRequirement
         self.gestionarAsistenciaRequirement = gestionarAsistenciaRequirement
+        self.verificarAsistenciaRequirement = verificarAsistenciaRequirement
     }
     
     func updateProperties(from actividad: Actividad) {
@@ -89,6 +105,20 @@ class ActividadIndividualViewModel: ObservableObject {
             if self.tipo == "Rodada" {
                 self.distancia = datosActividad.actividad.ruta?.distancia ?? ""
                 self.nivel = datosActividad.actividad.ruta?.nivel ?? ""
+                
+                let codigoTemp = datosActividad.actividad.codigoAsistencia ?? 0
+                self.codigoAsistencia = String(codigoTemp)
+                
+                if let currentUserID = userSessionManager.currentUserID {
+                    if let usuariosVerificados = datosActividad.actividad.usuariosVerificados {
+                        if usuariosVerificados.contains(currentUserID) {
+                            self.usuarioVerificado = true
+                        } else {
+                            self.usuarioVerificado = false
+                        }
+                    }
+                }
+                
             }
             self.isLoading = false
             
@@ -151,5 +181,45 @@ class ActividadIndividualViewModel: ObservableObject {
             self.showAlert = true
         }
         isLoading = false
+    }
+    
+    @MainActor
+    func verificarAsistencia(IDRodada: String, codigoAsistencia: String, adminOrStaff: Bool) async {
+        if adminOrStaff == false {
+            if codigoAsistenciaField.isEmpty || codigoAsistenciaField.count != 4 {
+                self.messageAlert = "Ingresa un código de 4 números para continuar."
+                self.showAlertSheet = true
+                return
+            }
+        }
+        
+        let response = await verificarAsistenciaRequirement.verificarAsistencia(IDRodada: IDRodada, codigo: codigoAsistencia)
+        
+        if response != nil {
+            if response?.status == 400 && response?.message == "Código de asistencia incorrecto" {
+                self.messageAlert = "El código de verificación es incorrecto. Por favor intente de nuevo."
+                self.showAlertSheet = true
+                self.alertTypeSheet = .error
+                return
+            } else if response?.status == 400 && response?.message == "La rodada no tiene un código de asistencia" {
+                self.messageAlert = "La rodada no tiene un código de asistencia."
+                self.showAlertSheet = true
+                self.alertTypeSheet = .error
+                return
+            } else if response?.status == 400 && response?.message == "Asistencia ya verificada para esta rodada" {
+                self.messageAlert = "Ya verificaste la asistencia para esta rodada. ¡Gracias por participar!"
+                self.showAlertSheet = true
+                self.alertTypeSheet = .errorInscrito
+                return
+            } else if response?.status == 200 {
+                self.messageAlert = "Tu asistencia ha sido verificada. ¡Gracias por asistir!"
+                self.showAlertSheet = true
+                self.alertTypeSheet = .success
+            }
+        } else {
+            self.messageAlert = "Hubo un error al verificar tu asistencia. Por favor intentelo de nuevo."
+            self.showAlertSheet = true
+            return
+        }
     }
 }

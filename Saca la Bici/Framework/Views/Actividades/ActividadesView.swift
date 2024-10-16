@@ -27,8 +27,13 @@ struct ActividadesView: View {
                         
                         Spacer()
                         
-                        Image(systemName: "questionmark.circle")
-                            .padding(.trailing, 8)
+                        Button(action: {
+                            path.append(.faqs)
+                        }, label: {
+                            Image(systemName: "questionmark.circle")
+                                .padding(.trailing, 8)
+                        })
+                        .buttonStyle(PlainButtonStyle())
                         
                         if userSessionManager.puedeIniciarRodada() {
                             Button(action: {
@@ -105,6 +110,14 @@ struct ActividadesView: View {
                     DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, isEditing: false)
                 case .detalle(let id):
                     ActividadIndividualView(path: $path, id: id)
+                case .faqs:
+                    FAQView<ActivitiesPaths>(path: $path)
+                case .faqDetail(let faq, let permisos):
+                    FAQDetailView<ActivitiesPaths>(faq: faq, permisos: permisos, path: $path)
+                case .addFAQ:
+                    AddFAQView<ActivitiesPaths>(path: $path)
+                case .updateFAQ(let faq):
+                    UpdateFAQView<ActivitiesPaths>(faq: faq, path: $path)
                 case .editarEvento(let id):
                     RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Evento", id: id, isEditing: true)
                 case .editarRodada(let id):

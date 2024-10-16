@@ -117,16 +117,27 @@ struct ActividadResponse: Codable {
     let _id: String
     let informacion: [Actividad]
     let ruta: Ruta?
+    let codigoAsistencia: Int?
+    let usuariosVerificados: [String]?
     
-    init(_id: String = "", informacion: [Actividad] = [], ruta: Ruta? = nil) {
+    init(_id: String = "", informacion: [Actividad] = [], ruta: Ruta? = nil,
+         codigoAsistencia: Int? = nil, usuariosVerificados: [String]? = []) {
         self._id = _id
         self.informacion = informacion
         self.ruta = ruta
+        self.codigoAsistencia = codigoAsistencia
+        self.usuariosVerificados = usuariosVerificados
     }
 }
 
 struct ActionResponse: Codable {
     let message: String
+}
+
+struct AsistenciaResponse: Codable {
+    let status: Int
+    let message: String
+    let nuevaMedallaGanada: Bool?
 }
 
 struct EliminarActividadResponse: Codable {
@@ -143,6 +154,12 @@ struct ModificarActividadModel: Codable {
     let ubicacion: String
     let descripcion: String
     let estado: Bool
+    let duracion: String
+    let imagen: Data?
+    let tipo: String
+    let foro: String?
+    let usuariosInscritos: [String]?
+    let ruta: String?
     let duracion: String
     let imagen: Data?
     let tipo: String

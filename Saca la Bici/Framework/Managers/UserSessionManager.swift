@@ -80,4 +80,7 @@ class UserSessionManager: ObservableObject {
         return tienePermiso("Registrar pregunta frecuente")
     }
     
+    func puedeVerificarAsistencia() -> Bool {
+        return tienePermiso("Verificar asistencia")
+    }
 }

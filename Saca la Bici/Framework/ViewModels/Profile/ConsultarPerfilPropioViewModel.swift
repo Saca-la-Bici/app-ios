@@ -9,26 +9,32 @@ import Foundation
 import FirebaseAuth
 
 class ConsultarPerfilPropioViewModel: ObservableObject {
+    static let shared = ConsultarPerfilPropioViewModel()
     @Published var profile: Profile?
-    @Published var isLoading: Bool = false
+    @Published var isLoading: Bool = true
     @Published var error: Error?
     @Published var errorMessage: String?
+    @Published var showAlert = false
     
     let consultarPerfilPropioRequirement = ConsultarPerfilPropioRequirement()
     
     @MainActor
     func consultarPerfilPropio() async throws {
-        
+        self.isLoading = true
         do {
             
             self.profile = try await consultarPerfilPropioRequirement.consultarPerfilPropio()
+            self.profile?.tipoSangre = profile?.tipoSangre?.isEmpty == true ? "Sin seleccionar" : profile?.tipoSangre ?? "Sin seleccionar"
+            
         } catch {
+            self.showAlert = true
             self.errorMessage = "Hubo un error al ingresar a tu perfil, intente de nuevo más tarde"
             
             // Manejo del error en caso de que algo falle
             print("Error: \(error.localizedDescription)")
             throw error
         }
+        self.isLoading = false
     }
     
 }

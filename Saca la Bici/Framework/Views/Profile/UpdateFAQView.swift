@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UpdateFAQView: View {
+struct UpdateFAQView<PathType: Equatable>: View {
     
     // FAQ
     var faq: FAQ
@@ -16,7 +16,7 @@ struct UpdateFAQView: View {
     @ObservedObject var viewModel = UpdateFAQViewModel()
     
     // Binding
-    @Binding var path: [ConfigurationPaths]
+    @Binding var path: [PathType]
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -76,7 +76,8 @@ struct UpdateFAQView: View {
                 .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button(action: {
-                                if viewModel.pregunta.isEmpty || viewModel.respuesta.isEmpty {
+                                if viewModel.pregunta.trimmingCharacters(in: .whitespaces).isEmpty ||
+                                    viewModel.respuesta.trimmingCharacters(in: .whitespaces).isEmpty {
                                     viewModel.errorMessage = "Debe ingresar una pregunta y una respuesta"
                                     viewModel.activeAlert = .error
                                 } else {

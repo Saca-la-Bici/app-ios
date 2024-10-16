@@ -291,6 +291,55 @@ class ActividadesAPIService {
         }
     }
     
+    func verificarAsistencia(url: URL, IDRodada: String, codigo: String) async -> AsistenciaResponse? {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
+            print("No se pudo obtener el ID Token")
+            return nil
+        }
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)", // Incluye el token en el header de autorización
+            "Content-Type": "application/json"
+        ]
+        
+        let parameters: Parameters = [
+            "IDRodada": IDRodada,
+            "codigo": codigo
+        ]
+            
+        let taskRequest = session.request(url, method: .patch, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate()
+        let response = await taskRequest.serializingData().response
+            
+        switch response.result {
+        case .success(let data):
+            do {
+                let response = try JSONDecoder().decode(AsistenciaResponse.self, from: data)
+                
+                return response
+            } catch {
+                return nil
+            }
+        case let .failure(error):
+            debugPrint(error.localizedDescription)
+            
+            // Imprimir el cuerpo de la respuesta en caso de error
+            if let data = response.data {
+                let errorResponse = String(decoding: data, as: UTF8.self)
+                print("\(errorResponse)")
+                
+                do {
+                    let response = try JSONDecoder().decode(AsistenciaResponse.self, from: data)
+                    
+                    return response
+                } catch {
+                    return nil
+                }
+            }
+            
+            return nil
+        }
+    }
+    
     func modificarActividad(url: URL, id: String, datosActividad: ModificarActividadModel) async throws -> ActionResponse {
         
         // Obtener token de Firebase
