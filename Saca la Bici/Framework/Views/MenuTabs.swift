@@ -14,7 +14,7 @@ struct MenuView: View {
                     if selectedTab == 0 {
                         ActividadesView()
                     } else if selectedTab == 1 {
-                        ContentView()
+                        MapaView()
                     } else if selectedTab == 2 {
                         ConsultarAnuncio()
                     } else {
