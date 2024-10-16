@@ -224,8 +224,6 @@ class ActividadViewModel: ObservableObject {
         // Duracion
         let duracionString = self.parseDurationString(duration: self.selectedTimeDuration)
         
-        // Duracion string
-        
         // Referencia a actividadResponse?.informacion[0]
         let info = self.actividadResponse?.informacion[0]
         
@@ -310,6 +308,7 @@ class ActividadViewModel: ObservableObject {
             
             // Rellenar los campos
             self.existingImageURL = URL(string: actividad!.imagen ?? "")
+            self.existingImageData = await self.getDataFromURL(url: existingImageURL!)
             self.selectedDate = parseDate(date: actividad!.fecha)
             self.tituloActividad = actividad!.titulo
             self.selectedTime = parseTime(time: actividad!.hora)
@@ -384,16 +383,17 @@ class ActividadViewModel: ObservableObject {
                                                             
     }
     
-    func getDataFromURL(url: URL) async throws -> Data {
+    func getDataFromURL(url: URL) async -> Data? {
         do {
             // Usa URLSession para obtener los datos
             let (data, _) = try await URLSession.shared.data(from: url)
-            // Retornar
+            
             return data
         } catch {
             print("Error: \(error.localizedDescription)")
-            throw error
         }
+        
+        return nil
     }
     
 }
