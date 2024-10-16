@@ -51,11 +51,16 @@
 		252B64FB2C99FFE200A362C5 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 252B64FA2C99FFE200A362C5 /* GoogleSignIn */; };
 		252B64FD2C99FFE200A362C5 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 252B64FC2C99FFE200A362C5 /* GoogleSignInSwift */; };
 		252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */; };
+		254BC9FE2CBF1EB600858477 /* RutasAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254BC9FD2CBF1EB600858477 /* RutasAPIService.swift */; };
+		254BCA002CBF1FB200858477 /* Rutas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254BC9FF2CBF1FB200858477 /* Rutas.swift */; };
+		254BCA022CBF217700858477 /* RutasRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254BCA012CBF217700858477 /* RutasRepository.swift */; };
+		254BCA042CBF38B100858477 /* RutaCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254BCA032CBF38B100858477 /* RutaCardView.swift */; };
 		2552B8F22CB799F8007FDC82 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2552B8F12CB799F8007FDC82 /* ProfileImageView.swift */; };
 		255474E12CBB51E5004CFAFE /* VerificarAsistenciaRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E02CBB51E5004CFAFE /* VerificarAsistenciaRequirement.swift */; };
 		255474E42CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E32CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift */; };
 		255474E62CBC43E5004CFAFE /* CodigoNumericoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E52CBC43E5004CFAFE /* CodigoNumericoView.swift */; };
 		255474E82CBD82D6004CFAFE /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 255474E72CBD82D6004CFAFE /* FirebaseInAppMessaging-Beta */; };
+		255474EA2CBEDA73004CFAFE /* InformacionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255474E92CBEDA73004CFAFE /* InformacionView.swift */; };
 		256EE2EF2CADB92400425181 /* TextoLimiteMultilineField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EE2EE2CADB92400425181 /* TextoLimiteMultilineField.swift */; };
 		25858A102CB0AF5400A7719C /* ActividadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */; };
 		25858A122CB0AFE300A7719C /* ActividadIndividualView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A112CB0AFE300A7719C /* ActividadIndividualView.swift */; };
@@ -74,6 +79,7 @@
 		25A7BE5C2CA7713A00FCB8B6 /* FirebaseTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BE5B2CA7713A00FCB8B6 /* FirebaseTokenManager.swift */; };
 		25A7BE602CA775CF00FCB8B6 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 25A7BE5F2CA775CF00FCB8B6 /* FirebaseMessaging */; };
 		25A7BE622CA9B17C00FCB8B6 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BE612CA9B17C00FCB8B6 /* NotificationManager.swift */; };
+		25AA2CB22CC06F88007036C8 /* DecalogosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA2CB12CC06F88007036C8 /* DecalogosView.swift */; };
 		25C302BA2C9A8C99005AD742 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302B92C9A8C99005AD742 /* CustomButton.swift */; };
 		25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */; };
 		25C302BE2C9A905F005AD742 /* TipoSangrePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */; };
@@ -212,10 +218,15 @@
 		252B64E82C99FE7200A362C5 /* SessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRepository.swift; sourceTree = "<group>"; };
 		252B65042C9A297700A362C5 /* Saca-la-Bici-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Saca-la-Bici-Info.plist"; sourceTree = SOURCE_ROOT; };
 		252B65082C9A3C9C00A362C5 /* CompletarDatosStep1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletarDatosStep1View.swift; sourceTree = "<group>"; };
+		254BC9FD2CBF1EB600858477 /* RutasAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RutasAPIService.swift; sourceTree = "<group>"; };
+		254BC9FF2CBF1FB200858477 /* Rutas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rutas.swift; sourceTree = "<group>"; };
+		254BCA012CBF217700858477 /* RutasRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RutasRepository.swift; sourceTree = "<group>"; };
+		254BCA032CBF38B100858477 /* RutaCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RutaCardView.swift; sourceTree = "<group>"; };
 		2552B8F12CB799F8007FDC82 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		255474E02CBB51E5004CFAFE /* VerificarAsistenciaRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificarAsistenciaRequirement.swift; sourceTree = "<group>"; };
 		255474E32CBC3AEE004CFAFE /* VerificarAsistenciaSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificarAsistenciaSheet.swift; sourceTree = "<group>"; };
 		255474E52CBC43E5004CFAFE /* CodigoNumericoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodigoNumericoView.swift; sourceTree = "<group>"; };
+		255474E92CBEDA73004CFAFE /* InformacionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformacionView.swift; sourceTree = "<group>"; };
 		256EE2EE2CADB92400425181 /* TextoLimiteMultilineField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextoLimiteMultilineField.swift; sourceTree = "<group>"; };
 		25858A0F2CB0AF4E00A7719C /* ActividadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadViewModel.swift; sourceTree = "<group>"; };
 		25858A112CB0AFE300A7719C /* ActividadIndividualView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadIndividualView.swift; sourceTree = "<group>"; };
@@ -234,6 +245,7 @@
 		25A7BE572CA664A800FCB8B6 /* SeguridadAccesoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeguridadAccesoView.swift; sourceTree = "<group>"; };
 		25A7BE5B2CA7713A00FCB8B6 /* FirebaseTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTokenManager.swift; sourceTree = "<group>"; };
 		25A7BE612CA9B17C00FCB8B6 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		25AA2CB12CC06F88007036C8 /* DecalogosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecalogosView.swift; sourceTree = "<group>"; };
 		25C302B92C9A8C99005AD742 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		25C302BB2C9A8F8A005AD742 /* FechaNacimientoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FechaNacimientoPicker.swift; sourceTree = "<group>"; };
 		25C302BD2C9A905F005AD742 /* TipoSangrePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipoSangrePicker.swift; sourceTree = "<group>"; };
@@ -406,6 +418,7 @@
 				AE8E78A52CA9E63C007F7365 /* activityCardView.swift */,
 				25858A172CB0DBC700A7719C /* ActividadInfoView.swift */,
 				2552B8F12CB799F8007FDC82 /* ProfileImageView.swift */,
+				254BCA032CBF38B100858477 /* RutaCardView.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -540,6 +553,7 @@
 				AE41A6E22C9A636B00921BDF /* AnuncioAPIService.swift */,
 				25A7BE5B2CA7713A00FCB8B6 /* FirebaseTokenManager.swift */,
 				7B9C5ED92CA9F08900441541 /* FAQAPIService.swift */,
+				254BC9FD2CBF1EB600858477 /* RutasAPIService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -611,6 +625,7 @@
 				252B64E82C99FE7200A362C5 /* SessionRepository.swift */,
 				AE41A6E02C9A632A00921BDF /* AnuncioRepository.swift */,
 				7B9C5EF72CACF66800441541 /* FAQRepository.swift */,
+				254BCA012CBF217700858477 /* RutasRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -627,6 +642,7 @@
 				AE41A6E62C9A679000921BDF /* Anuncio.swift */,
 				7B9C5ED52CA9E5C000441541 /* FAQModelo.swift */,
 				AE5BA0502CB1B23300AE8C0E /* ConsultarUsuarios.swift */,
+				254BC9FF2CBF1FB200858477 /* Rutas.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -646,6 +662,7 @@
 				6D7221322CBDA60500C606D5 /* ModificarPerfilView.swift */,
 				AE5BA04A2CB1B1B400AE8C0E /* ConsultarUsuariosView.swift */,
 				25A7BE502CA61C9500FCB8B6 /* ProfileView.swift */,
+				255474E92CBEDA73004CFAFE /* InformacionView.swift */,
 				25A7BE4E2CA61C0600FCB8B6 /* ConfigurationView.swift */,
 				25A7BE572CA664A800FCB8B6 /* SeguridadAccesoView.swift */,
 				7B9C5EDF2CAA4FB400441541 /* AddFAQView.swift */,
@@ -784,6 +801,7 @@
 				AE8E78A92CA9E653007F7365 /* rodadasView.swift */,
 				AE8E78A72CA9E649007F7365 /* eventosView.swift */,
 				25858A112CB0AFE300A7719C /* ActividadIndividualView.swift */,
+				25AA2CB12CC06F88007036C8 /* DecalogosView.swift */,
 			);
 			path = Actividades;
 			sourceTree = "<group>";
@@ -988,6 +1006,7 @@
 				2510D2052CB04E8B004C29CC /* RodadaRutaView.swift in Sources */,
 				252B64D22C99FE5900A362C5 /* UIApplicationExtensions.swift in Sources */,
 				252B64D32C99FE5900A362C5 /* SignUpStep1View.swift in Sources */,
+				254BCA022CBF217700858477 /* RutasRepository.swift in Sources */,
 				252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */,
 				7B9C5EE02CAA4FB400441541 /* AddFAQView.swift in Sources */,
 				25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */,
@@ -1018,6 +1037,7 @@
 				25F368212C9BAEA3003322CF /* LoadingView.swift in Sources */,
 				252B64EF2C99FE7200A362C5 /* SessionRepository.swift in Sources */,
 				AE9D1EE02CB73EDB00750DC4 /* LinksComponent.swift in Sources */,
+				254BCA042CBF38B100858477 /* RutaCardView.swift in Sources */,
 				252B64D52C99FE5900A362C5 /* SignUpStep3View.swift in Sources */,
 				AE6AB5072CBF714A00D248E6 /* Medallas.swift in Sources */,
 				AE8E78A82CA9E650007F7365 /* eventosView.swift in Sources */,
@@ -1033,6 +1053,7 @@
 				2510D2092CB04F2E004C29CC /* FechaPicker.swift in Sources */,
 				6DD117262CAE5C790084314A /* ConsultarPerfilPropioViewModel.swift in Sources */,
 				25A7BE5C2CA7713A00FCB8B6 /* FirebaseTokenManager.swift in Sources */,
+				255474EA2CBEDA73004CFAFE /* InformacionView.swift in Sources */,
 				6DD1172B2CAE61190084314A /* ConsultarPerfilPropioRequirement.swift in Sources */,
 				252B64D82C99FE5900A362C5 /* MainLoginView.swift in Sources */,
 				252B65092C9A3C9C00A362C5 /* CompletarDatosStep1View.swift in Sources */,
@@ -1061,12 +1082,14 @@
 				AE8E788D2CA9E4D9007F7365 /* ActividadesAPIService.swift in Sources */,
 				259CBBA02CA0E44A0067B550 /* SessionPaths.swift in Sources */,
 				7B9C5EEC2CAB754100441541 /* FAQDetailViewModel.swift in Sources */,
+				25AA2CB22CC06F88007036C8 /* DecalogosView.swift in Sources */,
 				7B9C5EEE2CAC9A8100441541 /* UpdateFAQView.swift in Sources */,
 				6DD117302CAE62170084314A /* ProfileRepository.swift in Sources */,
 				25A7BE4C2CA4F11A00FCB8B6 /* PasswordRecoveryView.swift in Sources */,
 				25A7BE622CA9B17C00FCB8B6 /* NotificationManager.swift in Sources */,
 				25D0E5192CA38C6C00B431A9 /* RestablecerContraseñaRequirement.swift in Sources */,
 				AE8E78882CA9E457007F7365 /* ActividadesRepository.swift in Sources */,
+				254BCA002CBF1FB200858477 /* Rutas.swift in Sources */,
 				252B64E02C99FE6F00A362C5 /* LoginRequirement.swift in Sources */,
 				25F3681B2C9B62CD003322CF /* ImagenAmarillaFondo.swift in Sources */,
 				2510D2072CB04F0B004C29CC /* DurationPicker.swift in Sources */,
@@ -1074,6 +1097,7 @@
 				255474E62CBC43E5004CFAFE /* CodigoNumericoView.swift in Sources */,
 				259EF8B72CA23899007CE3FE /* UserProfileSessionAPIService.swift in Sources */,
 				6DBF72C12CBFE5E800EB3FDB /* consultarEstadisticasView.swift in Sources */,
+				254BC9FE2CBF1EB600858477 /* RutasAPIService.swift in Sources */,
 				25C302C02C9A91A3005AD742 /* TextoLimiteField.swift in Sources */,
 				6D7221392CBDA6A000C606D5 /* ModificarPerfilRequirement.swift in Sources */,
 				252B64E12C99FE6F00A362C5 /* SignUpRequirement.swift in Sources */,

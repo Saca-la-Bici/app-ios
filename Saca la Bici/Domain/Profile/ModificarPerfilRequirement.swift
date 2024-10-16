@@ -13,6 +13,12 @@ class ModificarPerfilRequirement {
     
     private var resultado: String = ""
     
+    let sessionRepository: SessionRepository
+    
+    init(sessionRepository: SessionRepository = SessionRepository.shared) {
+        self.sessionRepository = sessionRepository
+    }
+    
     func modificarPerfil(nombre: String, username: String, tipoSangre: String, numeroEmergencia: String, imagen: Data?) async throws -> String {
         
         do {
@@ -25,6 +31,10 @@ class ModificarPerfilRequirement {
         }
         
         return resultado
+    }
+    
+    func verificarUsernameExistente(username: String) async -> Bool? {
+        return await sessionRepository.verificarUsernameExistente(username: username)
     }
     
 }
