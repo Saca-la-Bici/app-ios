@@ -49,7 +49,7 @@ struct ActividadIndividualView: View {
                     if actividadIndividualViewModel.tipo == "Rodada" {
                         HStack {
                             Button(action: {
-                                // Acción para Materiales
+                                path.append(.decalogo)
                             }, label: {
                                 Text("Decálogo del Ciclista")
                                     .padding(.leading, 15)
