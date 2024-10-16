@@ -49,7 +49,7 @@ class ProfileAPIService {
         
     }
     
-    func modificarPerfil(nombre: String, username: String, tipoSangre: String, numeroEmergencia: String, url: URL) async throws -> String {
+    func modificarPerfil(nombre: String, username: String, tipoSangre: String, numeroEmergencia: String, url: URL, imagen: Data?) async throws -> String {
         
         guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
@@ -57,29 +57,37 @@ class ProfileAPIService {
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(idToken)",
-            "Content-Type": "application/json"
+            "Content-Type": "multipart/form-data"  // Necesitamos multipart para manejar archivos e información de texto
         ]
         
-        // Cuerpo de la solicitud (datos del perfil a modificar)
-        let parameters: [String: Any] = [
+        let params: [String: String] = [
             "nombre": nombre,
             "username": username,
             "tipoSangre": tipoSangre,
             "numeroEmergencia": numeroEmergencia
         ]
         
-        do {
-            // Realiza la solicitud PATCH a la API
-            let response = try await session.request(url, method: .patch, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
-                .validate()
-                .serializingString()
-                .value
-            
-            return response  // Retorna la respuesta del servidor en caso de éxito
-            
-        } catch {
-            print("Error al modificar perfil: \(error.localizedDescription)")
-            throw error  // Propaga el error para que pueda manejarse a nivel superior
+        // Subir usando multipart/form-data
+        return try await withCheckedThrowingContinuation { continuation in
+            AF.upload(multipartFormData: { multipartFormData in
+                // Añadir los parámetros de texto
+                for (key, value) in params {
+                    multipartFormData.append(Data(value.utf8), withName: key)
+                }
+                // Añadir la imagen si existe
+                if let imagenData = imagen {
+                    multipartFormData.append(imagenData, withName: "file", fileName: "imagen.jpg", mimeType: "image/jpeg")
+                }
+            }, to: url, method: .patch, headers: headers)
+            .validate()
+            .responseString { response in
+                switch response.result {
+                case .success(let value):
+                    continuation.resume(returning: value)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
         }
     }
     

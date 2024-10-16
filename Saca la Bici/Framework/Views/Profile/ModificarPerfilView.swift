@@ -1,15 +1,9 @@
-//
-//  ModificarPerfilView.swift
-//  Saca la Bici
-//
-//  Created by Diego Lira on 09/10/24.
-//
-
 import SwiftUI
 import Combine
+import PhotosUI
 
 struct ModificarPerfilView: View {
-    
+
     @StateObject private var consultarPerfilPropioViewModel = ConsultarPerfilPropioViewModel.shared
     @StateObject private var modificarPerfilViewModel = ModificarPerfilViewModel()
     @State var isLoading: Bool = false
@@ -21,12 +15,15 @@ struct ModificarPerfilView: View {
     @State var telefonoEmergencia: String = ""
     @State var resultado: String = ""
     @State var mostrarAlerta: Bool = false
-    
+
+    @State private var selectedItem: PhotosPickerItem?
+    @State private var selectedImageData: Data? // Para almacenar la imagen seleccionada
+
     let tiposSangre = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Sin seleccionar"]
-    
+
     var body: some View {
         VStack {
-            profileHeader() // Encabezado del perfil
+            profileHeader() // Encabezado del perfil con la imagen seleccionada
             formFields() // Campos del formulario
         }
         .onAppear {
@@ -36,6 +33,18 @@ struct ModificarPerfilView: View {
             nombreUsuario = profile?.username ?? ""
             tipoSangre = profile?.tipoSangre ?? "Sin seleccionar"
             telefonoEmergencia = profile?.numeroEmergencia ?? ""
+            
+            // Si el perfil tiene una imagen, cargarla en selectedImageData
+            if let imageUrlString = profile?.imagen, let imageUrl = URL(string: imageUrlString) {
+                Task {
+                    do {
+                        let (data, _) = try await URLSession.shared.data(from: imageUrl)
+                        selectedImageData = data
+                    } catch {
+                        print("Error al cargar la imagen: \(error)")
+                    }
+                }
+            }
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -44,60 +53,38 @@ struct ModificarPerfilView: View {
         }
         .alert("Resultado", isPresented: $mostrarAlerta) {
             Button("Aceptar", role: .cancel) {
-                path.removeLast() // Remueve el último path al confirmar
+                if resultado == "Perfil modificado correctamente" {
+                    path.removeLast() // Solo regresa si el perfil fue modificado exitosamente
+                }
             }
         } message: {
             Text(resultado)
         }
+        .overlay(
+            Group {
+                if isLoading {
+                    ZStack {
+                        Color.white // Fondo completamente blanco
+                            .ignoresSafeArea() // Para que ocupe toda la pantalla
+                        ProgressView("Mandando información...")
+                    }
+                }
+            }
+        )
+
     }
 
     @ViewBuilder
     private func profileHeader() -> some View {
         VStack {
-            if let imageUrlString = consultarPerfilPropioViewModel.profile?.imagen,
-               let imageUrl = URL(string: imageUrlString) {
-                AsyncImage(url: imageUrl) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                            .frame(width: 80, height: 80)
-                            .background(Color.gray.opacity(0.1))
-                            .clipShape(Circle())
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .frame(width: 80, height: 80)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.black, lineWidth: 1))
-                            .shadow(color: .gray, radius: 2, x: 2, y: 2)
-                    case .failure:
-                        profileImagePlaceholder() // Vista de imagen predeterminada en caso de error
-                    @unknown default:
-                        EmptyView()
-                    }
-                }
-            } else {
-                profileImagePlaceholder() // Vista de imagen predeterminada cuando no hay imagen
-            }
-
-            Text("Editar foto")
-                .font(.caption)
-                .foregroundColor(.yellow)
-                .padding(.top, 5)
+            // Pasamos los bindings para permitir seleccionar una nueva imagen
+            ImagePickerProfile(
+                selectedItem: $selectedItem,
+                selectedImageData: $selectedImageData,
+                imageUrlString: consultarPerfilPropioViewModel.profile?.imagen
+            )
+            .padding(.top, 20)
         }
-        .padding(.top, 20)
-    }
-
-    @ViewBuilder
-    private func profileImagePlaceholder() -> some View {
-        Image(systemName: "person.crop.circle.fill")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 80, height: 80)
-            .foregroundColor(.gray)
-            .clipShape(Circle())
-            .overlay(Circle().stroke(Color.black, lineWidth: 1))
-            .shadow(color: .gray, radius: 2, x: 2, y: 2)
     }
 
     @ViewBuilder
@@ -109,19 +96,27 @@ struct ModificarPerfilView: View {
                 VStack(alignment: .leading) {
                     Text("Teléfono de Emergencia")
                         .font(.caption)
-                    TextField("Teléfono de Emergencia", text: $telefonoEmergencia)
-                        .keyboardType(.numberPad)
-                        .padding()
-                        .cornerRadius(10)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-                        )
-                        .onReceive(Just(telefonoEmergencia)) { _ in
-                            if telefonoEmergencia.count > 15 {
-                                telefonoEmergencia = String(telefonoEmergencia.prefix(15))
+                    
+                    HStack {
+                        Text("+")
+                            .font(.title2)
+                            .padding(.leading, 10)
+                        
+                        TextField("Teléfono de Emergencia", text: $telefonoEmergencia)
+                            .keyboardType(.numberPad)
+                            .padding()
+                            .cornerRadius(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                            )
+                            .onReceive(Just(telefonoEmergencia)) { _ in
+                                if telefonoEmergencia.count > 15 {
+                                    telefonoEmergencia = String(telefonoEmergencia.prefix(15))
+                                }
                             }
-                        }
+                    }
+                    
                 }
                 
                 TipoSangrePicker(selectedBloodType: $tipoSangre, bloodTypes: tiposSangre)
@@ -135,13 +130,16 @@ struct ModificarPerfilView: View {
     private func saveButton() -> some View {
         Button {
             Task {
+                isLoading = true
                 resultado = await modificarPerfilViewModel.modificarPerfil(
                     nombre: nombre,
                     username: nombreUsuario,
                     tipoSangre: tipoSangre,
-                    numeroEmergencia: telefonoEmergencia
+                    numeroEmergencia: telefonoEmergencia,
+                    imagen: selectedImageData // Se envía la imagen seleccionada (si existe)
                 )
                 mostrarAlerta = true
+                isLoading = false
             }
         } label: {
             Image(systemName: "checkmark")
@@ -151,4 +149,5 @@ struct ModificarPerfilView: View {
                 .foregroundColor(.yellow)
         }
     }
+    
 }
