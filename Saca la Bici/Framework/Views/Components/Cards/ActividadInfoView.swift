@@ -73,7 +73,6 @@ struct ActividadInfoView: View {
             }
             .padding(.vertical, 3)
         }
-        .padding(.horizontal)
     }
 
     private func detailRow(title: String, value: String) -> some View {
