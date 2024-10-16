@@ -17,9 +17,10 @@ struct TalleresView: View {
                 Spacer().frame(height: 5)
                 if viewModel.isLoading {
                     ProgressView()
-                } else if let errorMessage = viewModel.errorMessage {
-                    Text("Error: \(errorMessage)")
-                        .foregroundColor(.red)
+                } else if viewModel.talleres.isEmpty {
+                    Text("Actualmente no hay talleres disponibles, pero vuelve más tarde para ver nuevas actividades.")
+                        .foregroundColor(.gray)
+                        .font(.headline)
                         .padding()
                 } else {
                     ForEach(viewModel.talleres) { taller in
@@ -40,6 +41,10 @@ struct TalleresView: View {
                 Spacer().frame(height: 5)
             }
             .padding(.horizontal)
+        }
+        .onAppear {
+            viewModel.isLoading = true
+            viewModel.fetchTalleres()
         }
     }
 }

@@ -18,7 +18,6 @@ class EventosViewModel: ObservableObject {
     
     init(getEventosUseCase: GetEventosUseCase = GetEventosUseCase(repository: ActividadesRepository())) {
         self.getEventosUseCase = getEventosUseCase
-        fetchEventos()
     }
     
     func fetchEventos() {
