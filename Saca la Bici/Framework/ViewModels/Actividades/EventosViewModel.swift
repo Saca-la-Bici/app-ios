@@ -6,15 +6,12 @@
 //
 
 import SwiftUI
-import FirebaseAuth
 
 @MainActor
 class EventosViewModel: ObservableObject {
     @Published var eventos: [Evento] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
-    
-    let currentUserId = Auth.auth().currentUser?.uid
     
     private let getEventosUseCase: GetEventosUseCase
     private var userSessionManager = UserSessionManager.shared
