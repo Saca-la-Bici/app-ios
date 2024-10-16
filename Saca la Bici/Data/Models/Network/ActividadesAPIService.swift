@@ -395,6 +395,12 @@ class ActividadesAPIService {
                     }
                 }
                 
+                // Añadir ruta
+                if let rutaData = datosActividad.ruta?.data(using: .utf8) {
+                    print("ruta: \(rutaData)")
+                    multipartFormData.append(rutaData, withName: "ruta")
+                }
+                
             }, to: url, method: .patch, headers: headers)
             .validate()
             .responseDecodable(of: ActionResponse.self) { response in

@@ -101,7 +101,7 @@ struct ActividadesView: View {
                 case .taller:
                     RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Taller", isEditing: false)
                 case .rutas:
-                    RodadaRutaView(path: $path, actividadViewModel: actividadViewModel)
+                    RodadaRutaView(path: $path, actividadViewModel: actividadViewModel, isEditing: false)
                 case .descripcionRodada:
                     DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, isEditing: false)
                 case .descripcionEvento:
@@ -124,12 +124,14 @@ struct ActividadesView: View {
                     RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Rodada", id: id, isEditing: true)
                 case .editarTaller(let id):
                     RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Taller", id: id, isEditing: true)
-                case .editarDescripcionRodada(id: let id):
-                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, id: id, isEditing: true)
-                case .editarDescripcionEvento(id: let id):
-                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, id: id, isEditing: true)
-                case .editarDescripcionTaller(id: let id):
-                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, id: id, isEditing: true)
+                case .editarRodadaRuta(let id):
+                    RodadaRutaView(path: $path, actividadViewModel: actividadViewModel, isEditing: true)
+                case .editarDescripcionRodada(let id):
+                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, isEditing: true)
+                case .editarDescripcionEvento(let id):
+                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, isEditing: true)
+                case .editarDescripcionTaller(let id):
+                    DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, isEditing: true)
                 }
             }
         }

@@ -160,10 +160,4 @@ struct ModificarActividadModel: Codable {
     let foro: String?
     let usuariosInscritos: [String]?
     let ruta: String?
-    let duracion: String
-    let imagen: Data?
-    let tipo: String
-    let foro: String?
-    let usuariosInscritos: [String]?
-    let ruta: String?
 }

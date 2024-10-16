@@ -163,13 +163,25 @@ struct RegistrarActividadView: View {
                         action: {
                             actividadViewModel.validarDatosBase()
 
-                            if actividadViewModel.showAlert != true {
-                                if tipoActividad == "Rodada" {
-                                    path.append(.rutas)
-                                } else if tipoActividad == "Evento" {
-                                    path.append(.editarDescripcionEvento(id: actividadViewModel.idActividad))
-                                } else if tipoActividad == "Taller" {
-                                    path.append(.editarDescripcionEvento(id: actividadViewModel.idActividad))
+                            if actividadViewModel.isEditing {
+                                if actividadViewModel.showAlert != true {
+                                    if tipoActividad == "Rodada" {
+                                        path.append(.editarRodadaRuta(id: actividadViewModel.idActividad))
+                                    } else if tipoActividad == "Evento" {
+                                        path.append(.editarDescripcionEvento(id: actividadViewModel.idActividad))
+                                    } else if tipoActividad == "Taller" {
+                                        path.append(.editarDescripcionEvento(id: actividadViewModel.idActividad))
+                                    }
+                                }
+                            } else {
+                                if actividadViewModel.showAlert != true {
+                                    if tipoActividad == "Rodada" {
+                                        path.append(.rutas)
+                                    } else if tipoActividad == "Evento" {
+                                        path.append(.descripcionEvento)
+                                    } else if tipoActividad == "Taller" {
+                                        path.append(.descripcionTaller)
+                                    }
                                 }
                             }
                         },

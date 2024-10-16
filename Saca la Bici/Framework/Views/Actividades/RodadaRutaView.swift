@@ -11,6 +11,9 @@ struct RodadaRutaView: View {
     @Binding var path: [ActivitiesPaths]
 
     @ObservedObject var actividadViewModel = ActividadViewModel()
+    
+    // Variable para comprobar si se está agregando o editando
+    var isEditing: Bool
 
     var body: some View {
         ZStack {
@@ -22,7 +25,11 @@ struct RodadaRutaView: View {
                         text: "Siguiente",
                         backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                         action: {
-                            path.append(.descripcionRodada)
+                            if isEditing {
+                                path.append(.editarDescripcionRodada(id: actividadViewModel.idActividad))
+                            } else {
+                                path.append(.descripcionRodada)
+                            }
                         },
                         tieneIcono: true,
                         icono: "chevron.right"
@@ -47,7 +54,7 @@ struct RodadaRutaView_Previews: PreviewProvider {
         @State var path: [ActivitiesPaths] = []
 
         var body: some View {
-            RodadaRutaView(path: $path)
+            RodadaRutaView(path: $path, isEditing: false)
         }
     }
 }

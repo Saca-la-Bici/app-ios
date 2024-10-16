@@ -99,6 +99,8 @@ class ActividadViewModel: ObservableObject {
         guardarBoton = ""
         isEditing = false
         isLoading = false
+        existingImageURL = nil
+        existingImageData = nil
     }
     
     @MainActor

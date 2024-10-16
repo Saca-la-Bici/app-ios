@@ -13,9 +13,6 @@ struct DescripcionActividadView: View {
 
     @ObservedObject var actividadViewModel = ActividadViewModel()
     
-    // ID para edicion
-    var id: String?
-    
     // Variable para comprobar si se está agregando o editando
     var isEditing: Bool
 
@@ -63,8 +60,10 @@ struct DescripcionActividadView: View {
                         Button(action: {
                             Task {
                                 if isEditing {
+                                    print("Editando...")
                                     await actividadViewModel.modificarActividad()
                                 } else {
+                                    print("Registrando...")
                                     await actividadViewModel.registrarActividad()
                                 }
                             }
