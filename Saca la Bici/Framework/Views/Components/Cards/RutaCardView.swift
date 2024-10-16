@@ -12,6 +12,8 @@ struct RutaCardView: View {
     let isSelected: Bool
     
     var onDelete: () -> Void
+    
+    @ObservedObject private var userSessionManager = UserSessionManager.shared
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -47,11 +49,13 @@ struct RutaCardView: View {
         .shadow(radius: 5)
         .contentShape(Rectangle())
         .contextMenu {
-            Button(role: .destructive, action: {
-                onDelete()
-            }, label: {
-                Label("Eliminar", systemImage: "trash")
-            })
+            if userSessionManager.puedeEliminarRuta() {
+                Button(role: .destructive, action: {
+                    onDelete()
+                }, label: {
+                    Label("Eliminar", systemImage: "trash")
+                })
+            }
         }
     }
     
