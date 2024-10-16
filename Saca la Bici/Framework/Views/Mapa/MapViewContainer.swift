@@ -7,6 +7,7 @@ struct MapViewContainer: UIViewRepresentable {
     @Binding var routeCoordinates: [CLLocationCoordinate2D]
     @Binding var distance: Double
     @Binding var isAddingRoute: Bool
+    @Binding var message: String
     let locationManager = CLLocationManager()
 
     let directions: Directions = {
@@ -42,7 +43,7 @@ struct MapViewContainer: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: MapView, context: Context) {
-        if routeCoordinates.count == 3 {
+        if routeCoordinates.count == 7 {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 context.coordinator.getRoute()
             }
@@ -50,7 +51,7 @@ struct MapViewContainer: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self, routeCoordinates: $routeCoordinates, distance: $distance, isAddingRoute: $isAddingRoute)
+        Coordinator(self, routeCoordinates: $routeCoordinates, distance: $distance, isAddingRoute: $isAddingRoute, message: $message)
     }
 
     class Coordinator: NSObject, CLLocationManagerDelegate {
@@ -58,15 +59,17 @@ struct MapViewContainer: UIViewRepresentable {
         var routeCoordinates: Binding<[CLLocationCoordinate2D]>
         var distance: Binding<Double>
         var isAddingRoute: Binding<Bool>
+        var message: Binding<String>
         var mapView: MapView?
         var pointAnnotationManager: PointAnnotationManager?
         var polylineAnnotationManager: PolylineAnnotationManager?
 
-        init(_ parent: MapViewContainer, routeCoordinates: Binding<[CLLocationCoordinate2D]>, distance: Binding<Double>, isAddingRoute: Binding<Bool>) {
+        init(_ parent: MapViewContainer, routeCoordinates: Binding<[CLLocationCoordinate2D]>, distance: Binding<Double>, isAddingRoute: Binding<Bool>, message: Binding<String>) {
             self.parent = parent
             self.routeCoordinates = routeCoordinates
             self.distance = distance
             self.isAddingRoute = isAddingRoute
+            self.message = message
         }
 
         func setupAnnotationManagers() {
@@ -76,7 +79,6 @@ struct MapViewContainer: UIViewRepresentable {
         }
 
         @objc func handleMapTap(_ sender: UITapGestureRecognizer) {
-            // Verificar modo de agregar ruta
             guard isAddingRoute.wrappedValue else {
                 print("No está permitido registrar puntos en este modo.")
                 return
@@ -86,42 +88,76 @@ struct MapViewContainer: UIViewRepresentable {
             let location = sender.location(in: mapView)
             let coordinate = mapView.mapboxMap.coordinate(for: location)
             
-            if routeCoordinates.wrappedValue.count < 3 {
+            if routeCoordinates.wrappedValue.count < 7 {
                 routeCoordinates.wrappedValue.append(coordinate)
-                addMarker(at: coordinate, index: routeCoordinates.wrappedValue.count - 1)
-                print("Punto agregado: \(coordinate)")
+                let index = routeCoordinates.wrappedValue.count - 1
+                addMarker(at: coordinate, index: index)
                 
-                if routeCoordinates.wrappedValue.count == 3 {
-                    print("Se han seleccionado los 3 puntos. Calculando ruta...")
+                let pointName = getPointName(for: index)
+                message.wrappedValue = "\(pointName) registrado con éxito."
+                print("Punto \(pointName) agregado: \(coordinate)")
+                
+                if routeCoordinates.wrappedValue.count == 7 {
+                    print("Se han seleccionado los 7 puntos. Calculando ruta...")
                 }
             } else {
-                print("Solo se permiten tres puntos: inicio, descanso y fin.")
+                print("Solo se permiten siete puntos.")
             }
         }
 
-        // Función para agregar un marcador en el mapa
+        func getPointName(for index: Int) -> String {
+            switch index {
+            case 0:
+                return "Inicio"
+            case 1, 2:
+                return "Punto de referencia \(index)"
+            case 3:
+                return "Descanso"
+            case 4, 5:
+                return "Punto de referencia \(index - 2)"
+            case 6:
+                return "Fin"
+            default:
+                return "Punto desconocido"
+            }
+        }
+
+        func undoLastPoint() {
+            if !routeCoordinates.wrappedValue.isEmpty {
+                let removedPoint = routeCoordinates.wrappedValue.removeLast()
+                print("Punto deshecho: \(removedPoint)")
+                message.wrappedValue = "Último punto deshecho con éxito."
+            }
+        }
+
         func addMarker(at coordinate: CLLocationCoordinate2D, index: Int) {
             guard let pointAnnotationManager = pointAnnotationManager else {
                 print("PointAnnotationManager no está inicializado.")
                 return
             }
-            
+
             var pointAnnotation = PointAnnotation(coordinate: coordinate)
-            
-            // Definir colores diferentes para los marcadores (inicio, descanso y final)
+
             switch index {
             case 0:
-                pointAnnotationManager.annotations.append(makePointAnnotation(at: coordinate, color: .black))
-            case 1:
-                pointAnnotationManager.annotations.append(makePointAnnotation(at: coordinate, color: .gray))
-            case 2:
-                pointAnnotationManager.annotations.append(makePointAnnotation(at: coordinate, color: .red))
+                // Icono de inicio 
+                pointAnnotation.image = .init(image: UIImage(named: "start-icon")!, name: "start-icon")
+                pointAnnotation.iconSize = 0.05
+            case 3:
+                // Icono de descanso
+                pointAnnotation.image = .init(image: UIImage(named: "rest-icon")!, name: "rest-icon")
+                pointAnnotation.iconSize = 0.05
+            case 6:
+                // Icono de fin
+                pointAnnotation.image = .init(image: UIImage(named: "end-icon")!, name: "end-icon")
+                pointAnnotation.iconSize = 0.05
             default:
-                break
+                pointAnnotation.iconColor = StyleColor(.gray)
             }
+
+            pointAnnotationManager.annotations.append(pointAnnotation)
         }
 
-        // Función para crear un PointAnnotation con un color específico
         func makePointAnnotation(at coordinate: CLLocationCoordinate2D, color: UIColor) -> PointAnnotation {
             var pointAnnotation = PointAnnotation(coordinate: coordinate)
             pointAnnotation.iconColor = StyleColor(color)
@@ -130,18 +166,20 @@ struct MapViewContainer: UIViewRepresentable {
 
         func getRoute() {
             print("Iniciando cálculo de ruta...")
-            print("Número de puntos seleccionados: \(routeCoordinates.wrappedValue.count)")
-            
-            guard routeCoordinates.wrappedValue.count == 3 else {
+            guard routeCoordinates.wrappedValue.count == 7 else {
                 print("Número incorrecto de puntos para calcular la ruta.")
                 return
             }
             
-            let waypoints = routeCoordinates.wrappedValue.map { Waypoint(coordinate: $0) }
+            // Verificar coordenadas
+            for (index, coordinate) in routeCoordinates.wrappedValue.enumerated() {
+                print("Coordenada \(index): \(coordinate.latitude), \(coordinate.longitude)")
+            }
             
-            let options = RouteOptions(waypoints: waypoints, profileIdentifier: .cycling)
+            let waypoints = routeCoordinates.wrappedValue.map { Waypoint(coordinate: $0) }
+            let options = RouteOptions(waypoints: waypoints, profileIdentifier: .walking)
 
-            parent.directions.calculate(options) { (_, result) in
+            parent.directions.calculate(options) { [self] (_, result) in
                 switch result {
                 case .failure(let error):
                     print("Error calculando la ruta: \(error.localizedDescription)")
@@ -150,12 +188,13 @@ struct MapViewContainer: UIViewRepresentable {
                         print("No se encontró ninguna ruta.")
                         return
                     }
-                    print("Ruta obtenida: \(route)")
                     
                     if let geometry = route.shape {
                         DispatchQueue.main.async {
                             self.drawRoute(geometry.coordinates)
-                            self.distance.wrappedValue = route.distance / 1000 // Convertir a kilómetros
+                            self.distance.wrappedValue = route.distance / 1000
+                            print("Ruta calculada correctamente con \(routeCoordinates.wrappedValue.count) puntos.")
+                            print("Distancia calculada: \(self.distance.wrappedValue) km")
                         }
                     }
                 }
@@ -170,16 +209,29 @@ struct MapViewContainer: UIViewRepresentable {
             
             polylineAnnotationManager.annotations = []
             
-            if routeCoordinates.isEmpty {
-                print("Error: Las coordenadas de la ruta están vacías.")
+            // Verifica puntos
+            guard routeCoordinates.count >= 7 else {
+                print("Error: Las coordenadas de la ruta están incompletas.")
                 return
             }
 
-            var polyline = PolylineAnnotation(lineCoordinates: routeCoordinates)
-            polyline.lineColor = StyleColor(.red)
-            polyline.lineWidth = 2.5
+            // Segmento del inicio hasta el descanso
+            let firstSegment = Array(routeCoordinates.prefix(through: 3))
+            var polyline1 = PolylineAnnotation(lineCoordinates: firstSegment)
+            polyline1.lineColor = StyleColor(.green)
+            polyline1.lineWidth = 2.5
+
+            // Segmento del descanso hasta el fin
+            let secondSegment = Array(routeCoordinates.suffix(from: 3))
+            var polyline2 = PolylineAnnotation(lineCoordinates: secondSegment)
+            polyline2.lineColor = StyleColor(.red)
+            polyline2.lineWidth = 2.5
             
-            polylineAnnotationManager.annotations.append(polyline)
+            // Añade anotaciones del mapa
+            polylineAnnotationManager.annotations.append(polyline1)
+            polylineAnnotationManager.annotations.append(polyline2)
+            
+            print("Ruta dibujada correctamente con \(routeCoordinates.count) puntos.")
         }
     }
 }

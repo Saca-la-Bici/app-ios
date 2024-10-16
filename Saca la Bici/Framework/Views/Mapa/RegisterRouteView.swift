@@ -1,7 +1,7 @@
 import SwiftUI
 import MapboxMaps
 import CoreLocation
-import FirebaseAuth  
+import FirebaseAuth
 
 struct RegisterRouteView: View {
     @Binding var routeCoordinates: [CLLocationCoordinate2D]
@@ -14,6 +14,7 @@ struct RegisterRouteView: View {
     @State private var isSubmitting: Bool = false
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
+    @State private var message: String = "" 
 
     let levels = ["Nivel 1", "Nivel 2", "Nivel 3", "Nivel 4", "Nivel 5"]
 
@@ -46,7 +47,14 @@ struct RegisterRouteView: View {
                             .padding()
                     }
                     
-                    MapViewContainer(routeCoordinates: $routeCoordinates, distance: $distance, isAddingRoute: $isAddingRoute)
+                    if !message.isEmpty {
+                        Text(message)
+                            .foregroundColor(.green)
+                            .bold()
+                            .padding()
+                    }
+                    
+                    MapViewContainer(routeCoordinates: $routeCoordinates, distance: $distance, isAddingRoute: $isAddingRoute, message: $message)
                         .frame(height: 400)
                         .cornerRadius(10)
                 }
@@ -54,7 +62,24 @@ struct RegisterRouteView: View {
             }
             
             Button(action: {
-                if routeCoordinates.count == 3 {
+                if !routeCoordinates.isEmpty {
+                    routeCoordinates.removeLast()
+                    message = "Último punto deshecho."
+                }
+            }) {
+                Text("Deshacer último punto")
+                    .bold()
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(!routeCoordinates.isEmpty ? Color.orange : Color.gray)
+                    .cornerRadius(10)
+                    .foregroundColor(.white)
+                    .padding(.horizontal)
+            }
+            .disabled(routeCoordinates.isEmpty)
+            
+            Button(action: {
+                if routeCoordinates.count == 7 {
                     isSubmitting = true
                     
                     let routeDetails = RouteDetails(
@@ -63,11 +88,15 @@ struct RegisterRouteView: View {
                         tiempo: duration,
                         nivel: levels[selectedLevel - 1],
                         start: routeCoordinates[0],
-                        stopover: routeCoordinates[1],
-                        end: routeCoordinates[2]
+                        stopover1: routeCoordinates[1],
+                        stopover2: routeCoordinates[2],
+                        descanso: routeCoordinates[3],
+                        stopover3: routeCoordinates[4],
+                        stopover4: routeCoordinates[5],
+                        end: routeCoordinates[6]
                     )
                     
-                    // Obtener el token de Firebase para la autenticación
+                    // Token de Firebase
                     Auth.auth().currentUser?.getIDToken { idToken, error in
                         if let error = error {
                             print("Error al obtener el ID token: \(error.localizedDescription)")
@@ -91,7 +120,7 @@ struct RegisterRouteView: View {
                                 if success {
                                     alertMessage = "Ruta registrada exitosamente."
                                 } else {
-                                    alertMessage = "Error al registrar la ruta."
+                                    alertMessage = "Error al registrar la ruta, verifica todos los campos."
                                 }
                                 showAlert = true
                             }
@@ -99,7 +128,7 @@ struct RegisterRouteView: View {
                     }
                     
                 } else {
-                    alertMessage = "Debe seleccionar exactamente 3 puntos para registrar la ruta."
+                    alertMessage = "Debe seleccionar exactamente 7 puntos para registrar la ruta."
                     showAlert = true
                 }
             }) {
@@ -107,12 +136,12 @@ struct RegisterRouteView: View {
                     .bold()
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(routeCoordinates.count == 3 ? Color.yellow : Color.gray)
+                    .background(routeCoordinates.count == 7 ? Color.yellow : Color.gray)
                     .cornerRadius(10)
                     .foregroundColor(.black)
                     .padding(.horizontal)
             }
-            .disabled(routeCoordinates.count != 3 || isSubmitting)
+            .disabled(routeCoordinates.count != 7 || isSubmitting)
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("Registro de Ruta"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }
