@@ -6,6 +6,7 @@ import MessageUI
 struct MapaView: View {
     @StateObject private var viewModel = MailViewModel()
     @State private var showingSuccessMessage = false
+    @State private var showingMailError = false // Para mostrar la alerta si no se puede enviar correos
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -13,7 +14,11 @@ struct MapaView: View {
                 .ignoresSafeArea()
 
             Button(action: {
-                viewModel.sendMail()
+                if viewModel.canSendMail() {
+                    viewModel.sendMail()
+                } else {
+                    showingMailError = true // Activar la alerta si no se puede enviar correos
+                }
             }, label: {
                 Image(systemName: "envelope")
                     .foregroundColor(.white)
@@ -24,7 +29,6 @@ struct MapaView: View {
             })
             .padding(.top, 60)
             .padding(.trailing, 20)
-            .disabled(!viewModel.canSendMail())
         }
         .sheet(isPresented: $viewModel.isShowingMailView, content: {
             if let mailData = viewModel.mailData {
@@ -32,7 +36,7 @@ struct MapaView: View {
                     if result == .sent {
                         viewModel.isMailSent = true
                     }
-                    showingSuccessMessage = viewModel.isMailSent 
+                    showingSuccessMessage = viewModel.isMailSent
                 }
                 .onDisappear {
                     if viewModel.isMailSent {
@@ -45,6 +49,14 @@ struct MapaView: View {
             Alert(
                 title: Text("Correo Enviado"),
                 message: Text("El correo ha sido enviado con éxito."),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+        // Agregar la alerta si no se puede enviar correos
+        .alert(isPresented: $showingMailError) {
+            Alert(
+                title: Text("Error"),
+                message: Text("Este dispositivo no puede enviar correos. Por favor, configure una cuenta de correo."),
                 dismissButton: .default(Text("OK"))
             )
         }
