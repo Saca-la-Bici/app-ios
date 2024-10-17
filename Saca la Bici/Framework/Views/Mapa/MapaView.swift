@@ -1,11 +1,48 @@
 import SwiftUI
 import MapboxMaps
 import CoreLocation
+import MessageUI
 
 struct MapaView: View {
+    @StateObject private var viewModel = MailViewModel()
+    @State private var showingSuccessMessage = false
+
     var body: some View {
-        MapViewContainer()
-            .ignoresSafeArea()
+        ZStack(alignment: .topTrailing) {
+            MapViewContainer()
+                .ignoresSafeArea()
+
+            Button(action: {
+                viewModel.sendMail()
+            }, label: {
+                Image(systemName: "envelope")
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.red)
+                    .clipShape(Circle())
+                    .shadow(radius: 5)
+            })
+
+            .padding(.top, 60)
+            .padding(.trailing, 20)
+            .disabled(!viewModel.canSendMail())
+        }
+        .sheet(isPresented: $viewModel.isShowingMailView, content: {
+            if let mailData = viewModel.mailData {
+                MailView(model: mailData)
+                    .onDisappear {
+                        showingSuccessMessage = true
+                    }
+            }
+        })
+
+        .alert(isPresented: $showingSuccessMessage) {
+            Alert(
+                title: Text("Correo Enviado"),
+                message: Text("El correo ha sido enviado con éxito."),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
 }
 
@@ -28,17 +65,15 @@ struct MapViewContainer: UIViewRepresentable {
         locationOptions.puckType = .puck2D()
         mapView.location.options = locationOptions
 
-        // Seguimiento la ubicación del usuario
+        // Seguimiento de la ubicación del usuario
         let followPuckViewportState = mapView.viewport.makeFollowPuckViewportState()
         mapView.viewport.transition(to: followPuckViewportState)
 
         return mapView
     }
 
-    func updateUIView(_ uiView: MapView, context: Context) {
-    }
+    func updateUIView(_ uiView: MapView, context: Context) {}
 
-    // Coordinator para manejar las delegaciones de CLLocationManager
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
@@ -50,7 +85,6 @@ struct MapViewContainer: UIViewRepresentable {
             self.parent = parent
         }
 
-        // Manejo de cambios en el estado de los permisos de localización
         func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
             switch status {
             case .authorizedWhenInUse, .authorizedAlways:
@@ -74,7 +108,6 @@ struct MapViewContainer: UIViewRepresentable {
             }
         }
 
-        // Actualizaciones de la ubicación del usuario
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
             guard let location = locations.last else { return }
             print("Ubicación actualizada: \(location.coordinate)")
