@@ -58,8 +58,8 @@ class ActividadViewModel: ObservableObject {
         case success
         case delete
         
-        var id: Int {
-            hashValue
+        var id: UUID {
+            UUID()
         }
     }
     

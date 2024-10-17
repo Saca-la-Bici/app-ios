@@ -157,11 +157,13 @@ struct ActivityCardView: View {
                     return Alert(
                         title: Text("Éxito"),
                         message: Text(actividadViewModel.messageAlert),
-                        dismissButton: .default(Text("OK"))
+                        dismissButton: .default(Text("OK")) {
+                            self.seeCard = false
+                        }
                     )
                 case .error:
                     return Alert(
-                        title: Text("Error"),
+                        title: Text("Oops!"),
                         message: Text(actividadViewModel.messageAlert),
                         dismissButton: .default(Text("OK"))
                     )
@@ -172,8 +174,6 @@ struct ActivityCardView: View {
                         primaryButton: .destructive(Text("Eliminar")) {
                             Task {
                                 await actividadViewModel.eliminarActividad(id: id, tipo: activityType)
-                                
-                                self.seeCard = false
                             }
                         },
                         secondaryButton: .cancel(Text("Cancelar"))
