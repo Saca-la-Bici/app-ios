@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @EnvironmentObject var sessionManager: SessionManager
     @State private var path: [ConfigurationPaths] = []
     
     @StateObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
-    @StateObject private var consultarPerfilPropioViewModel = ConsultarPerfilPropioViewModel()
+    
+    @StateObject private var consultarPerfilPropioViewModel = ConsultarPerfilPropioViewModel.shared
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -55,6 +55,17 @@ struct ProfileView: View {
                         
                         // Imagen de perfil con borde de color
                         VStack {
+                            
+                            HStack {
+                                Image(systemName: "person.circle")
+                                Text(consultarPerfilPropioViewModel.profile?.username ?? "")
+                                    .font(.system(size: 14))
+                                    .fontWeight(.bold)
+                                
+                                Spacer()
+                            }
+                            .padding(.leading, 20)
+                            
                             HStack {
                                 // Elementos invisibles para alinear el contenido
                                 HStack(spacing: 3) {
@@ -69,7 +80,45 @@ struct ProfileView: View {
                                         .opacity(0)
                                 }
                                 // Imagen centrada
-                                ProfileImageView(imageUrlString: consultarPerfilPropioViewModel.profile?.imagen)
+                                if let imageUrlString = consultarPerfilPropioViewModel.profile?.imagen, let imageUrl = URL(string: imageUrlString) {
+                                    AsyncImage(url: imageUrl) { phase in
+                                        switch phase {
+                                        case .empty:
+                                            ProgressView()
+                                                .frame(width: 80, height: 80)
+                                                .background(Color.gray.opacity(0.1))
+                                                .clipShape(Circle())
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 80, height: 80)
+                                                .clipShape(Circle())
+                                                .overlay(Circle().stroke(Color.black, lineWidth: 1))
+                                                .shadow(color: .gray, radius: 2, x: 2, y: 2)
+                                        case .failure:
+                                            Image(systemName: "person.crop.circle.badge.exclamationmark")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 80, height: 80)
+                                                .foregroundColor(.gray)
+                                                .clipShape(Circle())
+                                                .overlay(Circle().stroke(Color.black, lineWidth: 1))
+                                                .shadow(color: .gray, radius: 2, x: 2, y: 2)
+                                        @unknown default:
+                                            EmptyView()
+                                        }
+                                    }
+                                } else {
+                                    Image(systemName: "person.crop.circle.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 80, height: 80)
+                                        .foregroundColor(.gray)
+                                        .clipShape(Circle())
+                                        .overlay(Circle().stroke(Color.black, lineWidth: 1))
+                                        .shadow(color: .gray, radius: 2, x: 2, y: 2)
+                                }
                                 
                                 // Elementos visibles
                                 HStack(spacing: 3) {
@@ -77,10 +126,12 @@ struct ProfileView: View {
                                         .resizable()
                                         .frame(width: 18, height: 20)
                                         .padding(.top, 50)
+                                        .opacity(consultarPerfilPropioViewModel.profile?.tipoSangre == "Sin seleccionar" ? 0 : 1)
                                     
                                     Text(consultarPerfilPropioViewModel.profile?.tipoSangre ?? "")
                                         .font(.subheadline)
                                         .padding(.top, 50)
+                                        .opacity(consultarPerfilPropioViewModel.profile?.tipoSangre == "Sin seleccionar" ? 0 : 1)
                                 }
                             }
                             .frame(maxWidth: .infinity)
@@ -111,23 +162,23 @@ struct ProfileView: View {
                         .padding(.horizontal, 100)  // Ajustamos el padding para que se vea más compacto
                         .padding(.bottom, 10)
 
-                        HStack {
-                            Button {
-                                // Acción para Editar perfil
-                            } label: {
-                                Text("Editar perfil")
-                                    .font(.system(size: 14))
-                                    .padding(.all, 7)
-                                    .frame(maxWidth: .infinity)  // Ajustamos el ancho para que ocupe todo el espacio disponible
-                                    .background(Color(red: 243/255, green: 240/255, blue: 235/255))
-                                    .foregroundColor(.black)
-                                    .cornerRadius(10)
-                                    .shadow(radius: 5, y: 3)
+                        Button {
+                            Task {
+                                path.append(.editProfile)
                             }
-                            .buttonStyle(PlainButtonStyle())
-                            .frame(maxWidth: .infinity)  // Hacemos que el botón se extienda a lo ancho del HStack
+                        } label: {
+                            Text("Editar perfil")
+                                .font(.system(size: 14))
+                                .padding(.all, 7)
+                                .frame(maxWidth: .infinity)
+                                .background(Color(red: 243/255, green: 240/255, blue: 235/255))
+                                .foregroundColor(.black)
+                                .cornerRadius(10)
+                                .shadow(radius: 5, y: 3)
                         }
-                        .padding(.horizontal, 100)  // Ajustamos el padding para que el botón esté alineado con los textos de "Rodadas" y "Kilómetros"
+                        .buttonStyle(PlainButtonStyle())
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, 100)
                         .padding(.bottom, 10)
 
                         IconSelectionView()
@@ -136,13 +187,13 @@ struct ProfileView: View {
                 Spacer()
             }
             .onAppear {
+                consultarPerfilPropioViewModel.showAlert = false
                 Task {
-                    if sessionManager.isAuthenticated {  
-                        try await consultarPerfilPropioViewModel.consultarPerfilPropio()
-                    }
+                    try await
+                    consultarPerfilPropioViewModel.consultarPerfilPropio()
                 }
             }
-            .alert(isPresented: .constant(consultarPerfilPropioViewModel.errorMessage != nil)) {
+            .alert(isPresented: $consultarPerfilPropioViewModel.showAlert) {
                 Alert(
                     title: Text("Oops!"),
                     message: Text(consultarPerfilPropioViewModel.errorMessage ?? "Hubo un error al ingresar a tu perfil, intente de nuevo más tarde"),
@@ -171,6 +222,10 @@ struct ProfileView: View {
                     PasswordRecoveryView<ConfigurationPaths>(path: $path, showIniciarSesion: false )
                 case .asignacionRoles:
                     ConsultarUsuariosView(path: $path)
+                case .editProfile:
+                    ModificarPerfilView(path: $path)
+                case .informacion:
+                    InformacionView(path: $path)
                 default:
                     EmptyView()
                 }

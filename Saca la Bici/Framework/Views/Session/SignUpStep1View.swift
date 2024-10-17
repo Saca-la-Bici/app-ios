@@ -53,7 +53,7 @@ struct SignUpStep1View: View {
                             label: "Nombre de usuario",
                             placeholder: "Escribe tu nombre de usuario...",
                             text: $signUpViewModel.username,
-                            maxLength: 50,
+                            maxLength: 25,
                             title: false
                         )
                         

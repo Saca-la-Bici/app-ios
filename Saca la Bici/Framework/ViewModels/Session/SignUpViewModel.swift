@@ -16,12 +16,12 @@ class SignUpViewModel: ObservableObject {
     @Published var isPasswordVisible: Bool = false
     @Published var isConfirmVisible: Bool = false
     @Published var fechaNacimiento: Date = Date()
-    @Published var selectedBloodType = "Selecciona tu tipo de sangre"
+    @Published var selectedBloodType = ""
     @Published var countryCode = ""
     @Published var phoneNumber = ""
     @Published var nombreCompleto: String = ""
 
-    let bloodTypes = ["Selecciona tu tipo de sangre", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]
+    let bloodTypes = ["Sin seleccionar", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]
     
     // Creas dos variables más por si se comete un error
     @Published var messageAlert = ""
@@ -112,8 +112,7 @@ class SignUpViewModel: ObservableObject {
     
     @MainActor
     func validarDatosStep2() {
-        if self.countryCode.isEmpty || self.phoneNumber.isEmpty ||
-            self.selectedBloodType == "Selecciona tu tipo de sangre" || self.nombreCompleto.isEmpty {
+        if self.countryCode.isEmpty || self.phoneNumber.isEmpty || self.nombreCompleto.isEmpty {
             self.messageAlert = "Falta de llenar algún dato. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
@@ -123,6 +122,10 @@ class SignUpViewModel: ObservableObject {
             self.messageAlert = "Por favor ingrese un nombre válido."
             self.showAlert = true
             return
+        }
+        
+        if self.selectedBloodType == "Sin seleccionar" {
+            self.selectedBloodType = ""
         }
     }
     
@@ -152,7 +155,7 @@ class SignUpViewModel: ObservableObject {
             return
         }
         
-        let numeroEmergencia = "+" + self.countryCode + self.phoneNumber
+        let numeroEmergencia = self.countryCode + self.phoneNumber
         
         let usuarioNuevo = UserNuevo(username: self.username, password: self.confirmPassword,
                                      nombre: nombreCompleto, email: self.email, fechaNacimiento: fechaNacimiento,
@@ -209,13 +212,17 @@ class SignUpViewModel: ObservableObject {
     @MainActor
     func completarRegistro() async {
         
-        if self.countryCode.isEmpty || self.phoneNumber.isEmpty || self.selectedBloodType == "Selecciona tu tipo de sangre" {
+        if self.countryCode.isEmpty || self.phoneNumber.isEmpty {
             self.messageAlert = "Falta de llenar algún dato. Favor de intentarlo de nuevo."
             self.showAlert = true
             return
         }
         
-        let numeroEmergencia = "+" + self.countryCode + self.phoneNumber
+        if self.selectedBloodType == "Sin seleccionar" {
+            self.selectedBloodType = ""
+        }
+        
+        let numeroEmergencia = self.countryCode + self.phoneNumber
         
         let usuarioNuevo = UserExterno(username: self.username, fechaNacimiento: fechaNacimiento,
                                        tipoSangre: self.selectedBloodType, numeroEmergencia: numeroEmergencia)

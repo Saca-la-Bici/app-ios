@@ -9,31 +9,98 @@ import SwiftUI
 
 struct RodadaRutaView: View {
     @Binding var path: [ActivitiesPaths]
-
     @ObservedObject var actividadViewModel = ActividadViewModel()
 
     var body: some View {
         ZStack {
-            ScrollView {
-                VStack {
-                    Text("Agregar lo que va en rutas")
+            if actividadViewModel.isLoading {
+                ProgressView()
+            } else if actividadViewModel.rutas.isEmpty {
+                Text("Actualmente no hay rutas registradas. Por favor, registra una ruta para registrar una rodada.")
+                    .foregroundColor(.gray)
+                    .font(.headline)
+                    .padding()
+            } else {
+                ScrollView {
+                    VStack {
+                        Spacer().frame(height: 10)
 
+                        Text("Selecciona la ruta de la rodada:")
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        Spacer().frame(height: 15)
+
+                        ForEach(actividadViewModel.rutas) { ruta in
+                            RutaCardView(ruta: ruta,
+                                         isSelected: actividadViewModel.selectedRuta?.id == ruta.id,
+                                         onDelete: {
+                                actividadViewModel.alertTypeRuta = .delete(ruta: ruta)
+                            })
+                            .onTapGesture {
+                                actividadViewModel.selectedRuta = ruta
+                            }
+                        }
+                        
+                        Spacer().frame(height: 40)
+                    }
+                    .padding()
+                }
+            }
+
+            VStack {
+                Spacer()
+                if !actividadViewModel.rutas.isEmpty {
                     CustomButton(
                         text: "Siguiente",
                         backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                         action: {
-                            path.append(.descripcionRodada)
+                            actividadViewModel.validarRuta()
+                            
+                            if actividadViewModel.showAlert != true {
+                                path.append(.descripcionRodada)
+                            }
                         },
                         tieneIcono: true,
                         icono: "chevron.right"
                     )
+                    .padding()
+                    .background(Color.white)
+                    .shadow(radius: 5)
+                    .transition(.move(edge: .bottom))
                 }
-                .padding()
             }
         }
         .navigationTitle(actividadViewModel.navTitulo)
-        .onTapGesture {
-            UIApplication.shared.hideKeyboard()
+        .alert(item: $actividadViewModel.alertTypeRuta) { alertType in
+            switch alertType {
+            case .delete(let ruta):
+                return Alert(
+                    title: Text("¿Seguro quieres eliminar la ruta?"),
+                    message: Text("Una vez eliminada no se podrá recuperar."),
+                    primaryButton: .destructive(Text("Eliminar")) {
+                        Task {
+                            await actividadViewModel.eliminarActividad(IDRuta: ruta._id)
+                        }
+                    },
+                    secondaryButton: .cancel()
+                )
+            case .validation:
+                return Alert(
+                    title: Text(actividadViewModel.tituloAlertaRuta),
+                    message: Text(actividadViewModel.messageAlert),
+                    dismissButton: .default(Text("Aceptar")) {
+                        actividadViewModel.showAlert = false
+                        
+                        if actividadViewModel.reloadRutas == true {
+                            Task {
+                                await actividadViewModel.validarDatosBase()
+                                actividadViewModel.reloadRutas = false
+                            }
+                        }
+                    }
+                )
+            }
         }
     }
 }
