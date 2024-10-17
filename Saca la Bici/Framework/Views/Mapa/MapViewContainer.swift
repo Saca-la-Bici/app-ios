@@ -38,7 +38,7 @@ struct MapViewContainer: UIViewRepresentable {
     func updateUIView(_ uiView: MapView, context: Context) {
         if routeCoordinates.count == 7 {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                viewModel.getRoute() // Método accesible
+                viewModel.getRoute()
             }
         }
     }

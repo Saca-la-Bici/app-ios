@@ -1,10 +1,3 @@
-//
-//  RouteDetails.swift
-//  Saca la Bici
-//
-//  Created by Arturo Sanchez on 16/10/24.
-//
-
 import CoreLocation
 
 struct RouteDetails {

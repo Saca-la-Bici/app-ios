@@ -18,37 +18,20 @@ struct MapaView: View {
                         Spacer()
                         
                         VStack(spacing: 9) {
-                            // Botón de agregar ruta
                             NavigationLink(destination: RegisterRouteView(routeCoordinates: $routeCoordinates, distance: $distance, isAddingRoute: $isAddingRoute)) {
                                 ZStack {
                                     Circle()
                                         .fill(Color.yellow)
-                                        .frame(width: 50, height: 50) // Tamaño más pequeño
+                                        .frame(width: 50, height: 50)
                                         .shadow(radius: 8)
                                     
                                     Image(systemName: "plus")
                                         .foregroundColor(.white)
-                                        .font(.system(size: 20, weight: .bold)) // Fuente más pequeña
-                                }
-                            }
-                            
-                            // Botón adicional (similar al de sobre que se ve en la imagen)
-                            Button(action: {
-                                // Acción del botón de sobre
-                            }) {
-                                ZStack {
-                                    Circle()
-                                        .fill(Color.red)
-                                        .frame(width: 50, height: 50) // Tamaño más pequeño
-                                        .shadow(radius: 8)
-                                    
-                                    Image(systemName: "envelope.fill")
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 20, weight: .bold)) // Fuente más pequeña
+                                        .font(.system(size: 20, weight: .bold))
                                 }
                             }
                         }
-                        .padding(.top, 50) // Ajusta este valor para moverlo más arriba
+                        .padding(.top, 50)
                         .padding(.trailing, 20)
                     }
                     Spacer()
