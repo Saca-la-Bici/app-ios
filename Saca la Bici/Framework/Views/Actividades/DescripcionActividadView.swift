@@ -58,6 +58,7 @@ struct DescripcionActividadView: View {
                     // Si no está cargando, mostrar botón para confirmar
                     if !actividadViewModel.isLoading {
                         Button(action: {
+                            UIApplication.shared.hideKeyboard()
                             Task {
                                 if isEditing {
                                     print("Editando...")

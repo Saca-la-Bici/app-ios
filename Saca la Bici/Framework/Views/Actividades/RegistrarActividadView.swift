@@ -216,8 +216,6 @@ struct RegistrarActividadView: View {
         }
         .onAppear {
             Task {
-                // Resetar campos
-                actividadViewModel.reset()
                 
                 // Modo edición
                 if isEditing {
@@ -225,8 +223,10 @@ struct RegistrarActividadView: View {
                     actividadViewModel.isEditing = true
                     actividadViewModel.idActividad = id ?? ""
                     
-                    await actividadViewModel.getActividad()
-                    print("ID: \(actividadViewModel.idActividad)")
+                    if !actividadViewModel.hasAppeared {
+                        await actividadViewModel.getActividad()
+                    }
+                
                 }
                 
                 if tipoActividad == "Evento" {

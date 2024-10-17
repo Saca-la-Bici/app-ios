@@ -52,11 +52,12 @@ class ActividadViewModel: ObservableObject {
     // Modificar vista
     @Published var isEditing: Bool = false
     @Published var isLoading: Bool = false
+    @Published var hasAppeared: Bool = false
     
     enum ActiveAlert: Identifiable {
         case error
         case success
-        case delete
+        case delete(id: String)
         
         var id: UUID {
             UUID()
@@ -122,6 +123,7 @@ class ActividadViewModel: ObservableObject {
         isLoading = false
         existingImageURL = nil
         existingImageData = nil
+        selectedRuta = nil
     }
     
     @MainActor
@@ -399,6 +401,7 @@ class ActividadViewModel: ObservableObject {
             self.ubicacionActividad = actividad!.ubicacion
             self.descripcionActividad = actividad!.descripcion
             self.selectedTimeDuration = parseDurationTime(duration: actividad!.duracion)
+            self.hasAppeared = true
         } else {
             // Mensaje de error
             self.messageAlert = "No se encontró la actividad."
