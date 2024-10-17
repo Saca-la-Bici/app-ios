@@ -1,4 +1,5 @@
 import SwiftUI
+import Foundation
 
 struct EventView: View {
     @State private var showErrorAlert = false
@@ -21,22 +22,7 @@ struct EventView: View {
                 } else {
                     ScrollView {
                         VStack(spacing: 16) {
-                            ForEach(viewModel.eventos, id: \.id) { evento in
-                                // Aquí estás accediendo a la propiedad informacion de cada evento
-                                let actividad = evento.informacion
-                                ActivityCardSMView(
-                                    id: actividad.id,
-                                    activityTitle: actividad.titulo,
-                                    activityType: actividad.tipo,
-                                    level: evento.ruta?.nivel,
-                                    date: FechaManager.shared.formatDate(actividad.fecha),
-                                    time: actividad.hora,
-                                    duration: actividad.duracion,
-                                    imagen: actividad.imagen,
-                                    location: actividad.ubicacion,
-                                    attendees: actividad.personasInscritas
-                                )
-                            }
+                            // AQUI VA EL FOR
                         }
                         .padding()
                     }
@@ -46,6 +32,7 @@ struct EventView: View {
                 Task {
                     do {
                         try await viewModel.getActividades()
+                        print(viewModel.eventos)
                     } catch {
                         showErrorAlert = true
                     }

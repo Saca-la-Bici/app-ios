@@ -163,31 +163,19 @@ struct ActividadesApiResponse: Codable {
     let message: String
 }
 
-struct ActividadInscrita: Codable, Identifiable {
-    let id: String
+struct ActividadInscrita: Codable {
+    let _id: String
     let informacion: [Actividad]
     let ruta: Ruta?
     let ubicacion: [Ubicacion]?
-    let version: Int?
     let codigoAsistencia: Int?
     let usuariosVerificados: [String]?
-
-    enum CodingKeys: String, CodingKey {
-        case id = "_id"
-        case informacion
-        case ruta
-        case ubicacion
-        case version = "__v"
-        case codigoAsistencia
-        case usuariosVerificados
-    }
 }
 
 struct Ubicacion: Codable {
     let latitud: Double
     let longitud: Double
 }
-
 
 struct InformacionWrapper: Codable {
     let informacion: [Actividad]

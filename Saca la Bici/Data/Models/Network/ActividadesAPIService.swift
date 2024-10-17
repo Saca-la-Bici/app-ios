@@ -339,105 +339,40 @@ class ActividadesAPIService {
             return nil
         }
     }
-    
+
     func getActividades(url: URL) async throws -> [ActividadInscrita] {
         guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
             throw NSError(domain: "Token Error", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
         }
-        
+
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(idToken)",
             "Content-Type": "application/json"
         ]
-        
+
         do {
-            let actividadesResponse = try await AF.request(url, method: .get, headers: headers)
+            // Realizamos la solicitud HTTP y obtenemos el 'Data' en lugar de decodificar automáticamente
+            let response = try await AF.request(url, method: .get, headers: headers)
                 .validate()
-                .serializingDecodable(ActividadesApiResponse.self)
+                .serializingData()
                 .value
-            
-            print("Pero NOOO falOOO!!!!!!")
+
+            // Intentamos decodificar manualmente usando JSONDecoder para mayor control
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase  // Si las claves tienen guiones bajos en el JSON
+            let actividadesResponse = try decoder.decode(ActividadesApiResponse.self, from: response)
+
             return actividadesResponse.actividadesInscritas
+            
+        } catch let decodingError as DecodingError {
+            // Manejo de errores específicos de decodificación
+            print("Error de decodificación: \(decodingError.localizedDescription)")
+            throw decodingError
         } catch {
+            // Manejo de otros errores
             print("Error al obtener actividades: \(error.localizedDescription)")
             throw error
         }
-        
-        ActividadInscrita(
-                    id: "6700e026cc2be498b7754322",
-                    informacion: [
-                        Actividad(
-                            id: "6700e026cc2be498b7754323",
-                            titulo: "Rodada para conocer el Tec 🐏💙",
-                            fecha: "2024-10-17T06:00:00.000Z",
-                            hora: "20:30",
-                            personasInscritas: 16,
-                            ubicacion: "Prepa Tec, Epigmenio González 500, Tecnologico, 76159 Santiago de Querétaro, Qro.",
-                            descripcion: "Rodada para conocer el nuevo edificio-plaza inagurado en el Tec de Monterrey, en camino al 50 aniversario del campus 🥳\\n¡Habrá divertidas dinámicas!",
-                            estado: true,
-                            duracion: "1 horas 30 minutos",
-                            imagen: "1728110630129-tempFile.jpg",
-                            tipo: "Rodada",
-                            foro: "6700e026cc2be498b7754325",
-                            usuariosInscritos: [
-                                "lV17ope3tCdu1M0Pb5XPxpK6kSm1",
-                                "yrxjip0wc7SpT4Pomt5eLSRZktE2",
-                                "3WCQvp4Q40Wvj0xo4wIVmKRor9x1",
-                                "1HIvrQp8cxWMmFhsWNdlDIWX3Vw1",
-                                "i3U8THsjyPbS710KQ1oc5Nz5a9e2",
-                                "IYw6N9i4MnNfe2HPVK3gAapHNBy1",
-                                "K6M1sVG00aPik39oWC0jhkQ0ji23",
-                                "NYszotiU7tPdXlZHcjtuTmnRzfP2",
-                                "cnVpVzTygHVtQC0g5ajSYl9NwPJ3",
-                                "jdFAQBGM3qaJQjkYblAZWTgmIVI2",
-                                "ono7nZjRxHX00oWjk3gx89KFVMO2",
-                                "jFHBpEGFyYXEohyBBCYhZju3ltm1",
-                                "2USL1Uxazec82wbrwKP6c5WDEt03",
-                                "MQHYCeVIUgMSdIUne9yMB24kbUq1",
-                                "JyrT55TQmTVtCalmFpbBwfW1CCc2",
-                                "Xfph2DhYsBQ1zuhiJC9KwqyC6lG3"
-                            ],
-                            fechaFin: "2024-10-17T22:00:00.000Z"
-                        )
-                    ],
-                    ruta: Ruta(
-                        id: "66ff205116524713c4b15365",
-                        titulo: "Ruta Tec",
-                        distancia: "4.95 km",
-                        tiempo: "2 horas 0 minutos",
-                        nivel: "Nivel 3",
-                        coordenadas: [
-                            Coordenada(
-                                latitud: 20.58937473356663,
-                                longitud: -100.41033982746183,
-                                tipo: "start",
-                                id: "6701e0cf49d321638527bbad"
-                            ),
-                            Coordenada(
-                                latitud: 20.600246297344214,
-                                longitud: -100.37680076763117,
-                                tipo: "end",
-                                id: "6701e0cf49d321638527bbb1"
-                            )
-                        ]
-                    ),
-                    ubicacion: [
-                        Ubicacion(
-                            latitud: 20.6125109,
-                            longitud: -100.403457,
-                            id: "670f05ebd1ead61812a2ab1f"
-                        )
-                    ],
-                    codigoAsistencia: 8642,
-                    usuariosVerificados: [
-                        "K6M1sVG00aPik39oWC0jhkQ0ji23",
-                        "jFHBpEGFyYXEohyBBCYhZju3ltm1",
-                        "MQHYCeVIUgMSdIUne9yMB24kbUq1",
-                        "Xfph2DhYsBQ1zuhiJC9KwqyC6lG3"
-                    ]
-                )
-        
-        
     }
     
 }
