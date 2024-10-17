@@ -139,7 +139,49 @@ struct AsistenciaResponse: Codable {
     let nuevaMedallaGanada: Bool?
 }
 
+struct Ruta2: Codable {
+    let _id: String
+    let titulo: String
+    let distancia: String
+    let tiempo: String
+    let nivel: String
+    let coordenadas: [Coordenada2]  // Asegúrate que el nombre no cause conflictos
+    let __v: Int
+}
+
+struct Coordenada2: Codable, Identifiable {
+    let latitud: Double
+    let longitud: Double
+    let tipo: String
+    let _id: String
+    
+    var id: String { _id }
+}
+
 struct ActividadesApiResponse: Codable {
-    let actividadesInscritas: [Actividad]
+    let actividadesInscritas: [ActividadInscrita]
     let message: String
+}
+
+struct ActividadInscrita: Codable, Identifiable {
+    let id: String
+    let informacion: Actividad
+    let ruta: Ruta?
+    let ubicacion: [Ubicacion]?
+    let codigoAsistencia: Int?
+    let usuariosVerificados: [String]?
+
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case informacion
+        case ruta
+        case ubicacion
+        case codigoAsistencia
+        case usuariosVerificados
+    }
+}
+
+struct Ubicacion: Codable {
+    let latitud: Double
+    let longitud: Double
 }

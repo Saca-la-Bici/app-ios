@@ -340,95 +340,28 @@ class ActividadesAPIService {
         }
     }
     
-    func getActividades(url: URL) async throws -> [Actividad] {
-            
-//            guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
-//                throw NSError(domain: "Token Error", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
-//            }
-//            
-//            let headers: HTTPHeaders = [
-//                "Authorization": "Bearer \(idToken)",
-//                "Content-Type": "application/json"
-//            ]
-//            
-//        do {
-//            let actividadesResponse = try await AF.request(url, method: .get, headers: headers)
-//                .validate()
-//                .serializingDecodable(ActividadesApiResponse.self)
-//                .value
-//
-//            return actividadesResponse.actividadesInscritas
-//        } catch {
-//            print("Error al obtener actividades: \(error.localizedDescription)")
-//            throw error
-//        }
+    func getActividades(url: URL) async throws -> [ActividadInscrita] {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
+            throw NSError(domain: "Token Error", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
         
-        // Hardcodear 4 actividades de prueba
-            let actividades: [Actividad] = [
-                Actividad(
-                    _id: "101",
-                    titulo: "Rodada en la ciudad",
-                    fecha: "2024-10-18",
-                    hora: "07:00",
-                    personasInscritas: 30,
-                    ubicacion: "Centro Histórico",
-                    descripcion: "Una rodada por las calles principales de la ciudad.",
-                    estado: true,
-                    duracion: "3 horas",
-                    imagen: "https://example.com/imagen101.jpg",
-                    tipo: "Rodada",
-                    comentarios: "Nivel intermedio, trae tu equipo de seguridad",
-                    usuariosInscritos: ["user1", "user2", "user5"]
-                ),
-                Actividad(
-                    _id: "202",
-                    titulo: "Taller de Reparación de Bicicletas",
-                    fecha: "2024-10-22",
-                    hora: "14:00",
-                    personasInscritas: 25,
-                    ubicacion: "Taller Comunal",
-                    descripcion: "Aprende a reparar tu bicicleta desde cero.",
-                    estado: true,
-                    duracion: "2 horas",
-                    imagen: "https://example.com/imagen202.jpg",
-                    tipo: "Taller",
-                    comentarios: "Materiales incluidos",
-                    usuariosInscritos: ["user3", "user4", "user6"]
-                ),
-                Actividad(
-                    _id: "303",
-                    titulo: "Evento Ciclístico Familiar",
-                    fecha: "2024-11-02",
-                    hora: "09:00",
-                    personasInscritas: 100,
-                    ubicacion: "Parque de los Venados",
-                    descripcion: "Un evento para toda la familia, con actividades para todos.",
-                    estado: true,
-                    duracion: "6 horas",
-                    imagen: "https://example.com/imagen303.jpg",
-                    tipo: "Evento",
-                    comentarios: "Premios para los ganadores",
-                    usuariosInscritos: ["user2", "user3", "user7", "user8"]
-                ),
-                Actividad(
-                    _id: "404",
-                    titulo: "Rodada Nocturna",
-                    fecha: "2024-10-25",
-                    hora: "20:00",
-                    personasInscritas: 40,
-                    ubicacion: "Paseo de la Reforma",
-                    descripcion: "Rodada nocturna por las principales avenidas de la ciudad.",
-                    estado: true,
-                    duracion: "2.5 horas",
-                    imagen: "https://example.com/imagen404.jpg",
-                    tipo: "Rodada",
-                    comentarios: "No olvides tus luces y chaleco reflectante",
-                    usuariosInscritos: ["user1", "user5", "user9", "user10"]
-                )
-            ]
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+        
+        do {
+            let actividadesResponse = try await AF.request(url, method: .get, headers: headers)
+                .validate()
+                .serializingDecodable(ActividadesApiResponse.self)
+                .value
             
-            // Retornar las actividades "hardcodeadas"
-            return actividades
+            print("Pero NOOO falOOO!!!!!!")
+            return actividadesResponse.actividadesInscritas
+        } catch {
+            print("Error al obtener actividades: \(error.localizedDescription)")
+            throw error
+        }
     }
     
 }

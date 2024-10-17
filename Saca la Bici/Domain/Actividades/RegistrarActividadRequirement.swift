@@ -10,7 +10,7 @@ import Foundation
 // Creas el protocolo de la historia de usuario
 protocol RegistrarActividadRequirementProtocol {
     func registrarActividad(actividad: DatosActividad) async throws -> Int?
-    func getActividades() async throws -> [Actividad]
+    func getActividades() async throws -> [ActividadInscrita]
 }
 
 class RegistrarActividadRequirement: RegistrarActividadRequirementProtocol {
@@ -30,7 +30,7 @@ class RegistrarActividadRequirement: RegistrarActividadRequirementProtocol {
         return try await actividadesRepository.registrarActividad(actividad: actividad)
     }
     
-    func getActividades() async throws -> [Actividad] {
+    func getActividades() async throws -> [ActividadInscrita] {
         do {
             return try await actividadesRepository.getActividades()
         } catch {

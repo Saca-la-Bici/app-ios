@@ -15,24 +15,26 @@ struct EventView: View {
                         .foregroundColor(.red)
                         .padding()
                 } else if viewModel.eventos.isEmpty {
-                    Text("No estás inscrito en ningún evento.")
+                    Text("No estás inscrito en ningúna actividad.")
                         .foregroundColor(.gray)
                         .padding()
                 } else {
                     ScrollView {
                         VStack(spacing: 16) {
-                            ForEach(viewModel.eventos) { evento in
+                            ForEach(viewModel.eventos, id: \.id) { evento in
+                                // Aquí estás accediendo a la propiedad informacion de cada evento
+                                let actividad = evento.informacion
                                 ActivityCardSMView(
-                                    id: evento.id,
-                                    activityTitle: evento.actividad.titulo,
-                                    activityType: evento.actividad.tipo,
-                                    level: evento.actividad.nivel,
-                                    date: FechaManager.shared.formatDate(evento.actividad.fecha),
-                                    time: evento.actividad.hora,
-                                    duration: evento.actividad.duracion,
-                                    imagen: evento.actividad.imagen,
-                                    location: evento.actividad.ubicacion,
-                                    attendees: evento.actividad.personasInscritas
+                                    id: actividad.id,
+                                    activityTitle: actividad.titulo,
+                                    activityType: actividad.tipo,
+                                    level: evento.ruta?.nivel,
+                                    date: FechaManager.shared.formatDate(actividad.fecha),
+                                    time: actividad.hora,
+                                    duration: actividad.duracion,
+                                    imagen: actividad.imagen,
+                                    location: actividad.ubicacion,
+                                    attendees: actividad.personasInscritas
                                 )
                             }
                         }
@@ -40,9 +42,15 @@ struct EventView: View {
                     }
                 }
             }
-            .navigationTitle("Eventos")
             .onAppear {
-                viewModel.getActividades()
+                Task {
+                    do {
+                        try await viewModel.getActividades()
+                    } catch {
+                        showErrorAlert = true
+                    }
+                }
+                
             }
             .alert(isPresented: $showErrorAlert) {
                 Alert(

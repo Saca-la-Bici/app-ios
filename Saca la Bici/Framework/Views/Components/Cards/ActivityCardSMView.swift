@@ -9,16 +9,16 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct ActivityCardSMView: View {
-    var id: String
-    var activityTitle: String
-    var activityType: String
-    var level: String?
-    var date: String?
-    var time: String?
-    var duration: String?
-    var imagen: String?
-    var location: String?
-    var attendees: Int?
+    let id: String
+    let activityTitle: String
+    let activityType: String
+    let level: String?
+    let date: String?
+    let time: String?
+    let duration: String?
+    let imagen: String?
+    let location: String?
+    let attendees: Int?
     
     let colorManager = ColorManager()
     
@@ -85,27 +85,6 @@ struct ActivityCardSMView: View {
                     }
                     .frame(height: 200)
                 }
-                
-                // Botón "Ver detalles"
-                let verde = colorManager.colorFromHex("7DA68D")
-                Button(action: {
-                    // Activar la navegación
-                    isActive = true
-                }, label: {
-                    HStack {
-                        Text("Ver detalles")
-                            .font(.system(size: 18))
-                            .bold()
-                            .foregroundColor(verde)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                        
-                        Image(systemName: "arrow.forward.circle.fill")
-                            .font(.system(size: 18))
-                            .foregroundColor(verde)
-                    }
-                })
-                .buttonStyle(PlainButtonStyle())
-                .padding(.top, 8)
             }
             .padding()
             .background(Color(UIColor.systemBackground))
@@ -125,7 +104,7 @@ struct ActivityCardSMView: View {
                 // Resto de tu vista
                 EmptyView() // Para ocultar el link
                     .navigationDestination(isPresented: $isActive) {
-                        ActividadIndividualSMView(id:id)
+                        ActividadIndividualSMView(id: id)
                     }
             }
         }
