@@ -12,6 +12,7 @@ struct DuracionPicker: View {
     @Binding var selectedDuration: TimeInterval
     @State private var showingSheet = false
     var title: Bool
+    var disabled: Bool = false
 
     // Formateador para mostrar la duración seleccionada
     private var durationFormatter: String {
@@ -31,9 +32,43 @@ struct DuracionPicker: View {
                     .font(.caption)
             }
 
-            Button(action: {
-                showingSheet = true
-            }, label: {
+            if !disabled {
+                Button(action: {
+                    showingSheet = true
+                }, label: {
+                    HStack {
+                        Text(durationFormatter)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                    )
+                    .contentShape(RoundedRectangle(cornerRadius: 10))
+                })
+                .buttonStyle(PlainButtonStyle())
+                .sheet(isPresented: $showingSheet) {
+                    VStack {
+                        Text("Selecciona la duración")
+                            .font(.headline)
+                            .padding()
+
+                        // Reemplaza con tu DurationPickerView
+                        DurationPickerView(selectedDuration: $selectedDuration)
+
+                        Button("Hecho") {
+                            showingSheet = false
+                        }
+                        .padding(.top, 10)
+                        .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .padding()
+                    .presentationDetents([.medium, .fraction(0.45)])
+                }
+            } else {
                 HStack {
                     Text(durationFormatter)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -45,27 +80,6 @@ struct DuracionPicker: View {
                         .stroke(Color.gray.opacity(0.4), lineWidth: 1)
                 )
                 .contentShape(RoundedRectangle(cornerRadius: 10))
-            })
-            .buttonStyle(PlainButtonStyle())
-
-            .sheet(isPresented: $showingSheet) {
-                VStack {
-                    Text("Selecciona la duración")
-                        .font(.headline)
-                        .padding()
-
-                    // Reemplaza con tu DurationPickerView
-                    DurationPickerView(selectedDuration: $selectedDuration)
-
-                    Button("Hecho") {
-                        showingSheet = false
-                    }
-                    .padding(.top, 10)
-                    .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
-                }
-                .buttonStyle(PlainButtonStyle())
-                .padding()
-                .presentationDetents([.medium, .fraction(0.45)])
             }
         }
         .frame(maxWidth: .infinity)

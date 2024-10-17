@@ -180,7 +180,7 @@ class ActividadesAPIService {
             "Content-Type": "multipart/form-data"
         ]
         
-        let parameters: Parameters = [
+        let parameters: [String: String] = [
             "id": actividadID
         ]
         
@@ -338,5 +338,110 @@ class ActividadesAPIService {
             
             return nil
         }
+    }
+    
+    func modificarActividad(url: URL, id: String, datosActividad: ModificarActividadModel) async throws -> ActionResponse {
+        
+        // Obtener token de Firebase
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
+        
+        print("ID Token: \(idToken)")
+        
+        // Subdiccionario de Informacion
+        let informacion: [String: String] = [
+            "titulo": datosActividad.titulo,
+            "fecha": datosActividad.fecha,
+            "hora": datosActividad.hora,
+            "ubicacion": datosActividad.ubicacion,
+            "descripcion": datosActividad.descripcion,
+            "duracion": datosActividad.duracion,
+            "tipo": datosActividad.tipo,
+            "personasInscritas": String(datosActividad.personasInscritas),
+            "estado": String(datosActividad.estado),
+            "foro": datosActividad.foro ?? ""
+        ]
+        
+        // Array de usuarios inscritos
+        let usuariosInscritos: [String] = datosActividad.usuariosInscritos ?? []
+        
+        // Headers
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "multipart/form-data"
+        ]
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            AF.upload(multipartFormData: { multipartFormData in
+
+                // Añadir cada campo dentro de 'informacion'
+                for (key, value) in informacion {
+                    multipartFormData.append(Data(value.utf8), withName: "informacion[\(key)]")
+                }
+
+                // Añadir la imagen (si existe)
+                if let imageData = datosActividad.imagen {
+                    multipartFormData.append(imageData, withName: "file", fileName: "image.jpg", mimeType: "image/jpeg")
+                }
+                
+                // Añadir usuarios inscritos
+                for (index, usuario) in usuariosInscritos.enumerated() {
+                    if let usuarioData = usuario.data(using: .utf8) {
+                        multipartFormData.append(usuarioData, withName: "usuariosInscritos[\(index)]")
+                    }
+                }
+                
+                // Añadir ruta
+                if let rutaData = datosActividad.ruta?.data(using: .utf8) {
+                    multipartFormData.append(rutaData, withName: "ruta")
+                }
+                
+            }, to: url, method: .patch, headers: headers)
+            .validate()
+            .responseDecodable(of: ActionResponse.self) { response in
+                switch response.result {
+                case .success(let actionResponse):
+                    continuation.resume(returning: actionResponse)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
+    func eliminarActividad(url: URL, id: String, tipo: String ) async throws -> EliminarActividadResponse {
+        
+        // Obtener token de Firebase
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
+        
+        // Headers
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+
+        // Parametros
+        let parameters: Parameters = [
+            "id": id,
+            "tipo": tipo
+        ]
+        
+        do {
+            
+            let response = try await AF.request(url, method: .patch, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+                .validate()
+                .serializingDecodable(EliminarActividadResponse.self)
+                .value
+            
+            return response
+            
+        } catch {
+            print("Error al eliminar actividad: \(error)")
+            throw error
+        }
+        
     }
 }

@@ -9,21 +9,24 @@ import SwiftUI
 
 struct TalleresView: View {
     @Binding var path: [ActivitiesPaths]
-    @StateObject private var viewModel = TalleresViewModel()
+    @ObservedObject var actividadViewModel = ActividadViewModel()
+    @ObservedObject var rodadasViewModel = RodadasViewModel()
+    @ObservedObject var eventosViewModel = EventosViewModel()
+    @ObservedObject var talleresViewModel = TalleresViewModel()
     
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
                 Spacer().frame(height: 5)
-                if viewModel.isLoading {
+                if talleresViewModel.isLoading {
                     ProgressView()
-                } else if viewModel.talleres.isEmpty {
+                } else if talleresViewModel.talleres.isEmpty {
                     Text("Actualmente no hay talleres disponibles, pero vuelve más tarde para ver nuevas actividades.")
                         .foregroundColor(.gray)
                         .font(.headline)
                         .padding()
                 } else {
-                    ForEach(viewModel.talleres) { taller in
+                    ForEach(talleresViewModel.talleres) { taller in
                         ActivityCardView(
                             path: $path,
                             id: taller.id,
@@ -34,7 +37,11 @@ struct TalleresView: View {
                             duration: taller.actividad.duracion,
                             imagen: taller.actividad.imagen,
                             location: taller.actividad.ubicacion,
-                            attendees: taller.actividad.personasInscritas
+                            attendees: taller.actividad.personasInscritas,
+                            actividadViewModel: actividadViewModel,
+                            rodadasViewModel: rodadasViewModel,
+                            talleresViewModel: talleresViewModel,
+                            eventosViewModel: eventosViewModel
                         )
                     }
                 }
@@ -43,8 +50,8 @@ struct TalleresView: View {
             .padding(.horizontal)
         }
         .onAppear {
-            viewModel.isLoading = true
-            viewModel.fetchTalleres()
+            talleresViewModel.isLoading = true
+            talleresViewModel.fetchTalleres()
         }
     }
 }

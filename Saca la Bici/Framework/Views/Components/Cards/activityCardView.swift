@@ -9,6 +9,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct ActivityCardView: View {
+    
     @Binding var path: [ActivitiesPaths]
     
     var id: String
@@ -23,6 +24,12 @@ struct ActivityCardView: View {
     var attendees: Int?
     
     let colorManager = ColorManager()
+    
+    // ViewModels
+    @ObservedObject var actividadViewModel = ActividadViewModel()
+    @ObservedObject var rodadasViewModel = RodadasViewModel()
+    @ObservedObject var talleresViewModel = TalleresViewModel()
+    @ObservedObject var eventosViewModel = EventosViewModel()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -51,6 +58,38 @@ struct ActivityCardView: View {
                             .foregroundColor(.primary)
                     }
                 }
+                
+                // Modificar / Eliminar actividad
+                Menu {
+                    Button(action: {
+                        // Acción para modificar la actividad
+                        actividadViewModel.hasAppeared = false
+                        if activityType == "Rodada" {
+                            path.append(.editarRodada(id: id))
+                        } else if activityType == "Evento" {
+                            path.append(.editarEvento(id: id))
+                        } else if activityType == "Taller" {
+                            path.append(.editarTaller(id: id))
+                        }
+                    }, label: {
+                        Label("Modificar actividad", systemImage: "pencil")
+                    })
+
+                    Button(role: .destructive, action: {
+                        // Acción para eliminar la actividad
+                        actividadViewModel.activeAlert = .delete(id: id)
+                    }, label: {
+                        Label("Eliminar actividad", systemImage: "trash")
+                            .foregroundColor(.red)
+                    })
+                } label: {
+                    Image(systemName: "ellipsis")
+                        .foregroundColor(.primary)
+                        .rotationEffect(.degrees(90))
+                        .padding()
+                }
+                .buttonStyle(PlainButtonStyle())
+
             }
             
             if let date = date {
@@ -78,7 +117,6 @@ struct ActivityCardView: View {
                         .frame(width: min(geometry.size.width, 350), height: 200)
                         .cornerRadius(8)
                         .clipped()
-                        .frame(maxWidth: .infinity)
                     }
                 .frame(height: 200)
             }
@@ -111,6 +149,37 @@ struct ActivityCardView: View {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(Color.primary.opacity(0.2), lineWidth: 1))
         .shadow(radius: 5)
+        .alert(item: $actividadViewModel.activeAlert) { alert in
+            switch alert {
+            case .success:
+                return Alert(
+                    title: Text("Éxito"),
+                    message: Text(actividadViewModel.messageAlert),
+                    dismissButton: .default(Text("OK")) {
+                        rodadasViewModel.fetchRodadas()
+                        eventosViewModel.fetchEventos()
+                        talleresViewModel.fetchTalleres()
+                    }
+                )
+            case .error:
+                return Alert(
+                    title: Text("Oops!"),
+                    message: Text(actividadViewModel.messageAlert),
+                    dismissButton: .default(Text("OK"))
+                )
+            case .delete(let idBorrar):
+                return Alert(
+                    title: Text("¿Seguro quieres eliminar la actividad?"),
+                    message: Text("Una vez eliminada no se podrá recuperar."),
+                    primaryButton: .destructive(Text("Eliminar")) {
+                        Task {
+                            await actividadViewModel.eliminarActividad(id: idBorrar, tipo: activityType)
+                        }
+                    },
+                    secondaryButton: .cancel(Text("Cancelar"))
+                )
+            }
+        }
     }
     
     private func infoRow(title: String, value: String) -> some View {
@@ -138,6 +207,30 @@ struct ActivityCardView: View {
             return Color(red: 244.0 / 255.0, green: 67.0 / 255.0, blue: 54.0 / 255.0)
         default:
             return Color.gray
+        }
+    }
+}
+
+struct ActivityCard_Previews: PreviewProvider {
+    static var previews: some View {
+        PreviewWrapper()
+    }
+
+    struct PreviewWrapper: View {
+        @State var path: [ActivitiesPaths] = []
+
+        var body: some View {
+            ActivityCardView(
+                path: $path,
+                id: "1",
+                activityTitle: "Lorem ipsum dolor sit amet ms",
+                activityType: "Rodada",
+                level: "Nivel 1",
+                date: "12/0/2",
+                time: "12:00",
+                duration: "2 horas",
+                attendees: 100
+            )
         }
     }
 }
