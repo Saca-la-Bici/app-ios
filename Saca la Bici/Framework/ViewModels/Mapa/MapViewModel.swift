@@ -22,6 +22,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         self._isAddingRoute = isAddingRoute
         self._message = message
         
+        // Se obtiene el token de acceso de Mapbox desde el archivo .plist
         guard let accessToken = Bundle.main.object(forInfoDictionaryKey: "MBXAccessToken") as? String else {
             fatalError("No está Mapbox en el .plist")
         }
@@ -30,6 +31,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         super.init()
     }
     
+    // Configura los manejadores de anotaciones para los puntos y líneas de la ruta
     func setupAnnotationManagers() {
         guard let mapView = mapView else { return }
         pointAnnotationManager = mapView.annotations.makePointAnnotationManager()
@@ -37,6 +39,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         setupLocation()
     }
     
+    // Configura la localización en el mapa, mostrando el "puck" de ubicación
     private func setupLocation() {
         guard let mapView = mapView else { return }
         var locationOptions = LocationOptions()
@@ -44,6 +47,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         mapView.location.options = locationOptions
     }
 
+    // Maneja el evento de tocar en el mapa para agregar puntos
     @objc func handleMapTap(_ sender: UITapGestureRecognizer) {
         guard isAddingRoute else {
             print("No está permitido registrar puntos en este modo.")
@@ -59,10 +63,12 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             let index = routeCoordinates.count - 1
             addMarker(at: coordinate, index: index)
             
+            // Muestra el nombre del punto que se acaba de agregar
             let pointName = getPointName(for: index)
             message = "\(pointName) registrado con éxito."
             print("Punto \(pointName) agregado: \(coordinate)")
             
+            // Si se han registrado los 7 puntos, se calcula la ruta
             if routeCoordinates.count == 7 {
                 print("Se han seleccionado los 7 puntos. Calculando ruta...")
                 getRoute()
@@ -72,6 +78,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
 
+    // Agrega un marcador en el mapa en la posición indicada y con el ícono adecuado según el índice
     private func addMarker(at coordinate: CLLocationCoordinate2D, index: Int) {
         guard let pointAnnotationManager = pointAnnotationManager else {
             print("PointAnnotationManager no está inicializado.")
@@ -80,17 +87,15 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
         var pointAnnotation = PointAnnotation(coordinate: coordinate)
 
+        // Se asignan íconos diferentes según el tipo de punto (inicio, descanso, final)
         switch index {
         case 0:
-            // Icono de inicio
             pointAnnotation.image = .init(image: UIImage(named: "start-icon")!, name: "start-icon")
             pointAnnotation.iconSize = 0.05
         case 3:
-            // Icono de descanso
             pointAnnotation.image = .init(image: UIImage(named: "rest-icon")!, name: "rest-icon")
             pointAnnotation.iconSize = 0.05
         case 6:
-            // Icono de fin
             pointAnnotation.image = .init(image: UIImage(named: "end-icon")!, name: "end-icon")
             pointAnnotation.iconSize = 0.05
         default:
@@ -100,6 +105,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         pointAnnotationManager.annotations.append(pointAnnotation)
     }
 
+    // Devuelve el nombre del punto según su posición en la ruta
     private func getPointName(for index: Int) -> String {
         switch index {
         case 0:
@@ -117,6 +123,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
 
+    // Calcula la ruta entre los puntos seleccionados utilizando el servicio de Directions de Mapbox
     func getRoute() {
         print("Iniciando cálculo de ruta...")
         guard routeCoordinates.count == 7 else {
@@ -150,6 +157,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
+    // Dibuja la ruta calculada en el mapa como una polilínea
     func drawRoute(_ routeCoordinates: [CLLocationCoordinate2D]) {
         guard let polylineAnnotationManager = polylineAnnotationManager else {
             print("PolylineAnnotationManager no está inicializado.")

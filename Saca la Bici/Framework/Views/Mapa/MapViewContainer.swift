@@ -7,9 +7,9 @@ struct MapViewContainer: UIViewRepresentable {
     @Binding var distance: Double
     @Binding var isAddingRoute: Bool
     @Binding var message: String
-    
-    @ObservedObject private var viewModel: MapViewModel
-    
+
+    private var viewModel: MapViewModel
+
     init(routeCoordinates: Binding<[CLLocationCoordinate2D]>, distance: Binding<Double>, isAddingRoute: Binding<Bool>, message: Binding<String>) {
         self._routeCoordinates = routeCoordinates
         self._distance = distance
@@ -26,8 +26,7 @@ struct MapViewContainer: UIViewRepresentable {
         let cameraOptions = CameraOptions(center: queretaroCoordinates, zoom: 14)
         mapView.mapboxMap.setCamera(to: cameraOptions)
         
-        viewModel.mapView = mapView
-        viewModel.setupAnnotationManagers()
+        context.coordinator.setMapView(mapView)
         
         let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleMapTap(_:)))
         mapView.addGestureRecognizer(tapGesture)
@@ -37,25 +36,36 @@ struct MapViewContainer: UIViewRepresentable {
     
     func updateUIView(_ uiView: MapView, context: Context) {
         if routeCoordinates.count == 7 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                viewModel.getRoute()
+            DispatchQueue.main.async {
+                context.coordinator.getRouteIfNeeded()
             }
         }
     }
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(viewModel)
+        Coordinator(viewModel: viewModel)
     }
     
     class Coordinator: NSObject {
-        var viewModel: MapViewModel
-        
-        init(_ viewModel: MapViewModel) {
+        private var viewModel: MapViewModel
+
+        init(viewModel: MapViewModel) {
             self.viewModel = viewModel
+        }
+
+        func setMapView(_ mapView: MapView) {
+            viewModel.mapView = mapView
+            viewModel.setupAnnotationManagers()
         }
         
         @objc func handleMapTap(_ sender: UITapGestureRecognizer) {
             viewModel.handleMapTap(sender)
+        }
+
+        func getRouteIfNeeded() {
+            if viewModel.routeCoordinates.count == 7 {
+                viewModel.getRoute()
+            }
         }
     }
 }

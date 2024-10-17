@@ -44,16 +44,19 @@ struct RegisterRouteView: View {
                             .padding()
                     }
                     
-                    MapViewContainer(routeCoordinates: $viewModel.routeCoordinates, distance: $viewModel.distance, isAddingRoute: $viewModel.isAddingRoute, message: $viewModel.message)
+                    MapViewContainer(routeCoordinates: $viewModel.routeCoordinates,
+                                     distance: $viewModel.distance,
+                                     isAddingRoute: $viewModel.isAddingRoute,
+                                     message: $viewModel.message)
                         .frame(height: 400)
                         .cornerRadius(10)
                 }
                 .padding(.horizontal)
             }
             
-            Button(action: {
+            Button {
                 viewModel.undoLastPoint()
-            }) {
+            } label: {
                 Text("Deshacer último punto")
                     .bold()
                     .frame(maxWidth: .infinity)
@@ -65,9 +68,9 @@ struct RegisterRouteView: View {
             }
             .disabled(viewModel.routeCoordinates.isEmpty)
             
-            Button(action: {
+            Button {
                 viewModel.submitRoute()
-            }) {
+            } label: {
                 Text(viewModel.isSubmitting ? "Registrando..." : "Registrar Ruta")
                     .bold()
                     .frame(maxWidth: .infinity)
@@ -81,6 +84,7 @@ struct RegisterRouteView: View {
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(title: Text("Registro de Ruta"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
             }
+
         }
         .padding(.top)
         .navigationTitle("Agrega una ruta")

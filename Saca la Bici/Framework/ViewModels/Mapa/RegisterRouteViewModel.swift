@@ -4,12 +4,10 @@ import FirebaseAuth
 import SwiftUI
 
 class RegisterRouteViewModel: ObservableObject {
-    // Bindings desde la Vista
     @Binding var routeCoordinates: [CLLocationCoordinate2D]
     @Binding var distance: Double
     @Binding var isAddingRoute: Bool
     
-    // Estado interno
     @Published var title: String = ""
     @Published var duration: String = ""
     @Published var selectedLevel: Int = 1

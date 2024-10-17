@@ -18,7 +18,9 @@ struct MapaView: View {
                         Spacer()
                         
                         VStack(spacing: 9) {
-                            NavigationLink(destination: RegisterRouteView(routeCoordinates: $routeCoordinates, distance: $distance, isAddingRoute: $isAddingRoute)) {
+                            NavigationLink(destination: RegisterRouteView(routeCoordinates: $routeCoordinates,
+                                distance: $distance,
+                                isAddingRoute: $isAddingRoute)) {
                                 ZStack {
                                     Circle()
                                         .fill(Color.yellow)
