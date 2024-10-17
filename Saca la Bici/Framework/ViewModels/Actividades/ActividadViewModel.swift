@@ -33,6 +33,9 @@ class ActividadViewModel: ObservableObject {
     @Published var tipoActividad: String = ""
     @Published var navTitulo: String = ""
     @Published var guardarBoton: String = ""
+    @Published var isLoading: Bool = false
+    @Published var errorMessage: String = ""
+    @Published var eventos: [Actividad]
     
     enum ActiveAlert: Identifiable {
         case error
@@ -169,7 +172,8 @@ class ActividadViewModel: ObservableObject {
     func getActividades() async throws -> [Actividad] {
         
         do {
-            return try await registrarActividadRequirement.getActividades()
+            eventos = try await registrarActividadRequirement.getActividades()
+            return eventos
         } catch {
             throw error
         }

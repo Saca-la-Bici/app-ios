@@ -1,68 +1,48 @@
-//
-//  ProfileEvents.swift
-//  Saca la Bici
-//
-//  Created by Diego Lira on 03/10/24.
-//
-
 import SwiftUI
 
 struct EventView: View {
-//    @Binding var path: [ActivitiesPaths]
     @State private var showErrorAlert = false
     @State private var errorMessage = ""
     @StateObject private var viewModel = ActividadViewModel()
 
     var body: some View {
-        
-//        VStack {
-//            if viewModel.isLoading {
-//                ProgressView()
-//            } else if let errorMessage = viewModel.errorMessage {
-//                Text("Error: \(errorMessage)")
-//                    .foregroundColor(.red)
-//                    .padding()
-//            } else if viewModel.eventos.isEmpty {
-//                Text("No estás inscrito en ningún evento.")
-//                    .foregroundColor(.gray)
-//                    .padding()
-//            } else {
-//                ScrollView {
-//                    VStack(spacing: 16) {
-//                        ForEach(viewModel.eventos) { evento in
-//                            ActivityCardView(
-//                                path: $path,
-//                                id: evento.id,
-//                                activityTitle: evento.actividad.titulo,
-//                                activityType: evento.actividad.tipo,
-//                                date: FechaManager.shared.formatDate(evento.actividad.fecha),
-//                                time: evento.actividad.hora,
-//                                duration: evento.actividad.duracion,
-//                                imagen: evento.actividad.imagen,
-//                                location: evento.actividad.ubicacion,
-//                                attendees: evento.actividad.personasInscritas
-//                            )
-//                        }
-//                    }
-//                    .padding()
-//                }
-//            }
-//        }
-//        .onAppear {
-//            viewModel.getActividades()
-//        }
-        Text("4")
-            .onAppear {
-                Task {
-                    do {
-                        var actividades = try await viewModel.getActividades()
-                        print(actividades)
-                    } catch {
-                        // Configurar el mensaje de error y mostrar la alerta
-                        errorMessage = "Error al conseguir las actividades, inténtalo más tarde."
-                        showErrorAlert = true
+        NavigationView {
+            VStack {
+                if viewModel.isLoading {
+                    ProgressView()
+                } else if let errorMessage = viewModel.errorMessage {
+                    Text("Error: \(errorMessage)")
+                        .foregroundColor(.red)
+                        .padding()
+                } else if viewModel.eventos.isEmpty {
+                    Text("No estás inscrito en ningún evento.")
+                        .foregroundColor(.gray)
+                        .padding()
+                } else {
+                    ScrollView {
+                        VStack(spacing: 16) {
+                            ForEach(viewModel.eventos) { evento in
+                                ActivityCardSMView(
+                                    id: evento.id,
+                                    activityTitle: evento.actividad.titulo,
+                                    activityType: evento.actividad.tipo,
+                                    level: evento.actividad.nivel,
+                                    date: FechaManager.shared.formatDate(evento.actividad.fecha),
+                                    time: evento.actividad.hora,
+                                    duration: evento.actividad.duracion,
+                                    imagen: evento.actividad.imagen,
+                                    location: evento.actividad.ubicacion,
+                                    attendees: evento.actividad.personasInscritas
+                                )
+                            }
+                        }
+                        .padding()
                     }
                 }
+            }
+            .navigationTitle("Eventos")
+            .onAppear {
+                viewModel.getActividades()
             }
             .alert(isPresented: $showErrorAlert) {
                 Alert(
@@ -71,6 +51,6 @@ struct EventView: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
-                    
+        }
     }
 }
