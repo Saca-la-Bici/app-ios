@@ -165,9 +165,10 @@ struct ActividadesApiResponse: Codable {
 
 struct ActividadInscrita: Codable, Identifiable {
     let id: String
-    let informacion: Actividad
+    let informacion: [Actividad]
     let ruta: Ruta?
     let ubicacion: [Ubicacion]?
+    let version: Int?
     let codigoAsistencia: Int?
     let usuariosVerificados: [String]?
 
@@ -176,6 +177,7 @@ struct ActividadInscrita: Codable, Identifiable {
         case informacion
         case ruta
         case ubicacion
+        case version = "__v"
         case codigoAsistencia
         case usuariosVerificados
     }
@@ -184,4 +186,9 @@ struct ActividadInscrita: Codable, Identifiable {
 struct Ubicacion: Codable {
     let latitud: Double
     let longitud: Double
+}
+
+
+struct InformacionWrapper: Codable {
+    let informacion: [Actividad]
 }

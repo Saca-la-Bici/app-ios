@@ -60,5 +60,6 @@ struct EventView: View {
                 )
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
