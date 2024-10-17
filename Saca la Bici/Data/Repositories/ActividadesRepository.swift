@@ -130,4 +130,18 @@ class ActividadesRepository: ActividadesAPIProtocol {
         return await actividadesAPIService.verificarAsistencia(
             url: URL(string: "\(Api.base)\(Api.Routes.rodadas)/verificarAsistencia")!, IDRodada: IDRodada, codigo: codigo)
     }
+    
+    func getActividades() async throws -> [Actividad] {
+        do {
+            // Construir la URL base y la ruta de actividades
+            guard let url = URL(string: "\(Api.base)\(Api.Routes.profile)/consultarActividadesInscritas") else {
+                throw URLError(.badURL)
+            }
+            
+            return try await actividadesAPIService.getActividades(url: url)
+            
+        } catch {
+            throw error
+        }
+    }
 }

@@ -138,3 +138,8 @@ struct AsistenciaResponse: Codable {
     let message: String
     let nuevaMedallaGanada: Bool?
 }
+
+struct ActividadesApiResponse: Codable {
+    let actividadesInscritas: [Actividad]
+    let message: String
+}

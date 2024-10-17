@@ -164,5 +164,16 @@ class ActividadViewModel: ObservableObject {
                 self.activeAlert = .error
         }
     }
+    
+    @MainActor
+    func getActividades() async throws -> [Actividad] {
+        
+        do {
+            return try await registrarActividadRequirement.getActividades()
+        } catch {
+            throw error
+        }
+        
+    }
 
 }
