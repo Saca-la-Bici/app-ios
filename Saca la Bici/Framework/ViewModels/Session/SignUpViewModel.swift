@@ -85,13 +85,13 @@ class SignUpViewModel: ObservableObject {
         }
         
         if !isNotOnlyNumbers(self.username) {
-            self.messageAlert = "Por favor ingrese un username válido."
+            self.messageAlert = "Por favor ingrese un nombre de usuario válido."
             self.showAlert = true
             return
         }
 
         if !isNotOnlySpecialCharacters(self.username) {
-            self.messageAlert = "Por favor ingrese un username válido."
+            self.messageAlert = "Por favor ingrese un nombre de usuario válido."
             self.showAlert = true
             return
         }
@@ -104,7 +104,7 @@ class SignUpViewModel: ObservableObject {
             return
 
         } else if usernameDisponible! == true {
-            self.messageAlert = "El username proporcionado ya está en uso. Favor de intentarlo con otro."
+            self.messageAlert = "El nombre de usuario proporcionado ya está en uso. Favor de intentarlo con otro."
             self.showAlert = true
             return
         }
@@ -178,19 +178,19 @@ class SignUpViewModel: ObservableObject {
     @MainActor
     func validarCompletarDatos1() async {
         if self.username.isEmpty {
-            self.messageAlert = "El username se encuentra vacío."
+            self.messageAlert = "El nombre de usuario se encuentra vacío."
             self.showAlert = true
             return
         }
         
         if !isNotOnlyNumbers(self.username) {
-            self.messageAlert = "Por favor ingrese un username válido."
+            self.messageAlert = "Por favor ingrese un nombre de usuario válido."
             self.showAlert = true
             return
         }
 
         if !isNotOnlySpecialCharacters(self.username) {
-            self.messageAlert = "Por favor ingrese un username válido."
+            self.messageAlert = "Por favor ingrese un nombre de usuario válido."
             self.showAlert = true
             return
         }
@@ -203,7 +203,7 @@ class SignUpViewModel: ObservableObject {
             return
 
         } else if usernameDisponible! == true {
-            self.messageAlert = "El username proporcionado ya está en uso. Favor de intentarlo con otro."
+            self.messageAlert = "El nombre de usuario proporcionado ya está en uso. Favor de intentarlo con otro."
             self.showAlert = true
             return
         }
