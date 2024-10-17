@@ -49,12 +49,12 @@ struct Evento: Identifiable {
     let actividad: Actividad
 }
 
-struct Taller: Identifiable {
+struct Taller: Identifiable, Equatable {
     let id: String
     let actividad: Actividad
 }
 
-struct Actividad: Codable, Identifiable {
+struct Actividad: Codable, Identifiable, Equatable {
     let _id: String
     let titulo: String
     let fecha: String
@@ -68,6 +68,7 @@ struct Actividad: Codable, Identifiable {
     let tipo: String
     let comentarios: String?
     let usuariosInscritos: [String]
+    let foro: String?
 
     var id: String { _id }
 }
@@ -119,4 +120,26 @@ struct AsistenciaResponse: Codable {
     let status: Int
     let message: String
     let nuevaMedallaGanada: Bool?
+}
+
+struct EliminarActividadResponse: Codable {
+    var code: Int
+    var msg: String
+}
+
+struct ModificarActividadModel: Codable {
+    let id: String
+    let titulo: String
+    let fecha: String
+    let hora: String
+    let personasInscritas: Int
+    let ubicacion: String
+    let descripcion: String
+    let estado: Bool
+    let duracion: String
+    let imagen: Data?
+    let tipo: String
+    let foro: String?
+    let usuariosInscritos: [String]?
+    let ruta: String?
 }

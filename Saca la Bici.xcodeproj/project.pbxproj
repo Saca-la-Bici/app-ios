@@ -113,6 +113,8 @@
 		6DD1172E2CAE61D40084314A /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD1172D2CAE61CF0084314A /* Profile.swift */; };
 		6DD117302CAE62170084314A /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD1172F2CAE620F0084314A /* ProfileRepository.swift */; };
 		6DD117322CAE62A70084314A /* ProfileAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD117312CAE62850084314A /* ProfileAPIService.swift */; };
+		7B720F4A2CB8177A000019E4 /* EliminarActividadRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B720F492CB8177A000019E4 /* EliminarActividadRequirement.swift */; };
+		7B8DDA972CB9FD030036535C /* ModificarActividadRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8DDA962CB9FD030036535C /* ModificarActividadRequirement.swift */; };
 		7B9C5ED12CA9D94900441541 /* FAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED02CA9D94900441541 /* FAQView.swift */; };
 		7B9C5ED42CA9E4D600441541 /* FAQViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED32CA9E4D600441541 /* FAQViewModel.swift */; };
 		7B9C5ED62CA9E5C000441541 /* FAQModelo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9C5ED52CA9E5C000441541 /* FAQModelo.swift */; };
@@ -281,6 +283,8 @@
 		6DD1172D2CAE61CF0084314A /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		6DD1172F2CAE620F0084314A /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
 		6DD117312CAE62850084314A /* ProfileAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAPIService.swift; sourceTree = "<group>"; };
+		7B720F492CB8177A000019E4 /* EliminarActividadRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EliminarActividadRequirement.swift; sourceTree = "<group>"; };
+		7B8DDA962CB9FD030036535C /* ModificarActividadRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModificarActividadRequirement.swift; sourceTree = "<group>"; };
 		7B9C5ED02CA9D94900441541 /* FAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQView.swift; sourceTree = "<group>"; };
 		7B9C5ED32CA9E4D600441541 /* FAQViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewModel.swift; sourceTree = "<group>"; };
 		7B9C5ED52CA9E5C000441541 /* FAQModelo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQModelo.swift; sourceTree = "<group>"; };
@@ -799,6 +803,8 @@
 				AE8E788F2CA9E520007F7365 /* ConsultarActividadesRequirement.swift */,
 				25858A152CB0BEF000A7719C /* ConsultarActividadIndividualRequirement.swift */,
 				255474E02CBB51E5004CFAFE /* VerificarAsistenciaRequirement.swift */,
+				7B720F492CB8177A000019E4 /* EliminarActividadRequirement.swift */,
+				7B8DDA962CB9FD030036535C /* ModificarActividadRequirement.swift */,
 			);
 			path = Actividades;
 			sourceTree = "<group>";
@@ -1034,6 +1040,7 @@
 				254BCA022CBF217700858477 /* RutasRepository.swift in Sources */,
 				252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */,
 				7B9C5EE02CAA4FB400441541 /* AddFAQView.swift in Sources */,
+				7B720F4A2CB8177A000019E4 /* EliminarActividadRequirement.swift in Sources */,
 				693C8ED32CC09F29000D4442 /* MailView.swift in Sources */,
 				25C302BC2C9A8F8A005AD742 /* FechaNacimientoPicker.swift in Sources */,
 				2510D2012CB04E31004C29CC /* DescripcionActividadView.swift in Sources */,
@@ -1054,6 +1061,7 @@
 				AE8E78972CA9E59E007F7365 /* TalleresViewModel.swift in Sources */,
 				AE6AB5052CBF711900D248E6 /* ConsultarMedallasRequirement.swift in Sources */,
 				AE5BA0512CB1B23A00AE8C0E /* ConsultarUsuarios.swift in Sources */,
+				7B8DDA972CB9FD030036535C /* ModificarActividadRequirement.swift in Sources */,
 				2510D20B2CB04F3E004C29CC /* HoraPicker.swift in Sources */,
 				252B64EE2C99FE7200A362C5 /* SessionAPIService.swift in Sources */,
 				AEFD01A22CB33200003B37C3 /* InscribirActividadRequirement.swift in Sources */,
