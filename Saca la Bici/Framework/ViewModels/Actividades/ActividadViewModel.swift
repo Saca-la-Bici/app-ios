@@ -402,6 +402,7 @@ class ActividadViewModel: ObservableObject {
             self.ubicacionActividad = actividad!.ubicacion
             self.descripcionActividad = actividad!.descripcion
             self.selectedTimeDuration = parseDurationTime(duration: actividad!.duracion)
+            self.selectedRuta = actividadIndividualResponse?.actividad.ruta ?? nil
             self.hasAppeared = true
         } else {
             // Mensaje de error
