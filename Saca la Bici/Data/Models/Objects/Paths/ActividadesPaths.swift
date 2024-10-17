@@ -21,4 +21,11 @@ enum ActivitiesPaths: Hashable {
     case addFAQ
     case updateFAQ (faq: FAQ)
     case decalogo
+    case editarRodada(id: String)
+    case editarEvento(id: String)
+    case editarTaller(id: String)
+    case editarRodadaRuta
+    case editarDescripcionRodada
+    case editarDescripcionEvento
+    case editarDescripcionTaller
 }

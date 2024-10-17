@@ -12,8 +12,12 @@ struct DescripcionActividadView: View {
     @Binding var path: [ActivitiesPaths]
 
     @ObservedObject var actividadViewModel = ActividadViewModel()
+    
+    // Variable para comprobar si se está agregando o editando
+    var isEditing: Bool
 
     var body: some View {
+        
         ZStack {
             ScrollView {
                 VStack {
@@ -25,28 +29,52 @@ struct DescripcionActividadView: View {
                         text: $actividadViewModel.descripcionActividad,
                         maxLength: 450,
                         title: false,
-                        showCharacterCount: true
+                        showCharacterCount: true,
+                        disabled: actividadViewModel.isLoading
                     )
 
                     Spacer().frame(height: 20)
 
-                    DuracionPicker(label: "Duración", selectedDuration: $actividadViewModel.selectedTimeDuration, title: false)
+                    DuracionPicker(
+                        label: "Duración",
+                        selectedDuration: $actividadViewModel.selectedTimeDuration,
+                        title: false,
+                        disabled: actividadViewModel.isLoading
+                    )
                 }
                 .padding()
+            }.zIndex(1)
+                .blur(radius: actividadViewModel.isLoading ? 10 : 0)
+            
+            if actividadViewModel.isLoading {
+                ProgressView()
+                    .zIndex(2)
             }
+            
         }
         .navigationTitle(actividadViewModel.navTitulo)
         .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        Task {
-                            await actividadViewModel.registrarActividad()
-                        }
-                    }, label: {
-                        Image(systemName: "checkmark")
-                            .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
-                    })
-                    .buttonStyle(PlainButtonStyle())
+                    // Si no está cargando, mostrar botón para confirmar
+                    if !actividadViewModel.isLoading {
+                        Button(action: {
+                            UIApplication.shared.hideKeyboard()
+                            Task {
+                                if isEditing {
+                                    print("Editando...")
+                                    await actividadViewModel.modificarActividad()
+                                } else {
+                                    print("Registrando...")
+                                    await actividadViewModel.registrarActividad()
+                                }
+                            }
+                        }, label: {
+                            Image(systemName: "checkmark")
+                                .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
+                        })
+                        .buttonStyle(PlainButtonStyle())
+                    }
+
                 }
             }
 
@@ -69,11 +97,15 @@ struct DescripcionActividadView: View {
                         path.removeAll()
                     }
                 )
+            case .delete:
+                return Alert(title: Text(""))
             }
+            
         }
         .onAppear {
             actividadViewModel.setGuardarBoton()
         }
+        
     }
 }
 
@@ -86,7 +118,7 @@ struct DescripcionActividadView_Previews: PreviewProvider {
         @State var path: [ActivitiesPaths] = []
 
         var body: some View {
-            DescripcionActividadView(path: $path)
+            DescripcionActividadView(path: $path, isEditing: false)
         }
     }
 }

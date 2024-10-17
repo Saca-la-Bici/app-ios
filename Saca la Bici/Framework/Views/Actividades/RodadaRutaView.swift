@@ -10,6 +10,9 @@ import SwiftUI
 struct RodadaRutaView: View {
     @Binding var path: [ActivitiesPaths]
     @ObservedObject var actividadViewModel = ActividadViewModel()
+    
+    // Variable para comprobar si se está agregando o editando
+    var isEditing: Bool
 
     var body: some View {
         ZStack {
@@ -42,7 +45,7 @@ struct RodadaRutaView: View {
                             }
                         }
                         
-                        Spacer().frame(height: 40)
+                        Spacer().frame(height: 75)
                     }
                     .padding()
                 }
@@ -58,7 +61,11 @@ struct RodadaRutaView: View {
                             actividadViewModel.validarRuta()
                             
                             if actividadViewModel.showAlert != true {
-                                path.append(.descripcionRodada)
+                                if isEditing {
+                                    path.append(.editarDescripcionRodada)
+                                } else {
+                                    path.append(.descripcionRodada)
+                                }
                             }
                         },
                         tieneIcono: true,
@@ -80,7 +87,7 @@ struct RodadaRutaView: View {
                     message: Text("Una vez eliminada no se podrá recuperar."),
                     primaryButton: .destructive(Text("Eliminar")) {
                         Task {
-                            await actividadViewModel.eliminarActividad(IDRuta: ruta._id)
+                            await actividadViewModel.eliminarRuta(IDRuta: ruta._id)
                         }
                     },
                     secondaryButton: .cancel()
@@ -114,7 +121,7 @@ struct RodadaRutaView_Previews: PreviewProvider {
         @State var path: [ActivitiesPaths] = []
 
         var body: some View {
-            RodadaRutaView(path: $path)
+            RodadaRutaView(path: $path, isEditing: false)
         }
     }
 }
