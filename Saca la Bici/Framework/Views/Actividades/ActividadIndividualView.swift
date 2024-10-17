@@ -22,191 +22,219 @@ struct ActividadIndividualView: View {
 
     @State private var safariURL: URL?
     @State private var showVerificarAsistenciaSheet = false
+    @State var comment: String = ""
 
     var body: some View {
         ZStack {
             if actividadIndividualViewModel.isLoading {
                 ProgressView("Cargando actividad...")
             } else {
-                ScrollView {
-                    Spacer().frame(height: 10)
-
-                    // Mostrar imagen si está disponible
-                    if !actividadIndividualViewModel.imagen.isEmpty {
-                        GeometryReader { geometry in
-                            WebImage(url: URL(string: actividadIndividualViewModel.imagen))
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: min(geometry.size.width, 370), height: 300)
-                                .cornerRadius(8)
-                                .clipped()
-                                .frame(maxWidth: .infinity)
-                        }
-                        .frame(height: 300)
-                        .padding(.horizontal)
-                    }
-
-                    HStack {
-                        Button(action: {
-                            // Acción para Materiales
-                        }, label: {
-                            Text("Materiales")
-                                .padding(.leading, 15)
-                                .bold()
-                                .font(.title3)
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                                .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
-                                .scaleEffect(1)
-                                .padding(.trailing, 25)
-                        })
-                        .buttonStyle(PlainButtonStyle())
-                    }
-                    .padding()
-
-                    ActividadInfoView(
-                        fecha: actividadIndividualViewModel.fecha,
-                        hora: actividadIndividualViewModel.hora,
-                        duracion: actividadIndividualViewModel.duracion,
-                        ubicacion: actividadIndividualViewModel.ubicacion,
-                        tipo: actividadIndividualViewModel.tipo,
-                        distancia: actividadIndividualViewModel.distancia,
-                        rentaBicicletasAction: {
-                            safariURL = URL(string: "http://rentabici.sacalabici.org")
-                        },
-                        nivel: actividadIndividualViewModel.nivel,
-                        descripcion: actividadIndividualViewModel.descripcion
-                    )
-                    .padding()
-
-                    if actividadIndividualViewModel.usuarioVerificado == false {
-                        Spacer().frame(height: 20)
-                        CustomButton(
-                            text: actividadIndividualViewModel.isJoined ? "Cancelar asistencia" : "Unirse",
-                            backgroundColor: actividadIndividualViewModel.isJoined ? .red : Color(red: 0.961, green: 0.802, blue: 0.048),
-                            foregroundColor: .white,
-                            action: {
-                                Task {
-                                    if actividadIndividualViewModel.isJoined {
-                                        await actividadIndividualViewModel.cancelarAsistencia(actividadID: id)
-                                    } else {
-                                        await actividadIndividualViewModel.inscribirActividad(actividadID: id)
-                                    }
-                                }
-                            },
-                            tieneIcono: true,
-                            icono: actividadIndividualViewModel.isJoined ? "xmark" : "plus"
-                        )
-                        .padding()
-                    }
-                    
-                    if actividadIndividualViewModel.tipo == "Rodada" &&
-                        actividadIndividualViewModel.usuarioVerificado == false &&
-                        actividadIndividualViewModel.isJoined == true {
+                
+                VStack {
+                    ScrollView {
                         Spacer().frame(height: 10)
-                        
-                        CustomButton(
-                            text: "Verificar Asistencia",
-                            backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
-                            foregroundColor: .white,
-                            action: {
-                                showVerificarAsistenciaSheet.toggle()
+
+                        // Mostrar imagen si está disponible
+                        if !actividadIndividualViewModel.imagen.isEmpty {
+                            GeometryReader { geometry in
+                                WebImage(url: URL(string: actividadIndividualViewModel.imagen))
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: min(geometry.size.width, 370), height: 300)
+                                    .cornerRadius(8)
+                                    .clipped()
+                                    .frame(maxWidth: .infinity)
+                            }
+                            .frame(height: 300)
+                            .padding(.horizontal)
+                        }
+
+                        HStack {
+                            Button(action: {
+                                // Acción para Materiales
+                            }, label: {
+                                Text("Materiales")
+                                    .padding(.leading, 15)
+                                    .bold()
+                                    .font(.title3)
+                                Spacer()
+                                Image(systemName: "chevron.forward")
+                                    .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
+                                    .scaleEffect(1)
+                                    .padding(.trailing, 25)
+                            })
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                        .padding()
+
+                        ActividadInfoView(
+                            fecha: actividadIndividualViewModel.fecha,
+                            hora: actividadIndividualViewModel.hora,
+                            duracion: actividadIndividualViewModel.duracion,
+                            ubicacion: actividadIndividualViewModel.ubicacion,
+                            tipo: actividadIndividualViewModel.tipo,
+                            distancia: actividadIndividualViewModel.distancia,
+                            rentaBicicletasAction: {
+                                safariURL = URL(string: "http://rentabici.sacalabici.org")
                             },
-                            tieneIcono: true,
-                            icono: "calendar.badge.checkmark"
+                            nivel: actividadIndividualViewModel.nivel,
+                            descripcion: actividadIndividualViewModel.descripcion
                         )
                         .padding()
-                        .sheet(isPresented: $showVerificarAsistenciaSheet) {
-                            VerificarAsistenciaSheet(
-                                verificarAction: {
-                                    if userSessionManager.puedeVerificarAsistencia() {
-                                        Task {
-                                            await actividadIndividualViewModel.verificarAsistencia(
-                                                IDRodada: id, codigoAsistencia: actividadIndividualViewModel.codigoAsistencia, adminOrStaff: true)
-                                        }
-                                    } else {
-                                        Task {
-                                            await actividadIndividualViewModel.verificarAsistencia(
-                                                IDRodada: id,
-                                                codigoAsistencia: actividadIndividualViewModel.codigoAsistenciaField, adminOrStaff: false)
+
+                        if actividadIndividualViewModel.usuarioVerificado == false {
+                            Spacer().frame(height: 20)
+                            CustomButton(
+                                text: actividadIndividualViewModel.isJoined ? "Cancelar asistencia" : "Unirse",
+                                backgroundColor: actividadIndividualViewModel.isJoined ? .red : Color(red: 0.961, green: 0.802, blue: 0.048),
+                                foregroundColor: .white,
+                                action: {
+                                    Task {
+                                        if actividadIndividualViewModel.isJoined {
+                                            await actividadIndividualViewModel.cancelarAsistencia(actividadID: id)
+                                        } else {
+                                            await actividadIndividualViewModel.inscribirActividad(actividadID: id)
                                         }
                                     }
                                 },
-                                codigoAsistenciaField: $actividadIndividualViewModel.codigoAsistenciaField,
-                                codigoAsistencia: actividadIndividualViewModel.codigoAsistencia,
-                                showAlertSheet: $actividadIndividualViewModel.showAlertSheet
+                                tieneIcono: true,
+                                icono: actividadIndividualViewModel.isJoined ? "xmark" : "plus"
                             )
-                            .presentationDetents([.fraction(0.35)])
-                            .alert(isPresented: $actividadIndividualViewModel.showAlertSheet) {
-                                switch actividadIndividualViewModel.alertTypeSheet {
-                                case .success:
-                                    return Alert(
-                                        title: Text("Éxito"),
-                                        message: Text(actividadIndividualViewModel.messageAlert),
-                                        dismissButton: .default(Text("Aceptar")) {
-                                            showVerificarAsistenciaSheet.toggle()
-                                            actividadIndividualViewModel.codigoAsistenciaField = ""
-                                            InAppMessaging.inAppMessaging().triggerEvent("medal_earned")
-                                            actividadIndividualViewModel.usuarioVerificado = true
+                            .padding()
+                        }
+                        
+                        if actividadIndividualViewModel.tipo == "Rodada" &&
+                            actividadIndividualViewModel.usuarioVerificado == false &&
+                            actividadIndividualViewModel.isJoined == true {
+                            Spacer().frame(height: 10)
+                            
+                            CustomButton(
+                                text: "Verificar Asistencia",
+                                backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
+                                foregroundColor: .white,
+                                action: {
+                                    showVerificarAsistenciaSheet.toggle()
+                                },
+                                tieneIcono: true,
+                                icono: "calendar.badge.checkmark"
+                            )
+                            .padding()
+                            .sheet(isPresented: $showVerificarAsistenciaSheet) {
+                                VerificarAsistenciaSheet(
+                                    verificarAction: {
+                                        if userSessionManager.puedeVerificarAsistencia() {
+                                            Task {
+                                                await actividadIndividualViewModel.verificarAsistencia(
+                                                    IDRodada: id, codigoAsistencia: actividadIndividualViewModel.codigoAsistencia, adminOrStaff: true)
+                                            }
+                                        } else {
+                                            Task {
+                                                await actividadIndividualViewModel.verificarAsistencia(
+                                                    IDRodada: id,
+                                                    codigoAsistencia: actividadIndividualViewModel.codigoAsistenciaField, adminOrStaff: false)
+                                            }
                                         }
-                                    )
-                                case .error:
-                                    return Alert(
-                                        title: Text("Oops!"),
-                                        message: Text(actividadIndividualViewModel.messageAlert),
-                                        dismissButton: .default(Text("Aceptar"))
-                                    )
-                                case .errorInscrito:
-                                    return Alert(
-                                        title: Text("Oops!"),
-                                        message: Text(actividadIndividualViewModel.messageAlert),
-                                        dismissButton: .default(Text("Aceptar")) {
-                                            showVerificarAsistenciaSheet.toggle()
-                                            actividadIndividualViewModel.codigoAsistenciaField = ""
-                                        }
-                                    )
-                                case .none:
-                                    return Alert(
-                                        title: Text("Información"),
-                                        message: Text(actividadIndividualViewModel.messageAlert),
-                                        dismissButton: .default(Text("Aceptar"))
-                                    )
+                                    },
+                                    codigoAsistenciaField: $actividadIndividualViewModel.codigoAsistenciaField,
+                                    codigoAsistencia: actividadIndividualViewModel.codigoAsistencia,
+                                    showAlertSheet: $actividadIndividualViewModel.showAlertSheet
+                                )
+                                .presentationDetents([.fraction(0.35)])
+                                .alert(isPresented: $actividadIndividualViewModel.showAlertSheet) {
+                                    switch actividadIndividualViewModel.alertTypeSheet {
+                                    case .success:
+                                        return Alert(
+                                            title: Text("Éxito"),
+                                            message: Text(actividadIndividualViewModel.messageAlert),
+                                            dismissButton: .default(Text("Aceptar")) {
+                                                showVerificarAsistenciaSheet.toggle()
+                                                actividadIndividualViewModel.codigoAsistenciaField = ""
+                                                InAppMessaging.inAppMessaging().triggerEvent("medal_earned")
+                                                actividadIndividualViewModel.usuarioVerificado = true
+                                            }
+                                        )
+                                    case .error:
+                                        return Alert(
+                                            title: Text("Oops!"),
+                                            message: Text(actividadIndividualViewModel.messageAlert),
+                                            dismissButton: .default(Text("Aceptar"))
+                                        )
+                                    case .errorInscrito:
+                                        return Alert(
+                                            title: Text("Oops!"),
+                                            message: Text(actividadIndividualViewModel.messageAlert),
+                                            dismissButton: .default(Text("Aceptar")) {
+                                                showVerificarAsistenciaSheet.toggle()
+                                                actividadIndividualViewModel.codigoAsistenciaField = ""
+                                            }
+                                        )
+                                    case .none:
+                                        return Alert(
+                                            title: Text("Información"),
+                                            message: Text(actividadIndividualViewModel.messageAlert),
+                                            dismissButton: .default(Text("Aceptar"))
+                                        )
+                                    }
                                 }
                             }
                         }
-                    }
-                    
-                    if actividadIndividualViewModel.usuarioVerificado == true {
-                        HStack {
-                            Image(systemName: "info.circle")
-                                .font(.system(size: 22))
-                                .foregroundColor(ColorManager.shared.colorFromHex("#7DA68D"))
+                        
+                        if actividadIndividualViewModel.usuarioVerificado == true {
+                            HStack {
+                                Image(systemName: "info.circle")
+                                    .font(.system(size: 22))
+                                    .foregroundColor(ColorManager.shared.colorFromHex("#7DA68D"))
 
-                            Text("¡Ya verificaste tu asistencia para esta rodada!")
-                                .foregroundColor(.primary)
-                                .font(.system(size: 18, weight: .bold))
-                            
-                            Spacer()
+                                Text("¡Ya verificaste tu asistencia para esta rodada!")
+                                    .foregroundColor(.primary)
+                                    .font(.system(size: 18, weight: .bold))
+                                
+                                Spacer()
+                            }
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 15)
+                                    .fill(Color.gray.opacity(0.2))
+                                    .shadow(radius: 5)
+                            )
+                            .padding(.horizontal)
                         }
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(Color.gray.opacity(0.2))
-                                .shadow(radius: 5)
-                        )
-                        .padding(.horizontal)
+                        
+                        ForoView(path: $path)
+                            .padding()
+                        
+                        Spacer()
                     }
                     
-                    // Foro
-                    ForoView(path: $path)
-                        .padding()
+                    HStack {
+                        TextField("Escribir un comentario...", text: $comment)
+                            .padding(12)
+                            .background(Color.white)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color.gray, lineWidth: 1) // Borde sólido gris
+                            )
+                            .padding(.horizontal, 10)
+
+                        // Botón de enviar con ícono
+                        Button(action: {
+                            // Acción del botón para enviar comentario
+                        }) {
+                            Image(systemName: "paperplane")
+                                .foregroundColor(.black)
+                                .padding(12)
+                        }
+                        .background(Color.white)
+                        .cornerRadius(12)
+                        .padding(.trailing, 10)
+                    }
+                    .padding(.bottom)
                     
-                    Spacer().frame(height: 10)
-                }
-                .navigationTitle(actividadIndividualViewModel.titulo)
-                .sheet(item: $safariURL) { url in
-                    SafariView(url: url)
-                }
+                }.navigationTitle(actividadIndividualViewModel.titulo)
+                    .sheet(item: $safariURL) { url in
+                        SafariView(url: url)
+                    }
+            
             }
         }
         .toolbar {

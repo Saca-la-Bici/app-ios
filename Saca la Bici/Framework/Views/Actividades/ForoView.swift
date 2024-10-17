@@ -12,9 +12,11 @@ struct ForoView: View {
     // Path
     @Binding var path: [ActivitiesPaths]
     
+    // Comentario
+    @State var comment: String = ""
+    
     var body: some View {
         
-        // Wrapper
         VStack {
             
             // Número de comentarios
