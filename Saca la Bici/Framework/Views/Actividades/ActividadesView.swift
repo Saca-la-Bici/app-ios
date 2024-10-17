@@ -118,6 +118,8 @@ struct ActividadesView: View {
                     AddFAQView<ActivitiesPaths>(path: $path)
                 case .updateFAQ(let faq):
                     UpdateFAQView<ActivitiesPaths>(faq: faq, path: $path)
+                case .decalogo:
+                    DecalogosView()
                 case .editarEvento(let id):
                     RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Evento", id: id, isEditing: true)
                 case .editarRodada(let id):

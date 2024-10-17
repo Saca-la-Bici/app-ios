@@ -57,7 +57,7 @@ struct IconSelectionView: View {
                     }
                     .buttonStyle(PlainButtonStyle())
             }
-            .padding(.bottom, 35)
+            .padding(.bottom, 15)
             
             // ZStack para las vistas con animación de transición
             ZStack {
@@ -67,6 +67,7 @@ struct IconSelectionView: View {
                         Spacer()
                     }
                     .transition(.scale)
+                    
                 } else if selectedIcon == 1 {
                     VStack {
                         MedalsView()
@@ -74,35 +75,12 @@ struct IconSelectionView: View {
                     }
                     .transition(.scale)
                 } else if selectedIcon == 2 {
-                    Text("Vista de mundo")
-                        .font(.title)
-                        .transition(.scale)
-                    Spacer()
+                    VStack {
+                        ConsultarEstadisticasView()
+                        Spacer()
+                    }
                 }
             }
-            .offset(x: offset.width)
-            .gesture(
-                DragGesture()
-                    .onChanged { gesture in
-                        offset = gesture.translation
-                    }
-                    .onEnded { gesture in
-                        if gesture.translation.width < -100 && selectedIcon < 2 {
-                            withAnimation {
-                                selectedIcon += 1
-                            }
-                        } else if gesture.translation.width > 100 && selectedIcon > 0 {
-                            withAnimation {
-                                selectedIcon -= 1
-                            }
-                        }
-                        withAnimation {
-                            offset = .zero
-                        }
-                    }
-            )
-            .animation(.easeInOut, value: selectedIcon)
-
             Spacer()
         }
         .padding()

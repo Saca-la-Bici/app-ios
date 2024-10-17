@@ -20,6 +20,7 @@ enum ActivitiesPaths: Hashable {
     case faqDetail (faq: FAQ, permisos: [String])
     case addFAQ
     case updateFAQ (faq: FAQ)
+    case decalogo
     case editarRodada(id: String)
     case editarEvento(id: String)
     case editarTaller(id: String)

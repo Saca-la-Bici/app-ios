@@ -107,6 +107,13 @@ struct RestablecerContrasenaView: View {
                                     path.removeLast()
                                 }
                             )
+                        } else if consultarPerfilPropioViewModel.errorMessage != nil {
+                            return Alert(
+                                title: Text("Oops!"),
+                                message: Text("Hubo un error al cargar los datos. Favor de intentar de nuevo."),
+                                dismissButton: .default(Text("Aceptar"), action: {
+                                    consultarPerfilPropioViewModel.errorMessage = nil
+                                }))
                         } else {
                             return Alert(
                                 title: Text("¡Éxito!"),
@@ -130,16 +137,6 @@ struct RestablecerContrasenaView: View {
                 consultarPerfilPropioViewModel.consultarPerfilPropio()
             }
         }
-        .alert(isPresented: .constant(consultarPerfilPropioViewModel.errorMessage != nil)) {
-            Alert(
-                title: Text("Oops!"),
-                message: Text("Hubo un error al cargar los datos. Favor de intentar de nuevo."),
-                dismissButton: .default(Text("Aceptar"), action: {
-                    consultarPerfilPropioViewModel.errorMessage = nil
-                })
-            )
-        }
-
     }
 }
 

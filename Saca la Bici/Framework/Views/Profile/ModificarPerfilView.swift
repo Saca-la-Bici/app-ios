@@ -142,7 +142,8 @@ struct ModificarPerfilView: View {
                     username: nombreUsuario,
                     tipoSangre: tipoSangre,
                     numeroEmergencia: telefonoEmergencia,
-                    imagen: selectedImageData // Se envía la imagen seleccionada (si existe)
+                    imagen: selectedImageData, // Se envía la imagen seleccionada (si existe)
+                    usernameExistente: consultarPerfilPropioViewModel.profile?.username ?? ""
                 )
                 mostrarAlerta = true
                 isLoading = false

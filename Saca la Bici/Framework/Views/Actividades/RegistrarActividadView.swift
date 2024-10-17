@@ -161,7 +161,8 @@ struct RegistrarActividadView: View {
                         text: "Siguiente",
                         backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                         action: {
-                            actividadViewModel.validarDatosBase()
+                            Task {
+                                await actividadViewModel.validarDatosBase()
 
                             if actividadViewModel.isEditing {
                                 if actividadViewModel.showAlert != true {

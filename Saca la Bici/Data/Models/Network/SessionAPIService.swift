@@ -68,6 +68,9 @@ class SessionAPIService: NSObject {
                 print("Error fetching FCM registration token: \(error.localizedDescription)")
             }
             
+            // Mandas el correo de verificación
+            try await authResult.user.sendEmailVerification()
+            
             let taskRequest = session.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate()
             let response = await taskRequest.serializingData().response
             
