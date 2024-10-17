@@ -45,7 +45,7 @@ struct RodadaRutaView: View {
                             }
                         }
                         
-                        Spacer().frame(height: 60)
+                        Spacer().frame(height: 75)
                     }
                     .padding()
                 }
@@ -58,10 +58,14 @@ struct RodadaRutaView: View {
                         text: "Siguiente",
                         backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                         action: {
-                            if isEditing {
-                                path.append(.editarDescripcionRodada)
-                            } else {
-                                path.append(.descripcionRodada)
+                            actividadViewModel.validarRuta()
+                            
+                            if actividadViewModel.showAlert != true {
+                                if isEditing {
+                                    path.append(.editarDescripcionRodada)
+                                } else {
+                                    path.append(.descripcionRodada)
+                                }
                             }
                         },
                         tieneIcono: true,

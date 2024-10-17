@@ -53,6 +53,7 @@ class ActividadViewModel: ObservableObject {
     @Published var isEditing: Bool = false
     @Published var isLoading: Bool = false
     @Published var hasAppeared: Bool = false
+    @Published var isButtonDisabled = false
     
     enum ActiveAlert: Identifiable {
         case error

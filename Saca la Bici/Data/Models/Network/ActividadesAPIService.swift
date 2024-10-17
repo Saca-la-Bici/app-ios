@@ -377,27 +377,23 @@ class ActividadesAPIService {
 
                 // Añadir cada campo dentro de 'informacion'
                 for (key, value) in informacion {
-                    print("informacion[\(key)]: \(value)")
                     multipartFormData.append(Data(value.utf8), withName: "informacion[\(key)]")
                 }
 
                 // Añadir la imagen (si existe)
                 if let imageData = datosActividad.imagen {
-                    print("file: \(imageData)")
                     multipartFormData.append(imageData, withName: "file", fileName: "image.jpg", mimeType: "image/jpeg")
                 }
                 
                 // Añadir usuarios inscritos
                 for (index, usuario) in usuariosInscritos.enumerated() {
                     if let usuarioData = usuario.data(using: .utf8) {
-                        print("usuariosInscritos[\(index)]: \(usuario)")
                         multipartFormData.append(usuarioData, withName: "usuariosInscritos[\(index)]")
                     }
                 }
                 
                 // Añadir ruta
                 if let rutaData = datosActividad.ruta?.data(using: .utf8) {
-                    print("ruta: \(rutaData)")
                     multipartFormData.append(rutaData, withName: "ruta")
                 }
                 

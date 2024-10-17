@@ -161,8 +161,11 @@ struct RegistrarActividadView: View {
                         text: "Siguiente",
                         backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                         action: {
+                            actividadViewModel.isButtonDisabled = true
                             Task {
                                 await actividadViewModel.validarDatosBase()
+                                
+                                defer { actividadViewModel.isButtonDisabled = false }
 
                             if actividadViewModel.isEditing {
                                 if actividadViewModel.showAlert != true {
@@ -190,6 +193,7 @@ struct RegistrarActividadView: View {
                         tieneIcono: true,
                         icono: "chevron.right"
                     )
+                    .disabled(actividadViewModel.isButtonDisabled)
 
                     Spacer()
 
