@@ -44,7 +44,7 @@ struct FAQDetailView<PathType: Equatable>: View {
                     Spacer().frame(height: 20)
                     
                     // Seccion de admin
-                    if permisos.contains("Modificar pregunta frecuente") || permisos.contains("Eliminar pregunta frecuente") || true {
+                    if permisos.contains("Modificar pregunta frecuente") || permisos.contains("Eliminar pregunta frecuente") {
                         
                         Text("Herramientas de administrador")
                             .font(.callout)
