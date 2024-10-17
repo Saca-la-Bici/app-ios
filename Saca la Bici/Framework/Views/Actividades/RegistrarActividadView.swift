@@ -167,11 +167,11 @@ struct RegistrarActividadView: View {
                             if actividadViewModel.isEditing {
                                 if actividadViewModel.showAlert != true {
                                     if tipoActividad == "Rodada" {
-                                        path.append(.editarRodadaRuta(id: actividadViewModel.idActividad))
+                                        path.append(.editarRodadaRuta)
                                     } else if tipoActividad == "Evento" {
-                                        path.append(.editarDescripcionEvento(id: actividadViewModel.idActividad))
+                                        path.append(.editarDescripcionEvento)
                                     } else if tipoActividad == "Taller" {
-                                        path.append(.editarDescripcionEvento(id: actividadViewModel.idActividad))
+                                        path.append(.editarDescripcionEvento)
                                     }
                                 }
                             } else {
@@ -184,6 +184,7 @@ struct RegistrarActividadView: View {
                                         path.append(.descripcionTaller)
                                     }
                                 }
+                            }
                             }
                         },
                         tieneIcono: true,

@@ -45,7 +45,7 @@ struct RodadaRutaView: View {
                             }
                         }
                         
-                        Spacer().frame(height: 40)
+                        Spacer().frame(height: 60)
                     }
                     .padding()
                 }
@@ -59,7 +59,7 @@ struct RodadaRutaView: View {
                         backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                         action: {
                             if isEditing {
-                                path.append(.editarDescripcionRodada(id: actividadViewModel.idActividad))
+                                path.append(.editarDescripcionRodada)
                             } else {
                                 path.append(.descripcionRodada)
                             }
@@ -83,7 +83,7 @@ struct RodadaRutaView: View {
                     message: Text("Una vez eliminada no se podrá recuperar."),
                     primaryButton: .destructive(Text("Eliminar")) {
                         Task {
-                            await actividadViewModel.eliminarActividad(IDRuta: ruta._id)
+                            await actividadViewModel.eliminarRuta(IDRuta: ruta._id)
                         }
                     },
                     secondaryButton: .cancel()

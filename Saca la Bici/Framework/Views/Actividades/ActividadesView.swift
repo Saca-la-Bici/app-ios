@@ -126,13 +126,13 @@ struct ActividadesView: View {
                     RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Rodada", id: id, isEditing: true)
                 case .editarTaller(let id):
                     RegistrarActividadView(path: $path, actividadViewModel: actividadViewModel, tipoActividad: "Taller", id: id, isEditing: true)
-                case .editarRodadaRuta(let id):
+                case .editarRodadaRuta:
                     RodadaRutaView(path: $path, actividadViewModel: actividadViewModel, isEditing: true)
-                case .editarDescripcionRodada(let id):
+                case .editarDescripcionRodada:
                     DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, isEditing: true)
-                case .editarDescripcionEvento(let id):
+                case .editarDescripcionEvento:
                     DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, isEditing: true)
-                case .editarDescripcionTaller(let id):
+                case .editarDescripcionTaller:
                     DescripcionActividadView(path: $path, actividadViewModel: actividadViewModel, isEditing: true)
                 }
             }

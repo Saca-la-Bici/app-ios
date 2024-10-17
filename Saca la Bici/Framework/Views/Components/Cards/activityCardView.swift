@@ -86,10 +86,11 @@ struct ActivityCardView: View {
                         })
                     } label: {
                         Image(systemName: "ellipsis")
-                            .foregroundColor(.black)
+                            .foregroundColor(.primary)
                             .rotationEffect(.degrees(90))
                             .padding()
                     }
+                    .buttonStyle(PlainButtonStyle())
 
                 }
                 

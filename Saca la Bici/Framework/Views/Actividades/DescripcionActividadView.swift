@@ -97,11 +97,10 @@ struct DescripcionActividadView: View {
                     }
                 )
             case .delete:
-                return Alert(title: Text("XD"))
+                return Alert(title: Text(""))
             }
             
         }
-        
         .onAppear {
             actividadViewModel.setGuardarBoton()
         }

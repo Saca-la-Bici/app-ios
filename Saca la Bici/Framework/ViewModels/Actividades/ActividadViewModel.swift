@@ -252,7 +252,7 @@ class ActividadViewModel: ObservableObject {
     }
     
     @MainActor
-    func eliminarActividad(IDRuta: String) async {
+    func eliminarRuta(IDRuta: String) async {
         let responseStatus = await registrarActividadRequirement.eliminarRuta(IDRuta: IDRuta)
         
         if responseStatus == 200 {
