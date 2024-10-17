@@ -4,6 +4,7 @@ import MessageUI
 struct MailView: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentation
     var model: MailModel
+    var onMailResult: (MFMailComposeResult) -> Void 
 
     class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
         var parent: MailView
@@ -13,6 +14,7 @@ struct MailView: UIViewControllerRepresentable {
         }
 
         func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+            parent.onMailResult(result)
             controller.dismiss(animated: true) {
                 self.parent.presentation.wrappedValue.dismiss()
             }

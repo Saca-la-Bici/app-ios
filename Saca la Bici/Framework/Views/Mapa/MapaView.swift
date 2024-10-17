@@ -22,20 +22,25 @@ struct MapaView: View {
                     .clipShape(Circle())
                     .shadow(radius: 5)
             })
-
             .padding(.top, 60)
             .padding(.trailing, 20)
             .disabled(!viewModel.canSendMail())
         }
         .sheet(isPresented: $viewModel.isShowingMailView, content: {
             if let mailData = viewModel.mailData {
-                MailView(model: mailData)
-                    .onDisappear {
+                MailView(model: mailData) { result in
+                    if result == .sent {
+                        viewModel.isMailSent = true
+                    }
+                    showingSuccessMessage = viewModel.isMailSent 
+                }
+                .onDisappear {
+                    if viewModel.isMailSent {
                         showingSuccessMessage = true
                     }
+                }
             }
         })
-
         .alert(isPresented: $showingSuccessMessage) {
             Alert(
                 title: Text("Correo Enviado"),
@@ -91,7 +96,7 @@ struct MapViewContainer: UIViewRepresentable {
                 print("Permisos de localización concedidos")
                 manager.startUpdatingLocation()
             case .denied, .restricted:
-                print("Permisos de localización denegados")
+                print("Permisos de localización denegados. Por favor, habilite los permisos en Configuración.")
             case .notDetermined:
                 print("Permisos de localización no determinados")
             @unknown default:
