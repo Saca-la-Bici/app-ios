@@ -20,8 +20,10 @@ class MailViewModel: ObservableObject {
     func canSendMail() -> Bool {
         let canSend = MFMailComposeViewController.canSendMail()
         if !canSend {
-            alertMessage = "Este dispositivo no puede enviar correos. Por favor, configure una cuenta de correo."
-            showAlert = true
+            DispatchQueue.main.async {
+                self.alertMessage = "Este dispositivo no puede enviar correos. Por favor, configure una cuenta de correo."
+                self.showAlert = true
+            }
         }
         return canSend
     }
