@@ -1,11 +1,65 @@
 import SwiftUI
 import MapboxMaps
 import CoreLocation
+import MessageUI
 
 struct MapaView: View {
+    @StateObject private var viewModel = MailViewModel()
+    @State private var showingSuccessMessage = false
+    @State private var showingMailError = false // Para mostrar la alerta si no se puede enviar correos
+
     var body: some View {
-        MapViewContainer()
-            .ignoresSafeArea()
+        ZStack(alignment: .topTrailing) {
+            MapViewContainer()
+                .ignoresSafeArea()
+
+            Button(action: {
+                if viewModel.canSendMail() {
+                    viewModel.sendMail()
+                } else {
+                    showingMailError = true // Activar la alerta si no se puede enviar correos
+                }
+            }, label: {
+                Image(systemName: "envelope")
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.red)
+                    .clipShape(Circle())
+                    .shadow(radius: 5)
+            })
+            .padding(.top, 60)
+            .padding(.trailing, 20)
+        }
+        .sheet(isPresented: $viewModel.isShowingMailView, content: {
+            if let mailData = viewModel.mailData {
+                MailView(model: mailData) { result in
+                    if result == .sent {
+                        viewModel.isMailSent = true
+                    }
+                    showingSuccessMessage = viewModel.isMailSent
+                }
+                .onDisappear {
+                    if viewModel.isMailSent {
+                        showingSuccessMessage = true
+                    }
+                }
+            }
+        })
+        .alert(isPresented: $showingSuccessMessage) {
+            Alert(
+                title: Text("Correo Enviado"),
+                message: Text("El correo ha sido enviado con éxito."),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+        // Agregar la alerta si no se puede enviar correos
+        .alert(isPresented: $showingMailError) {
+            Alert(
+                title: Text("Error"),
+                message: Text("Este dispositivo no puede enviar correos. Por favor, configure una cuenta de correo."),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
 }
 
@@ -28,17 +82,15 @@ struct MapViewContainer: UIViewRepresentable {
         locationOptions.puckType = .puck2D()
         mapView.location.options = locationOptions
 
-        // Seguimiento la ubicación del usuario
+        // Seguimiento de la ubicación del usuario
         let followPuckViewportState = mapView.viewport.makeFollowPuckViewportState()
         mapView.viewport.transition(to: followPuckViewportState)
 
         return mapView
     }
 
-    func updateUIView(_ uiView: MapView, context: Context) {
-    }
+    func updateUIView(_ uiView: MapView, context: Context) {}
 
-    // Coordinator para manejar las delegaciones de CLLocationManager
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
@@ -50,14 +102,13 @@ struct MapViewContainer: UIViewRepresentable {
             self.parent = parent
         }
 
-        // Manejo de cambios en el estado de los permisos de localización
         func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
             switch status {
             case .authorizedWhenInUse, .authorizedAlways:
                 print("Permisos de localización concedidos")
                 manager.startUpdatingLocation()
             case .denied, .restricted:
-                print("Permisos de localización denegados")
+                print("Permisos de localización denegados. Por favor, habilite los permisos en Configuración.")
             case .notDetermined:
                 print("Permisos de localización no determinados")
             @unknown default:
@@ -74,7 +125,6 @@ struct MapViewContainer: UIViewRepresentable {
             }
         }
 
-        // Actualizaciones de la ubicación del usuario
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
             guard let location = locations.last else { return }
             print("Ubicación actualizada: \(location.coordinate)")
