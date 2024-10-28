@@ -122,7 +122,7 @@ class ActividadesAPIService {
 
         var extraParams = parameters
         if actividad.tipo == "Rodada" {
-            extraParams["ruta"] = "66f59a62e3e99679a7509cf6"
+            extraParams["ruta"] = actividad.ruta
         }
 
         let taskRequest = session.upload(multipartFormData: { multipartFormData in

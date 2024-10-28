@@ -18,7 +18,6 @@ class TalleresViewModel: ObservableObject {
     
     init(getTalleresUseCase: GetTalleresUseCase = GetTalleresUseCase(repository: ActividadesRepository())) {
         self.getTalleresUseCase = getTalleresUseCase
-        fetchTalleres()
     }
     
     func fetchTalleres() {

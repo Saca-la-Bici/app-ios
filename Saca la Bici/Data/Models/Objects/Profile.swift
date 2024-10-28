@@ -20,4 +20,5 @@ struct Profile: Codable {
     let tiempoEnRecorrido: Double
     let rodadasCompletadas: Int
     let firebaseUID: String
+    let kilometrosMes: Int
 }

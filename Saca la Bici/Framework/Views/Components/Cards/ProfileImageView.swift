@@ -22,6 +22,7 @@ struct ProfileImageView: View {
                 case .success(let image):
                     image
                         .resizable()
+                        .aspectRatio(contentMode: .fill)
                         .frame(width: 80, height: 80)
                         .clipShape(Circle())
                         .overlay(Circle().stroke(Color.black, lineWidth: 1))

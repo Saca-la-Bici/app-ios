@@ -224,6 +224,8 @@ struct ProfileView: View {
                     ConsultarUsuariosView(path: $path)
                 case .editProfile:
                     ModificarPerfilView(path: $path)
+                case .informacion:
+                    InformacionView(path: $path)
                 default:
                     EmptyView()
                 }

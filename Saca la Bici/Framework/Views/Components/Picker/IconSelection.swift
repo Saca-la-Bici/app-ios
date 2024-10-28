@@ -57,7 +57,7 @@ struct IconSelectionView: View {
                     }
                     .buttonStyle(PlainButtonStyle())
             }
-            .padding(.bottom, 35)
+            .padding(.bottom, 15)
             
             // ZStack para las vistas con animación de transición
             ZStack {
@@ -67,6 +67,7 @@ struct IconSelectionView: View {
                         Spacer()
                     }
                     .transition(.scale)
+                    
                 } else if selectedIcon == 1 {
                     VStack {
                         MedalsView()
@@ -74,13 +75,12 @@ struct IconSelectionView: View {
                     }
                     .transition(.scale)
                 } else if selectedIcon == 2 {
-                    Text("Vista de mundo")
-                        .font(.title)
-                        .transition(.scale)
-                    Spacer()
+                    VStack {
+                        ConsultarEstadisticasView()
+                        Spacer()
+                    }
                 }
             }
-
             Spacer()
         }
         .padding()

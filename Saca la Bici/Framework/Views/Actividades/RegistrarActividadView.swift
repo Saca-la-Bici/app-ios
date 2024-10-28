@@ -68,15 +68,17 @@ struct RegistrarActividadView: View {
                         text: "Siguiente",
                         backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
                         action: {
-                            actividadViewModel.validarDatosBase()
+                            Task {
+                                await actividadViewModel.validarDatosBase()
 
-                            if actividadViewModel.showAlert != true {
-                                if tipoActividad == "Rodada" {
-                                    path.append(.rutas)
-                                } else if tipoActividad == "Evento" {
-                                    path.append(.descripcionEvento)
-                                } else if tipoActividad == "Taller" {
-                                    path.append(.descripcionTaller)
+                                if actividadViewModel.showAlert != true {
+                                    if tipoActividad == "Rodada" {
+                                        path.append(.rutas)
+                                    } else if tipoActividad == "Evento" {
+                                        path.append(.descripcionEvento)
+                                    } else if tipoActividad == "Taller" {
+                                        path.append(.descripcionTaller)
+                                    }
                                 }
                             }
                         },

@@ -14,6 +14,7 @@ enum ConfigurationPaths: Hashable {
     case password
     case ayuda
     case informacion
+    case comoUsarApp
     case faqs
     case asignacionRoles
     case desactivarUsuarios

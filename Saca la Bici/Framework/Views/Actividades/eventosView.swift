@@ -17,9 +17,10 @@ struct EventosView: View {
                 Spacer().frame(height: 5)
                 if viewModel.isLoading {
                     ProgressView()
-                } else if let errorMessage = viewModel.errorMessage {
-                    Text("Error: \(errorMessage)")
-                        .foregroundColor(.red)
+                } else if viewModel.eventos.isEmpty {
+                    Text("Actualmente no hay eventos disponibles, pero vuelve más tarde para ver nuevas actividades.")
+                        .foregroundColor(.gray)
+                        .font(.headline)
                         .padding()
                 } else {
                     ForEach(viewModel.eventos) { evento in
@@ -40,6 +41,10 @@ struct EventosView: View {
                 Spacer().frame(height: 5)
             }
             .padding(.horizontal)
+        }
+        .onAppear {
+            viewModel.isLoading = true
+            viewModel.fetchEventos()
         }
     }
 }

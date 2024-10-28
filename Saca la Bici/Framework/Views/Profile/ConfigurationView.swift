@@ -43,7 +43,7 @@ struct ConfigurationView: View {
                             BotonSection(icono: "figure.outdoor.cycle", titulo: "Cómo usar la app",
                                          button: true,
                                          path: $path,
-                                         nextPath: .faqs)
+                                         nextPath: .comoUsarApp)
                             
                             if userSessionManager.puedeModificarRol() {
                                 BotonSection(icono: "person.badge.plus",

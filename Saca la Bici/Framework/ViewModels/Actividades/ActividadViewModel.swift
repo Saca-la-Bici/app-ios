@@ -28,7 +28,9 @@ class ActividadViewModel: ObservableObject {
     @Published var selectedTimeDuration: TimeInterval = 150 * 60
 
     @Published var messageAlert = ""
+    @Published var tituloAlertaRuta = ""
     @Published var showAlert = false
+    @Published var reloadRutas = false
     @Published var showAlertDescripcion = false
     @Published var tipoActividad: String = ""
     @Published var navTitulo: String = ""
@@ -37,12 +39,33 @@ class ActividadViewModel: ObservableObject {
     @Published var eventos: [ActividadInscrita] = []
     @Published var errorMessage: String?
     
+    @Published var rutas: [Ruta] = []
+    @Published var selectedRuta: Ruta?
+    
+    @Published var isLoading: Bool = false
+    
     enum ActiveAlert: Identifiable {
         case error
         case success
 
         var id: Int {
             hashValue
+        }
+    }
+    
+    @Published var alertTypeRuta: AlertTypeRuta?
+    
+    enum AlertTypeRuta: Identifiable {
+        case delete(ruta: Ruta)
+        case validation
+        
+        var id: UUID {
+            switch self {
+            case .delete:
+                return UUID()
+            case .validation:
+                return UUID() 
+            }
         }
     }
     
@@ -87,10 +110,35 @@ class ActividadViewModel: ObservableObject {
     }
 
     @MainActor
-    func validarDatosBase() {
+    func validarDatosBase() async {
         if self.tituloActividad.trimmingCharacters(in: .whitespaces).isEmpty || self.ubicacionActividad.trimmingCharacters(in: .whitespaces).isEmpty {
             self.showAlert = true
             self.messageAlert = "Alguno de los datos está vacío. Por favor, rellene todos los campos."
+            return
+        }
+        
+        self.isLoading = true
+        
+        let rutas = await registrarActividadRequirement.getRutas()
+        
+        if rutas == nil {
+            self.showAlert = true
+            self.messageAlert = "Hubo un error al obtener las rutas. Por favor, intente más tarde."
+            return
+        } else {
+            self.rutas = rutas?.rutas ?? []
+        }
+        
+        self.isLoading = false
+    }
+    
+    @MainActor
+    func validarRuta() {
+        if self.selectedRuta == nil {
+            self.showAlert = true
+            self.alertTypeRuta = .validation
+            self.messageAlert = "No seleccionó una ruta. Por favor, seleccione una ruta."
+            self.tituloAlertaRuta = "Oops!"
             return
         }
     }
@@ -138,7 +186,8 @@ class ActividadViewModel: ObservableObject {
 
         let datosRegistrar = DatosActividad(titulo: self.tituloActividad, fecha: fechaString, hora: horaString,
                                             duracion: duracionString, descripcion: self.descripcionActividad,
-                                            imagen: self.selectedImageData, tipo: self.tipoActividad, ubicacion: self.ubicacionActividad)
+                                            imagen: self.selectedImageData, tipo: self.tipoActividad,
+                                            ubicacion: self.ubicacionActividad, ruta: self.selectedRuta?._id)
 
         do {
             let responseStatus = try await registrarActividadRequirement.registrarActividad(actividad: datosRegistrar)
@@ -177,6 +226,25 @@ class ActividadViewModel: ObservableObject {
             throw error
         }
         
+    }
+    
+    @MainActor
+    func eliminarActividad(IDRuta: String) async {
+        let responseStatus = await registrarActividadRequirement.eliminarRuta(IDRuta: IDRuta)
+        
+        if responseStatus == 200 {
+            self.showAlert = true
+            self.alertTypeRuta = .validation
+            self.reloadRutas = true
+            self.messageAlert = "La ruta se eliminó correctamente."
+            self.tituloAlertaRuta = "¡Éxito!"
+        } else if responseStatus == 500 {
+            self.showAlert = true
+            self.alertTypeRuta = .validation
+            self.messageAlert = "Hubo un error al eliminar la ruta. Por favor intente de nuevo."
+            self.tituloAlertaRuta = "Oops!"
+            return
+        }
     }
 
 }

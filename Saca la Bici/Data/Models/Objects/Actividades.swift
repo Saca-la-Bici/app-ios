@@ -72,25 +72,6 @@ struct Actividad: Codable, Identifiable {
     var id: String { _id }
 }
 
-struct Ruta: Codable {
-    let _id: String
-    let titulo: String
-    let distancia: String
-    let tiempo: String
-    let nivel: String
-    let coordenadas: [Coordenada]
-    let __v: Int
-}
-
-struct Coordenada: Codable, Identifiable {
-    let latitud: Double
-    let longitud: Double
-    let tipo: String
-    let _id: String
-    
-    var id: String { _id }
-}
-
 struct DatosActividad: Codable {
     let titulo: String
     let fecha: String
@@ -100,6 +81,7 @@ struct DatosActividad: Codable {
     let imagen: Data?
     let tipo: String
     let ubicacion: String
+    let ruta: String?
 }
 
 struct ActividadIndividualResponse: Codable {

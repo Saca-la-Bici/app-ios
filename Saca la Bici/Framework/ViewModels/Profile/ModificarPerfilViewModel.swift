@@ -10,7 +10,8 @@ class ModificarPerfilViewModel: ObservableObject {
     private var resultado: String = ""
     
     // Función que se encargará de validar los datos antes de enviarlos
-    func validarDatos(nombre: String, username: String, tipoSangre: String, numeroEmergencia: String) -> Bool {
+    @MainActor
+    func validarDatos(nombre: String, username: String, tipoSangre: String, numeroEmergencia: String, usernameActual: String) async -> Bool {
         // Validar que el nombre no esté vacío y solo contenga texto
         if nombre.isEmpty || !isOnlyText(nombre) {
             self.messageAlert = "El nombre ingresado no es válido."
@@ -34,16 +35,28 @@ class ModificarPerfilViewModel: ObservableObject {
             self.showAlert = true
             return false
         }
+        
+        if username != usernameActual {
+            let usernameExistente = await modificarPerfilRequirement.verificarUsernameExistente(username: username)
+            
+            if usernameExistente == true {
+                self.messageAlert = "Este nombre de usuario ya está tomado. Por favor usa otro."
+                self.alertTitle = "Oops!"
+                self.showAlert = true
+                return false
+            }
+        }
 
         // Si todas las validaciones pasan
         return true
     }
     
     @MainActor
-    func modificarPerfil(nombre: String, username: String, tipoSangre: String, numeroEmergencia: String, imagen: Data?) async -> String {
+    func modificarPerfil(nombre: String, username: String, tipoSangre: String, numeroEmergencia: String, imagen: Data?, usernameExistente: String) async -> String {
         
         // Validar los datos antes de proceder
-        guard validarDatos(nombre: nombre, username: username, tipoSangre: tipoSangre, numeroEmergencia: numeroEmergencia) else {
+        guard await validarDatos(nombre: nombre, username: username, tipoSangre: tipoSangre,
+                                 numeroEmergencia: numeroEmergencia, usernameActual: usernameExistente) else {
             return messageAlert // Ahora se retorna el mensaje personalizado
         }
 

@@ -45,24 +45,26 @@ struct ActividadIndividualView: View {
                         .frame(height: 300)
                         .padding(.horizontal)
                     }
-
-                    HStack {
-                        Button(action: {
-                            // Acción para Materiales
-                        }, label: {
-                            Text("Materiales")
-                                .padding(.leading, 15)
-                                .bold()
-                                .font(.title2)
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                                .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
-                                .scaleEffect(1.5)
-                                .padding(.trailing, 25)
-                        })
-                        .buttonStyle(PlainButtonStyle())
+                    
+                    if actividadIndividualViewModel.tipo == "Rodada" {
+                        HStack {
+                            Button(action: {
+                                path.append(.decalogo)
+                            }, label: {
+                                Text("Decálogo del Ciclista")
+                                    .padding(.leading, 15)
+                                    .bold()
+                                    .font(.title2)
+                                Spacer()
+                                Image(systemName: "chevron.forward")
+                                    .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
+                                    .scaleEffect(1.5)
+                                    .padding(.trailing, 25)
+                            })
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                        .padding()
                     }
-                    .padding()
 
                     ActividadInfoView(
                         fecha: actividadIndividualViewModel.fecha,

@@ -18,7 +18,6 @@ class RodadasViewModel: ObservableObject {
     
     init(getRodadasUseCase: GetRodadasUseCase = GetRodadasUseCase(repository: ActividadesRepository())) {
         self.getRodadasUseCase = getRodadasUseCase
-        fetchRodadas()
     }
     
     func fetchRodadas() {

@@ -17,9 +17,10 @@ struct RodadasView: View {
                 Spacer().frame(height: 5)
                 if viewModel.isLoading {
                     ProgressView()
-                } else if let errorMessage = viewModel.errorMessage {
-                    Text("Error: \(errorMessage)")
-                        .foregroundColor(.red)
+                } else if viewModel.rodadas.isEmpty {
+                    Text("Actualmente no hay rodadas disponibles, pero vuelve más tarde para ver nuevas actividades.")
+                        .foregroundColor(.gray)
+                        .font(.headline)
                         .padding()
                 } else {
                     ForEach(viewModel.rodadas) { rodada in
@@ -42,6 +43,10 @@ struct RodadasView: View {
                 Spacer().frame(height: 5)
             }
             .padding(.horizontal)
+        }
+        .onAppear {
+            viewModel.isLoading = true
+            viewModel.fetchRodadas()
         }
     }
 }

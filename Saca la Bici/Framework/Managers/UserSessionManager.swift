@@ -79,4 +79,8 @@ class UserSessionManager: ObservableObject {
     func puedeVerificarAsistencia() -> Bool {
         return tienePermiso("Verificar asistencia")
     }
+    
+    func puedeEliminarRuta() -> Bool {
+        return tienePermiso("Eliminar ruta")
+    }
 }
