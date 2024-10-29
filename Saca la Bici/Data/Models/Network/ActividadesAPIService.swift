@@ -364,10 +364,6 @@ class ActividadesAPIService {
 
             return actividadesResponse.actividadesInscritas
             
-        } catch let decodingError as DecodingError {
-            // Manejo de errores específicos de decodificación
-            print("Error de decodificación: \(decodingError.localizedDescription)")
-            throw decodingError
         } catch {
             // Manejo de otros errores
             print("Error al obtener actividades: \(error.localizedDescription)")

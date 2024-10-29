@@ -141,7 +141,6 @@ class ActividadesRepository: ActividadesAPIProtocol {
             return try await actividadesAPIService.getActividades(url: URL(string: "\(Api.base)\(Api.Routes.profile)/consultarActividadesInscritas")!)
             
         } catch {
-            print("JAJAJA volvi a fallar, mejor suerte para la proxima")
             throw error
         }
     }

@@ -42,8 +42,6 @@ class ActividadViewModel: ObservableObject {
     @Published var rutas: [Ruta] = []
     @Published var selectedRuta: Ruta?
     
-    @Published var isLoading: Bool = false
-    
     enum ActiveAlert: Identifiable {
         case error
         case success

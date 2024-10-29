@@ -12,10 +12,6 @@ struct EventView: View {
 
                 if viewModel.isLoading {
                     ProgressView()
-                } else if let errorMessage = viewModel.errorMessage {
-                    Text("Error: \(errorMessage)")
-                        .foregroundColor(.red)
-                        .padding()
                 } else if viewModel.eventos.allSatisfy({ inscripcion in
                     inscripcion.informacion.allSatisfy { !$0.estado }
                 }) {
@@ -50,7 +46,6 @@ struct EventView: View {
                                     attendees: item.actividad.personasInscritas
                                 )
                             }
-                            // AQUI VA EL FOR
                             
                         }
                         .padding()
@@ -60,8 +55,9 @@ struct EventView: View {
             .onAppear {
                 Task {
                     do {
+                        showErrorAlert = false
                         try await viewModel.getActividades()
-                        print(viewModel.eventos)
+                        
                     } catch {
                         showErrorAlert = true
                     }
@@ -71,7 +67,7 @@ struct EventView: View {
             .alert(isPresented: $showErrorAlert) {
                 Alert(
                     title: Text("Error"),
-                    message: Text(errorMessage),
+                    message: Text("Error al conseguir las actividades. Por favor, intenta más tarde"),
                     dismissButton: .default(Text("OK"))
                 )
             }
