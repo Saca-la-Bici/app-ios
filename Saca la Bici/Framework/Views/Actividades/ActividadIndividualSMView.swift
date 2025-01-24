@@ -11,14 +11,13 @@ import FirebaseInAppMessaging
 
 struct ActividadIndividualSMView: View {
     @StateObject var actividadIndividualViewModel = ActividadIndividualViewModel()
+    @Binding var path: [ConfigurationPaths]
     var id: String
 
     @ObservedObject private var userSessionManager = UserSessionManager.shared
 
     @State private var safariURL: URL?
     @State private var showVerificarAsistenciaSheet = false
-
-    @Environment(\.presentationMode) var presentationMode  // Para manejar el retroceso manualmente
 
     var body: some View {
         ZStack {
@@ -45,25 +44,25 @@ struct ActividadIndividualSMView: View {
                             .padding(.horizontal)
                         }
 
-                        HStack {
-                            Button(action: {
-                                // Acción para Materiales
-                                // Por ejemplo, navegar a una vista de materiales o abrir una URL
-                                // Ejemplo: safariURL = URL(string: "https://materiales.example.com")
-                            }, label: {
-                                Text("Materiales")
-                                    .padding(.leading, 15)
-                                    .bold()
-                                    .font(.title2)
-                                Spacer()
-                                Image(systemName: "chevron.forward")
-                                    .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
-                                    .scaleEffect(1.5)
-                                    .padding(.trailing, 25)
-                            })
-                            .buttonStyle(PlainButtonStyle())
+                        if actividadIndividualViewModel.tipo == "Rodada" {
+                            HStack {
+                                Button(action: {
+                                    path.append(.decalogo)
+                                }, label: {
+                                    Text("Decálogo del Ciclista")
+                                        .padding(.leading, 15)
+                                        .bold()
+                                        .font(.title2)
+                                    Spacer()
+                                    Image(systemName: "chevron.forward")
+                                        .foregroundColor(Color(red: 193.0 / 255.0, green: 182.0 / 255.0, blue: 3.0 / 255.0))
+                                        .scaleEffect(1.5)
+                                        .padding(.trailing, 25)
+                                })
+                                .buttonStyle(PlainButtonStyle())
+                            }
+                            .padding()
                         }
-                        .padding()
 
                         ActividadInfoView(
                             fecha: actividadIndividualViewModel.fecha,
@@ -235,7 +234,7 @@ struct ActividadIndividualSMView: View {
                     title: Text("Oops!"),
                     message: Text(actividadIndividualViewModel.messageAlert),
                     dismissButton: .default(Text("Aceptar")) {
-                        presentationMode.wrappedValue.dismiss()
+                        path.removeLast()
                     }
                 )
             case .none:

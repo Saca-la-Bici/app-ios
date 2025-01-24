@@ -77,6 +77,7 @@ class SessionManager: ObservableObject {
         }
     }
     
+    @MainActor
     func checkProfileCompleteness() {
         self.isLoading = true
         Task {

@@ -22,8 +22,7 @@ struct ActivityCardSMView: View {
     
     let colorManager = ColorManager()
     
-    // Variable de estado para controlar la navegación
-    @State private var isActive = false
+    @Binding var path: [ConfigurationPaths]
     
     var body: some View {
         ZStack {
@@ -34,9 +33,9 @@ struct ActivityCardSMView: View {
                     Text(activityTitle)
                         .font(.headline)
                         .foregroundColor(.primary)
-                    
+                        
                     Spacer()
-                    
+                        
                     if let level = level {
                         Text(level)
                             .font(.caption)
@@ -46,7 +45,7 @@ struct ActivityCardSMView: View {
                             )
                             .cornerRadius(8)
                     }
-                    
+                        
                     if let attendees = attendees {
                         HStack(spacing: 4) {
                             Image(systemName: "person.2")
@@ -55,23 +54,23 @@ struct ActivityCardSMView: View {
                         }
                     }
                 }
-                
+                    
                 if let date = date {
                     infoRow(title: "Fecha", value: date)
                 }
-                
+                    
                 if let time = time {
                     infoRow(title: "Hora", value: time)
                 }
-                
+                    
                 if let duration = duration {
                     infoRow(title: "Duración", value: duration)
                 }
-                
+                    
                 if let location = location {
                     infoRow(title: "Ubicación", value: location)
                 }
-                
+                    
             }
             .padding()
             .background(Color(UIColor.systemBackground))
@@ -82,17 +81,7 @@ struct ActivityCardSMView: View {
             )
             .shadow(radius: 5)
             .onTapGesture {
-                // Activar la navegación al tocar la tarjeta
-                isActive = true
-            }
-            
-            // NavigationLink oculto
-            NavigationStack {
-                // Resto de tu vista
-                EmptyView() // Para ocultar el link
-                    .navigationDestination(isPresented: $isActive) {
-                        ActividadIndividualSMView(id: id)
-                    }
+                path.append(.detalle(id: id))
             }
         }
     }
