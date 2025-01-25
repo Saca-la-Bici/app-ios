@@ -179,14 +179,26 @@ struct ActividadIndividualView: View {
                     }
                     
                     if actividadIndividualViewModel.usuarioVerificado == true {
-                        HStack {
-                            Image(systemName: "info.circle")
-                                .font(.system(size: 22))
-                                .foregroundColor(ColorManager.shared.colorFromHex("#7DA68D"))
+                        VStack {
+                            HStack {
+                                Image(systemName: "info.circle")
+                                    .font(.system(size: 22))
+                                    .foregroundColor(ColorManager.shared.colorFromHex("#7DA68D"))
 
-                            Text("¡Ya verificaste tu asistencia para esta rodada!")
-                                .foregroundColor(.primary)
-                                .font(.system(size: 18, weight: .bold))
+                                Text("¡Ya verificaste tu asistencia para esta rodada!")
+                                    .foregroundColor(.primary)
+                                    .font(.system(size: 18, weight: .bold))
+                            }
+                            
+                            if userSessionManager.puedeVerificarAsistencia() {
+                                HStack {
+                                    Text("Código de Verificación: ")
+                                        .font(.system(size: 16)) // Tamaño normal para el texto
+                                    Text(actividadIndividualViewModel.codigoAsistencia)
+                                        .font(.system(size: 34, weight: .bold)) // Tamaño grande y negrita para el número
+                                }
+                                .padding(.vertical, 20) // Espaciado vertical
+                            }
                             
                             Spacer()
                         }
