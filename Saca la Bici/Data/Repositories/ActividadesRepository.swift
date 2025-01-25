@@ -131,6 +131,35 @@ class ActividadesRepository: ActividadesAPIProtocol {
             url: URL(string: "\(Api.base)\(Api.Routes.rodadas)/verificarAsistencia")!, IDRodada: IDRodada, codigo: codigo)
     }
     
+    func modificarActividad(id: String, datosActividad: ModificarActividadModel) async throws -> ActionResponse? {
+        
+        var tipoURL = "/"
+        
+        switch datosActividad.tipo {
+        case "Rodada":
+            tipoURL += "rodada"
+        case "Evento":
+            tipoURL += "evento"
+        case "Taller":
+            tipoURL += "taller"
+        default:
+            tipoURL += ""
+        }
+        
+        guard let url = URL(string: "\(Api.base)\(Api.Routes.actividades)/modificar\(tipoURL)?id=\(id)") else {
+            throw URLError(.badURL)
+        }
+        
+        print("URL: \(url)")
+        
+        return try await actividadesAPIService.modificarActividad(url: url, id: id, datosActividad: datosActividad)
+    }
+    
+    func eliminarActividad(id: String, tipo: String) async throws -> EliminarActividadResponse {
+        let url = URL(string: "\(Api.base)\(Api.Routes.actividades)/eliminar")!
+        return try await actividadesAPIService.eliminarActividad(url: url, id: id, tipo: tipo)
+    }
+    
     func getActividades() async throws -> [ActividadInscrita] {
         do {
             // Construir la URL base y la ruta de actividades

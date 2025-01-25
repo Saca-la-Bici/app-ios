@@ -9,21 +9,24 @@ import SwiftUI
 
 struct RodadasView: View {
     @Binding var path: [ActivitiesPaths]
-    @StateObject private var viewModel = RodadasViewModel()
+    @ObservedObject var actividadViewModel = ActividadViewModel()
+    @ObservedObject var rodadasViewModel = RodadasViewModel()
+    @ObservedObject var eventosViewModel = EventosViewModel()
+    @ObservedObject var talleresViewModel = TalleresViewModel()
     
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
                 Spacer().frame(height: 5)
-                if viewModel.isLoading {
+                if rodadasViewModel.isLoading {
                     ProgressView()
-                } else if viewModel.rodadas.isEmpty {
+                } else if rodadasViewModel.rodadas.isEmpty {
                     Text("Actualmente no hay rodadas disponibles, pero vuelve más tarde para ver nuevas actividades.")
                         .foregroundColor(.gray)
                         .font(.headline)
                         .padding()
                 } else {
-                    ForEach(viewModel.rodadas) { rodada in
+                    ForEach(rodadasViewModel.rodadas) { rodada in
                         ActivityCardView(
                             path: $path,
                             id: rodada.id,
@@ -35,7 +38,11 @@ struct RodadasView: View {
                             duration: rodada.actividad.duracion,
                             imagen: rodada.actividad.imagen,
                             location: rodada.actividad.ubicacion,
-                            attendees: rodada.actividad.personasInscritas
+                            attendees: rodada.actividad.personasInscritas,
+                            actividadViewModel: actividadViewModel,
+                            rodadasViewModel: rodadasViewModel,
+                            talleresViewModel: talleresViewModel,
+                            eventosViewModel: eventosViewModel
                         )
                     }
                 }
@@ -45,8 +52,8 @@ struct RodadasView: View {
             .padding(.horizontal)
         }
         .onAppear {
-            viewModel.isLoading = true
-            viewModel.fetchRodadas()
+            rodadasViewModel.isLoading = true
+            rodadasViewModel.fetchRodadas()
         }
     }
 }
