@@ -24,9 +24,21 @@ struct EventView: View {
                     VStack(spacing: 16) {
                             
                         var actividadesActivas: [(actividad: Actividad, actividadInscritaId: String, ruta: Ruta?)] {
-                            viewModel.eventos.flatMap { actividadInscrita in
+                            let calendar = Calendar.current
+                            let todayStart = calendar.startOfDay(for: Date())
+
+                            return viewModel.eventos.flatMap { actividadInscrita in
                                 actividadInscrita.informacion
-                                    .filter { $0.estado }
+                                    .filter { actividadFiltrada in
+                                        let fechaString = actividadFiltrada.fecha
+                                            
+                                        guard let date = FechaManager.shared.parseISODate(fechaString) else {
+                                            return false
+                                        }
+                                        
+                                        let activityStartOfDay = calendar.startOfDay(for: date)
+                                        return actividadFiltrada.estado && activityStartOfDay >= todayStart
+                                    }
                                     .map { actividadFiltrada in
                                         (
                                             actividad: actividadFiltrada,
@@ -39,7 +51,7 @@ struct EventView: View {
 
                         ForEach(actividadesActivas, id: \.actividad.id) { item in
                             ActivityCardSMView(
-                                id: item.actividadInscritaId, 
+                                id: item.actividadInscritaId,
                                 activityTitle: item.actividad.titulo,
                                 activityType: item.actividad.tipo,
                                 level: item.ruta?.nivel ?? nil,
