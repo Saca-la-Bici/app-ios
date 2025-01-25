@@ -162,11 +162,6 @@ class ActividadesRepository: ActividadesAPIProtocol {
     
     func getActividades() async throws -> [ActividadInscrita] {
         do {
-            // Construir la URL base y la ruta de actividades
-//            guard let url = URL(string: "\(Api.base)\(Api.Routes.profile)/consultarActividadesInscritas") else {
-//                throw URLError(.badURL)
-//            }
-            
             return try await actividadesAPIService.getActividades(url: URL(string: "\(Api.base)\(Api.Routes.profile)/consultarActividadesInscritas")!)
             
         } catch {

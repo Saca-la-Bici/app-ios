@@ -23,20 +23,26 @@ struct EventView: View {
                 ScrollView {
                     VStack(spacing: 16) {
                             
-                        var actividadesActivas: [(actividad: Actividad, actividadInscritaId: String)] {
+                        var actividadesActivas: [(actividad: Actividad, actividadInscritaId: String, ruta: Ruta?)] {
                             viewModel.eventos.flatMap { actividadInscrita in
-                                actividadInscrita.informacion.filter { $0.estado }.map {
-                                    (actividad: $0, actividadInscritaId: actividadInscrita._id)
-                                }
+                                actividadInscrita.informacion
+                                    .filter { $0.estado }
+                                    .map { actividadFiltrada in
+                                        (
+                                            actividad: actividadFiltrada,
+                                            actividadInscritaId: actividadInscrita._id,
+                                            ruta: actividadInscrita.ruta
+                                        )
+                                    }
                             }
                         }
 
                         ForEach(actividadesActivas, id: \.actividad.id) { item in
                             ActivityCardSMView(
-                                id: item.actividadInscritaId,  // Aquí pasamos el _id de ActividadInscrita
+                                id: item.actividadInscritaId, 
                                 activityTitle: item.actividad.titulo,
                                 activityType: item.actividad.tipo,
-                                level: nil, // Puedes ajustar esto si tienes niveles
+                                level: item.ruta?.nivel ?? nil,
                                 date: FechaManager.shared.formatDate(item.actividad.fecha),
                                 time: item.actividad.hora,
                                 duration: item.actividad.duracion,

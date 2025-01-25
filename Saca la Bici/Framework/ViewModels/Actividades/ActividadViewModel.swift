@@ -258,7 +258,6 @@ class ActividadViewModel: ObservableObject {
     
     @MainActor
     func getActividades() async throws {
-        
         do {
             eventos = try await registrarActividadRequirement.getActividades()
         } catch {
