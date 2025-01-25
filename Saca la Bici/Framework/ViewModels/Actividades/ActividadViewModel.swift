@@ -54,7 +54,6 @@ class ActividadViewModel: ObservableObject {
     
     // Modificar vista
     @Published var isEditing: Bool = false
-    @Published var isLoading: Bool = false
     @Published var hasAppeared: Bool = false
     @Published var isButtonDisabled = false
     
