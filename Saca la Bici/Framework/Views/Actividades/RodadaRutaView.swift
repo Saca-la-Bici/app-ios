@@ -45,7 +45,7 @@ struct RodadaRutaView: View {
                             }
                         }
                         
-                        Spacer().frame(height: 75)
+                        Spacer().frame(height: 80)
                     }
                     .padding()
                 }

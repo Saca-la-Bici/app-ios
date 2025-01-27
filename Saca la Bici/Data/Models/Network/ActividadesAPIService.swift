@@ -444,4 +444,36 @@ class ActividadesAPIService {
         }
         
     }
+
+    func getActividades(url: URL) async throws -> [ActividadInscrita] {
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
+            throw NSError(domain: "Token Error", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
+
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+
+        do {
+            // Realizamos la solicitud HTTP y obtenemos el 'Data' en lugar de decodificar automáticamente
+            let response = try await AF.request(url, method: .get, headers: headers)
+                .validate()
+                .serializingData()
+                .value
+
+            // Intentamos decodificar manualmente usando JSONDecoder para mayor control
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase  // Si las claves tienen guiones bajos en el JSON
+            let actividadesResponse = try decoder.decode(ActividadesApiResponse.self, from: response)
+
+            return actividadesResponse.actividadesInscritas
+            
+        } catch {
+            // Manejo de otros errores
+            print("Error al obtener actividades: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
 }

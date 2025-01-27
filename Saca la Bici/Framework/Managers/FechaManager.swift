@@ -13,6 +13,22 @@ class FechaManager {
     
     private init() {}
     
+    func parseISODate(_ dateString: String) -> Date? {
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            
+            if let date = formatter.date(from: dateString) {
+                return date
+            }
+            
+            formatter.formatOptions = [.withInternetDateTime]
+            if let date = formatter.date(from: dateString) {
+                return date
+            }
+            
+            return nil
+        }
+    
     func formatDate(_ dateString: String) -> String {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]

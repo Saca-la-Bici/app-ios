@@ -159,4 +159,13 @@ class ActividadesRepository: ActividadesAPIProtocol {
         let url = URL(string: "\(Api.base)\(Api.Routes.actividades)/eliminar")!
         return try await actividadesAPIService.eliminarActividad(url: url, id: id, tipo: tipo)
     }
+    
+    func getActividades() async throws -> [ActividadInscrita] {
+        do {
+            return try await actividadesAPIService.getActividades(url: URL(string: "\(Api.base)\(Api.Routes.profile)/consultarActividadesInscritas")!)
+            
+        } catch {
+            throw error
+        }
+    }
 }

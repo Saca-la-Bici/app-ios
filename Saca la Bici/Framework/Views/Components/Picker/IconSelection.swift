@@ -10,6 +10,8 @@ import SwiftUI
 struct IconSelectionView: View {
     @State private var selectedIcon = 1
     @State private var offset: CGSize = .zero
+    
+    @Binding var path: [ConfigurationPaths]
 
     var body: some View {
         VStack {
@@ -63,7 +65,7 @@ struct IconSelectionView: View {
             ZStack {
                 if selectedIcon == 0 {
                     VStack {
-                        EventView()
+                        EventView(path: $path)
                         Spacer()
                     }
                     .transition(.scale)

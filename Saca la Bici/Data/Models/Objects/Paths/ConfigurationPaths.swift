@@ -22,4 +22,6 @@ enum ConfigurationPaths: Hashable {
     case addFAQ
     case updateFAQ (faq: FAQ)
     case editProfile
+    case detalle(id: String)
+    case decalogo
 }

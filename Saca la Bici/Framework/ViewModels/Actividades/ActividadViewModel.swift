@@ -45,13 +45,15 @@ class ActividadViewModel: ObservableObject {
     @Published var tipoActividad: String = ""
     @Published var navTitulo: String = ""
     @Published var guardarBoton: String = ""
+    @Published var isLoading: Bool = false
+    @Published var eventos: [ActividadInscrita] = []
+    @Published var errorMessage: String?
     
     @Published var rutas: [Ruta] = []
     @Published var selectedRuta: Ruta?
     
     // Modificar vista
     @Published var isEditing: Bool = false
-    @Published var isLoading: Bool = false
     @Published var hasAppeared: Bool = false
     @Published var isButtonDisabled = false
     
@@ -252,6 +254,16 @@ class ActividadViewModel: ObservableObject {
             self.messageAlert = "Hubo un error al registrar la actividad. Inténtelo de nuevo más tarde."
             self.activeAlert = .error
         }
+    }
+    
+    @MainActor
+    func getActividades() async throws {
+        do {
+            eventos = try await registrarActividadRequirement.getActividades()
+        } catch {
+            throw error
+        }
+        
     }
     
     @MainActor

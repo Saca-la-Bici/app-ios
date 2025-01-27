@@ -181,7 +181,7 @@ struct ProfileView: View {
                         .padding(.horizontal, 100)
                         .padding(.bottom, 10)
 
-                        IconSelectionView()
+                        IconSelectionView(path: $path)
                     }
                 }
                 Spacer()
@@ -226,6 +226,10 @@ struct ProfileView: View {
                     ModificarPerfilView(path: $path)
                 case .informacion:
                     InformacionView(path: $path)
+                case .detalle(let id):
+                    ActividadIndividualSMView(path: $path, id: id)
+                case .decalogo:
+                    DecalogosView()
                 default:
                     EmptyView()
                 }

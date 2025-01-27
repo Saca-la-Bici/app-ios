@@ -143,3 +143,45 @@ struct ModificarActividadModel: Codable {
     let usuariosInscritos: [String]?
     let ruta: String?
 }
+
+struct Ruta2: Codable {
+    let _id: String
+    let titulo: String
+    let distancia: String
+    let tiempo: String
+    let nivel: String
+    let coordenadas: [Coordenada2]  // Asegúrate que el nombre no cause conflictos
+    let __v: Int
+}
+
+struct Coordenada2: Codable, Identifiable {
+    let latitud: Double
+    let longitud: Double
+    let tipo: String
+    let _id: String
+    
+    var id: String { _id }
+}
+
+struct ActividadesApiResponse: Codable {
+    let actividadesInscritas: [ActividadInscrita]
+    let message: String
+}
+
+struct ActividadInscrita: Codable {
+    let _id: String
+    let informacion: [Actividad]
+    let ruta: Ruta?
+    let ubicacion: [Ubicacion]?
+    let codigoAsistencia: Int?
+    let usuariosVerificados: [String]?
+}
+
+struct Ubicacion: Codable {
+    let latitud: Double
+    let longitud: Double
+}
+
+struct InformacionWrapper: Codable {
+    let informacion: [Actividad]
+}
