@@ -80,7 +80,7 @@ struct SeguridadAccesoView: View {
                                 Spacer()
                                 
                                 Button(action: {
-                                    EliminarCuentaView()
+                                    path.append(.eliminarCuenta)
                                 }, label: {
                                     Text("Eliminar cuenta")
                                         .fontWeight(.bold)

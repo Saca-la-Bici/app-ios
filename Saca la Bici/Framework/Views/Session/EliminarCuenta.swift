@@ -62,6 +62,8 @@ struct EliminarCuentaView: View {
                             )
                         } else {
                             
+                            Text("Has validado la contraseña!")
+                            
                             // ESTO ES LO QUE TENEMOS QUE CAMBIAR PARA QUE SALGA EL MENSAJE DE CONFIRMACION DE ELIMANR CUENTA
                             
                             // AQUI ACABA
