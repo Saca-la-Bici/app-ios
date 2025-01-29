@@ -39,4 +39,16 @@ class ProfileRepository {
 
     }
     
+    func eliminarCuenta() async throws -> Bool {
+        
+        let url = URL(string: "\(Api.base)\(Api.Routes.profile)/eliminar")!
+        
+        do {
+            return try await profileAPIService.eliminarCuenta(url: url)
+        } catch {
+            throw error
+        }
+
+    }
+    
 }

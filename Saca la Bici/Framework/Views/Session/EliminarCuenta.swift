@@ -12,6 +12,11 @@ struct EliminarCuentaView: View {
     
     @StateObject private var consultarPerfilPropioViewModel = ConsultarPerfilPropioViewModel()
     
+    @StateObject private var eliminarCuentaViewModel = EliminarCuentaViewModel()
+    @State private var mensajeResultado = ""
+    @State private var mostrarMensaje = false
+    @State private var mostrarConfirmacionEliminacion = false
+    
     @Binding var path: [ConfigurationPaths]
 
     var body: some View {
@@ -62,11 +67,44 @@ struct EliminarCuentaView: View {
                             )
                         } else {
                             
-                            Text("Has validado la contraseña!")
+                            Text("Has validado tu contraseña.")
+                            .multilineTextAlignment(.center)
+                            .padding()
                             
-                            // ESTO ES LO QUE TENEMOS QUE CAMBIAR PARA QUE SALGA EL MENSAJE DE CONFIRMACION DE ELIMANR CUENTA
-                            
-                            // AQUI ACABA
+                            Button(action: {
+                                mostrarConfirmacionEliminacion = true
+                            }, label: {
+                                Text("Eliminar Cuenta")
+                                    .font(.headline)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .foregroundColor(.white)
+                                    .background(Color.red)
+                                    .cornerRadius(8)
+                            })
+                            .alert("Confirmar eliminación", isPresented: $mostrarConfirmacionEliminacion) {
+                                Button("Cancelar", role: .cancel) {}
+                                Button("Eliminar", role: .destructive) {
+                                    Task {
+                                        mensajeResultado = await eliminarCuentaViewModel.eliminarCuenta()
+                                        mostrarMensaje = true
+                                    }
+                                }
+                            } message: {
+                                Text("""
+                                        Esta acción es irreversible y eliminará permanentemente tu cuenta junto con todos tus datos. 
+                                        ¿Estás seguro de que deseas continuar?
+                                        """)
+                            }
+                            .alert("Resultado", isPresented: $mostrarMensaje) {
+                                Button("Aceptar", role: .cancel) {
+                                    if mensajeResultado == "Cuenta eliminada correctamente." {
+                                        // Aquí navegas a otra vista (reemplaza con la vista que necesites)
+                                    }
+                                }
+                            } message: {
+                                Text(mensajeResultado)
+                            }
                         }
                     }
                     .padding(.horizontal, 30)
@@ -109,7 +147,7 @@ struct EliminarCuentaView: View {
                 }
             }
         }
-        .navigationTitle("Elimanar Cuenta")
+        .navigationTitle("Eliminar Cuenta")
         .onAppear {
             Task {
                 try await
