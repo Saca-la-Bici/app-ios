@@ -123,12 +123,16 @@ class SessionManager: ObservableObject {
         do {
             UserDefaults.standard.set(false, forKey: "isRegistrationComplete")
             
-            let tokenBorradoExitosamente = await borrarFCMToken()
+            let localToken = Messaging.messaging().fcmToken
             
-            if !tokenBorradoExitosamente {
-                self.messageAlert = "Hubo un error al intentar cerrar sesión. Favor de intentarlo nuevamente."
-                self.showAlert = true
-                return
+            if localToken != nil {
+                let tokenBorradoExitosamente = await borrarFCMToken()
+                
+                if !tokenBorradoExitosamente {
+                    self.messageAlert = "Hubo un error al intentar cerrar sesión. Favor de intentarlo nuevamente."
+                    self.showAlert = true
+                    return
+                }
             }
             
             try Auth.auth().signOut()
