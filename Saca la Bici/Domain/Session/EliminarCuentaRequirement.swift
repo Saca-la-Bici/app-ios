@@ -12,10 +12,6 @@ class EliminarCuentaRequirement {
     private let profileRepository = ProfileRepository()
     
     func eliminarCuenta() async throws -> Bool {
-        do {
-            return try await profileRepository.eliminarCuenta()
-        } catch {
-            throw error
-        }
+        return try await profileRepository.eliminarCuenta()
     }
 }

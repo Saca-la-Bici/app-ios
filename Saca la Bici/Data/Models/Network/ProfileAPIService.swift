@@ -125,7 +125,7 @@ class ProfileAPIService {
         ]
         
         do {
-            let response = try await session.request(url, method: .delete, headers: headers)
+            _ = try await session.request(url, method: .delete, headers: headers)
                 .validate()
                 .serializingData()
                 .value
@@ -133,7 +133,7 @@ class ProfileAPIService {
             try await eliminarCuentaFirebase()
             return true
         } catch {
-            throw error
+            return false
         }
     }
     
