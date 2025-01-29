@@ -9,7 +9,8 @@ import Foundation
 
 class EliminarCuentaViewModel: ObservableObject {
     private let eliminarCuentaRequirement = EliminarCuentaRequirement()
-
+    
+    @MainActor
     func eliminarCuenta() async -> String {
         do {
             // Llamamos a la lógica de eliminación en la capa Requirements
@@ -17,7 +18,7 @@ class EliminarCuentaViewModel: ObservableObject {
 
             // Aquí decidimos qué mensaje mostrar con base en el resultado
             if exito {
-                return "Cuenta eliminada correctamente."
+                return "¡Listo! Tu cuenta y datos han sido borrados. Lamentamos verte partir."
             } else {
                 return "No se pudo eliminar tu cuenta. Intenta de nuevo más tarde o revisa tu conexión."
             }

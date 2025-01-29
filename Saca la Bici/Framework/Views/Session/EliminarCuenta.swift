@@ -58,7 +58,8 @@ struct EliminarCuentaView: View {
                             
                             CustomButton(
                                 text: "Eliminar Cuenta",
-                                backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
+                                backgroundColor: Color(.red),
+                                foregroundColor: Color(.white),
                                 action: {
                                     Task {
                                         await restablecerContraseñaViewModel.verificarContraseña()
@@ -67,22 +68,31 @@ struct EliminarCuentaView: View {
                             )
                         } else {
                             
-                            Text("Has validado tu contraseña.")
-                            .multilineTextAlignment(.center)
-                            .padding()
+                            Text("¡Listo! Ya verificamos tu identidad")
+                                    .font(.title2)
+                                    .fontWeight(.semibold)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal)
+                                    .padding(.bottom, 8)
+
+                                Text("""
+                                     Al eliminar tu cuenta, perderás acceso a todas tus actividades, \
+                                     datos y configuración. Esta acción es permanente y no se puede deshacer.
+                                     """)
+                                    .font(.body)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal)
+                                    .padding(.bottom, 24)
                             
-                            Button(action: {
-                                mostrarConfirmacionEliminacion = true
-                            }, label: {
-                                Text("Eliminar Cuenta")
-                                    .font(.headline)
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .foregroundColor(.white)
-                                    .background(Color.red)
-                                    .cornerRadius(8)
-                            })
-                            .alert("Confirmar eliminación", isPresented: $mostrarConfirmacionEliminacion) {
+                            CustomButton(
+                                text: "Eliminar Cuenta",
+                                backgroundColor: Color(.red),
+                                foregroundColor: Color(.white),
+                                action: {
+                                    mostrarConfirmacionEliminacion = true
+                                }
+                            ).alert("¿Estás seguro?", isPresented: $mostrarConfirmacionEliminacion) {
                                 Button("Cancelar", role: .cancel) {}
                                 Button("Eliminar", role: .destructive) {
                                     Task {
@@ -92,16 +102,13 @@ struct EliminarCuentaView: View {
                                 }
                             } message: {
                                 Text("""
-                                        Esta acción es irreversible y eliminará permanentemente tu cuenta junto con todos tus datos. 
-                                        ¿Estás seguro de que deseas continuar?
+                                        Se eliminará tu cuenta y todos tus datos de forma permanente. 
+                                        Esta acción no se puede deshacer. 
+                                        ¿Deseas continuar?
                                         """)
                             }
-                            .alert("Resultado", isPresented: $mostrarMensaje) {
-                                Button("Aceptar", role: .cancel) {
-                                    if mensajeResultado == "Cuenta eliminada correctamente." {
-                                        // Aquí navegas a otra vista (reemplaza con la vista que necesites)
-                                    }
-                                }
+                            .alert("Eliminación exitosa", isPresented: $mostrarMensaje) {
+                                Button("Aceptar", role: .cancel) {}
                             } message: {
                                 Text(mensajeResultado)
                             }
