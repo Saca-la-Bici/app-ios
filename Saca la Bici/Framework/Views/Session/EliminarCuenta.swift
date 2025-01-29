@@ -97,7 +97,6 @@ struct EliminarCuentaView: View {
                                 Button("Eliminar", role: .destructive) {
                                     Task {
                                         mensajeResultado = await eliminarCuentaViewModel.eliminarCuenta()
-                                        mostrarMensaje = true
                                     }
                                 }
                             } message: {
@@ -106,11 +105,6 @@ struct EliminarCuentaView: View {
                                         Esta acción no se puede deshacer. 
                                         ¿Deseas continuar?
                                         """)
-                            }
-                            .alert("Eliminación exitosa", isPresented: $mostrarMensaje) {
-                                Button("Aceptar", role: .cancel) {}
-                            } message: {
-                                Text(mensajeResultado)
                             }
                         }
                     }
