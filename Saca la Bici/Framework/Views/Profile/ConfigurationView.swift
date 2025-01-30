@@ -48,14 +48,6 @@ struct ConfigurationView: View {
                                              path: $path,
                                              nextPath: .asignacionRoles)
                             }
-                            
-                            if userSessionManager.puedeDesactivarUsuario() {
-                                BotonSection(icono: "person.crop.circle.badge.minus",
-                                             titulo: "Desactivar Usuarios",
-                                             button: true,
-                                             path: $path,
-                                             nextPath: .desactivarUsuarios)
-                            }
                         }
                     }
                     .padding(.horizontal, 25)
