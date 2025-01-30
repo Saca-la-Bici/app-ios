@@ -230,6 +230,8 @@ struct ProfileView: View {
                     ActividadIndividualSMView(path: $path, id: id)
                 case .decalogo:
                     DecalogosView()
+                case .eliminarCuenta:
+                    EliminarCuentaView(path: $path)
                 default:
                     EmptyView()
                 }

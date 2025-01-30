@@ -24,4 +24,5 @@ enum ConfigurationPaths: Hashable {
     case editProfile
     case detalle(id: String)
     case decalogo
+    case eliminarCuenta
 }

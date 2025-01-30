@@ -180,7 +180,7 @@ class SessionAPIService: NSObject {
     }
     
     @MainActor
-    func GoogleLogin(url: URL) async -> Int? {
+    func GoogleLogin(isReauthenticating: Bool) async -> Int? {
         // Obtener el UIViewController desde SwiftUI
         guard let presentingViewController = GetViewController.shared.topViewController() else {
             print("No se pudo obtener el UIViewController para presentar la interfaz de Google Sign-In")
@@ -191,8 +191,10 @@ class SessionAPIService: NSObject {
         let strongPresentingViewController = presentingViewController
 
         do {
-            // Matas la sesion antigua por cualquier cosa.
-            try Auth.auth().signOut()
+            if isReauthenticating == false {
+                // Matas la sesion antigua por cualquier cosa.
+                try Auth.auth().signOut()
+            }
             
             // Iniciar el proceso de inicio de sesión con Google
             let signInResult = try await GIDSignIn.sharedInstance.signIn(withPresenting: strongPresentingViewController)
@@ -202,19 +204,38 @@ class SessionAPIService: NSObject {
                 print("No se pudo obtener el ID token de Google")
                 return nil
             }
+            
             let accessToken = signInResult.user.accessToken.tokenString
             
             // Crear credenciales de Firebase con los tokens de Google
-            let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
+            let googleCredential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
             
-            // Iniciar sesión en Firebase con las credenciales
-            _ = try await Auth.auth().signIn(with: credential)
-            
-            do {
-                let token = try await Messaging.messaging().token()
-                enviarTokenAlServidor(token)
-            } catch {
-                print("Error fetching FCM registration token: \(error.localizedDescription)")
+            if isReauthenticating == false {
+                // Iniciar sesión en Firebase con las credenciales
+                _ = try await Auth.auth().signIn(with: googleCredential)
+                
+                do {
+                    let token = try await Messaging.messaging().token()
+                    enviarTokenAlServidor(token)
+                } catch {
+                    print("Error fetching FCM registration token: \(error.localizedDescription)")
+                }
+            } else {
+                if let currentUser = Auth.auth().currentUser,
+                   let currentEmail = currentUser.providerData.first?.email,
+                   let googleEmail = signInResult.user.profile?.email {
+                    if googleEmail.lowercased() != currentEmail.lowercased() {
+                        return 500
+                    }
+                }
+                
+                let reauthentication = await reautenticateUserExternal(externalCredential: googleCredential)
+                
+                if reauthentication == false {
+                    return 500
+                } else {
+                    return 200
+                }
             }
             
             return(200)
@@ -236,7 +257,7 @@ class SessionAPIService: NSObject {
         }
     }
     
-    func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int {
+    func AppleLogin(authorization: ASAuthorization, nonce: String, isReauthenticating: Bool) async -> Int {
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
             print("Credenciales inválidas")
             return 500
@@ -249,27 +270,38 @@ class SessionAPIService: NSObject {
         }
         
         // Crear credencial de Firebase
-        let credential = OAuthProvider.appleCredential(withIDToken: idTokenString,
+        let appleCredential = OAuthProvider.appleCredential(withIDToken: idTokenString,
                                                                     rawNonce: nonce,
                                                                     fullName: appleIDCredential.fullName)
         
-        do {
-            // Iniciar sesión en Firebase con las credenciales
-            _ = try await Auth.auth().signIn(with: credential)
-            
+        if isReauthenticating == false {
             do {
-                let token = try await Messaging.messaging().token()
-                enviarTokenAlServidor(token)
+                // Iniciar sesión en Firebase con las credenciales
+                _ = try await Auth.auth().signIn(with: appleCredential)
+                
+                do {
+                    let token = try await Messaging.messaging().token()
+                    enviarTokenAlServidor(token)
+                } catch {
+                    print("Error fetching FCM registration token: \(error.localizedDescription)")
+                }
+                
+                return 200
             } catch {
-                print("Error fetching FCM registration token: \(error.localizedDescription)")
+                print("Error al autenticar con Firebase: \(error.localizedDescription)")
+                return 500
             }
+        } else {
+            let reauthentication = await reautenticateUserExternal(externalCredential: appleCredential)
             
-            return 200
-        } catch {
-            print("Error al autenticar con Firebase: \(error.localizedDescription)")
-            return 500
+            if reauthentication == false {
+                return 500
+            } else {
+                return 200
+            }
         }
     }
+    
     // Función para reautenticar al usuario
     func reauthenticateUser(currentPassword: String) async -> Bool {
         // Obtener el usuario actual
@@ -282,6 +314,20 @@ class SessionAPIService: NSObject {
         
         do {
             try await user.reauthenticate(with: credential)
+            return true
+        } catch {
+            print("Reauthentication failed: \(error.localizedDescription)")
+            return false
+        }
+    }
+    
+    func reautenticateUserExternal(externalCredential: AuthCredential) async -> Bool {
+        guard let user = Auth.auth().currentUser else {
+            return false
+        }
+        
+        do {
+            try await user.reauthenticate(with: externalCredential)
             return true
         } catch {
             print("Reauthentication failed: \(error.localizedDescription)")

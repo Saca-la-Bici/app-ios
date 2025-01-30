@@ -17,7 +17,9 @@ protocol SessionAPIProtocol {
     func completarPerfil(UserDatos: UserExterno) async -> Int?
     func verificarUsernameExistente(username: String) async -> Bool?
     func GoogleLogin() async -> Int?
+    func GoogleLoginReauthentication() async -> Int?
     func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int
+    func AppleLoginReauthentication(authorization: ASAuthorization, nonce: String) async -> Int
     func reauthenticateUser(currentPassword: String) async -> Bool
     func restablecerContraseña(newPassword: String) async -> Bool
     func emailRestablecerContraseña(emailOrUsername: String) async -> Bool
@@ -67,11 +69,19 @@ class SessionRepository: SessionAPIProtocol {
     }
     
     func GoogleLogin() async -> Int? {
-        return await sessionService.GoogleLogin(url: URL(string: "\(Api.base)\(Api.Routes.session)/registrarUsuario")!)
+        return await sessionService.GoogleLogin(isReauthenticating: false)
+    }
+    
+    func GoogleLoginReauthentication() async -> Int? {
+        return await sessionService.GoogleLogin(isReauthenticating: true)
     }
     
     func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int {
-        return await sessionService.AppleLogin(authorization: authorization, nonce: nonce)
+        return await sessionService.AppleLogin(authorization: authorization, nonce: nonce, isReauthenticating: false)
+    }
+    
+    func AppleLoginReauthentication(authorization: ASAuthorization, nonce: String) async -> Int {
+        return await sessionService.AppleLogin(authorization: authorization, nonce: nonce, isReauthenticating: true)
     }
     
     func reauthenticateUser(currentPassword: String) async -> Bool {

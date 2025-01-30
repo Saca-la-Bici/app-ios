@@ -113,4 +113,45 @@ class ProfileAPIService {
         }
     }
     
+    func eliminarCuenta(url: URL) async throws -> Bool {
+        
+        guard let idToken = await firebaseTokenManager.obtenerIDToken() else {
+            throw NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "No se pudo obtener el ID Token"])
+        }
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(idToken)",
+            "Content-Type": "application/json"
+        ]
+        
+        do {
+            _ = try await session.request(url, method: .delete, headers: headers)
+                .validate()
+                .serializingData()
+                .value
+            
+            try await eliminarCuentaFirebase()
+            return true
+        } catch {
+            return false
+        }
+    }
+    
+    private func eliminarCuentaFirebase() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw NSError(domain: "FirebaseAuth", code: 404, userInfo: [NSLocalizedDescriptionKey: "No se encontró un usuario autenticado."])
+        }
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            user.delete { error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    print("Cuenta eliminada de Firebase")
+                    continuation.resume()
+                }
+            }
+        }
+    }
+    
 }
