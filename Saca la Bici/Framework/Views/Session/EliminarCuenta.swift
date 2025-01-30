@@ -32,40 +32,84 @@ struct EliminarCuentaView: View {
                         Text(consultarPerfilPropioViewModel.profile?.nombre ?? "")
                             .font(.system(size: 15))
                         
-                        Spacer().frame(height: 40)
+                        Spacer().frame(height: 10)
                         
                         if !restablecerContraseñaViewModel.showNuevaContraseñaFields {
                             
-                            // Campo de Contraseña Actual
-                            PasswordField(
-                                password: $restablecerContraseñaViewModel.currentPassword,
-                                isPasswordVisible: $restablecerContraseñaViewModel.showCurrentPassword,
-                                text: "Contraseña actual"
-                            )
+                            Text("""
+                                Por motivos de seguridad, antes de eliminar tu cuenta debes reautenticarte.
+                                Por favor, elige el método que prefieras para confirmar tu identidad.
+                                """)
+                                .font(.system(size: 14))
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal)
+                                .padding(.bottom, 20)
                             
-                            // ¿Olvidaste tu contraseña?
-                            Button(action: {
-                                path.append(.olvidar)
-                            }, label: {
-                                Text("¿Olvidaste tu contraseña?")
-                                    .font(.caption)
-                                    .underline()
-                            })
-                            .buttonStyle(PlainButtonStyle())
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Spacer().frame(height: 40)
-                            
-                            CustomButton(
-                                text: "Eliminar Cuenta",
-                                backgroundColor: Color(.red),
-                                foregroundColor: Color(.white),
-                                action: {
-                                    Task {
-                                        await restablecerContraseñaViewModel.verificarContraseña()
+                            if eliminarCuentaViewModel.passwordUser == true {
+                                
+                                // Campo de Contraseña Actual
+                                PasswordField(
+                                    password: $restablecerContraseñaViewModel.currentPassword,
+                                    isPasswordVisible: $restablecerContraseñaViewModel.showCurrentPassword,
+                                    text: "Contraseña actual"
+                                )
+                                
+                                // ¿Olvidaste tu contraseña?
+                                Button(action: {
+                                    path.append(.olvidar)
+                                }, label: {
+                                    Text("¿Olvidaste tu contraseña?")
+                                        .font(.caption)
+                                        .underline()
+                                })
+                                .buttonStyle(PlainButtonStyle())
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                Spacer().frame(height: 5)
+                                
+                                CustomButton(
+                                    text: "Reautenticar con Contraseña",
+                                    backgroundColor: Color(red: 0.961, green: 0.802, blue: 0.048),
+                                    action: {
+                                        Task {
+                                            await restablecerContraseñaViewModel.verificarContraseña()
+                                        }
                                     }
-                                }
-                            )
+                                )
+                            }
+                            
+                            if (eliminarCuentaViewModel.googleUser == true || eliminarCuentaViewModel.appleUser == true)
+                                && eliminarCuentaViewModel.passwordUser == true {
+                                
+                                Spacer().frame(height: 5)
+                                
+                                Text("o continúa con")
+                                    .font(.footnote)
+                                    .foregroundColor(Color.gray)
+                                    .frame(maxWidth: .infinity)
+                            }
+                            
+                            if eliminarCuentaViewModel.googleUser == true {
+                                
+                                Spacer().frame(height: 10)
+                                
+                                ExternalLoginButton(
+                                    action: {
+                                        Task {
+                                            await restablecerContraseñaViewModel.GoogleLoginReauthentication()
+                                        }
+                                    },
+                                    buttonText: "Reautenticar con Google",
+                                    imageName: "GoogleLogo",
+                                    systemImage: false
+                                )
+                            }
+                            
+                            if eliminarCuentaViewModel.appleUser == true {
+                                Spacer().frame(height: 20)
+                                Text("Apple")
+                            }
                         } else {
                             
                             Text("¡Listo! Ya verificamos tu identidad")
@@ -154,6 +198,7 @@ struct EliminarCuentaView: View {
                 try await
                 consultarPerfilPropioViewModel.consultarPerfilPropio()
             }
+            eliminarCuentaViewModel.checarProveedores()
         }
     }
 }

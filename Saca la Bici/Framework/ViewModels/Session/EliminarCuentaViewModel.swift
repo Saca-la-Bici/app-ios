@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 class EliminarCuentaViewModel: ObservableObject {
     private let eliminarCuentaRequirement = EliminarCuentaRequirement()
+    
+    @Published var passwordUser: Bool = false
+    @Published var googleUser: Bool = false
+    @Published var appleUser: Bool = false
     
     @MainActor
     func eliminarCuenta() async -> String {
@@ -25,6 +30,20 @@ class EliminarCuentaViewModel: ObservableObject {
         } catch {
             // En caso de error inesperado
             return "Ocurrió un error inesperado. Por favor, intenta de nuevo."
+        }
+    }
+    
+    func checarProveedores() {
+        for proveedor in Auth.auth().currentUser?.providerData ?? [] {
+            if proveedor.providerID == "password" {
+                self.passwordUser = true
+            }
+            if proveedor.providerID == "google.com" {
+                self.googleUser = true
+            }
+            if proveedor.providerID == "apple.com" {
+                self.appleUser = true
+            }
         }
     }
 }

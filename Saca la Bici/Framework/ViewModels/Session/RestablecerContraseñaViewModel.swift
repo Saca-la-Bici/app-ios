@@ -34,6 +34,8 @@ import Foundation
             self.restablecerContraseñaRequirement = restablecerContraseñaRequirement
         }
         
+        private let eliminarCuentaRequirement = EliminarCuentaRequirement()
+        
         // Función para validar que la contraseña contenga al menos una minúscula, una mayúscula y un número
         func isValidPassword(_ password: String) -> Bool {
             let regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>]).+$"
@@ -142,6 +144,25 @@ import Foundation
             self.showRestablecer = true
         } else {
             self.showRestablecer = false
+        }
+    }
+        
+    @MainActor
+    func GoogleLoginReauthentication() async {
+        let responseStatus = await self.eliminarCuentaRequirement.GoogleLoginReauthentication()
+            
+        if responseStatus == 500 {
+            self.messageAlert = """
+            Lo sentimos, ocurrió un error al reautenticar tu sesión.
+            Por favor, inténtalo de nuevo y asegúrate de usar la misma cuenta con la que iniciaste sesión.
+            """
+            self.showAlert = true
+            self.alertSuccess = false
+        // No mostrar error si se cancelo.
+        } else if responseStatus == -1 {
+            self.showAlert = false
+        } else if responseStatus == 200 {
+            self.showNuevaContraseñaFields = true
         }
     }
     
