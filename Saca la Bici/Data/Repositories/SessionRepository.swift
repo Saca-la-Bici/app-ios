@@ -19,6 +19,7 @@ protocol SessionAPIProtocol {
     func GoogleLogin() async -> Int?
     func GoogleLoginReauthentication() async -> Int?
     func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int
+    func AppleLoginReauthentication(authorization: ASAuthorization, nonce: String) async -> Int
     func reauthenticateUser(currentPassword: String) async -> Bool
     func restablecerContraseña(newPassword: String) async -> Bool
     func emailRestablecerContraseña(emailOrUsername: String) async -> Bool
@@ -76,7 +77,11 @@ class SessionRepository: SessionAPIProtocol {
     }
     
     func AppleLogin(authorization: ASAuthorization, nonce: String) async -> Int {
-        return await sessionService.AppleLogin(authorization: authorization, nonce: nonce)
+        return await sessionService.AppleLogin(authorization: authorization, nonce: nonce, isReauthenticating: false)
+    }
+    
+    func AppleLoginReauthentication(authorization: ASAuthorization, nonce: String) async -> Int {
+        return await sessionService.AppleLogin(authorization: authorization, nonce: nonce, isReauthenticating: true)
     }
     
     func reauthenticateUser(currentPassword: String) async -> Bool {

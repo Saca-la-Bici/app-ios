@@ -6,6 +6,7 @@
 //
 import Foundation
 import SwiftUI
+import AuthenticationServices
 
 struct EliminarCuentaView: View {
     @StateObject var restablecerContraseñaViewModel = RestablecerContraseñaViewModel()
@@ -108,7 +109,17 @@ struct EliminarCuentaView: View {
                             
                             if eliminarCuentaViewModel.appleUser == true {
                                 Spacer().frame(height: 20)
-                                Text("Apple")
+                                
+                                ExternalLoginButton(
+                                    action: {
+                                        Task {
+                                            await restablecerContraseñaViewModel.reauthenticateWithApple()
+                                        }
+                                    },
+                                    buttonText: "Reautenticar con Apple",
+                                    imageName: "applelogo",
+                                    systemImage: true
+                                )
                             }
                         } else {
                             

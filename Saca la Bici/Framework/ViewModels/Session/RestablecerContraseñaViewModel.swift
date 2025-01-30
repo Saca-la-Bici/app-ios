@@ -6,62 +6,69 @@
 //
 
 import Foundation
+import AuthenticationServices
 
-    class RestablecerContraseñaViewModel: ObservableObject {
+class RestablecerContraseñaViewModel: ObservableObject {
+    @Published var currentPassword: String = ""
+    @Published var newPassword: String = ""
+    @Published var confirmPassword: String = ""
+    @Published var showCurrentPassword = false
+    @Published var showNewPassword = false
+    @Published var showConfirmPassword = false
+    @Published var showNuevaContraseñaFields = false
+    
+    @Published var emailOrUsername: String = ""
+    @Published var buttonLabel: String = "Enviar enlace"
+    @Published var showRestablecer: Bool = false
+    
+    // Creas dos variables más por si se comete un error
+    @Published var messageAlert = ""
+    @Published var showAlert = false
+    
+    @Published var alertSuccess = false
+    @Published var alertTiempo = false
+    
+    // Variable para almacenar el nonce raw
+    private var rawNonce: String?
+    
+    lazy private var appleSignInManager: AppleSignInManager = {
+        AppleSignInManager(getNonce: self.prepareNonce)
+    }()
+
+    var restablecerContraseñaRequirement: RestablecerContraseñaRequirement
+
+    init(restablecerContraseñaRequirement: RestablecerContraseñaRequirement = RestablecerContraseñaRequirement.shared) {
+        self.restablecerContraseñaRequirement = restablecerContraseñaRequirement
+    }
         
-        @Published var currentPassword: String = ""
-        @Published var newPassword: String = ""
-        @Published var confirmPassword: String = ""
-        @Published var showCurrentPassword = false
-        @Published var showNewPassword = false
-        @Published var showConfirmPassword = false
-        @Published var showNuevaContraseñaFields = false
+    private let eliminarCuentaRequirement = EliminarCuentaRequirement()
         
-        @Published var emailOrUsername: String = ""
-        @Published var buttonLabel: String = "Enviar enlace"
-        @Published var showRestablecer: Bool = false
+    // Función para validar que la contraseña contenga al menos una minúscula, una mayúscula y un número
+    func isValidPassword(_ password: String) -> Bool {
+        let regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>]).+$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
+        return predicate.evaluate(with: password)
+    }
         
-        // Creas dos variables más por si se comete un error
-        @Published var messageAlert = ""
-        @Published var showAlert = false
-        
-        @Published var alertSuccess = false
-        @Published var alertTiempo = false
-        
-        var restablecerContraseñaRequirement: RestablecerContraseñaRequirement
-        
-        init(restablecerContraseñaRequirement: RestablecerContraseñaRequirement = RestablecerContraseñaRequirement.shared) {
-            self.restablecerContraseñaRequirement = restablecerContraseñaRequirement
+    @MainActor
+    func verificarContraseña () async {
+        if currentPassword.isEmpty {
+            self.showAlert = true
+            self.messageAlert = "Por favor ingresa tu contraseña actual."
+            self.alertSuccess = false
+            return
         }
-        
-        private let eliminarCuentaRequirement = EliminarCuentaRequirement()
-        
-        // Función para validar que la contraseña contenga al menos una minúscula, una mayúscula y un número
-        func isValidPassword(_ password: String) -> Bool {
-            let regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>]).+$"
-            let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
-            return predicate.evaluate(with: password)
-        }
-        
-        @MainActor
-        func verificarContraseña () async {
-            if currentPassword.isEmpty {
-                self.showAlert = true
-                self.messageAlert = "Por favor ingresa tu contraseña actual."
-                self.alertSuccess = false
-                return
-            }
             
-            let usuarioReautenticado = await restablecerContraseñaRequirement.reauthenticateUser(currentPassword: self.currentPassword)
+        let usuarioReautenticado = await restablecerContraseñaRequirement.reauthenticateUser(currentPassword: self.currentPassword)
             
-            if usuarioReautenticado == true {
-                self.showNuevaContraseñaFields = true
-            } else {
-                self.showAlert = true
-                self.messageAlert = "La contraseña ingresada no es correcta. Por favor intenta de nuevo."
-                return
-            }
+        if usuarioReautenticado == true {
+            self.showNuevaContraseñaFields = true
+        } else {
+            self.showAlert = true
+            self.messageAlert = "La contraseña ingresada no es correcta. Por favor intenta de nuevo."
+            return
         }
+    }
         
     @MainActor
     func restablecerContraseña () async {
@@ -166,4 +173,60 @@ import Foundation
         }
     }
     
+    // Función para preparar el nonce y devolver el nonce hasheado
+    func prepareNonce() -> String {
+        let nonce = AppleCryptoHelpers.randomNonceString()
+        let hashedNonce = AppleCryptoHelpers.sha256(nonce)
+        self.rawNonce = nonce
+        return hashedNonce
+    }
+    
+    @MainActor
+    // Función para manejar la autenticación con Apple
+    func reauthenticateWithApple() async {
+        appleSignInManager.onCompletion = { [weak self] result in
+                    guard let self = self else { return }
+                    
+                    switch result {
+                    case .success(let authorization):
+                        Task {
+                            await self.AppleLoginReauthentication(authorization: authorization)
+                        }
+                    case .failure(let error):
+                        if (error as NSError).code == ASAuthorizationError.canceled.rawValue {
+                            // El usuario canceló la autenticación
+                            self.showAlert = false
+                        } else {
+                            self.messageAlert = "Error en Sign in with Apple: \(error.localizedDescription)"
+                            self.alertSuccess = false
+                            self.showAlert = true
+                        }
+                    }
+                }
+        appleSignInManager.startSignInWithAppleFlow()
+    }
+    
+    @MainActor
+    func AppleLoginReauthentication(authorization: ASAuthorization) async {
+        guard let rawNonce = self.rawNonce else {
+            self.messageAlert = "Estado inválido"
+            self.alertSuccess = false
+            self.showAlert = true
+            return
+        }
+        
+        let responseStatus = await eliminarCuentaRequirement.AppleLoginReauthentication(authorization: authorization, nonce: rawNonce)
+        
+        if responseStatus == 200 {
+            self.showAlert = false
+            self.showNuevaContraseñaFields = true
+        } else {
+            self.messageAlert = """
+            Lo sentimos, ocurrió un error al reautenticar tu sesión.
+            Por favor, inténtalo de nuevo y asegúrate de usar la misma cuenta con la que iniciaste sesión.
+            """
+            self.alertSuccess = false
+            self.showAlert = true
+        }
+    }
 }

@@ -68,6 +68,7 @@
 		25858A142CB0B87600A7719C /* ActividadIndividualViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A132CB0B87600A7719C /* ActividadIndividualViewModel.swift */; };
 		25858A162CB0BEF000A7719C /* ConsultarActividadIndividualRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A152CB0BEF000A7719C /* ConsultarActividadIndividualRequirement.swift */; };
 		25858A182CB0DBC700A7719C /* ActividadInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25858A172CB0DBC700A7719C /* ActividadInfoView.swift */; };
+		258B1EF22D4B07F400A40FDE /* AppleSignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258B1EF12D4B07F400A40FDE /* AppleSignInManager.swift */; };
 		259CBB9A2C9E29C00067B550 /* AppleCryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259CBB992C9E29C00067B550 /* AppleCryptoHelpers.swift */; };
 		259CBBA02CA0E44A0067B550 /* SessionPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259CBB9F2CA0E44A0067B550 /* SessionPaths.swift */; };
 		259EF8B72CA23899007CE3FE /* UserProfileSessionAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259EF8B62CA23899007CE3FE /* UserProfileSessionAPIService.swift */; };
@@ -241,6 +242,7 @@
 		25858A132CB0B87600A7719C /* ActividadIndividualViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadIndividualViewModel.swift; sourceTree = "<group>"; };
 		25858A152CB0BEF000A7719C /* ConsultarActividadIndividualRequirement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultarActividadIndividualRequirement.swift; sourceTree = "<group>"; };
 		25858A172CB0DBC700A7719C /* ActividadInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActividadInfoView.swift; sourceTree = "<group>"; };
+		258B1EF12D4B07F400A40FDE /* AppleSignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInManager.swift; sourceTree = "<group>"; };
 		259CBB982C9E0E5A0067B550 /* Saca la Bici.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Saca la Bici.entitlements"; sourceTree = "<group>"; };
 		259CBB992C9E29C00067B550 /* AppleCryptoHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleCryptoHelpers.swift; sourceTree = "<group>"; };
 		259CBB9F2CA0E44A0067B550 /* SessionPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPaths.swift; sourceTree = "<group>"; };
@@ -780,6 +782,7 @@
 				AEF446812CA9FE7B0004D5E8 /* ColorManager.swift */,
 				AEF4467E2CA9F7AD0004D5E8 /* FechaManager.swift */,
 				AE8E788A2CA9E4B4007F7365 /* UserSessionManager.swift */,
+				258B1EF12D4B07F400A40FDE /* AppleSignInManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -1029,6 +1032,7 @@
 				252B64D22C99FE5900A362C5 /* UIApplicationExtensions.swift in Sources */,
 				252B64D32C99FE5900A362C5 /* SignUpStep1View.swift in Sources */,
 				254BCA022CBF217700858477 /* RutasRepository.swift in Sources */,
+				258B1EF22D4B07F400A40FDE /* AppleSignInManager.swift in Sources */,
 				252B64D42C99FE5900A362C5 /* SignUpStep2View.swift in Sources */,
 				7B9C5EE02CAA4FB400441541 /* AddFAQView.swift in Sources */,
 				7B720F4A2CB8177A000019E4 /* EliminarActividadRequirement.swift in Sources */,

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AuthenticationServices
 
 class EliminarCuentaRequirement {
     
@@ -20,6 +21,10 @@ class EliminarCuentaRequirement {
     
     func GoogleLoginReauthentication() async -> Int? {
         return await sessionRepository.GoogleLoginReauthentication()
+    }
+    
+    func AppleLoginReauthentication(authorization: ASAuthorization, nonce: String) async -> Int? {
+        return await sessionRepository.AppleLoginReauthentication(authorization: authorization, nonce: nonce)
     }
     
     func eliminarCuenta() async throws -> Bool {
